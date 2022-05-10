@@ -1,4 +1,4 @@
-import { errorHandler, NotFoundError } from "@atz3n/express-utils";
+import { errorHandler, NotFoundError, validateOrigin } from "@atz3n/express-utils";
 import { json } from "body-parser";
 import cors from "cors";
 import express from "express";
@@ -9,9 +9,7 @@ import { createServer, Server } from "http";
 import { EnvVars, RUN_CONTEXT } from "../lib/EnvVars";
 import { logErrors } from "./middlewares/errorLogging";
 import { logHttp } from "./middlewares/httpLogging";
-import { checkOrigin } from "./middlewares/originChecker";
-import { retrieveGreetingRouter } from "./routes/greeting/retrieve/retrieveGreeting";
-import { retrieveGreetingsRouter } from "./routes/greetings/retrieve/retrieveGreetings";
+import { postProductRouter } from "./routes/product/post/postProduct";
 
 
 export const httpServer = express();
@@ -28,11 +26,10 @@ httpServer.use(rateLimit({
 
 
 if (EnvVars.RUN_CONTEXT !== RUN_CONTEXT.DEVELOPMENT) {
-    httpServer.use(checkOrigin(EnvVars.ALLOWED_ORIGINS));
+    httpServer.use(validateOrigin(EnvVars.ALLOWED_ORIGINS));
 }
 
-httpServer.use(retrieveGreetingsRouter);
-httpServer.use(retrieveGreetingRouter);
+httpServer.use(postProductRouter);
 
 httpServer.all("*", (request, response) => {
   throw new NotFoundError();

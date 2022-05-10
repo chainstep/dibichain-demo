@@ -1,12 +1,12 @@
-import { GreetingStore } from "../src/storage/greeting/GreetingStore";
-import { createGreetingStore } from "../src/storage/greeting/greetingStoreFactory";
+import { ProductStore } from "../src/storage/product/ProductStore";
+import { createProductStore } from "../src/storage/product/productStoreFactory";
 import { StorageType } from "../src/storage/StorageType";
 import { DummyTransport, initLogger } from "../src/utils/logger";
 
 
 jest.setTimeout(100 * 1000);
 
-GreetingStore.init(createGreetingStore(StorageType.IN_MEMORY));
+ProductStore.init(createProductStore(StorageType.IN_MEMORY));
 
 initLogger({
     level: "all",
