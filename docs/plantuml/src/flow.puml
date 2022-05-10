@@ -1,0 +1,18 @@
+@startuml
+autonumber "<b>[00]"
+
+participant "SustainHub" as SUS
+participant "Operator" as OP
+participant "Blockchain" as BC
+participant "Company" as COMP
+
+
+-> SUS: add LCA data
+SUS -> OP: send data
+OP -> OP: store data
+OP -> BC: store hash
+BC -> COMP: notify
+COMP -> OP: get data (frontend)
+COMP -> COMP: verify data
+
+@enduml
