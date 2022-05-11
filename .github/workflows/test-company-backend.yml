@@ -1,0 +1,35 @@
+name: test company backend
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - company-backend/**
+
+env:
+  SOURCE_DIR: company-backend
+
+jobs:
+  test-operator:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16
+
+    - name: Install dependencies
+      run: cd ./${{ env.SOURCE_DIR }} && yarn install
+    
+    - name: Lint
+      run: cd ./${{ env.SOURCE_DIR }} && yarn lint
+
+    - name: Run tests
+      run: cd ./${{ env.SOURCE_DIR }} && yarn test
+
+    - name: Build operator
+      run: cd ./${{ env.SOURCE_DIR }} && yarn build
