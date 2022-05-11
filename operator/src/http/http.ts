@@ -9,6 +9,7 @@ import { createServer, Server } from "http";
 import { EnvVars, RUN_CONTEXT } from "../lib/EnvVars";
 import { logErrors } from "./middlewares/errorLogging";
 import { logHttp } from "./middlewares/httpLogging";
+import { getProductRouter } from "./routes/product/get/getProduct";
 import { postProductRouter } from "./routes/product/post/postProduct";
 
 
@@ -30,6 +31,7 @@ if (EnvVars.RUN_CONTEXT !== RUN_CONTEXT.DEVELOPMENT) {
 }
 
 httpServer.use(postProductRouter);
+httpServer.use(getProductRouter);
 
 httpServer.all("*", (request, response) => {
   throw new NotFoundError();

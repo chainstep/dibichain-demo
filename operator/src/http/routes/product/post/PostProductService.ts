@@ -1,6 +1,5 @@
 import { BadRequestError } from "@atz3n/express-utils";
 import { randomUUID } from "crypto";
-import { Request } from "express";
 import { IProductStore } from "../../../../storage/product/IProductStore";
 import { Product } from "../../../../types";
 import { RouteService } from "../../routerFactory";
@@ -26,7 +25,7 @@ export class PostProductService implements RouteService {
     }
 
 
-    public async run(inputs: Inputs, request: Request): Promise<void> {
+    public async run(inputs: Inputs): Promise<void> {
         const product = inputs;
         const productStore = this.getProductStore();
 

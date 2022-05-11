@@ -1,4 +1,3 @@
-import { NextFunction, Request, Response } from "express";
 import { body } from "express-validator";
 import { ProductStore } from "../../../../storage/product/ProductStore";
 import { ROUTE_NAMES } from "../../../constants";
@@ -18,14 +17,11 @@ export const postProductRouter = createRouter({
         body("number").isString().withMessage("number must be defined and valid"),
         body("documents").optional().custom(isDocumentArray).withMessage("invalid documents"),
         body("amount").optional().isNumeric().withMessage("amount must be defined and valid"),
-        body("amount-unit").optional().isString().toLowerCase().custom(isAmountUnit).withMessage("amount-unit must be defined and valid"),
+        body("amountUnit").optional().isString().toLowerCase().custom(isAmountUnit).withMessage("amountUnit must be defined and valid"),
         body("weight").optional().isNumeric().withMessage("weight must be defined and valid"),
-        body("weight-unit").optional().toLowerCase().custom(isWeightUnit).withMessage("weight-unit must be defined and valid"),
-        body("carbonfootprint").optional().isNumeric().withMessage("carbonfootprint must be defined and valid"),
-        body("carbonfootprint-unit").optional().toLowerCase().custom(isCarbonFootprintUnit).withMessage("carbonfootprint-unit must be defined and valid")
-    ],
-    middlewares: [
-        renameParameters
+        body("weightUnit").optional().toLowerCase().custom(isWeightUnit).withMessage("weightUnit must be defined and valid"),
+        body("carbonFootprint").optional().isNumeric().withMessage("carbonFootprint must be defined and valid"),
+        body("carbonFootprintUnit").optional().toLowerCase().custom(isCarbonFootprintUnit).withMessage("carbonFootprintUnit must be defined and valid")
     ],
     service: new PostProductService({
         getProductStore: () => ProductStore.get()
@@ -80,20 +76,4 @@ function isCarbonFootprintUnit(value: string): boolean {
     return value.includes("mg")
         || value.includes("g")
         || value.includes("kg");
-}
-
-function renameParameters(request: Request, response: Response, next: NextFunction): void {
-    request.body.amountUnit = request.body["amount-unit"];
-    delete request.body["amount-unit"];
-
-    request.body.weightUnit = request.body["weight-unit"];
-    delete request.body["weight-unit"];
-
-    request.body.carbonFootprint = request.body.carbonfootprint;
-    delete request.body.carbonfootprint;
-
-    request.body.carbonFootprintUnit = request.body["carbonfootprint-unit"];
-    delete request.body["carbonfootprint-unit"];
-
-    next();
 }

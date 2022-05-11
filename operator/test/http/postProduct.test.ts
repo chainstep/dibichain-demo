@@ -5,7 +5,8 @@ import { ProductStore } from "../../src/storage/product/ProductStore";
 import { ProductStoreInMemory } from "../../src/storage/product/ProductStoreInMemory";
 import { config } from "../config";
 
-const productRequest = {
+
+const requestProduct = {
     id: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
     uid: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
     name: "Bionic Partition",
@@ -13,11 +14,11 @@ const productRequest = {
     number: "EAN 20359483920",
     documents: [ "8181c8ae-eef1-4703-8498-2cf25be2877b"],
     amount: "1",
-    "amount-unit": "EACH",
+    amountUnit: "EACH",
     weight: "65.53",
-    "weight-unit": "kg",
-    carbonfootprint: "1345",
-    "carbonfootprint-unit": "kg"
+    weightUnit: "kg",
+    carbonFootprint: "1345",
+    carbonFootprintUnit: "kg"
 };
 
 
@@ -33,23 +34,23 @@ if (!config.skipTests.includes("postProduct")) {
         await request(httpServer)
             .post("/product")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
-            .send(productRequest)
+            .send(requestProduct)
             .expect(200);
 
         const product = productStore.store[0];
 
-        expect(product.amount).toEqual(productRequest.amount);
-        expect(product.amountUnit?.toLowerCase()).toEqual(productRequest["amount-unit"].toLowerCase());
-        expect(product.carbonFootprint).toEqual(productRequest.carbonfootprint);
-        expect(product.carbonFootprintUnit).toEqual(productRequest["carbonfootprint-unit"]);
-        expect(product.documents).toEqual(productRequest.documents);
-        expect(product.id).toEqual(productRequest.id);
-        expect(product.name).toEqual(productRequest.name);
-        expect(product.number).toEqual(productRequest.number);
-        expect(product.type.toLowerCase()).toEqual(productRequest.type.toLowerCase());
-        expect(product.uid).toEqual(productRequest.uid);
-        expect(product.weight).toEqual(productRequest.weight);
-        expect(product.weightUnit).toEqual(productRequest["weight-unit"]);
+        expect(product.amount).toEqual(requestProduct.amount);
+        expect(product.amountUnit?.toLowerCase()).toEqual(requestProduct.amountUnit.toLowerCase());
+        expect(product.carbonFootprint).toEqual(requestProduct.carbonFootprint);
+        expect(product.carbonFootprintUnit).toEqual(requestProduct.carbonFootprintUnit);
+        expect(product.documents).toEqual(requestProduct.documents);
+        expect(product.id).toEqual(requestProduct.id);
+        expect(product.name).toEqual(requestProduct.name);
+        expect(product.number).toEqual(requestProduct.number);
+        expect(product.type.toLowerCase()).toEqual(requestProduct.type.toLowerCase());
+        expect(product.uid).toEqual(requestProduct.uid);
+        expect(product.weight).toEqual(requestProduct.weight);
+        expect(product.weightUnit).toEqual(requestProduct.weightUnit);
     });
 } else {
     test("dummy", () => {
