@@ -30,8 +30,8 @@ export const postProductRouter = createRouter({
 
 function isProductType(value: string): boolean {
     return value.includes("assembly")
-        || value.includes("purchasepart")
-        || value.includes("standardpart");
+        || value.includes("purchase_part")
+        || value.includes("standard_part");
 }
 
 function isDocumentArray(value: string): boolean {
