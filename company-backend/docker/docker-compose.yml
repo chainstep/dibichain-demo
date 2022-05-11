@@ -1,12 +1,12 @@
 version: "3.8"
 networks: 
-  operator-network:
+  company-backend-network:
     external: false
 services:
-  operator:
-    image: dibichain-operator
+  company-backend:
+    image: dibichain-company-backend
     networks:
-      - operator-network
+      - company-backend-network
     ports:
       # extern:intern
       - 3000:3000
@@ -14,7 +14,7 @@ services:
       - GREETER_CONTRACT_ADDRESS=0x7fddbf846a115f5708ad1a186fc22540c62395db
       - RPC_URL=http://host.docker.internal:8546
       - MONGO_DB_URL=mongodb://blktrc-backend-db:27017
-  operator-db:
+  company-backend-db:
     image: mongo:4.4.1-bionic
     networks:
       - blktrc-network

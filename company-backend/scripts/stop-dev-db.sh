@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Builds the docker image
+# Stops and removes the development database container
 
 ###################################################################################################
 # CONFIGURATION
 ###################################################################################################
 
-IMAGE_NAME="dibichain-operator"
+CONTAINER_NAME="company-backend-dev-db"
 
 
 ###################################################################################################
@@ -20,5 +20,5 @@ HERE="$(pwd)/$(dirname $0)"
 # MAIN
 ###################################################################################################
 
-yarn build
-docker build -f ${HERE}/../docker/Dockerfile ${HERE}/.. -t ${IMAGE_NAME}
+docker container stop ${CONTAINER_NAME}
+docker container rm ${CONTAINER_NAME}

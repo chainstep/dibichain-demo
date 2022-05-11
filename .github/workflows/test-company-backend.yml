@@ -1,14 +1,14 @@
-name: test operator
+name: test company backend
 
 on:
   pull_request:
     branches:
       - main
     paths:
-      - operator/**
+      - company-backend/**
 
 env:
-  SOURCE_DIR: operator
+  SOURCE_DIR: company-backend
 
 jobs:
   test-operator:
