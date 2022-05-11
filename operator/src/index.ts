@@ -17,7 +17,7 @@ async function main(): Promise<void> {
     });
 
     logger.info("Init databases...");
-    if (isDevContext) {
+    if (isDevContext && !EnvVars.USE_MONGO_DB) {
         ProductStore.init(createProductStore(StorageType.IN_MEMORY));
     } else {
         ProductStore.init(createProductStore(StorageType.MONGO_DB));

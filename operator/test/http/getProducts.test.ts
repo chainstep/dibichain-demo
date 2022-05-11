@@ -35,7 +35,7 @@ if (!config.skipTests.includes("getProduct")) {
         productStore.add(product);
 
         const response = await request(httpServer)
-            .get("/product")
+            .get("/products")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .query({ uid: product.uid })
             .expect(200);

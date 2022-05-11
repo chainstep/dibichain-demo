@@ -7,7 +7,7 @@ import { PostProductService } from "./PostProductService";
 
 export const postProductRouter = createRouter({
     method: "post",
-    route: ROUTE_NAMES.product,
+    route: ROUTE_NAMES.products,
     inputPath: "body",
     inputChecks: [
         body("uid").optional().isUUID().withMessage("invalid uid"),

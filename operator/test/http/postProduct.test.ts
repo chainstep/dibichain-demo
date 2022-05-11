@@ -32,7 +32,7 @@ if (!config.skipTests.includes("postProduct")) {
 
     it("should post a product", async () => {
         await request(httpServer)
-            .post("/product")
+            .post("/products")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .send(requestProduct)
             .expect(200);

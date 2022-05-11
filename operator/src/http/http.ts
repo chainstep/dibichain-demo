@@ -9,8 +9,8 @@ import { createServer, Server } from "http";
 import { EnvVars, RUN_CONTEXT } from "../lib/EnvVars";
 import { logErrors } from "./middlewares/errorLogging";
 import { logHttp } from "./middlewares/httpLogging";
-import { getProductRouter } from "./routes/product/get/getProduct";
-import { postProductRouter } from "./routes/product/post/postProduct";
+import { getProductRouter } from "./routes/products/get/getProducts";
+import { postProductRouter } from "./routes/products/post/postProduct";
 
 
 export const httpServer = express();
