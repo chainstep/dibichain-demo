@@ -30,14 +30,6 @@ async function main(): Promise<void> {
     server.listen(EnvVars.PORT, () => {
         logger.info(`Listening on port ${EnvVars.PORT}...`);
     });
-
-    // logger.info("Init contract listeners...");
-    // initContractListeners(<Greeter> new Contract(
-    //     EnvVars.GREETER_CONTRACT_ADDRESS,
-    //     GreeterJSON.abi,
-    //     new StaticJsonRpcProvider(EnvVars.RPC_URL)
-    // ));
-    // logger.info("Listeners initialized");
 }
 
 
