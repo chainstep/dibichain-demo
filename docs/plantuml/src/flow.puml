@@ -2,17 +2,33 @@
 autonumber "<b>[00]"
 
 participant "SustainHub" as SUS
+participant "Company A" as COMPA
+participant "Company B" as COMPB
 participant "Operator" as OP
 participant "Blockchain" as BC
-participant "Company" as COMP
 
 
--> SUS: add LCA data
-SUS -> OP: send data
-OP -> OP: store data
-OP -> BC: store hash
-BC -> COMP: notify
-COMP -> OP: get data (frontend)
-COMP -> COMP: verify data
+== Issue New Product ==
+
+-> SUS: add product data
+SUS -> COMPA: send product data
+COMPA -> COMPA: store product data
+COMPA -> OP: anounce new product\n(id, uid, name, hash)
+OP -> BC: issue product info\n(id, uid, name, hash)
+BC -> COMPB: notify new product
+|||
+
+== Request Product Details ==
+
+COMPB -> OP: request details\n(uid, pubKeyB)
+OP -> BC: issue details request\n(uid, pubKeyB)
+BC -> COMPA: notify details request
+COMPA -> COMPA: get product data
+COMPA -> COMPA: encrypt(product data, pubKeyB)
+COMPA -> OP: send encrypted product data
+OP -> COMPB: forward encrypted product data
+COMPB -> COMPB: decrypt product data
+COMPB -> COMPB: hash product data
+COMPB -> COMPB: validate hashes
 
 @enduml
