@@ -1,4 +1,4 @@
-name: create company client image
+name: build company client image
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
       - company-client/**
 
 env:
-  # project dir
+  # github config
   SOURCE_DIR: company-client
   
   # docker config
