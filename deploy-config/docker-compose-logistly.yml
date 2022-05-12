@@ -13,7 +13,7 @@ services:
       # extern:intern
       - 3100:3000
     environment:
-      - MONGO_DB_URL=mongodb://logistex-client-db:27017
+      - MONGO_DB_URL=mongodb://logistly-client-db:27017
   logistly-client-db:
     image: mongo:4.4.1-bionic
     networks:
