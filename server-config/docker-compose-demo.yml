@@ -3,8 +3,8 @@ networks:
   dibichain-network:
     external: false
 services:
-  dibichain-logistex-backend:
-    image: ghcr.io/chainstep/dibichain/dibichain-company-backend:demo-latest
+  logistex-backend:
+    image: ghcr.io/chainstep/dibichain/company-backend:demo-latest
     depends_on:
       - logistex-backend-db
     networks:

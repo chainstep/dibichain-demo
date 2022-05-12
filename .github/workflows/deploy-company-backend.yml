@@ -15,7 +15,7 @@ env:
   SERVER_FOLDER: dibichain
   
   # docker config
-  IMAGE_NAME: dibichain-company-backend
+  IMAGE_NAME: company-backend
   IMAGE_TAG: demo-latest
   REGISTRY_NAME: ghcr.io/chainstep/dibichain
   PROJECT_NAME: dibichain
