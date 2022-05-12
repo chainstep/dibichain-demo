@@ -6,7 +6,7 @@ import "express-async-errors";
 import { rateLimit } from "express-rate-limit";
 import helmet from "helmet";
 import { createServer, Server } from "http";
-import { EnvVars, RUN_CONTEXT } from "../lib/EnvVars";
+import { EnvVars } from "../lib/EnvVars";
 import { logErrors } from "./middlewares/errorLogging";
 import { logHttp } from "./middlewares/httpLogging";
 import { getProductRouter } from "./routes/products/get/getProducts";
@@ -24,11 +24,7 @@ httpServer.use(rateLimit({
     max: EnvVars.MAX_REQUESTS_PER_15_MIN,
     standardHeaders: true
 }));
-
-
-if (EnvVars.RUN_CONTEXT !== RUN_CONTEXT.DEVELOPMENT) {
-    httpServer.use(validateOrigin(EnvVars.ALLOWED_ORIGINS));
-}
+httpServer.use(validateOrigin(EnvVars.ALLOWED_ORIGINS));
 
 httpServer.use(postProductRouter);
 httpServer.use(getProductRouter);

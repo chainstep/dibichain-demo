@@ -29,11 +29,11 @@ export class PostProductService implements RouteService {
         const product = inputs;
         const productStore = this.getProductStore();
 
-        if (!product.id) {
-            product.id = randomUUID();
-        }
         if (!product.uid) {
-            product.uid = product.id;
+            product.uid = randomUUID();
+        }
+        if (!product.id) {
+            product.id = product.uid;
         }
 
         const products = await productStore.find({ uid: product.uid });
