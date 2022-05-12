@@ -11,7 +11,7 @@ env:
   SOURCE_DIR: company-backend
 
 jobs:
-  test-operator:
+  test-company-backend:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -31,5 +31,5 @@ jobs:
     - name: Run tests
       run: cd ./${{ env.SOURCE_DIR }} && yarn test
 
-    - name: Build operator
+    - name: Build company backend
       run: cd ./${{ env.SOURCE_DIR }} && yarn build

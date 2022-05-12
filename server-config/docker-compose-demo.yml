@@ -1,0 +1,22 @@
+version: "3.8"
+networks:
+  dibichain-network:
+    external: false
+services:
+  dibichain-logistex-backend:
+    image: ghcr.io/chainstep/dibichain/dibichain-company-backend:demo-latest
+    depends_on:
+      - logistex-backend-db
+    networks:
+      - dibichain-network
+    ports:
+      # extern:intern
+      - 3000:3000
+    environment:
+      - MONGO_DB_URL=mongodb://logistex-backend-db:27017
+  logistex-backend-db:
+    image: mongo:4.4.1-bionic
+    networks:
+      - dibichain-network
+    volumes:
+      - ./../data/logistex:/data/db
