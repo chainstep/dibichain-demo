@@ -1,25 +1,20 @@
-name: deploy company backend
+name: create company client image
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - company-client/**
 
-# You also need to add a RUNNER_PRIVATE_KEY action secret
-# and fill it with an ssh private key of the server user
 env:
   # project dir
-  SOURCE_DIR: company-backend
-  
-  # server config
-  SERVER_DOMAIN: logistex.weltenmut.de
-  SERVER_USER: dibichain
-  SERVER_FOLDER: dibichain
+  SOURCE_DIR: company-client
   
   # docker config
-  IMAGE_NAME: company-backend
+  IMAGE_NAME: company-client
   IMAGE_TAG: demo-latest
   REGISTRY_NAME: ghcr.io/chainstep/dibichain
-  PROJECT_NAME: dibichain
-  COMPOSE_FILE: docker-compose-demo.yml
 
 jobs:
   test-project:
@@ -94,37 +89,3 @@ jobs:
           push: true
           tags: |
             ${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-      
-  deploy-image:
-    runs-on: ubuntu-latest
-    needs:
-      - build-image
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Prepare runner
-        run: |
-          mkdir -p ~/.ssh
-          touch ~/.ssh/known_hosts
-          ssh-keyscan ${{ env.SERVER_DOMAIN }} >> ~/.ssh/known_hosts
-          touch ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          echo "${{ secrets.RUNNER_PRIVATE_KEY }}" >> ~/.ssh/id_ed25519
-          echo "SSH_DOMAIN=${{ env.SERVER_USER }}@${{ env.SERVER_DOMAIN }}" >> $GITHUB_ENV &&
-          echo "SSH_SERVER_FOLDER=${{ env.SERVER_USER }}@${{ env.SERVER_DOMAIN }}:${{ env.SERVER_FOLDER }}" >> $GITHUB_ENV
-
-      - name: Prepare server
-        run: |
-          ssh -t ${{ env.SSH_DOMAIN }} "mkdir -p ${{ env.SERVER_FOLDER }}/docker"
-          scp ./server-config/${{ env.COMPOSE_FILE }} ${{ env.SSH_SERVER_FOLDER}}/docker
-
-      - name: Deploy image
-        run: |
-          ssh -t ${{ env.SSH_DOMAIN }} "
-            sudo docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-            cd ${{ env.SERVER_FOLDER }}/docker
-            sudo docker pull ghcr.io/chainstep/blktrc/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-            sudo docker-compose -f ${{ env.COMPOSE_FILE }} -p ${{ env.PROJECT_NAME }} up -d --remove-orphans
-            sudo rm -f /root/.docker/config.json
-          "
