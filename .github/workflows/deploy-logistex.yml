@@ -23,7 +23,7 @@ env:
   COMPOSE_FOLDER: deploy-config
 
 jobs: 
-  deploy-image:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
