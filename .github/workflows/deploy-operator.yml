@@ -6,6 +6,9 @@ on:
 # You also need to add a RUNNER_PRIVATE_KEY action secret
 # and fill it with an ssh private key of the server user
 env:
+  # github config
+  DEPLOY_BRANCH: main
+
   # server config
   SERVER_DOMAIN: api.operator.dibichain.de
   SERVER_USER: dibichain
@@ -15,7 +18,7 @@ env:
   IMAGE_NAME: operator
   IMAGE_TAG: demo-latest
   REGISTRY_NAME: ghcr.io/chainstep/dibichain
-  PROJECT_NAME: dibichain
+  PROJECT_NAME: dibichain-operator
   COMPOSE_FILE: docker-compose-operator.yml
   COMPOSE_FOLDER: deploy-config
 
@@ -25,6 +28,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Check branch
+        run: |
+          BRANCH=${GITHUB_REF#refs/heads/}
+          if [ ${BRANCH} != ${{ env.DEPLOY_BRANCH }} ]; then
+            echo "Action only works on branch: ${{ env.DEPLOY_BRANCH }}"
+            exit 1
+          fi
 
       - name: Prepare runner
         run: |
