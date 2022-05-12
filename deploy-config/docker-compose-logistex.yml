@@ -3,18 +3,18 @@ networks:
   logistex-network:
     external: false
 services:
-  logistex-backend:
-    image: ghcr.io/chainstep/dibichain/company-backend:demo-latest
+  logistex-client:
+    image: ghcr.io/chainstep/dibichain/company-client:demo-latest
     depends_on:
-      - logistex-backend-db
+      - logistex-client-db
     networks:
       - logistex-network
     ports:
       # extern:intern
       - 3000:3000
     environment:
-      - MONGO_DB_URL=mongodb://logistex-backend-db:27017
-  logistex-backend-db:
+      - MONGO_DB_URL=mongodb://logistex-client-db:27017
+  logistex-client-db:
     image: mongo:4.4.1-bionic
     networks:
       - logistex-network

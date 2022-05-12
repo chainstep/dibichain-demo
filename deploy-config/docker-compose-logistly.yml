@@ -3,18 +3,18 @@ networks:
   logistly-network:
     external: false
 services:
-  logistly-backend:
-    image: ghcr.io/chainstep/dibichain/company-backend:demo-latest
+  logistly-client:
+    image: ghcr.io/chainstep/dibichain/company-client:demo-latest
     depends_on:
-      - logistly-backend-db
+      - logistly-client-db
     networks:
       - logistly-network
     ports:
       # extern:intern
       - 3100:3000
     environment:
-      - MONGO_DB_URL=mongodb://logistex-backend-db:27017
-  logistly-backend-db:
+      - MONGO_DB_URL=mongodb://logistex-client-db:27017
+  logistly-client-db:
     image: mongo:4.4.1-bionic
     networks:
       - logistly-network
