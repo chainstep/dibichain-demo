@@ -6,7 +6,7 @@
 # CONFIGURATION
 ###################################################################################################
 
-IMAGE_NAME="company-backend"
+IMAGE_NAME="company-client"
 
 
 ###################################################################################################
@@ -20,6 +20,7 @@ HERE="$(pwd)/$(dirname $0)"
 # MAIN
 ###################################################################################################
 
+yarn
 yarn build
 
 # multi-arch build -> https://blog.jaimyn.dev/how-to-build-multi-architecture-docker-images-on-an-m1-mac/

@@ -1,12 +1,10 @@
 #!/bin/bash
 
-# Builds the docker image
+# Stops the local demo
 
 ###################################################################################################
 # CONFIGURATION
 ###################################################################################################
-
-IMAGE_NAME="operator"
 
 
 ###################################################################################################
@@ -20,13 +18,12 @@ HERE="$(pwd)/$(dirname $0)"
 # MAIN
 ###################################################################################################
 
-yarn
-yarn build
-
-# multi-arch build -> https://blog.jaimyn.dev/how-to-build-multi-architecture-docker-images-on-an-m1-mac/
-BUILD_CMD="build"
-if [[ $(uname) == "Darwin" && $(uname -a) == *"arm64"* ]]; then
-    BUILD_CMD="buildx build --platform linux/amd64 --load"
+SUDO=""
+if [ $(uname) == Linux ]; then
+    SUDO="sudo"
 fi
 
-docker ${BUILD_CMD} -f ${HERE}/../docker/Dockerfile ${HERE}/.. -t ${IMAGE_NAME}
+cd ${HERE}/../config
+${SUDO} docker-compose -p dibichain-logistex -f docker-compose-local-logistex.yml down
+${SUDO} docker-compose -p dibichain-logistly -f docker-compose-local-logistly.yml down
+${SUDO} docker-compose -p dibichain-operator -f docker-compose-local-operator.yml down

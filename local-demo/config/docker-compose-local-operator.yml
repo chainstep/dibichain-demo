@@ -1,0 +1,12 @@
+version: "3.8"
+networks:
+  operator-network:
+    external: false
+services:
+  operator:
+    image: operator
+    networks:
+      - operator-network
+    ports:
+      # extern:intern
+      - 300:3000

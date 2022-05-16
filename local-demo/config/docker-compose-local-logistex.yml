@@ -1,0 +1,23 @@
+version: "3.8"
+networks:
+  logistex-network:
+    external: false
+services:
+  logistex-client:
+    image: company-client
+    depends_on:
+      - logistex-client-db
+    networks:
+      - logistex-network
+    ports:
+      # extern:intern
+      - 3100:3000
+    environment:
+      - MONGO_DB_URL=mongodb://logistex-client-db:27017
+      - OPERATOR_URL=http://localhost:3000
+  logistex-client-db:
+    image: mongo:4.4.1-bionic
+    networks:
+      - logistex-network
+    volumes:
+      - ../data/logistex:/data/db

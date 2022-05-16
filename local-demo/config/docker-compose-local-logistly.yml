@@ -1,0 +1,23 @@
+version: "3.8"
+networks:
+  logistly-network:
+    external: false
+services:
+  logistly-client:
+    image: company-client
+    depends_on:
+      - logistly-client-db
+    networks:
+      - logistly-network
+    ports:
+      # extern:intern
+      - 3200:3000
+    environment:
+      - MONGO_DB_URL=mongodb://logistly-client-db:27017
+      - OPERATOR_URL=https://localhost:3000
+  logistly-client-db:
+    image: mongo:4.4.1-bionic
+    networks:
+      - logistly-network
+    volumes:
+      - ../data/logistly:/data/db

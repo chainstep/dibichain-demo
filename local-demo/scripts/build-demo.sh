@@ -1,12 +1,13 @@
 #!/bin/bash
 
-# Builds the docker image
+# Builds demo images on your machine
 
 ###################################################################################################
 # CONFIGURATION
 ###################################################################################################
 
-IMAGE_NAME="operator"
+RELATIVE_COMPANY_CLIENT_PATH="../../company-client"
+RELATIVE_OPERATOR_PATH="../../operator"
 
 
 ###################################################################################################
@@ -20,13 +21,10 @@ HERE="$(pwd)/$(dirname $0)"
 # MAIN
 ###################################################################################################
 
-yarn
-yarn build
+echo "[INFO] Build company client image"
+cd ${HERE}/${RELATIVE_COMPANY_CLIENT_PATH}
+./scripts/build-docker-image.sh
 
-# multi-arch build -> https://blog.jaimyn.dev/how-to-build-multi-architecture-docker-images-on-an-m1-mac/
-BUILD_CMD="build"
-if [[ $(uname) == "Darwin" && $(uname -a) == *"arm64"* ]]; then
-    BUILD_CMD="buildx build --platform linux/amd64 --load"
-fi
-
-docker ${BUILD_CMD} -f ${HERE}/../docker/Dockerfile ${HERE}/.. -t ${IMAGE_NAME}
+echo "" && echo "[INFO] Build operator image"
+cd ${HERE}/${RELATIVE_OPERATOR_PATH}
+./scripts/build-docker-image.sh
