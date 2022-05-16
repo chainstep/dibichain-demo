@@ -17,7 +17,7 @@ export class Operator {
 
     public async announceProduct(product: Product) {
         const hash = this.createHash(product);
-        await axios.post(this.url, {
+        await axios.post(this.url + "/products", {
             id: product.id,
             uid: product.uid,
             name: product.name,

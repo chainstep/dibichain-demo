@@ -46,6 +46,6 @@ export class PostProductService implements RouteService {
         }
 
         await productStore.add(<Product> product);
-        this.operator.announceProduct(<Product> product);
+        await this.operator.announceProduct(<Product> product);
     }
 }
