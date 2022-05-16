@@ -1,4 +1,6 @@
 import { body } from "express-validator";
+import { EnvVars } from "../../../../lib/EnvVars";
+import { Operator } from "../../../../lib/Operator";
 import { ProductStore } from "../../../../storage/product/ProductStore";
 import { ROUTE_NAMES } from "../../../constants";
 import { createRouter } from "../../routerFactory";
@@ -24,7 +26,10 @@ export const postProductRouter = createRouter({
         body("carbonFootprintUnit").optional().toLowerCase().custom(isCarbonFootprintUnit).withMessage("carbonFootprintUnit must be defined and valid")
     ],
     service: new PostProductService({
-        getProductStore: () => ProductStore.get()
+        getProductStore: () => ProductStore.get(),
+        operator: new Operator({
+            url: EnvVars.OPERATOR_URL
+        })
     })
 });
 

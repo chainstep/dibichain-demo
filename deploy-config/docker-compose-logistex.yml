@@ -14,6 +14,7 @@ services:
       - 3000:3000
     environment:
       - MONGO_DB_URL=mongodb://logistex-client-db:27017
+      - OPERATOR_URL=https://api.operator.dibichain.de
   logistex-client-db:
     image: mongo:4.4.1-bionic
     networks:

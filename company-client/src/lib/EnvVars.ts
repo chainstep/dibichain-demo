@@ -17,6 +17,7 @@ export class EnvVars {
     public static MONGO_DB_URL = "";
     public static USE_MONGO_DB = false;
     public static MAX_REQUESTS_PER_15_MIN = 0;
+    public static OPERATOR_URL = "";
 
 
     public static load(): void {
@@ -29,10 +30,10 @@ export class EnvVars {
         this.set_ALLOWED_ORIGINS();
 
         this.setVar("MONGO_DB_URL", (envVar) => {
-            this.MONGO_DB_URL = <string> envVar;
+            this.MONGO_DB_URL = String(envVar);
         });
         this.setVar("USE_MONGO_DB", (envVar) => {
-            this.USE_MONGO_DB = <boolean> envVar;
+            this.USE_MONGO_DB = Boolean(envVar);
         }, false);
         this.setVar("PORT", (envVar) => {
             this.PORT = Number(envVar);
@@ -40,6 +41,9 @@ export class EnvVars {
         this.setVar("MAX_REQUESTS_PER_15_MIN", (envVar) => {
             this.MAX_REQUESTS_PER_15_MIN = Number(envVar);
         }, 1000);
+        this.setVar("OPERATOR_URL", (envVar) => {
+            this.OPERATOR_URL = String(envVar);
+        });
     }
 
     private static set_RUN_CONTEXT(): void {
