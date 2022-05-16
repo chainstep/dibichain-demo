@@ -11,7 +11,7 @@ services:
       - logistly-network
     ports:
       # extern:intern
-      - 3100:3000
+      - 3200:3000
     environment:
       - MONGO_DB_URL=mongodb://logistly-client-db:27017
       - OPERATOR_URL=https://api.operator.dibichain.de

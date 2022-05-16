@@ -9,4 +9,4 @@ services:
       - operator-network
     ports:
       # extern:intern
-      - 5000:3000
+      - 3000:3000
