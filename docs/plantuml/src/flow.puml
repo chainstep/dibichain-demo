@@ -13,8 +13,8 @@ participant "Blockchain" as BC
 -> SUS: add product data
 SUS -> COMPA: send product data
 COMPA -> COMPA: store product data
-COMPA -> OP: anounce new product\n(id, uid, name, hash)
-OP -> BC: issue product info\n(id, uid, name, hash)
+COMPA -> OP: anounce new product\n(id, uid, name, type, number, hash)
+OP -> BC: issue product info\n(id, uid, name, type, number, hash)
 BC -> COMPB: notify new product
 |||
 

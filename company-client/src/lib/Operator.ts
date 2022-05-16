@@ -21,6 +21,8 @@ export class Operator {
             id: product.id,
             uid: product.uid,
             name: product.name,
+            type: product.type,
+            number: product.number,
             hash
         });
     }
