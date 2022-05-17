@@ -6,5 +6,6 @@
     "git.ignoreLimitWarning": true,
     "plantuml.diagramsRoot": "docs/plantuml/src",
     "plantuml.exportOutDir": "docs/plantuml/out",
-    "plantuml.exportSubFolder": false
+    "plantuml.exportSubFolder": false,
+    "solidity.packageDefaultDependenciesDirectory": "smart-contracts/node_modules"
 }
