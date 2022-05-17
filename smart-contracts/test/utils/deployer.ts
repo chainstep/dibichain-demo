@@ -1,10 +1,10 @@
 import { ethers } from "hardhat";
-import { Linker, Linker__factory } from "../../typechain";
+import { EventBus, EventBus__factory } from "../../typechain";
 
 
-export async function deploy(): Promise<Linker> {
-    const linkerFactory = <Linker__factory> await ethers.getContractFactory("Linker");
-    const linker = await linkerFactory.deploy();
-    await linker.deployed();
-    return linker;
+export async function deploy(): Promise<EventBus> {
+    const eventBusFactory = <EventBus__factory> await ethers.getContractFactory("EventBus");
+    const eventBus = await eventBusFactory.deploy();
+    await eventBus.deployed();
+    return eventBus;
 }
