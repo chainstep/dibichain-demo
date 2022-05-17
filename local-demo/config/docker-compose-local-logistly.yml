@@ -9,12 +9,14 @@ services:
       - logistly-client-db
     networks:
       - logistly-network
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
     ports:
       # extern:intern
       - 3200:3000
     environment:
-      - MONGO_DB_URL=mongodb://logistly-client-db:27017
-      - OPERATOR_URL=http://localhost:3000
+        MONGO_DB_URL: mongodb://logistly-client-db:27017
+        OPERATOR_URL: http://host.docker.internal:3000
   logistly-client-db:
     image: mongo:4.4.1-bionic
     networks:

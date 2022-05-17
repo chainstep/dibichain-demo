@@ -6,9 +6,6 @@
 # CONFIGURATION
 ###################################################################################################
 
-RELATIVE_COMPANY_CLIENT_PATH="../../company-client"
-RELATIVE_OPERATOR_PATH="../../operator"
-
 BUILD_IMAGES=false
 
 
@@ -23,6 +20,7 @@ while getopts "b?" opt; do
         ;;
     esac
 done
+
 
 ###################################################################################################
 # DEFINES
@@ -46,6 +44,7 @@ if [ $(uname) == Linux ]; then
 fi
 
 cd ../config
+${SUDO} docker-compose -p dibichain-chain -f docker-compose-local-chain.yml up -d
+${SUDO} docker-compose -p dibichain-operator -f docker-compose-local-operator.yml up -d
 ${SUDO} docker-compose -p dibichain-logistex -f docker-compose-local-logistex.yml up -d
 ${SUDO} docker-compose -p dibichain-logistly -f docker-compose-local-logistly.yml up -d
-${SUDO} docker-compose -p dibichain-operator -f docker-compose-local-operator.yml up -d

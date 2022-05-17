@@ -21,7 +21,7 @@ HERE="$(pwd)/$(dirname $0)"
 # MAIN
 ###################################################################################################
 
-echo "[INFO] Build company client image"
+echo "" && echo "[INFO] Build company client image"
 cd ${HERE}/${RELATIVE_COMPANY_CLIENT_PATH}
 ./scripts/build-docker-image.sh
 
