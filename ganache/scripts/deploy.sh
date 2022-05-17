@@ -33,7 +33,6 @@ scp ./run-docker.sh "${SERVER_FOLDER}/scripts"
 scp ./pause-docker.sh "${SERVER_FOLDER}/scripts"
 scp ./stop-docker.sh "${SERVER_FOLDER}/scripts"
 scp ../docker/docker-compose.yml "${SERVER_FOLDER}/docker"
-scp ../docker/envs/common-blockscout.env "${SERVER_FOLDER}/docker/envs"
 
 ssh -t ${SSH_DOMAIN} "sudo chmod 700 ./${FOLDER_NAME}/scripts/run-docker.sh"
 ssh -t ${SSH_DOMAIN} "sudo chmod 700 ./${FOLDER_NAME}/scripts/pause-docker.sh"
