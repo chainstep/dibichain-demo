@@ -2,22 +2,10 @@
 
 ## Access
 
-### Remote
-
-- RPC URL:
-  - `https://chain.blktrc.planetenangst.de`
-- Chain ID
-  - `4242`
-- Blockexplorer
-  - `https://explorer.blktrc.planetenangst.de`
-
-
-### Local
-
 - RPC URL:
   - `http://localhost:8545`
 - Chain ID
-  - `4242`
+  - `4243`
 - Blockexplorer
   - `http://localhost:4000`
 
@@ -27,6 +15,9 @@
 ```bash
 # start chain including explorer
 ./scripts/run-docker.sh
+
+# start chain including explorer in detached mode
+./scripts/run-docker.sh -d
 
 # stop chain including explorer
 ./scripts/pause-docker.sh
@@ -43,35 +34,35 @@
 ```ts
 const ACCOUNTS = [
     {
-        address: "0x20A881b4ad38058C35D68A0FAec44E80080F2192",
-        secret:  "0x221a47143c58591673f2f43395da8c956f917c48bf429f421f9fd1ec9d4ccb97"
+        address: "0x216518758F1Ea6C77fB2604D3224bF6EeC32164B",
+        secret:  "0x786e523ddd21e8c2524ea5da3c8b9b0498b40419aee35e131a6219212ee66b76"
     },{
-        address: "0x6947B7a7292904b76F83506C8c87a9CD26DF4E94",
-        secret:  "0x873c5ad9e79e599725caa23f0fe139c0d14880472e6d688dffbd3cd380fe5fbe"
+        address: "0x8fA98E72788A9200B41113728F8aDEd1597a99FE",
+        secret:  "0xce603e4a7db7c0c7fc74937792124c36396d5d9999b357384fd142b4f8e85320"
     },{
-        address: "0x3aF28409c4F4381E0702c9B7587fC0f5C1b5a3c7",
-        secret:  "0x3717c773ae7ce7a0a92cfcccfedc3a1ff43c18428ab1e84f83f8be5aa04637d9"
+        address: "0x17c3Fd10893Ce61938674b0d8F866C9a910817EB",
+        secret:  "0xe6587abf7617348b3208e7964ceb649eaa30a04a7add0eb893ba15b14e9249f0"
     },{
-        address: "0x7d19FC09bD80F2258715AA5e50dCB085dda92c4E",
-        secret:  "0x162fb47ac938ec28a8d40245893efca287a4f0dc2d258dc6b813513612b730f1"
+        address: "0x5F218281677e84979FC2f316749eF9129eB1fe10",
+        secret:  "0x61d01527bdb17f9207a3e97feee8e8fed31b86add30bdbc83848ed9aa0fa3e05"
     },{
-        address: "0x94004CE59c867F336eb04e8314b199fC85562438",
-        secret:  "0xf2778ad065d4e9c4391c8c6a2f2971fc649f3403046d758c91fb684ec32efd78"
+        address: "0x0516dDb5CA2fcf15F068Cb887Ca52b5cc80acd32",
+        secret:  "0x1f1b105000b2521e328569724eef1477313b92eb80e5fec9d502bc2e971e5955"
     },{
-        address: "0x06faB5aa12B1Aa3ac2Dad255cC1344c02cd365f4",
-        secret:  "0x35ff60ffe9a37110e2bc4b3a3f0dbdab61ddb4c179232f909708b6507f802766"
+        address: "0xcc0C002a499A0373aAe97B9BdD7b56A20CAf70D1",
+        secret:  "0xcc910c84983d0b539b4421041f60d90fcb5d3e13a7392edf52b92f1e0ecea7cc"
     },{
-        address: "0x042D5C660F2fD264eB2651C82aBC924A2b19707d",
-        secret:  "0xf31e47a4f19a7f6e7fa9670e5a81babd45cfc96b8aa6d47dafb0d97aee408426"
+        address: "0x0EB0077e802902f83544E177672Eb3339835C388",
+        secret:  "0x6b28a99e7b12942ba06f210ce3f39a9d5d17b8e23b8398e6347a2c56617fff3f"
     },{
-        address: "0x8c025C6bcE75278446f16eFb40a06BfdA3fB6410",
-        secret:  "0xe5aac27556ae8e2b088d1ef47577e7efc538ea0123ae9e0c4d37b96c9f0917cc"
+        address: "0x3006AC3bE9eE8e9beb5d314AFE41C39ED520eA11",
+        secret:  "0xcf7f1ca84a33de6e86246377020f2a99c4f42dee28d519102757b4ab57a3ab1f"
     },{
-        address: "0x1534454A3314BC8dc4B56386d27A6bcE5Fa4fF69",
-        secret:  "0x80c937eca0acdb023fae9115d6bc1f6da70d33a624fb37dcd0f07123f809472a"
+        address: "0xE6F747c1549bf428EE52214ba280801fe1129ED5",
+        secret:  "0x5f8d67a3c24599a720f27d7382c35747b64c709296438ed458473acd80cf9869"
     },{
-        address: "0x23E74dE9EE4649d91D71d67c6dB9cBF596c5f0E0",
-        secret:  "0x44cd7d4f47b2cd448c7c385e46c298bed2e02f295482b3464a65e4b540fc2d7d"
+        address: "0x765e538ED9AF9514aa649779e17d5d37e3628fb8",
+        secret:  "0x5fea76d0bd04a2427eb460407d45f81969faa9eb9ea6133abaa8881c113a11d8"
     }
 ];
 ```
