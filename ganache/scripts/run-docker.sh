@@ -8,6 +8,26 @@
 
 PROJECT_NAME="dibichain-ganache"
 
+RUN_DETACHED=false
+
+
+###################################################################################################
+# PARAMETER PARSING
+###################################################################################################
+
+while getopts "h?d?" opt; do
+    case "$opt" in
+        h)
+            echo "Parameter: [<value> / (flag)]"
+            echo "-d (run in detached mode)"
+            exit 0
+            ;;
+        d)
+            RUN_DETACHED=true
+            ;;
+    esac
+done
+
 
 ###################################################################################################
 # DEFINES
@@ -25,5 +45,10 @@ if [ $(uname) == Linux ]; then
     SUDO="sudo"
 fi
 
+DETACHED=""
+if [ ${RUN_DETACHED} == true ]; then 
+    DETACHED="-d";
+fi
+
 cd ${HERE}/../docker
-${SUDO} docker-compose -p ${PROJECT_NAME} up -d
+${SUDO} docker-compose -p ${PROJECT_NAME} up ${DETACHED}
