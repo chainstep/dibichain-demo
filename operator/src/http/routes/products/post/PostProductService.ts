@@ -27,7 +27,7 @@ export class PostProductService implements RouteService {
             hash: inputs.hash,
             id: inputs.id,
             name: inputs.name,
-            number: inputs.name
+            number: inputs.number
         });
     }
 }
