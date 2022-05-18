@@ -13,11 +13,17 @@ BUILD_IMAGES=false
 # PARAMETER PARSING
 ###################################################################################################
 
-while getopts "b?" opt; do
+while getopts "h?b?" opt; do
     case "$opt" in
-    b)
-       BUILD_IMAGES=true
-        ;;
+        h)
+            echo "Parameter: [<value> / (flag)]"
+            echo "-b (build docker images)"
+            echo "-d (run in detached mode)"
+            exit 0
+            ;;
+        b)
+            BUILD_IMAGES=true
+            ;;
     esac
 done
 
