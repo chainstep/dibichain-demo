@@ -11,8 +11,8 @@ contract EventBus is Ownable  {
     event ProductDetailsRequest(string uid, string pubKey, string algorithm);
 
     struct Product {
-        string id;
         string uid;
+        string id;
         string name;
         string Type;
         string number;
