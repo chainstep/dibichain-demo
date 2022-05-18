@@ -15,6 +15,9 @@ export class EnvVars {
     public static PORT = 0;
     public static ALLOWED_ORIGINS: string[] = [];
     public static MAX_REQUESTS_PER_15_MIN = 0;
+    public static EVENT_BUS_CONTRACT_ADDRESS = "";
+    public static RPC_URL = "";
+    public static ETHEREUM_PRIVATE_KEY = "";
 
 
     public static load(): void {
@@ -32,6 +35,15 @@ export class EnvVars {
         this.setVar("MAX_REQUESTS_PER_15_MIN", (envVar) => {
             this.MAX_REQUESTS_PER_15_MIN = Number(envVar);
         }, 1000);
+        this.setVar("EVENT_BUS_CONTRACT_ADDRESS", (envVar) => {
+            this.EVENT_BUS_CONTRACT_ADDRESS = String(envVar);
+        });
+        this.setVar("RPC_URL", (envVar) => {
+            this.RPC_URL = String(envVar);
+        });
+        this.setVar("ETHEREUM_PRIVATE_KEY", (envVar) => {
+            this.ETHEREUM_PRIVATE_KEY = String(envVar);
+        }, "");
     }
 
     private static set_RUN_CONTEXT(): void {

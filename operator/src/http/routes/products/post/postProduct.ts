@@ -1,4 +1,5 @@
 import { body } from "express-validator";
+import { Contracts } from "../../../../contract/Contracts";
 import { ROUTE_NAMES } from "../../../constants";
 import { createRouter } from "../../routerFactory";
 import { PostProductService } from "./PostProductService";
@@ -19,7 +20,7 @@ export const postProductRouter = createRouter({
         body("hash").isHash("sha256").withMessage(missingOrInvalidText + " hash")
     ],
     service: new PostProductService({
-
+        getEventBus: () => Contracts.getEventBus()
     })
 });
 
