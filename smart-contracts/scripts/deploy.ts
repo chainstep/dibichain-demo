@@ -1,13 +1,13 @@
 import { ethers } from 'hardhat';
-import { Greeter__factory } from '../typechain';
+import { EventBus__factory } from '../typechain';
 
 
 async function main() {
-    const greeterFactory = <Greeter__factory> await ethers.getContractFactory("Greeter");
-    const greeter = await greeterFactory.deploy();
-    await greeter.deployed();
+    const eventBusFactory = <EventBus__factory> await ethers.getContractFactory("EventBus");
+    const eventBus = await eventBusFactory.deploy();
+    await eventBus.deployed();
     
-    console.log("Greeter deployed to:", greeter.address);
+    console.log("EventBus deployed to:", eventBus.address);
 }
 
 main()

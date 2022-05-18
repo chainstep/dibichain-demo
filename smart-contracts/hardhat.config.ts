@@ -7,8 +7,8 @@ import { HardhatUserConfig } from "hardhat/types";
 import "solidity-coverage";
 
 
-if (process.env.DEV === "true") {
-    dotenv.config({ path: __dirname + "/.env-dev" });
+if (process.env.REMOTE === "true") {
+    dotenv.config({ path: __dirname + "/.env-remote" });
 } else if (process.env.LOCAL === "true") {
     dotenv.config({ path: __dirname + "/.env-local" });
 } else {

@@ -16,7 +16,7 @@ yarn test
 yarn coverage
 
 # deploy to own remote chain
-yarn deploy:dev
+yarn deploy:remote
 
 # deploy to local chain
 yarn deploy:local
