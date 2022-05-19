@@ -5,6 +5,7 @@ networks:
 services:
   dibichain-ganache:
     image: trufflesuite/ganache-cli
+    restart: always
     networks: 
       - dibichain-ganache-network
     ports:
