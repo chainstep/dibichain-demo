@@ -41,7 +41,7 @@ ssh -t ${SSH_DOMAIN} "sudo chmod 700 ./${FOLDER_NAME}/scripts/stop-docker.sh"
 
 echo "" && echo "[INFO] (Re)starting custom chain on server ..."
 ssh -t ${SSH_DOMAIN} "cd ./${FOLDER_NAME}/scripts && ./stop-docker.sh"
-ssh -t ${SSH_DOMAIN} "cd ./${FOLDER_NAME}/scripts && ./run-docker.sh -d"
+ssh -t ${SSH_DOMAIN} "cd ./${FOLDER_NAME}/scripts && ./run-docker.sh"
 
 
 echo "" && echo "[INFO] Done. Update deployed ..."

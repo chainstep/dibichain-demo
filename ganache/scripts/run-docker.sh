@@ -8,22 +8,22 @@
 
 PROJECT_NAME="dibichain-ganache"
 
-RUN_DETACHED=false
+RUN_DETACHED=true
 
 
 ###################################################################################################
 # PARAMETER PARSING
 ###################################################################################################
 
-while getopts "h?d?" opt; do
+while getopts "h?b?" opt; do
     case "$opt" in
         h)
             echo "Parameter: [<value> / (flag)]"
-            echo "-d (run in detached mode)"
+            echo "-b (run in blocking mode)"
             exit 0
             ;;
-        d)
-            RUN_DETACHED=true
+        b)
+            RUN_DETACHED=false
             ;;
     esac
 done
