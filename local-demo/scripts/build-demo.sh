@@ -21,10 +21,12 @@ HERE="$(pwd)/$(dirname $0)"
 # MAIN
 ###################################################################################################
 
-echo "" && echo "[INFO] Build company client image"
+echo "[INFO] Building company client image..."
 cd ${HERE}/${RELATIVE_COMPANY_CLIENT_PATH}
 ./scripts/build-docker-image.sh
 
-echo "" && echo "[INFO] Build operator image"
+echo "[INFO] Building operator image..."
 cd ${HERE}/${RELATIVE_OPERATOR_PATH}
 ./scripts/build-docker-image.sh
+
+echo "[INFO] Done."
