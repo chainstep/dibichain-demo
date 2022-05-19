@@ -35,6 +35,7 @@ services:
 
   dibichain-explorer:
     depends_on:
+      - dibichain-ganache
       - dibichain-explorer-db
     image: blockscout/blockscout:4.1.3
     networks: 
