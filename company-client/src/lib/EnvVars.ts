@@ -18,6 +18,13 @@ export class EnvVars {
     public static USE_MONGO_DB = false;
     public static MAX_REQUESTS_PER_15_MIN = 0;
     public static OPERATOR_URL = "";
+    public static RPC_URL = "";
+    public static WS_RPC_CONNECTION_CHECK_INTERVAL_SEC = 0;
+    public static WS_RPC_CONNECTION_CHECK_TIMEOUT_SEC = 0;
+    public static WS_RPC_KEEP_ALIVE_INTERVAL_SEC = 0;
+    public static WS_RPC_RECONNECT_DELAY_SEC = 0;
+    public static CATCH_UP_ALL_CONTRACT_EVENTS = false;
+    public static EVENT_BUS_CONTRACT_ADDRESS = "";
 
 
     public static load(): void {
@@ -44,6 +51,24 @@ export class EnvVars {
         this.setVar("OPERATOR_URL", (envVar) => {
             this.OPERATOR_URL = String(envVar);
         });
+        this.setVar("RPC_URL", (envVar) => {
+            this.RPC_URL = String(envVar);
+        });
+        this.setVar("WS_RPC_CONNECTION_CHECK_INTERVAL_SEC", (envVar) => {
+            this.WS_RPC_CONNECTION_CHECK_INTERVAL_SEC = Number(envVar);
+        }, 15);
+        this.setVar("WS_RPC_CONNECTION_CHECK_TIMEOUT_SEC", (envVar) => {
+            this.WS_RPC_CONNECTION_CHECK_TIMEOUT_SEC = Number(envVar);
+        }, 20);
+        this.setVar("WS_RPC_KEEP_ALIVE_INTERVAL_SEC", (envVar) => {
+            this.WS_RPC_KEEP_ALIVE_INTERVAL_SEC = Number(envVar);
+        }, 5 * 60);
+        this.setVar("WS_RPC_RECONNECT_DELAY_SEC", (envVar) => {
+            this.WS_RPC_RECONNECT_DELAY_SEC = Number(envVar);
+        }, 2);
+        this.setVar("CATCH_UP_ALL_CONTRACT_EVENTS", (envVar) => {
+            this.CATCH_UP_ALL_CONTRACT_EVENTS = Boolean(envVar);
+        }, false);
     }
 
     private static set_RUN_CONTEXT(): void {

@@ -1,4 +1,4 @@
-export type Product = {
+export interface Product {
     id: string;
     uid: string;
     name: string;
@@ -17,4 +17,17 @@ export interface ResponseProduct extends Omit<Product, "amount" | "weight" | "ca
     amount?: string;
     weight?: string;
     carbonFootprint?: string;
+}
+
+export interface ProductEvent {
+    uid: string;
+    timestamp: number;
+}
+
+export interface NewProductEvent extends ProductEvent {
+    id: string;
+    name: string;
+    type: string;
+    number: string;
+    hash: string;
 }
