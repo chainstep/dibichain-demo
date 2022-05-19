@@ -45,4 +45,18 @@ And reset the demo with:
 ./scripts/reset-demo.sh
 ```
 
-CAUTION: There is a chance that the block explorer is not working if you're on Apple Silicon.
+
+## Trouble Shooting
+
+### Blockexplorer does not work
+
+Unfortunately, there is a big chance that the block explorer is not working if you're on Apple Silicon. No fix right now.
+
+
+### Run script stops while Contract deployment
+
+If you face the following error message while deploying the contract:
+```
+could not detect network (event="noNetwork", code=NETWORK_ERROR, version=providers/5.6.6)
+```
+ganache (the local chain) is not started yet. You need to wait some time (depending on your machine) for ganache to be started. You can increase the waiting time by increasing the `BLOCK_CHAIN_WAITING_TIME_SECONDS` at the top of the `run-demo.sh` file. Default is 20 seconds.
