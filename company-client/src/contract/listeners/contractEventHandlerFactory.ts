@@ -12,7 +12,12 @@ export interface ContractEventListener {
     middlewares?: ContractEventMiddleware[];
 }
 
-export type ContractEventMiddleware = (args: unknown[]) => Promise<void>
+export enum ContractEventMiddlewareCode {
+    CONTINUE,
+    STOP
+}
+
+export type ContractEventMiddleware = (args: unknown[]) => Promise<ContractEventMiddlewareCode | void>
 
 export interface ContractEventHandlerFactoryParams {
     contract: Contract;
@@ -26,7 +31,10 @@ export function createContractEventHandler(params: ContractEventHandlerFactoryPa
         try {
             if (middlewares) {
                 for (let i = 0 ; i < middlewares.length ; i++) {
-                    await middlewares[i](args);
+                    const code = await middlewares[i](args);
+                    if (code && code === ContractEventMiddlewareCode.STOP) {
+                        return;
+                    }
                 }
             }
             await service.run(args, contract);
