@@ -40,4 +40,11 @@ export class NewProductEventStoreMongoDB implements INewProductEventStore {
         const doc = await NewProductEventModel.find(query, REMOVE_MONGO_FIELDS).lean();
         return doc;
     }
+
+
+    public async delete(params: {uid: string}): Promise<void> {
+        const { uid } = params;
+        await connect(this.mongoUrl);
+        await NewProductEventModel.deleteOne({ uid });
+    }
 }

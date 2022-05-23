@@ -24,6 +24,12 @@ export class NewProductEventStoreInMemory implements INewProductEventStore {
     }
 
 
+    public async delete(params: {uid: string}): Promise<void> {
+        const { uid } = params;
+        this.store = this.store.filter(product => product.uid !== uid);
+    }
+
+
     public clear(): void {
         this.store = [];
     }
