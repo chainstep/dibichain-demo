@@ -1,4 +1,3 @@
-import { Event } from "ethers";
 import { EnvVars } from "../lib/EnvVars";
 import { BlockchainInfoStore } from "../storage/blockchain/BlockchainInfoStore";
 import { EventBus } from "./interfaces/EventBus";
@@ -21,8 +20,7 @@ export async function initContractListeners(contract: EventBus): Promise<void> {
             fromBlockHeight: blockchainInfo.blockHeight,
             contract,
             eventSetups: [{
-                eventListener: newProductListener,
-                eventFilter: getOnlyNewProductEvents
+                eventListener: newProductListener
             }]
         });
     }
@@ -33,10 +31,4 @@ export async function initContractListeners(contract: EventBus): Promise<void> {
             eventListener
         });
     });
-}
-
-function getOnlyNewProductEvents(filterEvents: Event[]): Event[] {
-    const events: Event[] = [];
-    // TODO: filter only not processed events
-    return events;
 }

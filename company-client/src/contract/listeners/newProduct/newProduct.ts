@@ -1,39 +1,34 @@
-import { BigNumber, Event } from "ethers";
-import { BlockchainInfoStore } from "../../../storage/blockchain/BlockchainInfoStore";
-import { NewProductEventStore } from "../../../storage/newProductEvent/NewProductEventStore";
-import { ContractEventListener } from "../contractEventHandlerFactory";
+import { NewProductStore } from "../../../storage/newProduct/NewProductStore";
+import { ProductStore } from "../../../storage/product/ProductStore";
+import { NewProductEventParams } from "../../../types";
+import { logger } from "../../../utils/logger";
+import { ContractEventListener, ContractEventMiddlewareCode } from "../contractEventHandlerFactory";
 import { NewProductService } from "./NewProductService";
 
 
 export function createNewProductListener(): ContractEventListener {
     return {
         eventName: "NewProduct",
-        middlewares: [trackNewProductEvent],
-        service: new NewProductService()
+        middlewares: [skipExistingProducts],
+        service: new NewProductService({
+            getNewProductStore: () => NewProductStore.get()
+        })
     };
 }
 
-async function trackNewProductEvent(args: unknown[]): Promise<void> {
-    const blockchainInfoStore = BlockchainInfoStore.get();
-    const newProductEventStore = NewProductEventStore.get();
-    console.log("EVENT");
-    // console.log(args);
-    // const from = <string> args[0];
-    // const to = <string> args[1];
-    // const tokenId = (<BigNumber> args[2]).toNumber();
-    // const event = <Event> args[3];
+async function skipExistingProducts(args: unknown[]): Promise<ContractEventMiddlewareCode> {
+    const product = <NewProductEventParams> args[0];
+    const productStore = ProductStore.get();
 
-    // if (from !== ZERO_ADDRESS) {
-    //     return;
-    // }
+    try {
+        const products = await productStore.find({ uid: product.uid });
+        if (products.length !== 0) {
+            return ContractEventMiddlewareCode.STOP;
+        }
+    } catch (error) {
+        logger.error((<Error> error).message);
+        return ContractEventMiddlewareCode.STOP;
+    }
 
-    // await blockchainInfoStore.setBlockHeight(event.blockNumber);
-    // const block = await event.getBlock();
-    // await tokenEventStore.add({
-    //     type: "mint",
-    //     blockNumber: event.blockNumber,
-    //     timestamp: block.timestamp,
-    //     tokenId,
-    //     owner: to
-    // });
+    return ContractEventMiddlewareCode.CONTINUE;
 }
