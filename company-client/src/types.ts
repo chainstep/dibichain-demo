@@ -24,10 +24,19 @@ export interface ProductEvent {
     timestamp: number;
 }
 
-export interface NewProductEvent extends ProductEvent {
+export interface NewProduct extends ProductEvent {
     id: string;
     name: string;
     type: string;
+    number: string;
+    hash: string;
+}
+
+export interface NewProductEventParams {
+    id: string;
+    uid: string;
+    name: string;
+    Type: string;
     number: string;
     hash: string;
 }

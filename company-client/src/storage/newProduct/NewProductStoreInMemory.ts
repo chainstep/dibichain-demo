@@ -1,21 +1,21 @@
-import { NewProductEvent } from "../../types";
-import { INewProductEventStore } from "./INewProductEventStore";
+import { NewProduct } from "../../types";
+import { INewProductStore } from "./INewProductStore";
 
 
-export class NewProductEventStoreInMemory implements INewProductEventStore {
-    public store: NewProductEvent[] = [];
+export class NewProductStoreInMemory implements INewProductStore {
+    public store: NewProduct[] = [];
 
 
-    public async add(product: NewProductEvent): Promise<void> {
+    public async add(product: NewProduct): Promise<void> {
         this.store.push(this.deepCopy(product));
     }
 
-    private deepCopy(product: NewProductEvent): NewProductEvent {
+    private deepCopy(product: NewProduct): NewProduct {
         return JSON.parse(JSON.stringify(product));
     }
 
 
-    public async find(params: {uid?: string}): Promise<NewProductEvent[]> {
+    public async find(params: {uid?: string}): Promise<NewProduct[]> {
         const { uid } = params;
         if (uid) {
             return this.store.filter(product => product.uid === uid);

@@ -1,10 +1,10 @@
 import { connect, model, Schema } from "mongoose";
-import { NewProductEvent } from "../../types";
+import { NewProduct } from "../../types";
 import { REMOVE_MONGO_FIELDS } from "../constants";
-import { INewProductEventStore } from "./INewProductEventStore";
+import { INewProductStore } from "./INewProductStore";
 
 
-const schema = new Schema<NewProductEvent>({
+const schema = new Schema<NewProduct>({
     uid: { type: String, required: true },
     id: { type: String, required: true },
     name: { type: String, required: true },
@@ -14,10 +14,10 @@ const schema = new Schema<NewProductEvent>({
     timestamp: { type: Number, required: true }
 });
 
-const NewProductEventModel = model<NewProductEvent>("NewProductEvent", schema);
+const NewProductModel = model<NewProduct>("NewProduct", schema);
 
 
-export class NewProductEventStoreMongoDB implements INewProductEventStore {
+export class NewProductStoreMongoDB implements INewProductStore {
     private readonly mongoUrl: string;
 
 
@@ -26,18 +26,18 @@ export class NewProductEventStoreMongoDB implements INewProductEventStore {
     }
 
 
-    public async add(product: NewProductEvent): Promise<void> {
+    public async add(product: NewProduct): Promise<void> {
         await connect(this.mongoUrl);
-        await NewProductEventModel.updateOne({ uid: product.uid }, product, { upsert: true });
+        await NewProductModel.updateOne({ uid: product.uid }, product, { upsert: true });
     }
 
 
-    public async find(params: {uid?: string}): Promise<NewProductEvent[]> {
+    public async find(params: {uid?: string}): Promise<NewProduct[]> {
         const { uid } = params;
         const query = uid ? { uid } : {};
 
         await connect(this.mongoUrl);
-        const doc = await NewProductEventModel.find(query, REMOVE_MONGO_FIELDS).lean();
+        const doc = await NewProductModel.find(query, REMOVE_MONGO_FIELDS).lean();
         return doc;
     }
 
@@ -45,6 +45,6 @@ export class NewProductEventStoreMongoDB implements INewProductEventStore {
     public async delete(params: {uid: string}): Promise<void> {
         const { uid } = params;
         await connect(this.mongoUrl);
-        await NewProductEventModel.deleteOne({ uid });
+        await NewProductModel.deleteOne({ uid });
     }
 }
