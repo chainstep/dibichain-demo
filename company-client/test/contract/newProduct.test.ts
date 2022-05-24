@@ -34,14 +34,14 @@ const event = {
 
 
 if (!config.skipTests.includes("newProduct")) {
-    const blockchainInfoStore = BlockchainInfoStore.get();
-    const newProductStore = NewProductStore.get();
-    const productStore = ProductStore.get();
+    const blockchainInfoStore = <BlockchainInfoStoreInMemory> BlockchainInfoStore.get();
+    const newProductStore = <NewProductStoreInMemory> NewProductStore.get();
+    const productStore = <ProductStoreInMemory> ProductStore.get();
 
     beforeEach(async () => {
-        (<BlockchainInfoStoreInMemory> blockchainInfoStore).clear();
-        (<NewProductStoreInMemory> newProductStore).clear();
-        (<ProductStoreInMemory> productStore).clear();
+        blockchainInfoStore.clear();
+        newProductStore.clear();
+        productStore.clear();
     });
 
 
@@ -49,7 +49,7 @@ if (!config.skipTests.includes("newProduct")) {
         await initContractListeners(<EventBus> mockContract);
         await newProductListener(TEST_NEW_PRODUCT_EVENT_PARAMS, event);
 
-        const storedNewProduct = (<NewProductStoreInMemory> newProductStore).store[0];
+        const storedNewProduct = newProductStore.store[0];
 
         expect(storedNewProduct.hash).toEqual(TEST_NEW_PRODUCT_EVENT_PARAMS.hash);
         expect(storedNewProduct.id).toEqual(TEST_NEW_PRODUCT_EVENT_PARAMS.id);
@@ -66,7 +66,7 @@ if (!config.skipTests.includes("newProduct")) {
         await initContractListeners(<EventBus> mockContract);
         await newProductListener(TEST_NEW_PRODUCT_EVENT_PARAMS, event);
 
-        const storedNewProduct = (<NewProductStoreInMemory> newProductStore).store[0];
+        const storedNewProduct = newProductStore.store[0];
 
         expect(storedNewProduct).toBeUndefined();
     });

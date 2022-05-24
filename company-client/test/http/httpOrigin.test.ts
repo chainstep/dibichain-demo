@@ -9,10 +9,10 @@ import { TEST_PRODUCT } from "../constants";
 
 
 if (!config.skipTests.includes("httpOrigin")) {
-    const productStore = ProductStore.get();
+    const productStore = <ProductStoreInMemory> ProductStore.get();
 
     beforeEach(async () => {
-        (<ProductStoreInMemory> productStore).clear();
+        productStore.clear();
     });
 
 
