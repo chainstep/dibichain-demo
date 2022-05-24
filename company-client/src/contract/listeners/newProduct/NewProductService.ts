@@ -41,7 +41,9 @@ export class NewProductService implements ContractEventHandlerService {
                 timestamp: block.timestamp
             });
         } catch (error) {
-            logger.error((<Error> error).message);
+            logger.error((<Error> error).message,
+                { metadata: { uid: newProduct.uid, blockNumber: event.blockNumber } }
+            );
         }
 
 
