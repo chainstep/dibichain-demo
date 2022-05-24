@@ -2,7 +2,7 @@ import { NewProductEventParams } from "../src/types";
 import { Product } from "../src/types";
 
 
-export const product: Product = {
+export const TEST_PRODUCT: Product = {
     id: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
     uid: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
     name: "Bionic Partition",
@@ -17,7 +17,7 @@ export const product: Product = {
     carbonFootprintUnit: "kg"
 };
 
-export const newProductEventParams: NewProductEventParams = {
+export const TEST_NEW_PRODUCT_EVENT_PARAMS: NewProductEventParams = {
     id: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
     uid: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
     name: "Bionic Partition",

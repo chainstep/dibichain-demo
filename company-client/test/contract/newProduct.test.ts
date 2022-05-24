@@ -7,7 +7,7 @@ import { NewProductStoreInMemory } from "../../src/storage/newProduct/NewProduct
 import { ProductStore } from "../../src/storage/product/ProductStore";
 import { ProductStoreInMemory } from "../../src/storage/product/ProductStoreInMemory";
 import { config } from "../config";
-import { newProductEventParams, product } from "../constants";
+import { TEST_NEW_PRODUCT_EVENT_PARAMS, TEST_PRODUCT } from "../constants";
 
 
 // mock EventBus contract
@@ -47,24 +47,24 @@ if (!config.skipTests.includes("newProduct")) {
 
     it("should successfully process a new product event", async () => {
         await initContractListeners(<EventBus> mockContract);
-        await newProductListener(newProductEventParams, event);
+        await newProductListener(TEST_NEW_PRODUCT_EVENT_PARAMS, event);
 
         const storedNewProduct = (<NewProductStoreInMemory> newProductStore).store[0];
 
-        expect(storedNewProduct.hash).toEqual(newProductEventParams.hash);
-        expect(storedNewProduct.id).toEqual(newProductEventParams.id);
+        expect(storedNewProduct.hash).toEqual(TEST_NEW_PRODUCT_EVENT_PARAMS.hash);
+        expect(storedNewProduct.id).toEqual(TEST_NEW_PRODUCT_EVENT_PARAMS.id);
         expect(storedNewProduct.timestamp).toEqual(10);
-        expect(storedNewProduct.type).toEqual(newProductEventParams.Type);
-        expect(storedNewProduct.name).toEqual(newProductEventParams.name);
-        expect(storedNewProduct.number).toEqual(newProductEventParams.number);
-        expect(storedNewProduct.uid).toEqual(newProductEventParams.uid);
+        expect(storedNewProduct.type).toEqual(TEST_NEW_PRODUCT_EVENT_PARAMS.Type);
+        expect(storedNewProduct.name).toEqual(TEST_NEW_PRODUCT_EVENT_PARAMS.name);
+        expect(storedNewProduct.number).toEqual(TEST_NEW_PRODUCT_EVENT_PARAMS.number);
+        expect(storedNewProduct.uid).toEqual(TEST_NEW_PRODUCT_EVENT_PARAMS.uid);
     });
 
 
     it("should skip events for already existing products", async () => {
-        await productStore.add(product);
+        await productStore.add(TEST_PRODUCT);
         await initContractListeners(<EventBus> mockContract);
-        await newProductListener(newProductEventParams, event);
+        await newProductListener(TEST_NEW_PRODUCT_EVENT_PARAMS, event);
 
         const storedNewProduct = (<NewProductStoreInMemory> newProductStore).store[0];
 
