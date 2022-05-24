@@ -4,7 +4,7 @@ import { ResponseProduct } from "../../../../types";
 import { RouteService } from "../../routerFactory";
 
 
-export interface GetProductServiceOptions {
+export interface GetProductsServiceOptions {
     getProductStore: () => IProductStore;
 }
 
@@ -16,11 +16,11 @@ interface Outputs {
     products: ResponseProduct[];
 }
 
-export class GetProductService implements RouteService {
+export class GetProductsService implements RouteService {
     private readonly getProductStore: () => IProductStore;
 
 
-    constructor(options: GetProductServiceOptions) {
+    constructor(options: GetProductsServiceOptions) {
         this.getProductStore = options.getProductStore;
     }
 
