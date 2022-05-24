@@ -32,29 +32,35 @@ describe("Events", function() {
         const eventBus = await deploy();
         await expect(
             eventBus.broadcastNewProduct(product)
-        ).to.emit(eventBus, 'NewProduct').withArgs([
+        ).to.emit(eventBus, 'NewProduct').withArgs(
             product.uid,
-            product.id,
-            product.name,
-            product.Type,
-            product.number,
-            product.hash,
-        ]);
+            [
+                product.uid,
+                product.id,
+                product.name,
+                product.Type,
+                product.number,
+                product.hash
+            ]
+        );
     });
 
 
     it("Should emit a product details request event", async () => {
         const eventBus = await deploy();
         await expect(
-            eventBus.broadcastProductDetailsRequest(
+            eventBus.broadcastProductDetailsRequest({
+                uid: product.uid,
+                pubKey: RSA_PUB_KEY,
+                algorithm: ALGORITHM
+            })
+        ).to.emit(eventBus, 'ProductDetailsRequest').withArgs(
+            product.uid,
+            [
                 product.uid,
                 RSA_PUB_KEY,
                 ALGORITHM
-            )
-        ).to.emit(eventBus, 'ProductDetailsRequest').withArgs(
-            product.uid,
-            RSA_PUB_KEY,
-            ALGORITHM
+            ]
         );
     });
 });

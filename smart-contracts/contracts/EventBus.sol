@@ -7,10 +7,10 @@ import "hardhat/console.sol";
 
 
 contract EventBus is Ownable  {
-    event NewProduct(Product product);
-    event ProductDetailsRequest(string uid, string pubKey, string algorithm);
+    event NewProduct(string indexed uid, ProductData productData);
+    event ProductDetailsRequest(string indexed uid, ProductDetailsRequestData productDetailsRequestData);
 
-    struct Product {
+    struct ProductData {
         string uid;
         string id;
         string name;
@@ -18,14 +18,20 @@ contract EventBus is Ownable  {
         string number;
         string hash;
     }
+
+    struct ProductDetailsRequestData {
+        string uid;
+        string pubKey;
+        string algorithm;
+    }
     
 
-    function broadcastNewProduct(Product memory product) public onlyOwner {
-        emit NewProduct(product);
+    function broadcastNewProduct(ProductData memory productData) public onlyOwner {
+        emit NewProduct(productData.uid, productData);
     }
 
 
-    function broadcastProductDetailsRequest(string memory uid, string memory pubKey, string memory algorithm) public onlyOwner {
-        emit ProductDetailsRequest(uid, pubKey, algorithm);
+    function broadcastProductDetailsRequest(ProductDetailsRequestData memory productDetailsRequestData) public onlyOwner {
+        emit ProductDetailsRequest(productDetailsRequestData.uid, productDetailsRequestData);
     }
 }
