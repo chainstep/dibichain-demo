@@ -10,6 +10,7 @@ interface NewProductServiceOptions {
     getNewProductStore: () => INewProductStore;
 }
 
+
 export class NewProductService implements ContractEventHandlerService {
     private readonly getNewProductStore: () => INewProductStore;
 
@@ -21,22 +22,22 @@ export class NewProductService implements ContractEventHandlerService {
 
     async run(inputs: unknown[]): Promise<void> {
         const newProductStore = this.getNewProductStore();
-        const product = <NewProductEventParams> inputs[0];
-        const event = <Event> inputs[3];
+        const newProduct = <NewProductEventParams> inputs[0];
+        const event = <Event> inputs[1];
 
-        logger.event("NewProduct -> uid: " + product.uid + ", block: " + event.blockNumber,
-            { metadata: { uid: product.uid, blockNumber: event.blockNumber } }
+        logger.event("NewProduct -> uid: " + newProduct.uid + ", block: " + event.blockNumber,
+            { metadata: { uid: newProduct.uid, blockNumber: event.blockNumber } }
         );
 
         try {
             const block = await event.getBlock();
             await newProductStore.add({
-                hash: product.hash,
-                id: product.id,
-                name: product.name,
-                number: product.number,
-                type: product.Type,
-                uid: product.uid,
+                hash: newProduct.hash,
+                id: newProduct.id,
+                name: newProduct.name,
+                number: newProduct.number,
+                type: newProduct.Type,
+                uid: newProduct.uid,
                 timestamp: block.timestamp
             });
         } catch (error) {

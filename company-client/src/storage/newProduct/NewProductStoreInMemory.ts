@@ -6,19 +6,19 @@ export class NewProductStoreInMemory implements INewProductStore {
     public store: NewProduct[] = [];
 
 
-    public async add(product: NewProduct): Promise<void> {
-        this.store.push(this.deepCopy(product));
+    public async add(newProduct: NewProduct): Promise<void> {
+        this.store.push(this.deepCopy(newProduct));
     }
 
-    private deepCopy(product: NewProduct): NewProduct {
-        return JSON.parse(JSON.stringify(product));
+    private deepCopy(newProduct: NewProduct): NewProduct {
+        return JSON.parse(JSON.stringify(newProduct));
     }
 
 
     public async find(params: {uid?: string}): Promise<NewProduct[]> {
         const { uid } = params;
         if (uid) {
-            return this.store.filter(product => product.uid === uid);
+            return this.store.filter(newProduct => newProduct.uid === uid);
         }
         return this.store;
     }
@@ -26,7 +26,7 @@ export class NewProductStoreInMemory implements INewProductStore {
 
     public async delete(params: {uid: string}): Promise<void> {
         const { uid } = params;
-        this.store = this.store.filter(product => product.uid !== uid);
+        this.store = this.store.filter(newProduct => newProduct.uid !== uid);
     }
 
 
