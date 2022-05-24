@@ -7,7 +7,7 @@ import { NewProductStoreInMemory } from "../../src/storage/newProduct/NewProduct
 import { ProductStore } from "../../src/storage/product/ProductStore";
 import { ProductStoreInMemory } from "../../src/storage/product/ProductStoreInMemory";
 import { config } from "../config";
-import { TEST_NEW_PRODUCT_EVENT_PARAMS, TEST_PRODUCT } from "../constants";
+import { TEST_NEW_PRODUCT, TEST_NEW_PRODUCT_EVENT_PARAMS, TEST_PRODUCT } from "../constants";
 
 
 // mock EventBus contract
@@ -51,13 +51,7 @@ if (!config.skipTests.includes("newProduct")) {
 
         const storedNewProduct = newProductStore.store[0];
 
-        expect(storedNewProduct.hash).toEqual(TEST_NEW_PRODUCT_EVENT_PARAMS.hash);
-        expect(storedNewProduct.id).toEqual(TEST_NEW_PRODUCT_EVENT_PARAMS.id);
-        expect(storedNewProduct.timestamp).toEqual(10);
-        expect(storedNewProduct.type).toEqual(TEST_NEW_PRODUCT_EVENT_PARAMS.Type);
-        expect(storedNewProduct.name).toEqual(TEST_NEW_PRODUCT_EVENT_PARAMS.name);
-        expect(storedNewProduct.number).toEqual(TEST_NEW_PRODUCT_EVENT_PARAMS.number);
-        expect(storedNewProduct.uid).toEqual(TEST_NEW_PRODUCT_EVENT_PARAMS.uid);
+        expect(storedNewProduct).toEqual(TEST_NEW_PRODUCT);
     });
 
 

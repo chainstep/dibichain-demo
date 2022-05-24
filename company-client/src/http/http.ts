@@ -9,7 +9,8 @@ import { createServer, Server } from "http";
 import { EnvVars } from "../lib/EnvVars";
 import { logErrors } from "./middlewares/errorLogging";
 import { logHttp } from "./middlewares/httpLogging";
-import { getProductRouter } from "./routes/products/get/getProducts";
+import { getNewProductsRouter } from "./routes/new-products/get/getNewProduct";
+import { getProductsRouter } from "./routes/products/get/getProducts";
 import { postProductRouter } from "./routes/products/post/postProduct";
 
 
@@ -27,7 +28,8 @@ httpServer.use(rateLimit({
 httpServer.use(validateOrigin(EnvVars.ALLOWED_ORIGINS));
 
 httpServer.use(postProductRouter);
-httpServer.use(getProductRouter);
+httpServer.use(getProductsRouter);
+httpServer.use(getNewProductsRouter);
 
 httpServer.all("*", (request, response) => {
   throw new NotFoundError();
