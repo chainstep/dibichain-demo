@@ -69,6 +69,9 @@ export class EnvVars {
         this.setVar("CATCH_UP_ALL_CONTRACT_EVENTS", (envVar) => {
             this.CATCH_UP_ALL_CONTRACT_EVENTS = Boolean(envVar);
         }, false);
+        this.setVar("EVENT_BUS_CONTRACT_ADDRESS", (envVar) => {
+            this.EVENT_BUS_CONTRACT_ADDRESS = String(envVar);
+        });
     }
 
     private static set_RUN_CONTEXT(): void {
