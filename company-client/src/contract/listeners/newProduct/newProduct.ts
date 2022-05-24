@@ -17,7 +17,7 @@ export function createNewProductListener(): ContractEventListener {
 }
 
 async function skipExistingProducts(args: unknown[]): Promise<ContractEventMiddlewareCode> {
-    const product = <NewProductEventParams> args[0];
+    const product = <NewProductEventParams> args[1];
     const productStore = ProductStore.get();
 
     try {

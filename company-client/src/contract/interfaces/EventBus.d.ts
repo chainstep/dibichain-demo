@@ -22,7 +22,7 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 interface EventBusInterface extends ethers.utils.Interface {
   functions: {
     "broadcastNewProduct((string,string,string,string,string,string))": FunctionFragment;
-    "broadcastProductDetailsRequest(string,string,string)": FunctionFragment;
+    "broadcastProductDetailsRequest((string,string,string))": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
@@ -43,7 +43,7 @@ interface EventBusInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "broadcastProductDetailsRequest",
-    values: [string, string, string]
+    values: [{ uid: string; pubKey: string; algorithm: string }]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -74,9 +74,9 @@ interface EventBusInterface extends ethers.utils.Interface {
   ): Result;
 
   events: {
-    "NewProduct(tuple)": EventFragment;
+    "NewProduct(string,tuple)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
-    "ProductDetailsRequest(string,string,string)": EventFragment;
+    "ProductDetailsRequest(string,tuple)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "NewProduct"): EventFragment;
@@ -86,6 +86,7 @@ interface EventBusInterface extends ethers.utils.Interface {
 
 export type NewProductEvent = TypedEvent<
   [
+    string,
     [string, string, string, string, string, string] & {
       uid: string;
       id: string;
@@ -95,7 +96,8 @@ export type NewProductEvent = TypedEvent<
       hash: string;
     }
   ] & {
-    product: [string, string, string, string, string, string] & {
+    uid: string;
+    productData: [string, string, string, string, string, string] & {
       uid: string;
       id: string;
       name: string;
@@ -111,7 +113,21 @@ export type OwnershipTransferredEvent = TypedEvent<
 >;
 
 export type ProductDetailsRequestEvent = TypedEvent<
-  [string, string, string] & { uid: string; pubKey: string; algorithm: string }
+  [
+    string,
+    [string, string, string] & {
+      uid: string;
+      pubKey: string;
+      algorithm: string;
+    }
+  ] & {
+    uid: string;
+    productDetailsRequestData: [string, string, string] & {
+      uid: string;
+      pubKey: string;
+      algorithm: string;
+    };
+  }
 >;
 
 export class EventBus extends BaseContract {
@@ -159,7 +175,7 @@ export class EventBus extends BaseContract {
 
   functions: {
     broadcastNewProduct(
-      product: {
+      productData: {
         uid: string;
         id: string;
         name: string;
@@ -171,9 +187,11 @@ export class EventBus extends BaseContract {
     ): Promise<ContractTransaction>;
 
     broadcastProductDetailsRequest(
-      uid: string,
-      pubKey: string,
-      algorithm: string,
+      productDetailsRequestData: {
+        uid: string;
+        pubKey: string;
+        algorithm: string;
+      },
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -190,7 +208,7 @@ export class EventBus extends BaseContract {
   };
 
   broadcastNewProduct(
-    product: {
+    productData: {
       uid: string;
       id: string;
       name: string;
@@ -202,9 +220,11 @@ export class EventBus extends BaseContract {
   ): Promise<ContractTransaction>;
 
   broadcastProductDetailsRequest(
-    uid: string,
-    pubKey: string,
-    algorithm: string,
+    productDetailsRequestData: {
+      uid: string;
+      pubKey: string;
+      algorithm: string;
+    },
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -221,7 +241,7 @@ export class EventBus extends BaseContract {
 
   callStatic: {
     broadcastNewProduct(
-      product: {
+      productData: {
         uid: string;
         id: string;
         name: string;
@@ -233,9 +253,11 @@ export class EventBus extends BaseContract {
     ): Promise<void>;
 
     broadcastProductDetailsRequest(
-      uid: string,
-      pubKey: string,
-      algorithm: string,
+      productDetailsRequestData: {
+        uid: string;
+        pubKey: string;
+        algorithm: string;
+      },
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -250,10 +272,12 @@ export class EventBus extends BaseContract {
   };
 
   filters: {
-    "NewProduct(tuple)"(
-      product?: null
+    "NewProduct(string,tuple)"(
+      uid?: string | null,
+      productData?: null
     ): TypedEventFilter<
       [
+        string,
         [string, string, string, string, string, string] & {
           uid: string;
           id: string;
@@ -264,7 +288,8 @@ export class EventBus extends BaseContract {
         }
       ],
       {
-        product: [string, string, string, string, string, string] & {
+        uid: string;
+        productData: [string, string, string, string, string, string] & {
           uid: string;
           id: string;
           name: string;
@@ -276,9 +301,11 @@ export class EventBus extends BaseContract {
     >;
 
     NewProduct(
-      product?: null
+      uid?: string | null,
+      productData?: null
     ): TypedEventFilter<
       [
+        string,
         [string, string, string, string, string, string] & {
           uid: string;
           id: string;
@@ -289,7 +316,8 @@ export class EventBus extends BaseContract {
         }
       ],
       {
-        product: [string, string, string, string, string, string] & {
+        uid: string;
+        productData: [string, string, string, string, string, string] & {
           uid: string;
           id: string;
           name: string;
@@ -316,28 +344,54 @@ export class EventBus extends BaseContract {
       { previousOwner: string; newOwner: string }
     >;
 
-    "ProductDetailsRequest(string,string,string)"(
-      uid?: null,
-      pubKey?: null,
-      algorithm?: null
+    "ProductDetailsRequest(string,tuple)"(
+      uid?: string | null,
+      productDetailsRequestData?: null
     ): TypedEventFilter<
-      [string, string, string],
-      { uid: string; pubKey: string; algorithm: string }
+      [
+        string,
+        [string, string, string] & {
+          uid: string;
+          pubKey: string;
+          algorithm: string;
+        }
+      ],
+      {
+        uid: string;
+        productDetailsRequestData: [string, string, string] & {
+          uid: string;
+          pubKey: string;
+          algorithm: string;
+        };
+      }
     >;
 
     ProductDetailsRequest(
-      uid?: null,
-      pubKey?: null,
-      algorithm?: null
+      uid?: string | null,
+      productDetailsRequestData?: null
     ): TypedEventFilter<
-      [string, string, string],
-      { uid: string; pubKey: string; algorithm: string }
+      [
+        string,
+        [string, string, string] & {
+          uid: string;
+          pubKey: string;
+          algorithm: string;
+        }
+      ],
+      {
+        uid: string;
+        productDetailsRequestData: [string, string, string] & {
+          uid: string;
+          pubKey: string;
+          algorithm: string;
+        };
+      }
     >;
   };
 
   estimateGas: {
     broadcastNewProduct(
-      product: {
+      productData: {
         uid: string;
         id: string;
         name: string;
@@ -349,9 +403,11 @@ export class EventBus extends BaseContract {
     ): Promise<BigNumber>;
 
     broadcastProductDetailsRequest(
-      uid: string,
-      pubKey: string,
-      algorithm: string,
+      productDetailsRequestData: {
+        uid: string;
+        pubKey: string;
+        algorithm: string;
+      },
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -369,7 +425,7 @@ export class EventBus extends BaseContract {
 
   populateTransaction: {
     broadcastNewProduct(
-      product: {
+      productData: {
         uid: string;
         id: string;
         name: string;
@@ -381,9 +437,11 @@ export class EventBus extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     broadcastProductDetailsRequest(
-      uid: string,
-      pubKey: string,
-      algorithm: string,
+      productDetailsRequestData: {
+        uid: string;
+        pubKey: string;
+        algorithm: string;
+      },
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

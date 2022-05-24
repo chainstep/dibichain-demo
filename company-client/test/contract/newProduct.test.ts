@@ -47,7 +47,7 @@ if (!config.skipTests.includes("newProduct")) {
 
     it("should successfully process a new product event", async () => {
         await initContractListeners(<EventBus> mockContract);
-        await newProductListener(TEST_NEW_PRODUCT_EVENT_PARAMS, event);
+        await newProductListener(TEST_NEW_PRODUCT_EVENT_PARAMS.uid, TEST_NEW_PRODUCT_EVENT_PARAMS, event);
 
         const storedNewProduct = newProductStore.store[0];
 
@@ -58,7 +58,7 @@ if (!config.skipTests.includes("newProduct")) {
     it("should skip events for already existing products", async () => {
         await productStore.add(TEST_PRODUCT);
         await initContractListeners(<EventBus> mockContract);
-        await newProductListener(TEST_NEW_PRODUCT_EVENT_PARAMS, event);
+        await newProductListener(TEST_NEW_PRODUCT_EVENT_PARAMS.uid, TEST_NEW_PRODUCT_EVENT_PARAMS, event);
 
         const storedNewProduct = newProductStore.store[0];
 

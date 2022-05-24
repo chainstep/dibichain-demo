@@ -22,8 +22,8 @@ export class NewProductService implements ContractEventHandlerService {
 
     async run(inputs: unknown[]): Promise<void> {
         const newProductStore = this.getNewProductStore();
-        const newProduct = <NewProductEventParams> inputs[0];
-        const event = <Event> inputs[1];
+        const newProduct = <NewProductEventParams> inputs[1];
+        const event = <Event> inputs[2];
 
         logger.event("NewProduct -> uid: " + newProduct.uid + ", block: " + event.blockNumber,
             { metadata: { uid: newProduct.uid, blockNumber: event.blockNumber } }
