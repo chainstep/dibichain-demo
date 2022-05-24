@@ -8,7 +8,11 @@ export const TEST_PRODUCT: Product = {
     name: "Bionic Partition",
     type: "assembly",
     number: "EAN 20359483920",
-    documents: [ "8181c8ae-eef1-4703-8498-2cf25be2877b"],
+    documents: [
+        "8181c8ae-eef1-4703-8498-2cf25be2877b",
+        "8181c8ae-eef1-4703-8498-2cf25be2877c",
+        "8181c8ae-eef1-4703-8498-2cf25be2877d"
+    ],
     amount: 1,
     amountUnit: "each",
     weight: 65.53,
@@ -23,5 +27,5 @@ export const TEST_NEW_PRODUCT_EVENT_PARAMS: NewProductEventParams = {
     name: "Bionic Partition",
     Type: "assembly",
     number: "EAN 20359483920",
-    hash: "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    hash: "ab393730632e6b821d2c512e3336e9e45eaa23f742c21045317930b6830bee90"
 };

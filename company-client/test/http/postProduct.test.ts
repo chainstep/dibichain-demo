@@ -3,28 +3,9 @@ import { httpServer } from "../../src/http/http";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { ProductStore } from "../../src/storage/product/ProductStore";
 import { ProductStoreInMemory } from "../../src/storage/product/ProductStoreInMemory";
-import { Product } from "../../src/types";
 import { config } from "../config";
+import { TEST_PRODUCT } from "../constants";
 
-
-const requestProduct: Product = {
-    id: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
-    uid: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
-    name: "Bionic Partition",
-    type: "assembly",
-    number: "EAN 20359483920",
-    documents: [
-        "8181c8ae-eef1-4703-8498-2cf25be2877b",
-        "8181c8ae-eef1-4703-8498-2cf25be2877c",
-        "8181c8ae-eef1-4703-8498-2cf25be2877d"
-    ],
-    amount: 1,
-    amountUnit: "each",
-    weight: 65.53,
-    weightUnit: "kg",
-    carbonFootprint: 1345,
-    carbonFootprintUnit: "kg"
-};
 
 // mock axios
 jest.mock("axios", () => {
@@ -32,11 +13,11 @@ jest.mock("axios", () => {
         post: async (url: string, data: never): Promise<void> => {
             const { id, uid, name, hash, type, number } = data;
             expect(url).toEqual("http://operator.dummy.io/products");
-            expect(id).toEqual(requestProduct.id);
-            expect(uid).toEqual(requestProduct.uid);
-            expect(name).toEqual(requestProduct.name);
-            expect(type).toEqual(requestProduct.type);
-            expect(number).toEqual(requestProduct.number);
+            expect(id).toEqual(TEST_PRODUCT.id);
+            expect(uid).toEqual(TEST_PRODUCT.uid);
+            expect(name).toEqual(TEST_PRODUCT.name);
+            expect(type).toEqual(TEST_PRODUCT.type);
+            expect(number).toEqual(TEST_PRODUCT.number);
             expect(hash).toEqual("ab393730632e6b821d2c512e3336e9e45eaa23f742c21045317930b6830bee90");
         }
     };
@@ -55,23 +36,23 @@ if (!config.skipTests.includes("postProduct")) {
         await request(httpServer)
             .post("/products")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
-            .send(requestProduct)
+            .send(TEST_PRODUCT)
             .expect(200);
 
         const product = productStore.store[0];
 
-        expect(product.amount).toEqual(requestProduct.amount);
-        expect(product.amountUnit?.toLowerCase()).toEqual(requestProduct.amountUnit?.toLowerCase());
-        expect(product.carbonFootprint).toEqual(requestProduct.carbonFootprint);
-        expect(product.carbonFootprintUnit).toEqual(requestProduct.carbonFootprintUnit);
-        expect(product.documents).toEqual(requestProduct.documents);
-        expect(product.id).toEqual(requestProduct.id);
-        expect(product.name).toEqual(requestProduct.name);
-        expect(product.number).toEqual(requestProduct.number);
-        expect(product.type.toLowerCase()).toEqual(requestProduct.type.toLowerCase());
-        expect(product.uid).toEqual(requestProduct.uid);
-        expect(product.weight).toEqual(requestProduct.weight);
-        expect(product.weightUnit).toEqual(requestProduct.weightUnit);
+        expect(product.amount).toEqual(TEST_PRODUCT.amount);
+        expect(product.amountUnit?.toLowerCase()).toEqual(TEST_PRODUCT.amountUnit?.toLowerCase());
+        expect(product.carbonFootprint).toEqual(TEST_PRODUCT.carbonFootprint);
+        expect(product.carbonFootprintUnit).toEqual(TEST_PRODUCT.carbonFootprintUnit);
+        expect(product.documents).toEqual(TEST_PRODUCT.documents);
+        expect(product.id).toEqual(TEST_PRODUCT.id);
+        expect(product.name).toEqual(TEST_PRODUCT.name);
+        expect(product.number).toEqual(TEST_PRODUCT.number);
+        expect(product.type.toLowerCase()).toEqual(TEST_PRODUCT.type.toLowerCase());
+        expect(product.uid).toEqual(TEST_PRODUCT.uid);
+        expect(product.weight).toEqual(TEST_PRODUCT.weight);
+        expect(product.weightUnit).toEqual(TEST_PRODUCT.weightUnit);
     });
 } else {
     test("dummy", () => {
