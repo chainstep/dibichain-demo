@@ -1,17 +1,14 @@
 import { Product } from "../../types";
+import { AInMemoryStore } from "../AInMemoryStore";
 import { IProductStore } from "./IProductStore";
 
 
-export class ProductStoreInMemory implements IProductStore {
+export class ProductStoreInMemory extends AInMemoryStore implements IProductStore {
     public store: Product[] = [];
 
 
     public async add(product: Product): Promise<void> {
         this.store.push(this.deepCopy(product));
-    }
-
-    private deepCopy(product: Product): Product {
-        return JSON.parse(JSON.stringify(product));
     }
 
 
@@ -27,10 +24,5 @@ export class ProductStoreInMemory implements IProductStore {
             return this.store.filter(product => product.name === name);
         }
         return this.store;
-    }
-
-
-    public clear(): void {
-        this.store = [];
     }
 }
