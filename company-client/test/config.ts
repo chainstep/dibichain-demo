@@ -5,6 +5,7 @@ export const config = {
         // "httpOrigin",
         // "newProduct",
         // "getNewProducts",
-        // "postMyProductDetailsRequest"
+        // "postMyProductDetailsRequest".
+        // "getMyProductDetailsRequests"
     ]
 };
