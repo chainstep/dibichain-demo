@@ -1,4 +1,4 @@
-import { NewProduct, NewProductEventParams, ProductDetailsRequest } from "../src/types";
+import { NewProduct, NewProductEventParams, MyProductDetailsRequest } from "../src/types";
 import { Product } from "../src/types";
 
 
@@ -40,7 +40,7 @@ export const TEST_NEW_PRODUCT: NewProduct = {
     timestamp: 10
 };
 
-export const TEST_PRODUCT_DETAILS_REQUEST: ProductDetailsRequest = {
+export const TEST_MY_PRODUCT_DETAILS_REQUEST: MyProductDetailsRequest = {
     uid: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
     pubKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAQQC2huXadFJAaYW5DvofKzwPCkyG4vFgN2leRrKOfHsdQELrmC8ph0AxGt7f6ql5SATTPdk/H/m01iayOELXpH5N \n",
     privKey: "-----BEGIN OPENSSH PRIVATE KEY-----\n" +

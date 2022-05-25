@@ -1,4 +1,4 @@
-import { Product, ProductDetailsRequest } from "../types";
+import { Product, MyProductDetailsRequest } from "../types";
 import crypto from "crypto";
 import axios from "axios";
 
@@ -69,7 +69,7 @@ export class Operator {
     }
 
 
-    public async announceProductDetailsRequest(productDetailsRequest: Omit<ProductDetailsRequest, "privKey">) {
+    public async announceProductDetailsRequest(productDetailsRequest: Omit<MyProductDetailsRequest, "privKey">) {
         await axios.post(this.url + "/product-details-request", productDetailsRequest);
     }
 }
