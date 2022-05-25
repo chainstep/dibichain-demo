@@ -4,26 +4,18 @@ import { EventBus } from "../../src/contract/interfaces/EventBus";
 import { httpServer } from "../../src/http/http";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { config } from "../config";
-import { TEST_NEW_PRODUCT } from "../constants";
+import { TEST_PRODUCT_DETAILS_REQUEST } from "../constants";
 
 
 // mock eventBus contract
 const mockContract = <unknown> {
-    async broadcastNewProduct(product: {
+    async broadcastProductDetailsRequest(request: {
         uid: string;
-        id: string;
-        name: string;
-        Type: string;
-        number: string;
-        hash: string;
+        pubKey: string;
+        algorithm: string;
     }): Promise<void> {
         try {
-            expect(product.uid).toEqual(TEST_NEW_PRODUCT.uid);
-            expect(product.id).toEqual(TEST_NEW_PRODUCT.id);
-            expect(product.name).toEqual(TEST_NEW_PRODUCT.name);
-            expect(product.Type).toEqual(TEST_NEW_PRODUCT.type);
-            expect(product.number).toEqual(TEST_NEW_PRODUCT.number);
-            expect(product.hash).toEqual(TEST_NEW_PRODUCT.hash);
+            expect(request).toEqual(TEST_PRODUCT_DETAILS_REQUEST);
         } catch (error) {
             console.log((<Error> error).message);
             throw error;
@@ -32,16 +24,16 @@ const mockContract = <unknown> {
 };
 
 
-if (!config.skipTests.includes("postProduct")) {
+if (!config.skipTests.includes("postProductDetailsRequest")) {
     Contracts.init({
         eventBus: <EventBus> mockContract
     });
 
-    it("should post a product", async () => {
+    it("should post a product details request", async () => {
         await request(httpServer)
-            .post("/products")
+            .post("/product-details-request")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
-            .send(TEST_NEW_PRODUCT)
+            .send(TEST_PRODUCT_DETAILS_REQUEST)
             .expect(200);
     });
 } else {
