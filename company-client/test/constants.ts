@@ -1,4 +1,4 @@
-import { NewProduct, NewProductEventParams } from "../src/types";
+import { NewProduct, NewProductEventParams, ProductDetailsRequest } from "../src/types";
 import { Product } from "../src/types";
 
 
@@ -38,4 +38,20 @@ export const TEST_NEW_PRODUCT: NewProduct = {
     number: "EAN 20359483920",
     hash: "ab393730632e6b821d2c512e3336e9e45eaa23f742c21045317930b6830bee90",
     timestamp: 10
+};
+
+export const TEST_PRODUCT_DETAILS_REQUEST: ProductDetailsRequest = {
+    uid: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
+    pubKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAQQC2huXadFJAaYW5DvofKzwPCkyG4vFgN2leRrKOfHsdQELrmC8ph0AxGt7f6ql5SATTPdk/H/m01iayOELXpH5N \n",
+    privKey: "-----BEGIN OPENSSH PRIVATE KEY-----\n" +
+             "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAVwAAAAdzc2gtcn\n" +
+             "NhAAAAAwEAAQAAAEEAtobl2nRSQGmFuQ76Hys8DwpMhuLxYDdpXkayjnx7HUBC65gvKYdA\n" +
+             "MRre3+qpeUgE0z3ZPx/5tNYmsjhC16R+TQAAARgAAAAAAAAAAAAAAAdzc2gtcnNhAAAAQQ\n" +
+             "C2huXadFJAaYW5DvofKzwPCkyG4vFgN2leRrKOfHsdQELrmC8ph0AxGt7f6ql5SATTPdk/\n" +
+             "H/m01iayOELXpH5NAAAAAwEAAQAAAEAUUfBE4a5GfXjloUU3Mxj8k6jxW1KD46dXV4eJVV\n" +
+             "Jfbxfiq5DcEdtV9nVu5jOBqQAr3UzPd7jKezEriRV6KaABAAAAIDTdH6NMxFF+qHFM3Glt\n" +
+             "nfefuQf/qwYvQdF0leUrsacZAAAAIQDZGFOXLoX4zyPIWLr5ZTZZHGqW3syy8JwA5+m25I\n" +
+             "bGXQAAACEA1zyw0hk5uIMGaE4TiIEalsWCrJhOftReOuM1zzRFOLEAAAAAAQID\n" +
+             "-----END OPENSSH PRIVATE KEY-----\n",
+    algorithm: "openssh-rsa"
 };

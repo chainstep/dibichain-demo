@@ -1,4 +1,4 @@
-import { Product } from "../types";
+import { Product, ProductDetailsRequest } from "../types";
 import crypto from "crypto";
 import axios from "axios";
 
@@ -11,9 +11,11 @@ export interface OperatorOptions {
 export class Operator {
     private readonly url: string;
 
+
     constructor(options: OperatorOptions) {
         this.url = options.url;
     }
+
 
     public async announceProduct(product: Product) {
         const hash = this.createHash(product);
@@ -64,5 +66,10 @@ export class Operator {
             product.documents.forEach(document => productValues.push(document));
         }
         return productValues.join("");
+    }
+
+
+    public async announceProductDetailsRequest(productDetailsRequest: Omit<ProductDetailsRequest, "privKey">) {
+        await axios.post(this.url + "/product-details-request", productDetailsRequest);
     }
 }

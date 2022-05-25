@@ -40,3 +40,10 @@ export interface NewProductEventParams {
     number: string;
     hash: string;
 }
+
+export interface ProductDetailsRequest {
+    uid: string;
+    algorithm: string;
+    pubKey: string;
+    privKey: string;
+}
