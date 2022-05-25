@@ -1,25 +1,38 @@
 import request from "supertest";
+import { Contracts } from "../../src/contract/Contracts";
+import { EventBus } from "../../src/contract/interfaces/EventBus";
 import { ROUTE_NAMES } from "../../src/http/constants";
 import { httpServer } from "../../src/http/http";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { config } from "../config";
+import { TEST_NEW_PRODUCT } from "../constants";
 
 
-const requestProduct = {
-    id: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
-    uid: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
-    name: "Bionic Partition",
-    type: "Assembly",
-    number: "EAN 20359483920",
-    hash: "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+// mock eventBus contract
+const mockContract = <unknown> {
+    async broadcastNewProduct(product: {
+        uid: string;
+        id: string;
+        name: string;
+        Type: string;
+        number: string;
+        hash: string;
+    }): Promise<void> {
+       return;
+    }
 };
 
+
 if (!config.skipTests.includes("httpOrigin")) {
+    Contracts.init({
+        eventBus: <EventBus> mockContract
+    });
+
     it("should accept requests from known origins", async () => {
         await request(httpServer)
             .post(ROUTE_NAMES.products)
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
-            .send(requestProduct)
+            .send(TEST_NEW_PRODUCT)
             .expect(200);
     });
 
@@ -28,7 +41,7 @@ if (!config.skipTests.includes("httpOrigin")) {
         await request(httpServer)
         .post(ROUTE_NAMES.products)
         .set("Origin", "http://unknown.domain")
-        .send(requestProduct)
+        .send(TEST_NEW_PRODUCT)
         .expect(401);
     });
 } else {
