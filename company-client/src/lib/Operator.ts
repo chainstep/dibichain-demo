@@ -1,6 +1,6 @@
-import { Product, MyProductDetailsRequest } from "../types";
-import crypto from "crypto";
 import axios from "axios";
+import crypto from "crypto";
+import { Product, ProductDetailsRequest } from "../types";
 
 
 export interface OperatorOptions {
@@ -69,7 +69,7 @@ export class Operator {
     }
 
 
-    public async announceProductDetailsRequest(productDetailsRequest: Omit<MyProductDetailsRequest, "privKey">) {
+    public async announceProductDetailsRequest(productDetailsRequest: Omit<ProductDetailsRequest, "timestamp">) {
         await axios.post(this.url + "/product-details-request", productDetailsRequest);
     }
 }

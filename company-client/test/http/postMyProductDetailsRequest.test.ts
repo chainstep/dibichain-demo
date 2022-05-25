@@ -46,9 +46,9 @@ if (!config.skipTests.includes("postProductDetailsRequest")) {
     });
 
 
-    it("should post a product details request", async () => {
+    it("should post my product details request", async () => {
         await request(httpServer)
-            .post("/my-product-details-request")
+            .post("/my-product-details-requests")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .send({
                 uid: TEST_MY_PRODUCT_DETAILS_REQUEST.uid

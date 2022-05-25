@@ -36,7 +36,8 @@ export class PostMyProductDetailsRequestService implements RouteService {
             algorithm: key.algorithm,
             privKey: key.privKey,
             pubKey: key.pubKey,
-            uid: inputs.uid
+            uid: inputs.uid,
+            timestamp: 0
         });
 
         await this.operator.announceProductDetailsRequest({

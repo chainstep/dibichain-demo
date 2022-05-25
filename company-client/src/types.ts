@@ -41,9 +41,11 @@ export interface NewProductEventParams {
     hash: string;
 }
 
-export interface MyProductDetailsRequest {
-    uid: string;
-    algorithm: string;
+export interface ProductDetailsRequest extends ProductEvent {
     pubKey: string;
+    algorithm: string;
+}
+
+export interface MyProductDetailsRequest extends ProductDetailsRequest {
     privKey: string;
 }

@@ -1,4 +1,4 @@
-import { NewProduct, NewProductEventParams, MyProductDetailsRequest } from "../src/types";
+import { NewProduct, NewProductEventParams, MyProductDetailsRequest, ProductDetailsRequest } from "../src/types";
 import { Product } from "../src/types";
 
 
@@ -53,5 +53,13 @@ export const TEST_MY_PRODUCT_DETAILS_REQUEST: MyProductDetailsRequest = {
              "nfefuQf/qwYvQdF0leUrsacZAAAAIQDZGFOXLoX4zyPIWLr5ZTZZHGqW3syy8JwA5+m25I\n" +
              "bGXQAAACEA1zyw0hk5uIMGaE4TiIEalsWCrJhOftReOuM1zzRFOLEAAAAAAQID\n" +
              "-----END OPENSSH PRIVATE KEY-----\n",
-    algorithm: "openssh-rsa"
+    algorithm: "openssh-rsa",
+    timestamp: 0
+};
+
+export const TEST_PRODUCT_DETAILS_REQUEST: ProductDetailsRequest = {
+    uid: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
+    pubKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAQQC2huXadFJAaYW5DvofKzwPCkyG4vFgN2leRrKOfHsdQELrmC8ph0AxGt7f6ql5SATTPdk/H/m01iayOELXpH5N \n",
+    algorithm: "openssh-rsa",
+    timestamp: 0
 };

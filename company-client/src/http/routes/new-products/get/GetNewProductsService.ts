@@ -7,6 +7,11 @@ export interface GetNewProductsServiceOptions {
     getNewProductStore: () => INewProductStore;
 }
 
+
+interface Inputs {
+    uid?: string
+}
+
 interface Outputs {
     newProducts: NewProduct[];
 }
@@ -21,9 +26,9 @@ export class GetNewProductsService implements RouteService {
     }
 
 
-    public async run(): Promise<Outputs> {
+    public async run(inputs: Inputs): Promise<Outputs> {
         const newProductStore = this.getNewProductStore();
-        const newProducts =await newProductStore.find({});
+        const newProducts =await newProductStore.find(inputs);
         return { newProducts };
     }
 }

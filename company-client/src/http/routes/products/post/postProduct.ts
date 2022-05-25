@@ -2,7 +2,7 @@ import { body } from "express-validator";
 import { EnvVars } from "../../../../lib/EnvVars";
 import { Operator } from "../../../../lib/Operator";
 import { ProductStore } from "../../../../storage/product/ProductStore";
-import { ROUTE_NAMES } from "../../../constants";
+import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
 import { createRouter } from "../../routerFactory";
 import { PostProductService } from "./PostProductService";
 
@@ -12,18 +12,18 @@ export const postProductRouter = createRouter({
     route: ROUTE_NAMES.products,
     inputPath: "body",
     inputChecks: [
-        body("uid").optional().isUUID().withMessage("invalid uid"),
-        body("id").optional().isString().withMessage("invalid id"),
-        body("name").isString().withMessage("name must be defined"),
-        body("type").isString().toLowerCase().custom(isProductType).withMessage("type must be defined and valid"),
-        body("number").isString().withMessage("number must be defined and valid"),
-        body("documents").optional().custom(isDocumentArray).withMessage("invalid documents"),
-        body("amount").optional().isNumeric().withMessage("amount must be defined and valid"),
-        body("amountUnit").optional().isString().toLowerCase().custom(isAmountUnit).withMessage("amountUnit must be defined and valid"),
-        body("weight").optional().isNumeric().withMessage("weight must be defined and valid"),
-        body("weightUnit").optional().toLowerCase().custom(isWeightUnit).withMessage("weightUnit must be defined and valid"),
-        body("carbonFootprint").optional().isNumeric().withMessage("carbonFootprint must be defined and valid"),
-        body("carbonFootprintUnit").optional().toLowerCase().custom(isCarbonFootprintUnit).withMessage("carbonFootprintUnit must be defined and valid")
+        body("uid").optional().isUUID().withMessage(INVALID_INPUT_TEXT + "uid"),
+        body("id").optional().isString().withMessage(INVALID_INPUT_TEXT + "id"),
+        body("name").isString().withMessage(INVALID_INPUT_TEXT + "name"),
+        body("type").isString().toLowerCase().custom(isProductType).withMessage(INVALID_INPUT_TEXT + "type"),
+        body("number").isString().withMessage(INVALID_INPUT_TEXT + "number"),
+        body("documents").optional().custom(isDocumentArray).withMessage(INVALID_INPUT_TEXT + "documents"),
+        body("amount").optional().isNumeric().withMessage(INVALID_INPUT_TEXT + "amount"),
+        body("amountUnit").optional().isString().toLowerCase().custom(isAmountUnit).withMessage(INVALID_INPUT_TEXT + "amountUnit"),
+        body("weight").optional().isNumeric().withMessage(INVALID_INPUT_TEXT + "weight"),
+        body("weightUnit").optional().toLowerCase().custom(isWeightUnit).withMessage(INVALID_INPUT_TEXT + "weightUnit"),
+        body("carbonFootprint").optional().isNumeric().withMessage(INVALID_INPUT_TEXT + "carbonFootprint"),
+        body("carbonFootprintUnit").optional().toLowerCase().custom(isCarbonFootprintUnit).withMessage(INVALID_INPUT_TEXT + "carbonFootprintUnit")
     ],
     service: new PostProductService({
         getProductStore: () => ProductStore.get(),

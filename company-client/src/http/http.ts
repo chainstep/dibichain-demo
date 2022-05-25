@@ -9,6 +9,7 @@ import { createServer, Server } from "http";
 import { EnvVars } from "../lib/EnvVars";
 import { logErrors } from "./middlewares/errorLogging";
 import { logHttp } from "./middlewares/httpLogging";
+import { getMyProductDetailsRequestsRouter } from "./routes/my-product-details-requests/get/getMyProductDetailsRequests";
 import { postMyProductDetailsRequestRouter } from "./routes/my-product-details-requests/post/postMyProductDetailsRequest";
 import { getNewProductsRouter } from "./routes/new-products/get/getNewProduct";
 import { getProductsRouter } from "./routes/products/get/getProducts";
@@ -32,6 +33,7 @@ httpServer.use(postProductRouter);
 httpServer.use(getProductsRouter);
 httpServer.use(getNewProductsRouter);
 httpServer.use(postMyProductDetailsRequestRouter);
+httpServer.use(getMyProductDetailsRequestsRouter);
 
 httpServer.all("*", (request, response) => {
   throw new NotFoundError();
