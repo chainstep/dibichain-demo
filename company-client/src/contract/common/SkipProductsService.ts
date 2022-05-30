@@ -1,22 +1,25 @@
-import { logger } from "../../../utils/logger";
-import { ContractEventHandlerService, ContractEventServiceCode } from "../contractEventHandlerFactory";
+import { logger } from "../../utils/logger";
+import { ContractEventHandlerService, ContractEventServiceCode } from "../listeners/contractEventHandlerFactory";
 
 
 interface Store {
     find(params: {uid?: string}): Promise<{uid: string}[]>;
 }
 
-interface SkipExistingProductsServiceOptions {
+interface SkipProductsServiceOptions {
     getStore: () => Store;
+    skipNonExistingProducts?: boolean
 }
 
 
-export class SkipExistingProductsService implements ContractEventHandlerService {
+export class SkipProductsService implements ContractEventHandlerService {
     private readonly getStore: () => Store;
+    private readonly skipNonExistingProducts?: boolean;
 
 
-    constructor(options: SkipExistingProductsServiceOptions) {
+    constructor(options: SkipProductsServiceOptions) {
         this.getStore = options.getStore;
+        this.skipNonExistingProducts = options.skipNonExistingProducts;
     }
 
 
@@ -26,7 +29,10 @@ export class SkipExistingProductsService implements ContractEventHandlerService 
 
         try {
             const products = await store.find({ uid: product.uid });
-            if (products.length !== 0) {
+            if (!this.skipNonExistingProducts && products.length !== 0) {
+                return ContractEventServiceCode.STOP;
+            }
+            if (this.skipNonExistingProducts && products.length === 0) {
                 return ContractEventServiceCode.STOP;
             }
         } catch (error) {

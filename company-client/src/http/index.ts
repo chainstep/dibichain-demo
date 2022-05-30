@@ -11,9 +11,9 @@ import { logErrors } from "./middlewares/errorLogging";
 import { logHttp } from "./middlewares/httpLogging";
 import { getMyProductDetailsRequestsRouter } from "./routes/my-product-details-requests/get/getMyProductDetailsRequests";
 import { postMyProductDetailsRequestRouter } from "./routes/my-product-details-requests/post/postMyProductDetailsRequest";
+import { getMyProductsRouter } from "./routes/my-products/get/getMyProducts";
+import { postMyProductRouter } from "./routes/my-products/post/postMyProduct";
 import { getNewProductsRouter } from "./routes/new-products/get/getNewProduct";
-import { getProductsRouter } from "./routes/products/get/getProducts";
-import { postProductRouter } from "./routes/products/post/postProduct";
 
 
 export const httpServer = express();
@@ -29,8 +29,8 @@ httpServer.use(rateLimit({
 }));
 httpServer.use(validateOrigin(EnvVars.ALLOWED_ORIGINS));
 
-httpServer.use(postProductRouter);
-httpServer.use(getProductsRouter);
+httpServer.use(postMyProductRouter);
+httpServer.use(getMyProductsRouter);
 httpServer.use(getNewProductsRouter);
 httpServer.use(postMyProductDetailsRequestRouter);
 httpServer.use(getMyProductDetailsRequestsRouter);
