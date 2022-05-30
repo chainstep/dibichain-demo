@@ -1,5 +1,5 @@
 import { MyProductStore } from "../../../storage/myProduct/MyProductStore";
-import { NewProductStore } from "../../../storage/newProduct/NewProductStore";
+import { ProductDetailsRequestStore } from "../../../storage/productDetailsRequest/ProductDetailsRequestStore";
 import { SkipProductsService } from "../../common/SkipProductsService";
 import { ContractEventListener } from "../contractEventHandlerFactory";
 import { ProductDetailsRequestService } from "./ProductDetailsRequestService";
@@ -14,7 +14,7 @@ export function createProductDetailsRequestListener(): ContractEventListener {
                 skipNonExistingProducts: true
             }),
             new ProductDetailsRequestService({
-                getNewProductStore: () => NewProductStore.get()
+                getProductDetailsRequestStore: () => ProductDetailsRequestStore.get()
             })
         ]
     };

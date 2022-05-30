@@ -43,6 +43,12 @@ export interface NewProductEventParams {
     hash: string;
 }
 
+export interface ProductDetailsRequestEventParams {
+    uid: string;
+    pubKey: string;
+    algorithm: string;
+}
+
 export interface ProductDetailsRequest extends ProductEvent {
     pubKey: string;
     algorithm: string;

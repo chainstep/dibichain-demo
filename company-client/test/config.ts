@@ -6,6 +6,7 @@ export const config = {
         // "newProduct",
         // "getNewProducts",
         // "postMyProductDetailsRequest",
-        // "getMyProductDetailsRequests"
+        // "getMyProductDetailsRequests",
+        // "productDetailsRequest"
     ]
 };

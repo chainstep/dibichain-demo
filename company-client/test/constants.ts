@@ -1,4 +1,4 @@
-import { NewProduct, NewProductEventParams, MyProductDetailsRequest, ProductDetailsRequest } from "../src/types";
+import { NewProduct, NewProductEventParams, MyProductDetailsRequest, ProductDetailsRequest, ProductDetailsRequestEventParams } from "../src/types";
 import { Product } from "../src/types";
 
 
@@ -61,5 +61,11 @@ export const TEST_PRODUCT_DETAILS_REQUEST: ProductDetailsRequest = {
     uid: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
     pubKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAQQC2huXadFJAaYW5DvofKzwPCkyG4vFgN2leRrKOfHsdQELrmC8ph0AxGt7f6ql5SATTPdk/H/m01iayOELXpH5N \n",
     algorithm: "openssh-rsa",
-    timestamp: 0
+    timestamp: 10
+};
+
+export const TEST_PRODUCT_DETAILS_REQUEST_EVENT_PARAMS: ProductDetailsRequestEventParams = {
+    uid: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
+    pubKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAQQC2huXadFJAaYW5DvofKzwPCkyG4vFgN2leRrKOfHsdQELrmC8ph0AxGt7f6ql5SATTPdk/H/m01iayOELXpH5N \n",
+    algorithm: "openssh-rsa"
 };
