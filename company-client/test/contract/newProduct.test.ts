@@ -1,4 +1,4 @@
-import { initContractListeners } from "../../src/contract/contract";
+import { initContractListeners } from "../../src/contract";
 import { EventBus } from "../../src/contract/interfaces/EventBus";
 import { BlockchainInfoStore } from "../../src/storage/blockchain/BlockchainInfoStore";
 import { BlockchainInfoStoreInMemory } from "../../src/storage/blockchain/BlockchainInfoStoreInMemory";

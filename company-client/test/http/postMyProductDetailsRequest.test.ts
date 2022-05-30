@@ -1,5 +1,5 @@
 import request from "supertest";
-import { httpServer } from "../../src/http/http";
+import { httpServer } from "../../src/http";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { MyProductDetailsRequestStore } from "../../src/storage/myProductDetailsRequest/MyProductDetailsRequestStore";
 import { MyProductDetailsRequestStoreInMemory } from "../../src/storage/myProductDetailsRequest/MyProductDetailsRequestStoreInMemory";
