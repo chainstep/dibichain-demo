@@ -9,7 +9,7 @@ export interface GetMyProductDetailsRequestsServiceOptions {
 
 
 interface Outputs {
-    productDetailsRequests: ProductDetailsRequest[];
+    myProductDetailsRequests: ProductDetailsRequest[];
 }
 
 interface Inputs {
@@ -28,7 +28,7 @@ export class GetMyProductDetailsRequestsService implements RouteService {
 
     public async run(inputs: Inputs): Promise<Outputs> {
         const myProductDetailsRequestStore = this.getMyProductDetailsRequestStore();
-        const productDetailsRequests = (await myProductDetailsRequestStore.find(inputs)).map((request) => {
+        const myProductDetailsRequests = (await myProductDetailsRequestStore.find(inputs)).map((request) => {
             return <ProductDetailsRequest> {
                 algorithm: request.algorithm,
                 pubKey: request.pubKey,
@@ -36,6 +36,6 @@ export class GetMyProductDetailsRequestsService implements RouteService {
                 uid: request.uid
             };
         });
-        return { productDetailsRequests };
+        return { myProductDetailsRequests };
     }
 }

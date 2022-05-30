@@ -27,14 +27,14 @@ if (!config.skipTests.includes("getMyProductDetailsRequests")) {
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .expect(200);
 
-        const productDetailsRequests = <MyProductDetailsRequest[]> response.body.data.productDetailsRequests;
+        const myProductDetailsRequests = <MyProductDetailsRequest[]> response.body.data.myProductDetailsRequests;
 
-        expect(productDetailsRequests.length).toEqual(2);
+        expect(myProductDetailsRequests.length).toEqual(2);
         const productDetailsRequest = { ...TEST_PRODUCT_DETAILS_REQUEST };
         productDetailsRequest.timestamp = 0;
-        expect(productDetailsRequests[0]).toEqual(productDetailsRequest);
+        expect(myProductDetailsRequests[0]).toEqual(productDetailsRequest);
         productDetailsRequest.uid = "8181c8ae-eef1-4703-8498-2cf25be2877c";
-        expect(productDetailsRequests[1]).toEqual(productDetailsRequest);
+        expect(myProductDetailsRequests[1]).toEqual(productDetailsRequest);
     });
 } else {
     test("dummy", () => {
