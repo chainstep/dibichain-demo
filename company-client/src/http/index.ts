@@ -14,6 +14,7 @@ import { postMyProductDetailsRequestRouter } from "./routes/my-product-details-r
 import { getMyProductsRouter } from "./routes/my-products/get/getMyProducts";
 import { postMyProductRouter } from "./routes/my-products/post/postMyProduct";
 import { getNewProductsRouter } from "./routes/new-products/get/getNewProduct";
+import { getProductDetailsRequestsRouter } from "./routes/product-details-requests/get/getProductDetailsRequests";
 
 
 export const httpServer = express();
@@ -34,6 +35,7 @@ httpServer.use(getMyProductsRouter);
 httpServer.use(getNewProductsRouter);
 httpServer.use(postMyProductDetailsRequestRouter);
 httpServer.use(getMyProductDetailsRequestsRouter);
+httpServer.use(getProductDetailsRequestsRouter);
 
 httpServer.all("*", (request, response) => {
   throw new NotFoundError();
