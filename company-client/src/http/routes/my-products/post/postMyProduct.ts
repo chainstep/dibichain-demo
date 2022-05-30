@@ -1,15 +1,15 @@
 import { body } from "express-validator";
 import { EnvVars } from "../../../../lib/EnvVars";
 import { Operator } from "../../../../lib/Operator";
-import { ProductStore } from "../../../../storage/product/ProductStore";
+import { MyProductStore } from "../../../../storage/myProduct/MyProductStore";
 import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
 import { createRouter } from "../../routerFactory";
-import { PostProductService } from "./PostProductService";
+import { PostMyProductService } from "./PostMyProductService";
 
 
-export const postProductRouter = createRouter({
+export const postMyProductRouter = createRouter({
     method: "post",
-    route: ROUTE_NAMES.products,
+    route: ROUTE_NAMES.myProducts,
     inputPath: "body",
     inputChecks: [
         body("uid").optional().isUUID().withMessage(INVALID_INPUT_TEXT + "uid"),
@@ -25,8 +25,8 @@ export const postProductRouter = createRouter({
         body("carbonFootprint").optional().isNumeric().withMessage(INVALID_INPUT_TEXT + "carbonFootprint"),
         body("carbonFootprintUnit").optional().toLowerCase().custom(isCarbonFootprintUnit).withMessage(INVALID_INPUT_TEXT + "carbonFootprintUnit")
     ],
-    service: new PostProductService({
-        getProductStore: () => ProductStore.get(),
+    service: new PostMyProductService({
+        getMyProductStore: () => MyProductStore.get(),
         operator: new Operator({
             url: EnvVars.OPERATOR_URL
         })

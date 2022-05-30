@@ -1,18 +1,18 @@
 import { query } from "express-validator";
-import { ProductStore } from "../../../../storage/product/ProductStore";
+import { MyProductStore } from "../../../../storage/myProduct/MyProductStore";
 import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
 import { createRouter } from "../../routerFactory";
-import { GetProductsService } from "./GetProductsService";
+import { GetMyProductsService } from "./GetMyProductsService";
 
 
-export const getProductsRouter = createRouter({
+export const getMyProductsRouter = createRouter({
     method: "get",
-    route: ROUTE_NAMES.products,
+    route: ROUTE_NAMES.myProducts,
     inputPath: "query",
     inputChecks: [
         query("uid").optional().isUUID().withMessage(INVALID_INPUT_TEXT + "uid")
     ],
-    service: new GetProductsService({
-        getProductStore: () => ProductStore.get()
+    service: new GetMyProductsService({
+        getMyProductStore: () => MyProductStore.get()
     })
 });

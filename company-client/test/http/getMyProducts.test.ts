@@ -1,31 +1,31 @@
 import request from "supertest";
-import { httpServer } from "../../src/http/http";
+import { httpServer } from "../../src/http";
 import { EnvVars } from "../../src/lib/EnvVars";
-import { ProductStore } from "../../src/storage/product/ProductStore";
-import { ProductStoreInMemory } from "../../src/storage/product/ProductStoreInMemory";
+import { MyProductStore } from "../../src/storage/myProduct/MyProductStore";
+import { MyProductStoreInMemory } from "../../src/storage/myProduct/MyProductStoreInMemory";
 import { ResponseProduct } from "../../src/types";
 import { config } from "../config";
 import { TEST_PRODUCT } from "../constants";
 
 
-if (!config.skipTests.includes("getProducts")) {
-    const productStore = (<ProductStoreInMemory> ProductStore.get());
+if (!config.skipTests.includes("getMyProducts")) {
+    const myProductStore = (<MyProductStoreInMemory> MyProductStore.get());
 
     beforeEach(async () => {
-        productStore.clear();
+        myProductStore.clear();
     });
 
 
     it("should get a product", async () => {
-        productStore.add(TEST_PRODUCT);
+        myProductStore.add(TEST_PRODUCT);
 
         const response = await request(httpServer)
-            .get("/products")
+            .get("/my-products")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .query({ uid: TEST_PRODUCT.uid })
             .expect(200);
 
-        const responseProduct = (<ResponseProduct[]> response.body.data.products)[0];
+        const responseProduct = (<ResponseProduct[]> response.body.data.myProducts)[0];
         expect(responseProduct.amount).toEqual("" + TEST_PRODUCT.amount);
         expect(responseProduct.amountUnit?.toLowerCase()).toEqual(TEST_PRODUCT.amountUnit);
         expect(responseProduct.carbonFootprint).toEqual("" + TEST_PRODUCT.carbonFootprint);

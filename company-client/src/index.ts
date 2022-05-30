@@ -1,18 +1,24 @@
 import { Provider } from "@ethersproject/providers";
 import { Contract } from "ethers";
-import { initContractListeners } from "./contract/contract";
+import { initContractListeners } from "./contract";
 import { Contracts } from "./contract/Contracts";
 import { EventBus } from "./contract/interfaces/EventBus";
 import EventBusJSON from "./contract/interfaces/EventBus.json";
-import { initHttpServer } from "./http/http";
+import { initHttpServer } from "./http";
 import { EnvVars, RUN_CONTEXT } from "./lib/EnvVars";
 import { RPCProvider } from "./lib/RPCProvider";
 import { BlockchainInfoStore } from "./storage/blockchain/BlockchainInfoStore";
 import { createBlockchainInfoStore } from "./storage/blockchain/blockchainInfoStoreFactory";
+import { MyProductStore } from "./storage/myProduct/MyProductStore";
+import { createMyProductStore } from "./storage/myProduct/myProductStoreFactory";
+import { MyProductDetailsRequestStore } from "./storage/myProductDetailsRequest/MyProductDetailsRequestStore";
+import { createMyProductDetailsRequestStore } from "./storage/myProductDetailsRequest/myProductDetailsRequestStoreFactory";
 import { NewProductStore } from "./storage/newProduct/NewProductStore";
 import { createNewProductStore } from "./storage/newProduct/newProductStoreFactory";
 import { ProductStore } from "./storage/product/ProductStore";
 import { createProductStore } from "./storage/product/productStoreFactory";
+import { ProductDetailsRequestStore } from "./storage/productDetailsRequest/ProductDetailsRequestStore";
+import { createProductDetailsRequestStore } from "./storage/productDetailsRequest/productDetailsRequestStoreFactory";
 import { StorageType } from "./storage/StorageType";
 import { ConsoleTransport, initLogger, logger } from "./utils/logger";
 
@@ -31,11 +37,17 @@ async function main(): Promise<void> {
     if (isDevContext && !EnvVars.USE_MONGO_DB) {
         BlockchainInfoStore.init(createBlockchainInfoStore(StorageType.IN_MEMORY));
         ProductStore.init(createProductStore(StorageType.IN_MEMORY));
+        MyProductStore.init(createMyProductStore(StorageType.IN_MEMORY));
         NewProductStore.init(createNewProductStore(StorageType.IN_MEMORY));
+        MyProductDetailsRequestStore.init(createMyProductDetailsRequestStore(StorageType.IN_MEMORY));
+        ProductDetailsRequestStore.init(createProductDetailsRequestStore(StorageType.IN_MEMORY));
     } else {
         BlockchainInfoStore.init(createBlockchainInfoStore(StorageType.MONGO_DB));
         ProductStore.init(createProductStore(StorageType.MONGO_DB));
+        MyProductStore.init(createMyProductStore(StorageType.MONGO_DB));
         NewProductStore.init(createNewProductStore(StorageType.MONGO_DB));
+        MyProductDetailsRequestStore.init(createMyProductDetailsRequestStore(StorageType.MONGO_DB));
+        ProductDetailsRequestStore.init(createProductDetailsRequestStore(StorageType.MONGO_DB));
     }
 
     logger.info("Init RPC provider...");

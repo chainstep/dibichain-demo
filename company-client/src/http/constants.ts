@@ -1,5 +1,5 @@
 export const ROUTE_NAMES = {
-    products: "/products",
+    myProducts: "/my-products",
     newProducts: "/new-products",
     myProductDetailsRequests: "/my-product-details-requests"
 };

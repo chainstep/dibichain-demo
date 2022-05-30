@@ -13,6 +13,8 @@ export interface Product {
     carbonFootprintUnit?: "mg" | "g" | "kg";
 }
 
+export type MyProduct = Product
+
 export interface ResponseProduct extends Omit<Product, "amount" | "weight" | "carbonFootprint" > {
     amount?: string;
     weight?: string;
