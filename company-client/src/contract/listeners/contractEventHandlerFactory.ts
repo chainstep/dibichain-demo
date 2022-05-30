@@ -3,41 +3,36 @@ import { logger } from "../../utils/logger";
 
 
 export interface ContractEventHandlerService {
-    run(args: unknown[], contract?: Contract): Promise<void>
+    run(args: unknown[], contract?: Contract): Promise<void | ContractEventServiceCode>
 }
 
 export interface ContractEventListener {
     eventName: string,
-    service: ContractEventHandlerService;
-    middlewares?: ContractEventMiddleware[];
+    services: ContractEventHandlerService[];
 }
 
-export enum ContractEventMiddlewareCode {
+export enum ContractEventServiceCode {
     CONTINUE,
     STOP
 }
-
-export type ContractEventMiddleware = (args: unknown[]) => Promise<ContractEventMiddlewareCode | void>
 
 export interface ContractEventHandlerFactoryParams {
     contract: Contract;
     eventListener: ContractEventListener;
 }
 
+
 export function createContractEventHandler(params: ContractEventHandlerFactoryParams): void {
     const { contract, eventListener } = params;
-    const { eventName, service, middlewares } = eventListener;
+    const { eventName, services } = eventListener;
     contract.on(eventName, async (...args: unknown[]) => {
         try {
-            if (middlewares) {
-                for (let i = 0 ; i < middlewares.length ; i++) {
-                    const code = await middlewares[i](args);
-                    if (code && code === ContractEventMiddlewareCode.STOP) {
-                        return;
-                    }
+            for (let i = 0 ; i < services.length ; i++) {
+                const code = await services[i].run(args);
+                if (code && code === ContractEventServiceCode.STOP) {
+                    return;
                 }
             }
-            await service.run(args, contract);
         } catch (error) {
             logger.error((<Error> error).message);
         }

@@ -6,8 +6,10 @@ import { ProductDetailsRequestService } from "./ProductDetailsRequestService";
 export function createProductDetailsRequestListener(): ContractEventListener {
     return {
         eventName: "ProductDetailsRequest",
-        service: new ProductDetailsRequestService({
-            getNewProductStore: () => NewProductStore.get()
-        })
+        services: [
+            new ProductDetailsRequestService({
+                getNewProductStore: () => NewProductStore.get()
+            })
+        ]
     };
 }

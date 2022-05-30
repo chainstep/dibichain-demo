@@ -1,5 +1,6 @@
 import { Contract, Event } from "ethers";
-import { ContractEventListener, ContractEventMiddleware, ContractEventMiddlewareCode } from "./contractEventHandlerFactory";
+import { ContractEventListener, ContractEventServiceCode } from "./contractEventHandlerFactory";
+import { logger } from "../../utils/logger";
 
 
 export interface EventHandlerService {
@@ -9,7 +10,6 @@ export interface EventHandlerService {
 export interface EventSetups {
     eventListener: ContractEventListener;
     eventFilter?: (events: Event[]) => Event[];
-    middlewares?: ContractEventMiddleware[];
 }
 
 export type EventsCallback = (eventName: string, args: unknown[]) => Promise<void>;
@@ -102,18 +102,19 @@ async function callServices(
         const event = events[i];
 
         for (let j = 0 ; j < eventSetups.length ; j++) {
-            const { eventName, service, middlewares } = eventSetups[j].eventListener;
+            const { eventName, services } = eventSetups[j].eventListener;
 
             if (event.event === eventName) {
-                if (middlewares) {
-                    for (let j = 0 ; j < middlewares.length ; j++) {
-                        const code = await middlewares[j]([...event.args || [], event]);
-                        if (code && code === ContractEventMiddlewareCode.STOP) {
+                try {
+                    for (let j = 0 ; j < services.length ; j++) {
+                        const code = await services[j].run([...event.args || [], event]);
+                        if (code && code === ContractEventServiceCode.STOP) {
                             return;
                         }
                     }
+                } catch (error) {
+                    logger.error((<Error> error).message);
                 }
-                await service.run([...event.args || [], event]);
             }
         }
     }

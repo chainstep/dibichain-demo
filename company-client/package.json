@@ -26,10 +26,9 @@
         "jest": "^27.4.5",
         "jest-cli": "^27.4.5",
         "ts-jest": "^27.1.2",
-        "ts-node": "^10.2.1",
         "ts-node-dev": "^1.1.6",
         "tsc": "^2.0.3",
-        "typescript": "^4.2.4"
+        "typescript": "4.6.4"
     },
     "dependencies": {
         "@atz3n/express-utils": "^1.2.1",
