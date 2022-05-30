@@ -1,7 +1,7 @@
 import { BadRequestError } from "@atz3n/express-utils";
 import { randomUUID } from "crypto";
 import { Operator } from "../../../../lib/Operator";
-import { IMyProductStore } from "../../../../storage/myProduct/IMyProductStore";
+import { IMyProductStore } from "../../../../storage/my-product/IMyProductStore";
 import { MyProduct } from "../../../../types";
 import { RouteService } from "../../routerFactory";
 

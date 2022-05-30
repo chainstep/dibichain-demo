@@ -2,12 +2,12 @@ import { initContractListeners } from "../../src/contract";
 import { EventBus } from "../../src/contract/interfaces/EventBus";
 import { BlockchainInfoStore } from "../../src/storage/blockchain/BlockchainInfoStore";
 import { BlockchainInfoStoreInMemory } from "../../src/storage/blockchain/BlockchainInfoStoreInMemory";
-import { MyProductStore } from "../../src/storage/myProduct/MyProductStore";
-import { MyProductStoreInMemory } from "../../src/storage/myProduct/MyProductStoreInMemory";
-import { ProductDetailsRequestStore } from "../../src/storage/productDetailsRequest/ProductDetailsRequestStore";
-import { ProductDetailsRequestStoreInMemory } from "../../src/storage/productDetailsRequest/ProductDetailsRequestStoreInMemory";
+import { MyProductStore } from "../../src/storage/my-product/MyProductStore";
+import { MyProductStoreInMemory } from "../../src/storage/my-product/MyProductStoreInMemory";
+import { ProductDetailsRequestStore } from "../../src/storage/product-details-request/ProductDetailsRequestStore";
+import { ProductDetailsRequestStoreInMemory } from "../../src/storage/product-details-request/ProductDetailsRequestStoreInMemory";
 import { config } from "../config";
-import { TEST_NEW_PRODUCT, TEST_NEW_PRODUCT_EVENT_PARAMS, TEST_PRODUCT, TEST_PRODUCT_DETAILS_REQUEST, TEST_PRODUCT_DETAILS_REQUEST_EVENT_PARAMS } from "../constants";
+import { TEST_PRODUCT, TEST_PRODUCT_DETAILS_REQUEST, TEST_PRODUCT_DETAILS_REQUEST_EVENT_PARAMS } from "../constants";
 
 
 // mock EventBus contract

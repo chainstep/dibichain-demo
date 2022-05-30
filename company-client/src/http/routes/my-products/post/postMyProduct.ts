@@ -1,7 +1,7 @@
 import { body } from "express-validator";
 import { EnvVars } from "../../../../lib/EnvVars";
 import { Operator } from "../../../../lib/Operator";
-import { MyProductStore } from "../../../../storage/myProduct/MyProductStore";
+import { MyProductStore } from "../../../../storage/my-product/MyProductStore";
 import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
 import { createRouter } from "../../routerFactory";
 import { PostMyProductService } from "./PostMyProductService";

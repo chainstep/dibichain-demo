@@ -2,7 +2,7 @@ import { body } from "express-validator";
 import { Crypto } from "../../../../lib/Crypto";
 import { EnvVars } from "../../../../lib/EnvVars";
 import { Operator } from "../../../../lib/Operator";
-import { MyProductDetailsRequestStore } from "../../../../storage/myProductDetailsRequest/MyProductDetailsRequestStore";
+import { MyProductDetailsRequestStore } from "../../../../storage/my-product-details-request/MyProductDetailsRequestStore";
 import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
 import { createRouter } from "../../routerFactory";
 import { PostMyProductDetailsRequestService } from "./PostMyProductDetailsService";

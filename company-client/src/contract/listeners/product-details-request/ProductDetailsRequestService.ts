@@ -1,5 +1,5 @@
 import { Event } from "ethers";
-import { IProductDetailsRequestStore } from "../../../storage/productDetailsRequest/IProductDetailsRequestStore";
+import { IProductDetailsRequestStore } from "../../../storage/product-details-request/IProductDetailsRequestStore";
 import { ProductDetailsRequestEventParams } from "../../../types";
 import { logger } from "../../../utils/logger";
 import { ContractEventHandlerService } from "../contractEventHandlerFactory";

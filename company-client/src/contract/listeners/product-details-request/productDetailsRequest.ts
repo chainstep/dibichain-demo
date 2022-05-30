@@ -1,5 +1,5 @@
-import { MyProductStore } from "../../../storage/myProduct/MyProductStore";
-import { ProductDetailsRequestStore } from "../../../storage/productDetailsRequest/ProductDetailsRequestStore";
+import { MyProductStore } from "../../../storage/my-product/MyProductStore";
+import { ProductDetailsRequestStore } from "../../../storage/product-details-request/ProductDetailsRequestStore";
 import { SkipProductsService } from "../../common/SkipProductsService";
 import { ContractEventListener } from "../contractEventHandlerFactory";
 import { ProductDetailsRequestService } from "./ProductDetailsRequestService";

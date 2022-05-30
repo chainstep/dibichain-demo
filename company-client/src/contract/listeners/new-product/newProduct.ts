@@ -1,9 +1,9 @@
-import { NewProductStore } from "../../../storage/newProduct/NewProductStore";
 import { ProductStore } from "../../../storage/product/ProductStore";
 import { ContractEventListener } from "../contractEventHandlerFactory";
 import { NewProductService } from "./NewProductService";
 import { SkipProductsService } from "../../common/SkipProductsService";
-import { MyProductStore } from "../../../storage/myProduct/MyProductStore";
+import { MyProductStore } from "../../../storage/my-product/MyProductStore";
+import { NewProductStore } from "../../../storage/new-product/NewProductStore";
 
 
 export function createNewProductListener(): ContractEventListener {

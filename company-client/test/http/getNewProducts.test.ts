@@ -1,8 +1,8 @@
 import request from "supertest";
 import { httpServer } from "../../src/http";
 import { EnvVars } from "../../src/lib/EnvVars";
-import { NewProductStore } from "../../src/storage/newProduct/NewProductStore";
-import { NewProductStoreInMemory } from "../../src/storage/newProduct/NewProductStoreInMemory";
+import { NewProductStore } from "../../src/storage/new-product/NewProductStore";
+import { NewProductStoreInMemory } from "../../src/storage/new-product/NewProductStoreInMemory";
 import { NewProduct } from "../../src/types";
 import { config } from "../config";
 import { TEST_NEW_PRODUCT } from "../constants";
@@ -18,9 +18,9 @@ if (!config.skipTests.includes("getNewProducts")) {
 
     it("should get all new products", async () => {
         const newProduct = { ...TEST_NEW_PRODUCT };
-        newProductStore.add(newProduct);
+        await newProductStore.add(newProduct);
         newProduct.uid = "8181c8ae-eef1-4703-8498-2cf25be2877c";
-        newProductStore.add(newProduct);
+        await newProductStore.add(newProduct);
 
         const response = await request(httpServer)
             .get("/new-products")

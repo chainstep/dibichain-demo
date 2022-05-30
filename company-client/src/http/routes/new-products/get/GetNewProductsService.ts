@@ -1,4 +1,4 @@
-import { INewProductStore } from "../../../../storage/newProduct/INewProductStore";
+import { INewProductStore } from "../../../../storage/new-product/INewProductStore";
 import { NewProduct } from "../../../../types";
 import { RouteService } from "../../routerFactory";
 

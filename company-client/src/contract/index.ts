@@ -3,8 +3,8 @@ import { BlockchainInfoStore } from "../storage/blockchain/BlockchainInfoStore";
 import { EventBus } from "./interfaces/EventBus";
 import { createContractEventHandler } from "./listeners/contractEventHandlerFactory";
 import { catchUpEvents } from "./listeners/eventCatchUpper";
-import { createNewProductListener } from "./listeners/newProduct/newProduct";
-import { createProductDetailsRequestListener } from "./listeners/productDetailsRequest/productDetailsRequest";
+import { createNewProductListener } from "./listeners/new-product/newProduct";
+import { createProductDetailsRequestListener } from "./listeners/product-details-request/productDetailsRequest";
 
 
 export async function initContractListeners(contract: EventBus): Promise<void> {

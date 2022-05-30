@@ -1,5 +1,5 @@
 import { query } from "express-validator";
-import { MyProductStore } from "../../../../storage/myProduct/MyProductStore";
+import { MyProductStore } from "../../../../storage/my-product/MyProductStore";
 import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
 import { createRouter } from "../../routerFactory";
 import { GetMyProductsService } from "./GetMyProductsService";

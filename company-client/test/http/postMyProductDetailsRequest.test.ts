@@ -1,8 +1,8 @@
 import request from "supertest";
 import { httpServer } from "../../src/http";
 import { EnvVars } from "../../src/lib/EnvVars";
-import { MyProductDetailsRequestStore } from "../../src/storage/myProductDetailsRequest/MyProductDetailsRequestStore";
-import { MyProductDetailsRequestStoreInMemory } from "../../src/storage/myProductDetailsRequest/MyProductDetailsRequestStoreInMemory";
+import { MyProductDetailsRequestStore } from "../../src/storage/my-product-details-request/MyProductDetailsRequestStore";
+import { MyProductDetailsRequestStoreInMemory } from "../../src/storage/my-product-details-request/MyProductDetailsRequestStoreInMemory";
 import { config } from "../config";
 import { TEST_MY_PRODUCT_DETAILS_REQUEST } from "../constants";
 

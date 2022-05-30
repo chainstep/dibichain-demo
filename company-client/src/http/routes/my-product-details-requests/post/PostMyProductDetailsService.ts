@@ -1,6 +1,6 @@
 import { Crypto } from "../../../../lib/Crypto";
 import { Operator } from "../../../../lib/Operator";
-import { IMyProductDetailsRequestStore } from "../../../../storage/myProductDetailsRequest/IMyProductDetailsRequestStore";
+import { IMyProductDetailsRequestStore } from "../../../../storage/my-product-details-request/IMyProductDetailsRequestStore";
 import { RouteService } from "../../routerFactory";
 
 

@@ -1,15 +1,15 @@
 import { BlockchainInfoStore } from "../src/storage/blockchain/BlockchainInfoStore";
 import { createBlockchainInfoStore } from "../src/storage/blockchain/blockchainInfoStoreFactory";
-import { MyProductStore } from "../src/storage/myProduct/MyProductStore";
-import { createMyProductStore } from "../src/storage/myProduct/myProductStoreFactory";
-import { MyProductDetailsRequestStore } from "../src/storage/myProductDetailsRequest/MyProductDetailsRequestStore";
-import { createMyProductDetailsRequestStore } from "../src/storage/myProductDetailsRequest/myProductDetailsRequestStoreFactory";
-import { NewProductStore } from "../src/storage/newProduct/NewProductStore";
-import { createNewProductStore } from "../src/storage/newProduct/newProductStoreFactory";
+import { MyProductDetailsRequestStore } from "../src/storage/my-product-details-request/MyProductDetailsRequestStore";
+import { createMyProductDetailsRequestStore } from "../src/storage/my-product-details-request/myProductDetailsRequestStoreFactory";
+import { MyProductStore } from "../src/storage/my-product/MyProductStore";
+import { createMyProductStore } from "../src/storage/my-product/myProductStoreFactory";
+import { NewProductStore } from "../src/storage/new-product/NewProductStore";
+import { createNewProductStore } from "../src/storage/new-product/newProductStoreFactory";
+import { ProductDetailsRequestStore } from "../src/storage/product-details-request/ProductDetailsRequestStore";
+import { createProductDetailsRequestStore } from "../src/storage/product-details-request/productDetailsRequestStoreFactory";
 import { ProductStore } from "../src/storage/product/ProductStore";
 import { createProductStore } from "../src/storage/product/productStoreFactory";
-import { ProductDetailsRequestStore } from "../src/storage/productDetailsRequest/ProductDetailsRequestStore";
-import { createProductDetailsRequestStore } from "../src/storage/productDetailsRequest/productDetailsRequestStoreFactory";
 import { StorageType } from "../src/storage/StorageType";
 import { DummyTransport, initLogger } from "../src/utils/logger";
 

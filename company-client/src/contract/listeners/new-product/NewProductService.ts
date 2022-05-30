@@ -1,6 +1,5 @@
-// import { MessageType } from "../../../ws/WebSocketHandler";
 import { Event } from "ethers";
-import { INewProductStore } from "../../../storage/newProduct/INewProductStore";
+import { INewProductStore } from "../../../storage/new-product/INewProductStore";
 import { NewProductEventParams } from "../../../types";
 import { logger } from "../../../utils/logger";
 import { ContractEventHandlerService } from "../contractEventHandlerFactory";
@@ -45,26 +44,5 @@ export class NewProductService implements ContractEventHandlerService {
                 { metadata: { uid: newProduct.uid, blockNumber: event.blockNumber } }
             );
         }
-
-
-        // if (from !== ZERO_ADDRESS) {
-        //     return;
-        // }
-
-        // logger.event("Mint -> tokenId: " + tokenId + ", block: " + event.blockNumber + ", owner: " + to,
-        //     { metadata: { tokenId, blockNumber: event.blockNumber } }
-        // );
-
-        // const date = tokenIdToDate(tokenId);
-        // const wsListeners = WebSocketManager.getSocketHandlersByYearEra({ year: date.year, era: date.era });
-        // wsListeners.forEach(wsListener => wsListener.sendMessage(this.createNewMintMessage(tokenId, to)));
     }
-
-    // private createNewMintMessage(tokenId: number, owner: string): string {
-    //     const message = {
-    //         type: MessageType.NEW_MINT,
-    //         params: { tokenId, owner }
-    //     };
-    //     return JSON.stringify(message);
-    // }
 }

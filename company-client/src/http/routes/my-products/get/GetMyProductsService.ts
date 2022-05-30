@@ -1,5 +1,5 @@
 import { NotFoundError } from "@atz3n/express-utils";
-import { IProductStore as IMyProductStore } from "../../../../storage/product/IProductStore";
+import { IMyProductStore } from "../../../../storage/my-product/IMyProductStore";
 import { ResponseProduct } from "../../../../types";
 import { RouteService } from "../../routerFactory";
 

@@ -1,8 +1,8 @@
 import request from "supertest";
 import { httpServer } from "../../src/http";
 import { EnvVars } from "../../src/lib/EnvVars";
-import { MyProductStore } from "../../src/storage/myProduct/MyProductStore";
-import { MyProductStoreInMemory } from "../../src/storage/myProduct/MyProductStoreInMemory";
+import { MyProductStore } from "../../src/storage/my-product/MyProductStore";
+import { MyProductStoreInMemory } from "../../src/storage/my-product/MyProductStoreInMemory";
 import { ResponseProduct } from "../../src/types";
 import { config } from "../config";
 import { TEST_PRODUCT } from "../constants";
@@ -17,7 +17,7 @@ if (!config.skipTests.includes("getMyProducts")) {
 
 
     it("should get a product", async () => {
-        myProductStore.add(TEST_PRODUCT);
+        await myProductStore.add(TEST_PRODUCT);
 
         const response = await request(httpServer)
             .get("/my-products")

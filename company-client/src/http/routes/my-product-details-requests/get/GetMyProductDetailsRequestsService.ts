@@ -1,4 +1,4 @@
-import { IMyProductDetailsRequestStore } from "../../../../storage/myProductDetailsRequest/IMyProductDetailsRequestStore";
+import { IMyProductDetailsRequestStore } from "../../../../storage/my-product-details-request/IMyProductDetailsRequestStore";
 import { ProductDetailsRequest } from "../../../../types";
 import { RouteService } from "../../routerFactory";
 
