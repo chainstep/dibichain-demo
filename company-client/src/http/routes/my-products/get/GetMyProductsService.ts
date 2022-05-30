@@ -1,4 +1,3 @@
-import { NotFoundError } from "@atz3n/express-utils";
 import { IMyProductStore } from "../../../../storage/my-product/IMyProductStore";
 import { ResponseProduct } from "../../../../types";
 import { RouteService } from "../../routerFactory";
@@ -36,9 +35,6 @@ export class GetMyProductsService implements RouteService {
             _product.carbonFootprint = "" + product.carbonFootprint;
             return _product;
         });
-        if (myProducts.length === 0) {
-            throw new NotFoundError("my product not found");
-        }
         return { myProducts };
     }
 }
