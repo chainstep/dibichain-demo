@@ -7,15 +7,15 @@ export class MyProductDetailsRequestStoreInMemory extends AInMemoryStore impleme
     public store: MyProductDetailsRequest[] = [];
 
 
-    public async add(productDetailsRequest: MyProductDetailsRequest): Promise<void> {
-        this.store.push(this.deepCopy(productDetailsRequest));
+    public async add(myProductDetailsRequest: MyProductDetailsRequest): Promise<void> {
+        this.store.push(this.deepCopy(myProductDetailsRequest));
     }
 
 
     public async find(params: {uid?: string}): Promise<MyProductDetailsRequest[]> {
         const { uid } = params;
         if (uid) {
-            return this.store.filter(productDetailsRequest => productDetailsRequest.uid === uid);
+            return this.store.filter(myProductDetailsRequest => myProductDetailsRequest.uid === uid);
         }
         return this.store;
     }
@@ -23,6 +23,6 @@ export class MyProductDetailsRequestStoreInMemory extends AInMemoryStore impleme
 
     public async delete(params: {uid: string}): Promise<void> {
         const { uid } = params;
-        this.store = this.store.filter(productDetailsRequest => productDetailsRequest.uid !== uid);
+        this.store = this.store.filter(myProductDetailsRequest => myProductDetailsRequest.uid !== uid);
     }
 }
