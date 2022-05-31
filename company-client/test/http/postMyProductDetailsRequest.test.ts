@@ -11,10 +11,10 @@ import { TEST_MY_PRODUCT_DETAILS_REQUEST } from "../constants";
 jest.mock("axios", () => {
     return {
         post: async (url: string, data: never): Promise<void> => {
-            const { uid, pubKey, algorithm } = data;
+            const { uid, publicKey, algorithm } = data;
             expect(url).toEqual("http://operator.dummy.io/product-details-request");
             expect(uid).toEqual(TEST_MY_PRODUCT_DETAILS_REQUEST.uid);
-            expect(pubKey).toEqual(TEST_MY_PRODUCT_DETAILS_REQUEST.pubKey);
+            expect(publicKey).toEqual(TEST_MY_PRODUCT_DETAILS_REQUEST.publicKey);
             expect(algorithm).toEqual(TEST_MY_PRODUCT_DETAILS_REQUEST.algorithm);
         }
     };
@@ -25,11 +25,11 @@ jest.mock("../../src/lib/Crypto", () => {
     return {
         Crypto: jest.fn().mockImplementation(() => {
             return {
-                generateKey: (): { privKey: string, pubKey: string, algorithm: string } => {
+                generateKeyPair: (): { privateKey: string, publicKey: string, algorithm: string } => {
                     return {
                         algorithm: TEST_MY_PRODUCT_DETAILS_REQUEST.algorithm,
-                        privKey: TEST_MY_PRODUCT_DETAILS_REQUEST.privKey,
-                        pubKey: TEST_MY_PRODUCT_DETAILS_REQUEST.pubKey
+                        privateKey: TEST_MY_PRODUCT_DETAILS_REQUEST.privateKey,
+                        publicKey: TEST_MY_PRODUCT_DETAILS_REQUEST.publicKey
                     };
                 }
             };

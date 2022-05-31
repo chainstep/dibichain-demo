@@ -13,8 +13,15 @@ const product = {
     hash: "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
 };
 
-const RSA_PUB_KEY = "AAAAB3NzaC1yc2EAAAADAQABAAABgQDAaOiwZ7yOJuAZrBRghd0CU2J8oVHVU6WCJA891itgvB/psn83oVN2oGpPz+fDocuUL/Z12ell9Q/WryPnZ3qTNZEQZxGAu68Fq4Z36Rm9me4cmbQbnPiZAI8lbhnkqEPCNGN6mQbbmpiVUIQp0xCqlSahCzDiagn5wmkNmgdp0qqGidnLXSpea2bSW34vuNcaPy8AHRZmRN7kUC/yKq2FNWKo5kFCIMvR9UdHVTiQ7a+bcM2d0WVN+JSn2xtCZP1fGTLeRuJdp6agz/qGNZ7D5n4Vrjif/KeexZLsM71v59mX8RGxogB9VEZRNu+XDDlL9rOeCSVQ6MgAEF7dmgwQZ/ZRjgVyHuJXyV/aMEK1ruA4u+vyG0bHdH5EC5ZQzYIqmWI0zVVvcxW4m8KHyXBUcoCRXv96b08qeTgO5z7NVMIBEqRaM4nUibbmwsAcK+4MhnjjfGz/jjaNQCrBL906+ufJiSK9R3VKBoDRVM0bKR8RsZ41GFmb+d1hVdFCCv0=";
-const ALGORITHM = "rsa";
+const RSA_PUB_KEY = "-----BEGIN RSA PUBLIC KEY-----\n" +
+                    "MIIBCgKCAQEA4cHLrQ5lgyjP/idKwlsnp0+nhvY1BhwE39Dxn8no6DbDl/W0RRVM\n" +
+                    "eSiP4Ny1AoUzalkzr0fmugUIy6skmuePqqXbes/4aCisJMB86izQeGZhac2k8ofk\n" +
+                    "9ivedD4VOOcSLqenMVRdqG/1jFxQmwtfe7pt0Mw0AorYN8d5fXLGPFDjXKaO7cfr\n" +
+                    "OBWY4AQlKF5tkiTiwXoqorjIBl+2S3dh+/xzYHMyF46s9sDkHkmpNK1JquFK8VJw\n" +
+                    "s8PZHnw6o+C2/i+Ea1ZAkgU/3ta6ztX/5Ak2F9HFAp6tMLqK3Ac+A1T45tb46NaJ\n" +
+                    "iVocbo+Nrht97J2OnvCd2tmGsxeaiMZ2AwIDAQAB\n" +
+                    "-----END RSA PUBLIC KEY-----\n";
+const ALGORITHM = "rsa:pem:PKCS1_OAEP_PADDING:sha256";
 
 
 describe("Events", function() {
@@ -51,7 +58,7 @@ describe("Events", function() {
         await expect(
             eventBus.broadcastProductDetailsRequest({
                 uid: product.uid,
-                pubKey: RSA_PUB_KEY,
+                publicKey: RSA_PUB_KEY,
                 algorithm: ALGORITHM
             })
         ).to.emit(eventBus, 'ProductDetailsRequest').withArgs(

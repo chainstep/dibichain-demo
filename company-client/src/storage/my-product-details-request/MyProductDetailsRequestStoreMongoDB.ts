@@ -7,8 +7,8 @@ import { IMyProductDetailsRequestStore } from "./IMyProductDetailsRequestStore";
 const schema = new Schema<MyProductDetailsRequest>({
     uid: { type: String, required: true },
     algorithm: { type: String, required: true },
-    privKey: { type: String, required: true },
-    pubKey: { type: String, required: true },
+    privateKey: { type: String, required: true },
+    publicKey: { type: String, required: true },
     timestamp: { type: Number, required: true }
 });
 

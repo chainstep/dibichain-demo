@@ -32,7 +32,7 @@ export class ProductDetailsRequestService implements ContractEventHandlerService
             const block = await event.getBlock();
             await productDetailsRequestStore.add({
                 algorithm: productDetailsRequest.algorithm,
-                pubKey: productDetailsRequest.pubKey,
+                publicKey: productDetailsRequest.publicKey,
                 uid: productDetailsRequest.uid,
                 timestamp: block.timestamp
             });

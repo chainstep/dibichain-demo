@@ -45,15 +45,15 @@ export interface NewProductEventParams {
 
 export interface ProductDetailsRequestEventParams {
     uid: string;
-    pubKey: string;
+    publicKey: string;
     algorithm: string;
 }
 
 export interface ProductDetailsRequest extends ProductEvent {
-    pubKey: string;
+    publicKey: string;
     algorithm: string;
 }
 
 export interface MyProductDetailsRequest extends ProductDetailsRequest {
-    privKey: string;
+    privateKey: string;
 }

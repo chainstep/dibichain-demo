@@ -31,7 +31,7 @@ export class GetMyProductDetailsRequestsService implements RouteService {
         const myProductDetailsRequests = (await myProductDetailsRequestStore.find(inputs)).map((request) => {
             return <ProductDetailsRequest> {
                 algorithm: request.algorithm,
-                pubKey: request.pubKey,
+                publicKey: request.publicKey,
                 timestamp: request.timestamp,
                 uid: request.uid
             };

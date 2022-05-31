@@ -2,6 +2,11 @@ import { Contract } from "ethers";
 import { logger } from "../../utils/logger";
 
 
+export enum ContractEventServiceCode {
+    CONTINUE,
+    STOP
+}
+
 export interface ContractEventHandlerService {
     run(args: unknown[], contract?: Contract): Promise<void | ContractEventServiceCode>
 }
@@ -9,11 +14,6 @@ export interface ContractEventHandlerService {
 export interface ContractEventListener {
     eventName: string,
     services: ContractEventHandlerService[];
-}
-
-export enum ContractEventServiceCode {
-    CONTINUE,
-    STOP
 }
 
 export interface ContractEventHandlerFactoryParams {
