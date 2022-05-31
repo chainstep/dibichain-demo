@@ -49,7 +49,6 @@ if (!config.skipTests.includes("postProductDetailsResponse")) {
             .expect(200);
 
         const productDetailsRequests = await productDetailsRequestStore.find({ uid: TEST_PRODUCT_DETAILS_REQUEST.uid });
-        console.log(productDetailsRequests);
         expect(productDetailsRequests.length).toEqual(1);
         expect(productDetailsRequests[0].responded).toEqual(true);
     });
