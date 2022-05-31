@@ -47,9 +47,9 @@ if (!config.skipTests.includes("productDetailsRequest")) {
 
     it("should successfully process a product details request event", async () => {
         const myProduct = { ...TEST_PRODUCT };
-        await myProductStore.add(myProduct);
+        await myProductStore.upsert(myProduct);
         myProduct.uid = "8181c8ae-eef1-4703-8498-2cf25be2877c";
-        await myProductStore.add(myProduct);
+        await myProductStore.upsert(myProduct);
 
         await initContractListeners(<EventBus> mockContract);
         await productDetailsRequestListener(

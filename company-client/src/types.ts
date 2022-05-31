@@ -52,6 +52,7 @@ export interface ProductDetailsRequestEventParams {
 export interface ProductDetailsRequest extends ProductEvent {
     publicKey: string;
     algorithm: string;
+    responded: boolean;
 }
 
 export interface MyProductDetailsRequest extends ProductDetailsRequest {

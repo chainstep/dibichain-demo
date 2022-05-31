@@ -17,7 +17,7 @@ if (!config.skipTests.includes("getMyProducts")) {
 
 
     it("should get a product", async () => {
-        await myProductStore.add(TEST_PRODUCT);
+        await myProductStore.upsert(TEST_PRODUCT);
 
         const response = await request(httpServer)
             .get("/my-products")

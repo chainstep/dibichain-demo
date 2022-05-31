@@ -30,11 +30,12 @@ export class ProductDetailsRequestService implements ContractEventHandlerService
 
         try {
             const block = await event.getBlock();
-            await productDetailsRequestStore.add({
+            await productDetailsRequestStore.upsert({
                 algorithm: productDetailsRequest.algorithm,
                 publicKey: productDetailsRequest.publicKey,
                 uid: productDetailsRequest.uid,
-                timestamp: block.timestamp
+                timestamp: block.timestamp,
+                responded: false
             });
         } catch (error) {
             logger.error((<Error> error).message,

@@ -32,11 +32,12 @@ export class PostMyProductDetailsRequestService implements RouteService {
         const myProductDetailsRequestStore = this.getMyProductDetailsRequestStore();
         const key = this.crypto.generateKeyPair();
 
-        await myProductDetailsRequestStore.add({
+        await myProductDetailsRequestStore.upsert({
             algorithm: key.algorithm,
             privateKey: key.privateKey,
             publicKey: key.publicKey,
             uid: inputs.uid,
+            responded: false,
             timestamp: 0
         });
 

@@ -33,7 +33,8 @@ export class GetMyProductDetailsRequestsService implements RouteService {
                 algorithm: request.algorithm,
                 publicKey: request.publicKey,
                 timestamp: request.timestamp,
-                uid: request.uid
+                uid: request.uid,
+                responded: request.responded
             };
         });
         return { myProductDetailsRequests };

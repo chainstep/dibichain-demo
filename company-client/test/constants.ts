@@ -78,7 +78,8 @@ export const TEST_MY_PRODUCT_DETAILS_REQUEST: MyProductDetailsRequest = {
                 "WGohoShkXznHGwpjljt9NJXGelZ9LuIFlql7LP8CNHYtT4l5JmnWsg==\n" +
                 "-----END RSA PRIVATE KEY-----\n",
     algorithm: "rsa_aes",
-    timestamp: 0
+    timestamp: 0,
+    responded: false
 };
 
 export const TEST_PRODUCT_DETAILS_REQUEST: ProductDetailsRequest = {
@@ -92,7 +93,8 @@ export const TEST_PRODUCT_DETAILS_REQUEST: ProductDetailsRequest = {
                 "iVocbo+Nrht97J2OnvCd2tmGsxeaiMZ2AwIDAQAB\n" +
                 "-----END RSA PUBLIC KEY-----\n",
     algorithm: "rsa_aes",
-    timestamp: 10
+    timestamp: 10,
+    responded: false
 };
 
 export const TEST_PRODUCT_DETAILS_REQUEST_EVENT_PARAMS: ProductDetailsRequestEventParams = {

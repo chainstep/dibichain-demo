@@ -18,9 +18,9 @@ if (!config.skipTests.includes("getNewProducts")) {
 
     it("should get all new products", async () => {
         const newProduct = { ...TEST_NEW_PRODUCT };
-        await newProductStore.add(newProduct);
+        await newProductStore.upsert(newProduct);
         newProduct.uid = "8181c8ae-eef1-4703-8498-2cf25be2877c";
-        await newProductStore.add(newProduct);
+        await newProductStore.upsert(newProduct);
 
         const response = await request(httpServer)
             .get("/new-products")

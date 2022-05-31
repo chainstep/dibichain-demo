@@ -24,7 +24,7 @@ export class MyProductDetailsRequestStoreMongoDB implements IMyProductDetailsReq
     }
 
 
-    public async add(myProductDetailsRequest: MyProductDetailsRequest): Promise<void> {
+    public async upsert(myProductDetailsRequest: MyProductDetailsRequest): Promise<void> {
         await connect(this.mongoUrl);
         await MyProductDetailsRequestModel.updateOne(
             { uid: myProductDetailsRequest.uid },
