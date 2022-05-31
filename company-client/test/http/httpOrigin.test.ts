@@ -17,7 +17,7 @@ if (!config.skipTests.includes("httpOrigin")) {
 
 
     it("should accept requests from known origins", async () => {
-        await myProductStore.add(TEST_PRODUCT);
+        await myProductStore.upsert(TEST_PRODUCT);
         await request(httpServer)
             .get(ROUTE_NAMES.myProducts)
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])

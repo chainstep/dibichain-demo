@@ -7,15 +7,15 @@ export class NewProductStoreInMemory extends AInMemoryStore implements INewProdu
     public store: NewProduct[] = [];
 
 
-    public async add(newProduct: NewProduct): Promise<void> {
-        this.store.push(this.deepCopy(newProduct));
+    public async upsert(newProduct: NewProduct): Promise<void> {
+        this._upsert(newProduct, "uid");
     }
 
 
     public async find(params: {uid?: string}): Promise<NewProduct[]> {
         const { uid } = params;
         if (uid) {
-            return this.store.filter(newProduct => newProduct.uid === uid);
+            return this._find("uid", uid);
         }
         return this.store;
     }
@@ -23,6 +23,6 @@ export class NewProductStoreInMemory extends AInMemoryStore implements INewProdu
 
     public async delete(params: {uid: string}): Promise<void> {
         const { uid } = params;
-        this.store = this.store.filter(newProduct => newProduct.uid !== uid);
+        this._delete("uid", uid);
     }
 }

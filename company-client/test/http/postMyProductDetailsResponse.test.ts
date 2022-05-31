@@ -37,8 +37,8 @@ if (!config.skipTests.includes("postProductDetailsResponse")) {
 
 
     it("should post my product details response", async () => {
-        await myProductStore.add(TEST_PRODUCT);
-        await productDetailsRequestStore.add(TEST_PRODUCT_DETAILS_REQUEST);
+        await myProductStore.upsert(TEST_PRODUCT);
+        await productDetailsRequestStore.upsert(TEST_PRODUCT_DETAILS_REQUEST);
 
         await request(httpServer)
             .post("/my-product-details-responses")
@@ -47,6 +47,10 @@ if (!config.skipTests.includes("postProductDetailsResponse")) {
                 uid: TEST_PRODUCT_DETAILS_REQUEST.uid
             })
             .expect(200);
+
+        const productDetailsRequests = await productDetailsRequestStore.find({ uid: TEST_PRODUCT_DETAILS_REQUEST.uid });
+        expect(productDetailsRequests.length).toEqual(1);
+        expect(productDetailsRequests[0].responded).toEqual(true);
     });
 } else {
     test("dummy", () => {

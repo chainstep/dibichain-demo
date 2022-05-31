@@ -18,9 +18,9 @@ if (!config.skipTests.includes("getProductDetailsRequests")) {
 
     it("should get all product details requests", async () => {
         let productDetailsRequest = { ...TEST_PRODUCT_DETAILS_REQUEST };
-        await productDetailsRequestStore.add(productDetailsRequest);
+        await productDetailsRequestStore.upsert(productDetailsRequest);
         productDetailsRequest.uid = "8181c8ae-eef1-4703-8498-2cf25be2877c";
-        await productDetailsRequestStore.add(productDetailsRequest);
+        await productDetailsRequestStore.upsert(productDetailsRequest);
 
         const response = await request(httpServer)
             .get("/product-details-requests")

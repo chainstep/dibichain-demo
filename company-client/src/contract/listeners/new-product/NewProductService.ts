@@ -30,7 +30,7 @@ export class NewProductService implements ContractEventHandlerService {
 
         try {
             const block = await event.getBlock();
-            await newProductStore.add({
+            await newProductStore.upsert({
                 hash: newProduct.hash,
                 id: newProduct.id,
                 name: newProduct.name,

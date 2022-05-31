@@ -8,7 +8,8 @@ const schema = new Schema<ProductDetailsRequest>({
     uid: { type: String, required: true },
     algorithm: { type: String, required: true },
     publicKey: { type: String, required: true },
-    timestamp: { type: Number, required: true }
+    timestamp: { type: Number, required: true },
+    responded: { type: Boolean, required: true }
 });
 
 const ProductDetailsRequestModel = model<ProductDetailsRequest>("ProductDetailsRequest", schema);
@@ -23,7 +24,7 @@ export class ProductDetailsRequestStoreMongoDB implements IProductDetailsRequest
     }
 
 
-    public async add(productDetailsRequest: ProductDetailsRequest): Promise<void> {
+    public async upsert(productDetailsRequest: ProductDetailsRequest): Promise<void> {
         await connect(this.mongoUrl);
         await ProductDetailsRequestModel.updateOne(
             { uid: productDetailsRequest.uid },

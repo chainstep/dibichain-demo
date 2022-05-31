@@ -67,7 +67,7 @@ export class Operator {
     }
 
 
-    public async announceProductDetailsRequest(productDetailsRequest: Omit<ProductDetailsRequest, "timestamp">): Promise<void> {
+    public async announceProductDetailsRequest(productDetailsRequest: Omit<ProductDetailsRequest, "timestamp" | "responded">): Promise<void> {
         await axios.post(this.url + "/product-details-request", productDetailsRequest);
     }
 

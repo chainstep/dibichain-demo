@@ -31,7 +31,7 @@ export class MyProductStoreMongoDB implements IMyProductStore {
     }
 
 
-    public async add(myProduct: MyProduct): Promise<void> {
+    public async upsert(myProduct: MyProduct): Promise<void> {
         await connect(this.mongoUrl);
         await MyProductModel.updateOne({ uid: myProduct.uid }, myProduct, { upsert: true });
     }

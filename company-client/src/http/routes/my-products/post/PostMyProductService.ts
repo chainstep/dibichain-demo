@@ -45,7 +45,7 @@ export class PostMyProductService implements RouteService {
             throw new BadRequestError("product already exists");
         }
 
-        await myProductStore.add(<MyProduct> myProduct);
+        await myProductStore.upsert(<MyProduct> myProduct);
         await this.operator.announceProduct(<MyProduct> myProduct);
     }
 }

@@ -48,5 +48,8 @@ export class PostMyProductDetailsResponseService implements RouteService {
             publicKey: productDetailsRequests[0].publicKey,
             algorithm: productDetailsRequests[0].algorithm
         });
+
+        productDetailsRequests[0].responded = true;
+        await productDetailsRequestStore.upsert(productDetailsRequests[0]);
     }
 }
