@@ -84,9 +84,11 @@ export class Operator {
         }
         const { publicKey, product } = params;
         const normalizedProduct = this.createNormalizedProduct(product);
-        const encMessage = this.crypto.encrypt(publicKey, normalizedProduct);
-        await axios.post(this.url + "/product-details-response", {
-            message: encMessage
+        const message = this.crypto.encrypt(publicKey, normalizedProduct);
+        await axios.post(this.url + "/product-details-responses", {
+            publicKey,
+            message,
+            uid: product.uid
         });
     }
 }

@@ -77,7 +77,7 @@ export const TEST_MY_PRODUCT_DETAILS_REQUEST: MyProductDetailsRequest = {
                 "Xns5vOQfiH9fmR7OOjUcoil5Or3Ex3kVo3/H8Ztz11Jr3HqEkE8SFZ9Vy/5Y3gBz\n" +
                 "WGohoShkXznHGwpjljt9NJXGelZ9LuIFlql7LP8CNHYtT4l5JmnWsg==\n" +
                 "-----END RSA PRIVATE KEY-----\n",
-    algorithm: "rsa:PKCS1_OAEP_PADDING:sha256",
+    algorithm: "rsa_aes",
     timestamp: 0
 };
 
@@ -91,7 +91,7 @@ export const TEST_PRODUCT_DETAILS_REQUEST: ProductDetailsRequest = {
                 "s8PZHnw6o+C2/i+Ea1ZAkgU/3ta6ztX/5Ak2F9HFAp6tMLqK3Ac+A1T45tb46NaJ\n" +
                 "iVocbo+Nrht97J2OnvCd2tmGsxeaiMZ2AwIDAQAB\n" +
                 "-----END RSA PUBLIC KEY-----\n",
-    algorithm: "rsa:PKCS1_OAEP_PADDING:sha256",
+    algorithm: "rsa_aes",
     timestamp: 10
 };
 
@@ -105,5 +105,13 @@ export const TEST_PRODUCT_DETAILS_REQUEST_EVENT_PARAMS: ProductDetailsRequestEve
                 "s8PZHnw6o+C2/i+Ea1ZAkgU/3ta6ztX/5Ak2F9HFAp6tMLqK3Ac+A1T45tb46NaJ\n" +
                 "iVocbo+Nrht97J2OnvCd2tmGsxeaiMZ2AwIDAQAB\n" +
                 "-----END RSA PUBLIC KEY-----\n",
-    algorithm: "rsa:PKCS1_OAEP_PADDING:sha256"
+    algorithm: "rsa_aes"
+};
+
+export const TEST_PLAIN_SECRET = "4j1eJX4t44f+vCZmZz7vZB6F93gT97DaX5QefCRkW/A=";
+
+export const TEST_MESSAGE = {
+    secret: "T96NYph58ppp8Tklte5o34DAT5n9Mi61yuo3oPqZTogInUxFYSOZz7lTc4Xwg1HDtTCRqoT4DW3JFuQWHTpTrC0SWF3oiuMuMI7LNm3JroSZzckvrj8J/IDHg9Qg+swK12LsbmVb3NfqmeYiJgFOyw34nMyg1JNhka0uNqbdRU13ZUiLeaxHQjaracWkUWdvpryd3WIqyc5T3prAqTzZ8iFy/hgVoY39EFfUc2x8xx2TVvrwPsQb/z30q7G4sBXS5MDOhjSSNHBuFQCmIVhfyG+mXDT9nAODoyIfjcshNiL3KJ1gKTtV7RAvSpq85C+43cguTitmaMClk6k0oN0KKg==",
+    cipherText: "68xf5xnHyhWRDa313N8mxTr/2lSxP9ikSExR0a/DE8jRu2P6fHv9aEGsstsLXRTVYhhBUFGdK4k/uCVMqLe1UfL4kptLO2S937TbGSqgMooaXc0Nk+cKP/jpYTVMN4VJQB91vvAG4twsdBtZRRM9FFyPvEw5nT8IKGJHhyXnvyeTjDBbkWIjW9JgSXh6eP1iWV5YzaTvTAFiCK0E47STqZIN2tke9LRHTxcHj9JS/5HWmXUO/QgD0r1WkBfZrHd13bs8D1t71qyjv9zgZ4Uj0m/7/HdocImUCozJuff+mIekLDw7TBJ/Mi5y29xCjpL0",
+    initVector: "DlpxkZyDxNWCf7829bOrDg=="
 };

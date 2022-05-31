@@ -8,6 +8,7 @@ export const config = {
         // "postMyProductDetailsRequest",
         // "getMyProductDetailsRequests",
         // "productDetailsRequest",
-        // "getProductDetailsRequests"
+        // "getProductDetailsRequests",
+        // "postProductDetailsResponse"
     ]
 };
