@@ -23,6 +23,10 @@ BC -> COMPB: notify new product\n(id, uid, name, type, number, hash)
 COMPB -> OP: request product details\n(uid, pubKeyB, algorithm)
 OP -> BC: issue product details request\n(uid, pubKeyB, algorithm)
 BC -> COMPA: notify product details request\n(uid, pubKeyB, algorithm)
+|||
+
+== Provide Product Details ==
+
 COMPA -> COMPA: get product data
 COMPA -> COMPA: encrypt(product data, pubKeyB)
 COMPA -> OP: send encrypted product data
