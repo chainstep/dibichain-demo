@@ -1,26 +1,52 @@
-import NodeRSA from "node-rsa";
+import crypto from "crypto";
+
+
+export enum ALGORITHMS {
+    RSA__PKCS1_OAEP_PADDING__sha256 = "rsa:PKCS1_OAEP_PADDING:sha256"
+}
 
 
 export class Crypto {
-    public generateKey(): { privKey: string, pubKey: string, algorithm: string } {
-        const key = new NodeRSA({ b: 512 });
+    public generateKeyPair(): { privateKey: string, publicKey: string, algorithm: string } {
+        const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
+            modulusLength: 2048
+        });
+
         return {
-            privKey: key.exportKey("openssh-private"),
-            pubKey: key.exportKey("openssh-public"),
-            algorithm: "openssh-rsa"
+            privateKey: privateKey.export({ type: "pkcs1", format: "pem" }).toString(),
+            publicKey: publicKey.export({ type: "pkcs1", format: "pem" }).toString(),
+            algorithm: ALGORITHMS.RSA__PKCS1_OAEP_PADDING__sha256
         };
     }
 
 
-    public encrypt(privKey: string, message: string): string {
-        const key = new NodeRSA().importKey(privKey, "openssh-private");
-        const encryptedMessage = key.encryptPrivate(message);
-        return encryptedMessage.toString("hex");
+    public encrypt(publicKey: string, message: string): string {
+        const encryptedData = crypto.publicEncrypt(
+            {
+                key: publicKey,
+                padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+                oaepHash: "sha256",
+            },
+            Buffer.from(message)
+        );
+        return encryptedData.toString("base64");
     }
 
 
-    public decrypt(pubKey: string, encryptedMessage: string): string {
-        const key = new NodeRSA().importKey(pubKey, "openssh-public");
-        return key.decryptPublic(Buffer.from(encryptedMessage, "hex")).toString("ascii");
+    public decrypt(privateKey: string, encryptedMessage: string): string {
+        const decryptedData = crypto.privateDecrypt(
+            {
+                key: privateKey,
+                padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+                oaepHash: "sha256",
+            },
+            Buffer.from(encryptedMessage, "base64"),
+        );
+        return decryptedData.toString("utf-8");
+    }
+
+
+    public hash(message: string): string {
+        return crypto.createHash("sha256").update(message).digest("hex");
     }
 }

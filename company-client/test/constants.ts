@@ -42,30 +42,68 @@ export const TEST_NEW_PRODUCT: NewProduct = {
 
 export const TEST_MY_PRODUCT_DETAILS_REQUEST: MyProductDetailsRequest = {
     uid: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
-    pubKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAQQC2huXadFJAaYW5DvofKzwPCkyG4vFgN2leRrKOfHsdQELrmC8ph0AxGt7f6ql5SATTPdk/H/m01iayOELXpH5N \n",
-    privKey: "-----BEGIN OPENSSH PRIVATE KEY-----\n" +
-             "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAVwAAAAdzc2gtcn\n" +
-             "NhAAAAAwEAAQAAAEEAtobl2nRSQGmFuQ76Hys8DwpMhuLxYDdpXkayjnx7HUBC65gvKYdA\n" +
-             "MRre3+qpeUgE0z3ZPx/5tNYmsjhC16R+TQAAARgAAAAAAAAAAAAAAAdzc2gtcnNhAAAAQQ\n" +
-             "C2huXadFJAaYW5DvofKzwPCkyG4vFgN2leRrKOfHsdQELrmC8ph0AxGt7f6ql5SATTPdk/\n" +
-             "H/m01iayOELXpH5NAAAAAwEAAQAAAEAUUfBE4a5GfXjloUU3Mxj8k6jxW1KD46dXV4eJVV\n" +
-             "Jfbxfiq5DcEdtV9nVu5jOBqQAr3UzPd7jKezEriRV6KaABAAAAIDTdH6NMxFF+qHFM3Glt\n" +
-             "nfefuQf/qwYvQdF0leUrsacZAAAAIQDZGFOXLoX4zyPIWLr5ZTZZHGqW3syy8JwA5+m25I\n" +
-             "bGXQAAACEA1zyw0hk5uIMGaE4TiIEalsWCrJhOftReOuM1zzRFOLEAAAAAAQID\n" +
-             "-----END OPENSSH PRIVATE KEY-----\n",
-    algorithm: "openssh-rsa",
+    publicKey:  "-----BEGIN RSA PUBLIC KEY-----\n" +
+                "MIIBCgKCAQEA4cHLrQ5lgyjP/idKwlsnp0+nhvY1BhwE39Dxn8no6DbDl/W0RRVM\n" +
+                "eSiP4Ny1AoUzalkzr0fmugUIy6skmuePqqXbes/4aCisJMB86izQeGZhac2k8ofk\n" +
+                "9ivedD4VOOcSLqenMVRdqG/1jFxQmwtfe7pt0Mw0AorYN8d5fXLGPFDjXKaO7cfr\n" +
+                "OBWY4AQlKF5tkiTiwXoqorjIBl+2S3dh+/xzYHMyF46s9sDkHkmpNK1JquFK8VJw\n" +
+                "s8PZHnw6o+C2/i+Ea1ZAkgU/3ta6ztX/5Ak2F9HFAp6tMLqK3Ac+A1T45tb46NaJ\n" +
+                "iVocbo+Nrht97J2OnvCd2tmGsxeaiMZ2AwIDAQAB\n" +
+                "-----END RSA PUBLIC KEY-----\n",
+    privateKey: "-----BEGIN RSA PRIVATE KEY-----\n" +
+                "MIIEpAIBAAKCAQEA4cHLrQ5lgyjP/idKwlsnp0+nhvY1BhwE39Dxn8no6DbDl/W0\n" +
+                "RRVMeSiP4Ny1AoUzalkzr0fmugUIy6skmuePqqXbes/4aCisJMB86izQeGZhac2k\n" +
+                "8ofk9ivedD4VOOcSLqenMVRdqG/1jFxQmwtfe7pt0Mw0AorYN8d5fXLGPFDjXKaO\n" +
+                "7cfrOBWY4AQlKF5tkiTiwXoqorjIBl+2S3dh+/xzYHMyF46s9sDkHkmpNK1JquFK\n" +
+                "8VJws8PZHnw6o+C2/i+Ea1ZAkgU/3ta6ztX/5Ak2F9HFAp6tMLqK3Ac+A1T45tb4\n" +
+                "6NaJiVocbo+Nrht97J2OnvCd2tmGsxeaiMZ2AwIDAQABAoIBAQCOj1t379Roq9gU\n" +
+                "TWmnK/rxa5qF3moDbqQhVgeO+OjL4vFGv5DT4yxEgjnBLH5dlhGuwZ+iu0vXAiDY\n" +
+                "xD08WKffghcECdp6o9x45Ni85AnNThGLx6G2ydvrHC7AxweNxFU2AwbQXs8582Fi\n" +
+                "/lSkY90q+8InDRx20ojRSHTOpDDMmrOW29T7+/dL2raSzcrat8Zmw+i+aTSwva+p\n" +
+                "HdgpCEngBTl+40LzSVuyWOTZ16MtBvG/DunSETNF09esMxD/X6iXh1ZaBF6cltbI\n" +
+                "/6sEqmn2FFYc+cKMr13nN2cfiT1fpkxLTCeBcTvvz3EYFejoGpeWlL5myV8nQ3KE\n" +
+                "KVLWXa/JAoGBAP+fnTu1+MXxTeLXjxVy5Ij9AWIptIDT3RGeBJ1R24CBWtpAi1uv\n" +
+                "CZlM+/f8icMih+TljSIx27+KY9QZoguvWm8bvQaVbTpHJupsVqRk+Uo+/LScQM0F\n" +
+                "5v+MCGnTgJbyJKYlo2eATOcqR9ji7RUMCO3juga/MsDAx42JAbpKjFY9AoGBAOIW\n" +
+                "639/SVz8r7Ubr8w8rou7e43j8DovcPYfbZqTKBn3SxrYwG2/P87iiGYt+2y5zkFk\n" +
+                "5NvIuthivdr3ry2sB2XF9K9mfKOV7KU7oR0Pq5cdWt3ULDX8H8nCrTP5gsGPyioz\n" +
+                "9s/n+SZaBw5FGpy4l4wWTC64gaUnRFuun61o8wE/AoGAYsdeLg3CpVL64vajXwl3\n" +
+                "0IvcNf+htcqo+b7TT6urI7xYzE/2yiYYknnSQGEBJzu3wbcG07jqjti+fN6u5M8N\n" +
+                "JjRU1i919vg5zIqy7HHsd0lhw7VBwThPrF6DfclyPmIx0VZoD33fudB31RLTxLdS\n" +
+                "2AKRBzxpM10Lf+D6nu9hzY0CgYEAwVHj0EMgkfgmre+cpECG50hKX4s10Crcpjc9\n" +
+                "WtzVf05q0+vernjHsLkW9HgA8nj2GgiRgDTlPz0/Jcp/6cedE7LuhERX8vCxRp/0\n" +
+                "JYtOp4ocNm3D1+1bqQNjYnvJCIVQ0kFYm3G5Isf8HIGOPc/BFbHDNnfhszweQV7R\n" +
+                "fk+s6bUCgYAzZVt1b+Vix0wC4J60ceRlDs3QNW/7g90O11dKG5PkQ0OyGXuKbfmZ\n" +
+                "Xns5vOQfiH9fmR7OOjUcoil5Or3Ex3kVo3/H8Ztz11Jr3HqEkE8SFZ9Vy/5Y3gBz\n" +
+                "WGohoShkXznHGwpjljt9NJXGelZ9LuIFlql7LP8CNHYtT4l5JmnWsg==\n" +
+                "-----END RSA PRIVATE KEY-----\n",
+    algorithm: "rsa:PKCS1_OAEP_PADDING:sha256",
     timestamp: 0
 };
 
 export const TEST_PRODUCT_DETAILS_REQUEST: ProductDetailsRequest = {
     uid: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
-    pubKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAQQC2huXadFJAaYW5DvofKzwPCkyG4vFgN2leRrKOfHsdQELrmC8ph0AxGt7f6ql5SATTPdk/H/m01iayOELXpH5N \n",
-    algorithm: "openssh-rsa",
+    publicKey:  "-----BEGIN RSA PUBLIC KEY-----\n" +
+                "MIIBCgKCAQEA4cHLrQ5lgyjP/idKwlsnp0+nhvY1BhwE39Dxn8no6DbDl/W0RRVM\n" +
+                "eSiP4Ny1AoUzalkzr0fmugUIy6skmuePqqXbes/4aCisJMB86izQeGZhac2k8ofk\n" +
+                "9ivedD4VOOcSLqenMVRdqG/1jFxQmwtfe7pt0Mw0AorYN8d5fXLGPFDjXKaO7cfr\n" +
+                "OBWY4AQlKF5tkiTiwXoqorjIBl+2S3dh+/xzYHMyF46s9sDkHkmpNK1JquFK8VJw\n" +
+                "s8PZHnw6o+C2/i+Ea1ZAkgU/3ta6ztX/5Ak2F9HFAp6tMLqK3Ac+A1T45tb46NaJ\n" +
+                "iVocbo+Nrht97J2OnvCd2tmGsxeaiMZ2AwIDAQAB\n" +
+                "-----END RSA PUBLIC KEY-----\n",
+    algorithm: "rsa:PKCS1_OAEP_PADDING:sha256",
     timestamp: 10
 };
 
 export const TEST_PRODUCT_DETAILS_REQUEST_EVENT_PARAMS: ProductDetailsRequestEventParams = {
     uid: "d3285b47-8ba9-4e40-ba43-a9ac325a0b1e",
-    pubKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAQQC2huXadFJAaYW5DvofKzwPCkyG4vFgN2leRrKOfHsdQELrmC8ph0AxGt7f6ql5SATTPdk/H/m01iayOELXpH5N \n",
-    algorithm: "openssh-rsa"
+    publicKey:  "-----BEGIN RSA PUBLIC KEY-----\n" +
+                "MIIBCgKCAQEA4cHLrQ5lgyjP/idKwlsnp0+nhvY1BhwE39Dxn8no6DbDl/W0RRVM\n" +
+                "eSiP4Ny1AoUzalkzr0fmugUIy6skmuePqqXbes/4aCisJMB86izQeGZhac2k8ofk\n" +
+                "9ivedD4VOOcSLqenMVRdqG/1jFxQmwtfe7pt0Mw0AorYN8d5fXLGPFDjXKaO7cfr\n" +
+                "OBWY4AQlKF5tkiTiwXoqorjIBl+2S3dh+/xzYHMyF46s9sDkHkmpNK1JquFK8VJw\n" +
+                "s8PZHnw6o+C2/i+Ea1ZAkgU/3ta6ztX/5Ak2F9HFAp6tMLqK3Ac+A1T45tb46NaJ\n" +
+                "iVocbo+Nrht97J2OnvCd2tmGsxeaiMZ2AwIDAQAB\n" +
+                "-----END RSA PUBLIC KEY-----\n",
+    algorithm: "rsa:PKCS1_OAEP_PADDING:sha256"
 };

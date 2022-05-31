@@ -1,24 +1,29 @@
 import axios from "axios";
-import crypto from "crypto";
 import { Product, ProductDetailsRequest } from "../types";
-
+import { Crypto } from "./Crypto";
 
 export interface OperatorOptions {
+    crypto?: Crypto
     url: string;
 }
 
 
 export class Operator {
     private readonly url: string;
+    private readonly crypto?: Crypto;
 
 
     constructor(options: OperatorOptions) {
         this.url = options.url;
+        this.crypto = options.crypto;
     }
 
 
-    public async announceProduct(product: Product) {
-        const hash = this.createHash(product);
+    public async announceProduct(product: Product): Promise<void> {
+        if (!this.crypto) {
+            return;
+        }
+        const hash = this.crypto.hash(this.createNormalizedProduct(product));
         await axios.post(this.url + "/products", {
             id: product.id,
             uid: product.uid,
@@ -29,14 +34,7 @@ export class Operator {
         });
     }
 
-    private createHash(product: Product): string {
-        return crypto
-            .createHash("sha256")
-            .update(this.createNormalizedProduct(product))
-            .digest("hex");
-    }
-
-    private createNormalizedProduct(product: Product) {
+    private createNormalizedProduct(product: Product): string {
         const productValues: (string | number)[] = [
             product.uid,
             product.id,
@@ -69,7 +67,26 @@ export class Operator {
     }
 
 
-    public async announceProductDetailsRequest(productDetailsRequest: Omit<ProductDetailsRequest, "timestamp">) {
+    public async announceProductDetailsRequest(productDetailsRequest: Omit<ProductDetailsRequest, "timestamp">): Promise<void> {
         await axios.post(this.url + "/product-details-request", productDetailsRequest);
+    }
+
+
+    public async sendProductDetailsResponse(
+        params: {
+            publicKey: string,
+            algorithm: string,
+            product: Product
+        }
+    ): Promise<void> {
+        if (!this.crypto) {
+            return;
+        }
+        const { publicKey, product } = params;
+        const normalizedProduct = this.createNormalizedProduct(product);
+        const encMessage = this.crypto.encrypt(publicKey, normalizedProduct);
+        await axios.post(this.url + "/product-details-response", {
+            message: encMessage
+        });
     }
 }

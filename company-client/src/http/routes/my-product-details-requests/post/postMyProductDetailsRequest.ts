@@ -19,7 +19,8 @@ export const postMyProductDetailsRequestRouter = createRouter({
         getMyProductDetailsRequestStore: () => MyProductDetailsRequestStore.get(),
         crypto: new Crypto(),
         operator: new Operator({
-            url: EnvVars.OPERATOR_URL
+            url: EnvVars.OPERATOR_URL,
+            crypto: new Crypto()
         })
     })
 });

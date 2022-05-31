@@ -30,19 +30,19 @@ export class PostMyProductDetailsRequestService implements RouteService {
 
     public async run(inputs: Inputs): Promise<void> {
         const myProductDetailsRequestStore = this.getMyProductDetailsRequestStore();
-        const key = this.crypto.generateKey();
+        const key = this.crypto.generateKeyPair();
 
         await myProductDetailsRequestStore.add({
             algorithm: key.algorithm,
-            privKey: key.privKey,
-            pubKey: key.pubKey,
+            privateKey: key.privateKey,
+            publicKey: key.publicKey,
             uid: inputs.uid,
             timestamp: 0
         });
 
         await this.operator.announceProductDetailsRequest({
             algorithm: key.algorithm,
-            pubKey: key.pubKey,
+            publicKey: key.publicKey,
             uid: inputs.uid
         });
     }
