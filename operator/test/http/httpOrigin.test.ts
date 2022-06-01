@@ -2,7 +2,7 @@ import request from "supertest";
 import { Contracts } from "../../src/contract/Contracts";
 import { EventBus } from "../../src/contract/interfaces/EventBus";
 import { ROUTE_NAMES } from "../../src/http/constants";
-import { httpServer } from "../../src/http/http";
+import { httpServer } from "../../src/http";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { config } from "../config";
 import { TEST_NEW_PRODUCT } from "../constants";

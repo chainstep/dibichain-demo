@@ -8,7 +8,7 @@ export interface PostProductDetailsRequestServiceOptions {
 
 interface Inputs {
     uid: string;
-    pubKey: string;
+    publicKey: string;
     algorithm: string;
 }
 

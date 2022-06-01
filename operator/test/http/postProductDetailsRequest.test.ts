@@ -1,7 +1,7 @@
 import request from "supertest";
 import { Contracts } from "../../src/contract/Contracts";
 import { EventBus } from "../../src/contract/interfaces/EventBus";
-import { httpServer } from "../../src/http/http";
+import { httpServer } from "../../src/http";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { config } from "../config";
 import { TEST_PRODUCT_DETAILS_REQUEST } from "../constants";
@@ -11,7 +11,7 @@ import { TEST_PRODUCT_DETAILS_REQUEST } from "../constants";
 const mockContract = <unknown> {
     async broadcastProductDetailsRequest(request: {
         uid: string;
-        pubKey: string;
+        publicKey: string;
         algorithm: string;
     }): Promise<void> {
         try {
@@ -31,7 +31,7 @@ if (!config.skipTests.includes("postProductDetailsRequest")) {
 
     it("should post a product details request", async () => {
         await request(httpServer)
-            .post("/product-details-request")
+            .post("/product-details-requests")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .send(TEST_PRODUCT_DETAILS_REQUEST)
             .expect(200);
