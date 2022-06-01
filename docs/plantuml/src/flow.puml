@@ -2,7 +2,9 @@
 autonumber "<b>[00]"
 
 participant "SustainHub" as SUS
+participant "Company A UI" as COMPAU
 participant "Company A" as COMPA
+participant "Company B UI" as COMPBU
 participant "Company B" as COMPB
 participant "Operator" as OP
 participant "Blockchain" as BC
@@ -11,33 +13,97 @@ participant "Blockchain" as BC
 == Issue New Product ==
 
 -> SUS: add product data
-SUS -> COMPA: send product data
-COMPA -> COMPA: store product data
+SUS -> COMPA: send product data 
+note right
+    POST /my-products
+end note
+COMPA -> COMPA: store my product data
+COMPAU -> COMPA: get my products
+note right
+    GET /my-products
+end note
+COMPAU -> COMPA: anounce new product
+note right
+    POST /my-new-products
+end note
 COMPA -> OP: anounce new product\n(id, uid, name, type, number, hash)
+note right
+    POST /new-products
+end note
 OP -> BC: issue new product data\n(id, uid, name, type, number, hash)
+COMPA -> COMPA: store my new product data
+COMPAU -> COMPA: get my new products
+note right
+    GET /my-new-products
+end note
 BC -> COMPB: notify new product\n(id, uid, name, type, number, hash)
+note left
+    event "NewProduct"
+end note
+COMPB -> COMPB: store new product data
+COMPBU -> COMPB: get new products
+note right
+    GET /new-products
+end note
 |||
 
 == Request Product Details ==
 
+COMPBU -> COMPB: request product details
+note right
+    POST /my-product-details-request
+end note
 COMPB -> OP: request product details\n(uid, pubKeyB, algorithm)
+note right
+    POST /product-details-request
+end note
 OP -> BC: issue product details request\n(uid, pubKeyB, algorithm)
+COMPB -> COMPB: store my product\ndetails request
+COMPBU -> COMPB: get my product details requests
+note right
+    GET /my-product-details-requests
+end note
 BC -> COMPA: notify product details request\n(uid, pubKeyB, algorithm)
+note left
+    event "ProductDetailsRequest"
+end note
+COMPA -> COMPA: store product\ndetails request
+COMPAU -> COMPA: get product details requests
+note right
+    GET /product-details-requests
+end note
 |||
 
 == Provide Product Details ==
+COMPAU -> COMPA: send product details
+note right
+    POST /my-product-details-responses
+end note
 
 COMPA -> COMPA: get product data
 COMPA -> COMPA: encrypt(product data, pubKeyB)
 COMPA -> OP: send encrypted product data\n(uid, pubKeyB, encData)
+note right
+    POST /product-details-responses
+end note
+COMPA -> COMPA: update product details request\ndata with responded
 |||
 
 == Get Product Details ==
 
 COMPB -> OP: get encrypted product data\n(uid, pubKeyB)
+note right
+    GET /product-details-responses
+end note
 COMPB -> COMPB: decrypt product data
 COMPB -> COMPB: hash product data
 COMPB -> COMPB: validate hashes
+COMPB -> COMPB: store product data
+COMPBU -> COMPB: get products
+note right
+    GET /products
+end note
+
 |||
 
 @enduml
