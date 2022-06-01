@@ -43,7 +43,7 @@ interface EventBusInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "broadcastProductDetailsRequest",
-    values: [{ uid: string; pubKey: string; algorithm: string }]
+    values: [{ uid: string; publicKey: string; algorithm: string }]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -117,14 +117,14 @@ export type ProductDetailsRequestEvent = TypedEvent<
     string,
     [string, string, string] & {
       uid: string;
-      pubKey: string;
+      publicKey: string;
       algorithm: string;
     }
   ] & {
     uid: string;
     productDetailsRequestData: [string, string, string] & {
       uid: string;
-      pubKey: string;
+      publicKey: string;
       algorithm: string;
     };
   }
@@ -189,7 +189,7 @@ export class EventBus extends BaseContract {
     broadcastProductDetailsRequest(
       productDetailsRequestData: {
         uid: string;
-        pubKey: string;
+        publicKey: string;
         algorithm: string;
       },
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -222,7 +222,7 @@ export class EventBus extends BaseContract {
   broadcastProductDetailsRequest(
     productDetailsRequestData: {
       uid: string;
-      pubKey: string;
+      publicKey: string;
       algorithm: string;
     },
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -255,7 +255,7 @@ export class EventBus extends BaseContract {
     broadcastProductDetailsRequest(
       productDetailsRequestData: {
         uid: string;
-        pubKey: string;
+        publicKey: string;
         algorithm: string;
       },
       overrides?: CallOverrides
@@ -352,7 +352,7 @@ export class EventBus extends BaseContract {
         string,
         [string, string, string] & {
           uid: string;
-          pubKey: string;
+          publicKey: string;
           algorithm: string;
         }
       ],
@@ -360,7 +360,7 @@ export class EventBus extends BaseContract {
         uid: string;
         productDetailsRequestData: [string, string, string] & {
           uid: string;
-          pubKey: string;
+          publicKey: string;
           algorithm: string;
         };
       }
@@ -374,7 +374,7 @@ export class EventBus extends BaseContract {
         string,
         [string, string, string] & {
           uid: string;
-          pubKey: string;
+          publicKey: string;
           algorithm: string;
         }
       ],
@@ -382,7 +382,7 @@ export class EventBus extends BaseContract {
         uid: string;
         productDetailsRequestData: [string, string, string] & {
           uid: string;
-          pubKey: string;
+          publicKey: string;
           algorithm: string;
         };
       }
@@ -405,7 +405,7 @@ export class EventBus extends BaseContract {
     broadcastProductDetailsRequest(
       productDetailsRequestData: {
         uid: string;
-        pubKey: string;
+        publicKey: string;
         algorithm: string;
       },
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -439,7 +439,7 @@ export class EventBus extends BaseContract {
     broadcastProductDetailsRequest(
       productDetailsRequestData: {
         uid: string;
-        pubKey: string;
+        publicKey: string;
         algorithm: string;
       },
       overrides?: Overrides & { from?: string | Promise<string> }
