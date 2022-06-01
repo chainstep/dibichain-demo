@@ -1,5 +1,5 @@
 import { IMyProductDetailsRequestStore } from "../../../../storage/my-product-details-request/IMyProductDetailsRequestStore";
-import { ProductDetailsRequest } from "../../../../types";
+import { MyProductDetailsRequest } from "../../../../types";
 import { RouteService } from "../../routerFactory";
 
 
@@ -9,7 +9,7 @@ export interface GetMyProductDetailsRequestsServiceOptions {
 
 
 interface Outputs {
-    myProductDetailsRequests: ProductDetailsRequest[];
+    myProductDetailsRequests: MyProductDetailsRequest[];
 }
 
 interface Inputs {
@@ -28,15 +28,7 @@ export class GetMyProductDetailsRequestsService implements RouteService {
 
     public async run(inputs: Inputs): Promise<Outputs> {
         const myProductDetailsRequestStore = this.getMyProductDetailsRequestStore();
-        const myProductDetailsRequests = (await myProductDetailsRequestStore.find(inputs)).map((request) => {
-            return <ProductDetailsRequest> {
-                algorithm: request.algorithm,
-                publicKey: request.publicKey,
-                timestamp: request.timestamp,
-                uid: request.uid,
-                responded: request.responded
-            };
-        });
+        const myProductDetailsRequests = await myProductDetailsRequestStore.find(inputs);
         return { myProductDetailsRequests };
     }
 }
