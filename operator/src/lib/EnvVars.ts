@@ -18,6 +18,8 @@ export class EnvVars {
     public static EVENT_BUS_CONTRACT_ADDRESS = "";
     public static RPC_URL = "";
     public static ETHEREUM_PRIVATE_KEY = "";
+    public static MONGO_DB_URL = "";
+    public static USE_MONGO_DB = false;
 
 
     public static load(): void {
@@ -43,7 +45,13 @@ export class EnvVars {
         });
         this.setVar("ETHEREUM_PRIVATE_KEY", (envVar) => {
             this.ETHEREUM_PRIVATE_KEY = String(envVar);
-        }, "");
+        });
+        this.setVar("MONGO_DB_URL", (envVar) => {
+            this.MONGO_DB_URL = String(envVar);
+        });
+        this.setVar("USE_MONGO_DB", (envVar) => {
+            this.USE_MONGO_DB = Boolean(envVar);
+        }, false);
     }
 
     private static set_RUN_CONTEXT(): void {
