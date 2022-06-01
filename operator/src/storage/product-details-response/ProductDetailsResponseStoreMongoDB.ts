@@ -36,10 +36,8 @@ export class ProductDetailsResponseStoreMongoDB implements IProductDetailsRespon
     }
 
 
-    public async find(params: {uid?: string}): Promise<ProductDetailsResponse[]> {
-        const { uid } = params;
-        const query = uid ? { uid } : {};
-
+    public async find(params: {uid: string, publicKey: string}): Promise<ProductDetailsResponse[]> {
+        const query = params;
         await connect(this.mongoUrl);
         const doc = await ProductDetailsResponseModel.find(query, REMOVE_MONGO_FIELDS).lean();
         return doc;

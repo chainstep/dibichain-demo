@@ -11,12 +11,11 @@ export class ProductDetailsResponseStoreInMemory extends AInMemoryStore implemen
     }
 
 
-    public async find(params: {uid?: string}): Promise<ProductDetailsResponse[]> {
-        const { uid } = params;
-        if (uid) {
-            return this._find("uid", uid);
-        }
-        return this.store;
+    public async find(params: {uid: string, publicKey: string}): Promise<ProductDetailsResponse[]> {
+        const { uid, publicKey } = params;
+        return this.store.filter((object) => {
+            return object.uid === uid && object.publicKey === publicKey;
+        });
     }
 
 

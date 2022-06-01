@@ -3,6 +3,7 @@ export const config = {
         // "postProduct",
         // "httpOrigin",
         // "postProductDetailsRequest",
-        // "postProductDetailsResponse"
+        // "postProductDetailsResponse",
+        // "getProductDetailsResponse"
     ]
 };
