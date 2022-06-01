@@ -19,6 +19,17 @@ You can run the dibichain demo locally on your unix based machine. If you're on 
 ./scripts/reset-demo.sh
 ```
 
+**URLs**
+
+- operator
+  - http://localhost:3000
+- logistex
+  - http://localhost:3100
+- logistly
+  - http://localhost:3200
+- explorer
+  - http://localhost:4000
+
 ## Starting the demo
 First you need to build the docker images with:
 ```bash
