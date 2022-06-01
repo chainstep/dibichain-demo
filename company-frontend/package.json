@@ -31,6 +31,7 @@
     "@chakra-ui/react": "^1.6.9",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "axios": "^0.27.2",
     "dotenv": "^10.0.0",
     "env-cmd": "^10.1.0",
     "framer-motion": "^4",
@@ -38,6 +39,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
-    "sass": "^1.38.2"
+    "sass": "^1.38.2",
+    "usehooks-ts": "^2.5.4"
   }
 }

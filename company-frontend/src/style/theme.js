@@ -4,19 +4,18 @@ const theme = extendTheme({
   styles: {
     global: {
       'html, body': {
-        color: '#17243E',
       },
     },
   },
   fonts: {
-    body: 'Montserrat',
-    heading: 'Automate'
+    body: '',
+    heading: ''
   },
   components: {
     Button: {
       // 1. We can update the base styles
       baseStyle: {
-        fontWeight: 'bold', // Normally, it is "semibold"
+        fontWeight: '', // Normally, it is "semibold"
       },
     },
   },
@@ -30,7 +29,7 @@ const theme = extendTheme({
      }
   },
   shadows: {
-    outline: '0 0 0 2px #EC6746;'
+    outline: ''
   }
 });
 
