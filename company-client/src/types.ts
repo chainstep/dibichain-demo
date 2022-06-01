@@ -34,6 +34,8 @@ export interface NewProduct extends ProductEvent {
     hash: string;
 }
 
+export type MyNewProduct = NewProduct
+
 export interface NewProductEventParams {
     id: string;
     uid: string;

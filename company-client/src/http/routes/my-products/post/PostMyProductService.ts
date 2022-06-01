@@ -1,6 +1,5 @@
 import { BadRequestError } from "@atz3n/express-utils";
 import { randomUUID } from "crypto";
-import { Operator } from "../../../../lib/Operator";
 import { IMyProductStore } from "../../../../storage/my-product/IMyProductStore";
 import { MyProduct } from "../../../../types";
 import { RouteService } from "../../routerFactory";
@@ -8,7 +7,6 @@ import { RouteService } from "../../routerFactory";
 
 export interface PostMyProductServiceOptions {
     getMyProductStore: () => IMyProductStore;
-    operator: Operator;
 }
 
 
@@ -20,12 +18,10 @@ interface Inputs extends Omit<MyProduct, "id" | "uid"> {
 
 export class PostMyProductService implements RouteService {
     private readonly getMyProductStore: () => IMyProductStore;
-    private readonly operator: Operator;
 
 
     constructor(options: PostMyProductServiceOptions) {
         this.getMyProductStore = options.getMyProductStore;
-        this.operator = options.operator;
     }
 
 
@@ -46,6 +42,5 @@ export class PostMyProductService implements RouteService {
         }
 
         await myProductStore.upsert(<MyProduct> myProduct);
-        await this.operator.announceProduct(<MyProduct> myProduct);
     }
 }
