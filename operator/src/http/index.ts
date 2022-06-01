@@ -10,6 +10,8 @@ import { EnvVars } from "../lib/EnvVars";
 import { logErrors } from "./middlewares/errorLogging";
 import { logHttp } from "./middlewares/httpLogging";
 import { postProductDetailsRequestRouter } from "./routes/product-details-request/post/postProductDetailsRequest";
+import { getProductDetailsResponseRouter } from "./routes/product-details-response/get/GetProductDetailsResponses";
+import { postProductDetailsResponseRouter } from "./routes/product-details-response/post/postProductDetailsResponse";
 import { postProductRouter } from "./routes/products/post/postProduct";
 
 
@@ -28,6 +30,8 @@ httpServer.use(validateOrigin(EnvVars.ALLOWED_ORIGINS));
 
 httpServer.use(postProductRouter);
 httpServer.use(postProductDetailsRequestRouter);
+httpServer.use(postProductDetailsResponseRouter);
+httpServer.use(getProductDetailsResponseRouter);
 
 httpServer.all("*", (request, response) => {
   throw new NotFoundError();

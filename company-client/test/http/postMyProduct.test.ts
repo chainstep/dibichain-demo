@@ -32,7 +32,7 @@ if (!config.skipTests.includes("postMyProduct")) {
     });
 
 
-    it("should post a product", async () => {
+    it("should post my product", async () => {
         await request(httpServer)
             .post("/my-products")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])

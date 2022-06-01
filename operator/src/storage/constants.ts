@@ -1,0 +1,1 @@
+export const REMOVE_MONGO_FIELDS = "-_id -__v";
