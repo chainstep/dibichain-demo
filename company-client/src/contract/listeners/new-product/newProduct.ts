@@ -1,26 +1,23 @@
+import { MyNewProductStore } from "../../../storage/my-new-product/MyNewProductStore";
+import { NewProductStore } from "../../../storage/new-product/NewProductStore";
 import { ProductStore } from "../../../storage/product/ProductStore";
+import { SkipProductService } from "../../common/SkipProductsService";
 import { ContractEventListener } from "../contractEventHandlerFactory";
 import { NewProductService } from "./NewProductService";
-import { SkipProductsService } from "../../common/SkipProductsService";
-import { MyProductStore } from "../../../storage/my-product/MyProductStore";
-import { NewProductStore } from "../../../storage/new-product/NewProductStore";
 
 
 export function createNewProductListener(): ContractEventListener {
     return {
         eventName: "NewProduct",
         services: [
-            new SkipProductsService({
-                getStore: () => NewProductStore.get()
-            }),
-            new SkipProductsService({
-                getStore: () => ProductStore.get()
-            }),
-            new SkipProductsService({
-                getStore: () => MyProductStore.get()
+            new SkipProductService({
+                getStores: [
+                    () => ProductStore.get()
+                ]
             }),
             new NewProductService({
-                getNewProductStore: () => NewProductStore.get()
+                getNewProductStore: () => NewProductStore.get(),
+                getMyNewProductStore: () => MyNewProductStore.get()
             })
         ]
     };

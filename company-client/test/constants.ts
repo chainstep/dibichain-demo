@@ -1,4 +1,4 @@
-import { NewProduct, NewProductEventParams, MyProductDetailsRequest, ProductDetailsRequest, ProductDetailsRequestEventParams } from "../src/types";
+import { NewProduct, NewProductEventParams, MyProductDetailsRequest, ProductDetailsRequest, ProductDetailsRequestEventParams, Key } from "../src/types";
 import { Product } from "../src/types";
 
 
@@ -50,6 +50,20 @@ export const TEST_MY_PRODUCT_DETAILS_REQUEST: MyProductDetailsRequest = {
                 "s8PZHnw6o+C2/i+Ea1ZAkgU/3ta6ztX/5Ak2F9HFAp6tMLqK3Ac+A1T45tb46NaJ\n" +
                 "iVocbo+Nrht97J2OnvCd2tmGsxeaiMZ2AwIDAQAB\n" +
                 "-----END RSA PUBLIC KEY-----\n",
+    algorithm: "rsa_aes",
+    timestamp: 0,
+    responded: false
+};
+
+export const TEST_KEY: Key = {
+    publicKey:  "-----BEGIN RSA PUBLIC KEY-----\n" +
+                "MIIBCgKCAQEA4cHLrQ5lgyjP/idKwlsnp0+nhvY1BhwE39Dxn8no6DbDl/W0RRVM\n" +
+                "eSiP4Ny1AoUzalkzr0fmugUIy6skmuePqqXbes/4aCisJMB86izQeGZhac2k8ofk\n" +
+                "9ivedD4VOOcSLqenMVRdqG/1jFxQmwtfe7pt0Mw0AorYN8d5fXLGPFDjXKaO7cfr\n" +
+                "OBWY4AQlKF5tkiTiwXoqorjIBl+2S3dh+/xzYHMyF46s9sDkHkmpNK1JquFK8VJw\n" +
+                "s8PZHnw6o+C2/i+Ea1ZAkgU/3ta6ztX/5Ak2F9HFAp6tMLqK3Ac+A1T45tb46NaJ\n" +
+                "iVocbo+Nrht97J2OnvCd2tmGsxeaiMZ2AwIDAQAB\n" +
+                "-----END RSA PUBLIC KEY-----\n",
     privateKey: "-----BEGIN RSA PRIVATE KEY-----\n" +
                 "MIIEpAIBAAKCAQEA4cHLrQ5lgyjP/idKwlsnp0+nhvY1BhwE39Dxn8no6DbDl/W0\n" +
                 "RRVMeSiP4Ny1AoUzalkzr0fmugUIy6skmuePqqXbes/4aCisJMB86izQeGZhac2k\n" +
@@ -78,8 +92,6 @@ export const TEST_MY_PRODUCT_DETAILS_REQUEST: MyProductDetailsRequest = {
                 "WGohoShkXznHGwpjljt9NJXGelZ9LuIFlql7LP8CNHYtT4l5JmnWsg==\n" +
                 "-----END RSA PRIVATE KEY-----\n",
     algorithm: "rsa_aes",
-    timestamp: 0,
-    responded: false
 };
 
 export const TEST_PRODUCT_DETAILS_REQUEST: ProductDetailsRequest = {

@@ -2,12 +2,12 @@ import { body } from "express-validator";
 import { Contracts } from "../../../../contract/Contracts";
 import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
 import { createRouter } from "../../routerFactory";
-import { PostProductService } from "./PostProductService";
+import { PostNewProductService } from "./PostNewProductService";
 
 
-export const postProductRouter = createRouter({
+export const postNewProductRouter = createRouter({
     method: "post",
-    route: ROUTE_NAMES.products,
+    route: ROUTE_NAMES.newProducts,
     inputPath: "body",
     inputChecks: [
         body("uid").isUUID().withMessage(INVALID_INPUT_TEXT + "uid"),
@@ -17,7 +17,7 @@ export const postProductRouter = createRouter({
         body("number").isString().withMessage(INVALID_INPUT_TEXT + "number"),
         body("hash").isHash("sha256").withMessage(INVALID_INPUT_TEXT + "hash")
     ],
-    service: new PostProductService({
+    service: new PostNewProductService({
         getEventBus: () => Contracts.getEventBus()
     })
 });

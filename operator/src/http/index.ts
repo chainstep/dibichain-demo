@@ -12,7 +12,7 @@ import { logHttp } from "./middlewares/httpLogging";
 import { postProductDetailsRequestRouter } from "./routes/product-details-request/post/postProductDetailsRequest";
 import { getProductDetailsResponseRouter } from "./routes/product-details-response/get/GetProductDetailsResponses";
 import { postProductDetailsResponseRouter } from "./routes/product-details-response/post/postProductDetailsResponse";
-import { postProductRouter } from "./routes/products/post/postProduct";
+import { postNewProductRouter } from "./routes/new-products/post/postNewProduct";
 
 
 export const httpServer = express();
@@ -28,7 +28,7 @@ httpServer.use(rateLimit({
 }));
 httpServer.use(validateOrigin(EnvVars.ALLOWED_ORIGINS));
 
-httpServer.use(postProductRouter);
+httpServer.use(postNewProductRouter);
 httpServer.use(postProductDetailsRequestRouter);
 httpServer.use(postProductDetailsResponseRouter);
 httpServer.use(getProductDetailsResponseRouter);

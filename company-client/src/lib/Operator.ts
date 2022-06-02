@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Product, ProductDetailsRequest } from "../types";
+import { MyNewProduct, Product, ProductDetailsRequest } from "../types";
 import { Crypto } from "./Crypto";
 
 export interface OperatorOptions {
@@ -19,19 +19,21 @@ export class Operator {
     }
 
 
-    public async announceProduct(product: Product): Promise<void> {
+    public async announceNewProduct(product: Product): Promise<MyNewProduct> {
         if (!this.crypto) {
-            return;
+            return <MyNewProduct> {};
         }
         const hash = this.crypto.hash(this.createNormalizedProduct(product));
-        await axios.post(this.url + "/products", {
+        const myNewProduct = {
             id: product.id,
             uid: product.uid,
             name: product.name,
             type: product.type,
             number: product.number,
             hash
-        });
+        };
+        await axios.post(this.url + "/new-products", myNewProduct);
+        return { ...myNewProduct, timestamp: 0 };
     }
 
     private createNormalizedProduct(product: Product): string {

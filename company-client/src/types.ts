@@ -34,6 +34,8 @@ export interface NewProduct extends ProductEvent {
     hash: string;
 }
 
+export type MyNewProduct = NewProduct
+
 export interface NewProductEventParams {
     id: string;
     uid: string;
@@ -55,6 +57,10 @@ export interface ProductDetailsRequest extends ProductEvent {
     responded: boolean;
 }
 
-export interface MyProductDetailsRequest extends ProductDetailsRequest {
+export type MyProductDetailsRequest = ProductDetailsRequest
+
+export interface Key {
     privateKey: string;
+    publicKey: string;
+    algorithm: string;
 }

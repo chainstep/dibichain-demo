@@ -32,14 +32,14 @@ const mockContract = <unknown> {
 };
 
 
-if (!config.skipTests.includes("postProduct")) {
+if (!config.skipTests.includes("postNewProduct")) {
     Contracts.init({
         eventBus: <EventBus> mockContract
     });
 
-    it("should post a product", async () => {
+    it("should post a new product", async () => {
         await request(httpServer)
-            .post("/products")
+            .post("/new-products")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .send(TEST_NEW_PRODUCT)
             .expect(200);
