@@ -13,14 +13,19 @@ import { TEST_NEW_PRODUCT, TEST_PRODUCT } from "../constants";
 jest.mock("axios", () => {
     return {
         post: async (url: string, data: never): Promise<void> => {
-            const { id, uid, name, hash, type, number } = data;
-            expect(url).toEqual("http://operator.dummy.io/new-products");
-            expect(id).toEqual(TEST_NEW_PRODUCT.id);
-            expect(uid).toEqual(TEST_NEW_PRODUCT.uid);
-            expect(name).toEqual(TEST_NEW_PRODUCT.name);
-            expect(type).toEqual(TEST_NEW_PRODUCT.type);
-            expect(number).toEqual(TEST_NEW_PRODUCT.number);
-            expect(hash).toEqual(TEST_NEW_PRODUCT.hash);
+            try {
+                const { id, uid, name, hash, type, number } = data;
+                expect(url).toEqual("http://operator.dummy.io/new-products");
+                expect(id).toEqual(TEST_NEW_PRODUCT.id);
+                expect(uid).toEqual(TEST_NEW_PRODUCT.uid);
+                expect(name).toEqual(TEST_NEW_PRODUCT.name);
+                expect(type).toEqual(TEST_NEW_PRODUCT.type);
+                expect(number).toEqual(TEST_NEW_PRODUCT.number);
+                expect(hash).toEqual(TEST_NEW_PRODUCT.hash);
+            } catch (error) {
+                console.error((<Error> error).message);
+                throw error;
+            }
         }
     };
 });

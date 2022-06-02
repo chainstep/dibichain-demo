@@ -7,23 +7,6 @@ import { config } from "../config";
 import { TEST_PRODUCT } from "../constants";
 
 
-// mock axios
-jest.mock("axios", () => {
-    return {
-        post: async (url: string, data: never): Promise<void> => {
-            const { id, uid, name, hash, type, number } = data;
-            expect(url).toEqual("http://operator.dummy.io/products");
-            expect(id).toEqual(TEST_PRODUCT.id);
-            expect(uid).toEqual(TEST_PRODUCT.uid);
-            expect(name).toEqual(TEST_PRODUCT.name);
-            expect(type).toEqual(TEST_PRODUCT.type);
-            expect(number).toEqual(TEST_PRODUCT.number);
-            expect(hash).toEqual("ab393730632e6b821d2c512e3336e9e45eaa23f742c21045317930b6830bee90");
-        }
-    };
-});
-
-
 if (!config.skipTests.includes("postMyProduct")) {
     const myProductStore = (<MyProductStoreInMemory> MyProductStore.get());
 

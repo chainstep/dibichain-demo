@@ -14,19 +14,24 @@ jest.mock("axios", () => {
     return {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         post: async (url: string, data: any): Promise<void> => {
-            const { publicKey, message, uid } = data;
-            expect(url).toEqual("http://operator.dummy.io/product-details-responses");
-            expect(publicKey).toEqual(TEST_PRODUCT_DETAILS_REQUEST.publicKey);
-            expect(uid).toEqual(TEST_PRODUCT_DETAILS_REQUEST.uid);
-            expect(message.secret).toBeDefined();
-            expect(message.cipherText).toBeDefined();
-            expect(message.initVector).toBeDefined();
+            try {
+                const { publicKey, message, uid } = data;
+                expect(url).toEqual("http://operator.dummy.io/product-details-responses");
+                expect(publicKey).toEqual(TEST_PRODUCT_DETAILS_REQUEST.publicKey);
+                expect(uid).toEqual(TEST_PRODUCT_DETAILS_REQUEST.uid);
+                expect(message.secret).toBeDefined();
+                expect(message.cipherText).toBeDefined();
+                expect(message.initVector).toBeDefined();
+            } catch (error) {
+                console.error((<Error> error).message);
+                throw error;
+            }
         }
     };
 });
 
 
-if (!config.skipTests.includes("postProductDetailsResponse")) {
+if (!config.skipTests.includes("postMyProductDetailsResponse")) {
     const productDetailsRequestStore = (<ProductDetailsRequestStoreInMemory> ProductDetailsRequestStore.get());
     const myProductStore = (<MyProductStoreInMemory> MyProductStore.get());
 
