@@ -1,20 +1,20 @@
 import { EventBus } from "../../../../contract/interfaces/EventBus";
-import { Product } from "../../../../types";
+import { NewProduct } from "../../../../types";
 import { RouteService } from "../../routerFactory";
 
 
-export interface PostProductServiceOptions {
+export interface PostNewProductServiceOptions {
     getEventBus: () => EventBus
 }
 
-type Inputs = Product
+type Inputs = NewProduct
 
 
-export class PostProductService implements RouteService {
+export class PostNewProductService implements RouteService {
     private readonly getEventBus: () => EventBus;
 
 
-    constructor(options: PostProductServiceOptions) {
+    constructor(options: PostNewProductServiceOptions) {
         this.getEventBus = options.getEventBus;
     }
 
