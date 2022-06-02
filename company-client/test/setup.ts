@@ -1,5 +1,7 @@
 import { BlockchainInfoStore } from "../src/storage/blockchain/BlockchainInfoStore";
 import { createBlockchainInfoStore } from "../src/storage/blockchain/blockchainInfoStoreFactory";
+import { KeyStore } from "../src/storage/key/KeyStore";
+import { createKeyStore } from "../src/storage/key/KeyStoreFactory";
 import { MyNewProductStore } from "../src/storage/my-new-product/MyNewProductStore";
 import { createMyNewProductStore } from "../src/storage/my-new-product/myNewProductStoreFactory";
 import { MyProductDetailsRequestStore } from "../src/storage/my-product-details-request/MyProductDetailsRequestStore";
@@ -25,6 +27,7 @@ NewProductStore.init(createNewProductStore(StorageType.IN_MEMORY));
 MyNewProductStore.init(createMyNewProductStore(StorageType.IN_MEMORY));
 MyProductDetailsRequestStore.init(createMyProductDetailsRequestStore(StorageType.IN_MEMORY));
 ProductDetailsRequestStore.init(createProductDetailsRequestStore(StorageType.IN_MEMORY));
+KeyStore.init(createKeyStore(StorageType.IN_MEMORY));
 
 initLogger({
     level: "all",
