@@ -17,7 +17,7 @@ jest.mock("axios", () => {
         post: async (url: string, data: never): Promise<void> => {
             try {
                 const { uid, publicKey, algorithm } = data;
-                expect(url).toEqual("http://operator.dummy.io/product-details-request");
+                expect(url).toEqual("http://operator.dummy.io/product-details-requests");
                 expect(uid).toEqual(TEST_MY_PRODUCT_DETAILS_REQUEST.uid);
                 expect(publicKey).toEqual(TEST_MY_PRODUCT_DETAILS_REQUEST.publicKey);
                 expect(algorithm).toEqual(TEST_MY_PRODUCT_DETAILS_REQUEST.algorithm);
