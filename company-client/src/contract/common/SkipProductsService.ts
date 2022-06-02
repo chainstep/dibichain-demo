@@ -6,33 +6,40 @@ interface Store {
     find(params: {uid?: string}): Promise<{uid: string}[]>;
 }
 
-interface SkipProductsServiceOptions {
-    getStore: () => Store;
-    skipNonExistingProducts?: boolean
+interface SkipProductServiceOptions {
+    getStores: (() => Store)[];
+    skipIfNotFound?: boolean
 }
 
 
-export class SkipProductsService implements ContractEventHandlerService {
-    private readonly getStore: () => Store;
-    private readonly skipNonExistingProducts?: boolean;
+export class SkipProductService implements ContractEventHandlerService {
+    private readonly getStores: (() => Store)[];
+    private readonly skipNonExistingProduct?: boolean;
 
 
-    constructor(options: SkipProductsServiceOptions) {
-        this.getStore = options.getStore;
-        this.skipNonExistingProducts = options.skipNonExistingProducts;
+    constructor(options: SkipProductServiceOptions) {
+        this.getStores = options.getStores;
+        this.skipNonExistingProduct = options.skipIfNotFound;
     }
 
 
     async run(inputs: unknown[]): Promise<ContractEventServiceCode> {
         const product = <{uid: string}> inputs[1];
-        const store = this.getStore();
+        const stores = <Store[]> [];
+        this.getStores.forEach(getStore => stores.push(getStore()));
 
         try {
-            const products = await store.find({ uid: product.uid });
-            if (!this.skipNonExistingProducts && products.length !== 0) {
+            let products = <{uid: string}[]> [];
+            for (let i = 0 ; i < stores.length ; i++) {
+                const store = stores[i];
+                const _products = await store.find({ uid: product.uid });
+                products = [...products, ..._products];
+            }
+
+            if (!this.skipNonExistingProduct && products.length !== 0) {
                 return ContractEventServiceCode.STOP;
             }
-            if (this.skipNonExistingProducts && products.length === 0) {
+            if (this.skipNonExistingProduct && products.length === 0) {
                 return ContractEventServiceCode.STOP;
             }
         } catch (error) {
