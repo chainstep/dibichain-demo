@@ -27,12 +27,12 @@ const MyProductsPage: React.FC = () => {
 
   useEffect(() => {
     getNewProducts().then(({ data }) => setNewProducts(data.newProducts));
-    //getMyNewProducts().then(({ data }) => setMyNewProducts(data.newProducts));
+    getMyNewProducts().then(({ data }) => setMyNewProducts(data.myNewProducts));
   }, []);
 
   useInterval(() => {
     getNewProducts().then(({ data }) => setNewProducts(data.newProducts));
-    //getMyNewProducts().then(({ data }) => setMyNewProducts(data.newProducts));
+    getMyNewProducts().then(({ data }) => setMyNewProducts(data.myNewProducts));
   }, 10000);
 
   const onButtonClick = (uid: string) => {

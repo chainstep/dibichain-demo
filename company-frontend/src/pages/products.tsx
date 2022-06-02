@@ -32,13 +32,13 @@ const MyProductsPage: React.FC = () => {
 
   useEffect(() => {
     getMyProducts().then(({ data }) => setMyProducts(data.myProducts));
-    //getMyNewProducts().then(({ data }) => setMyNewProducts(data.myProducts));
+    getMyNewProducts().then(({ data }) => setMyNewProducts(data.myNewProducts));
     //getProducts().then(({ data }) => setProducts(data.products));
   }, []);
 
   useInterval(() => {
     getMyProducts().then(({ data }) => setMyProducts(data.myProducts));
-    //getMyNewProducts().then(({ data }) => setMyNewProducts(data.myProducts));
+    getMyNewProducts().then(({ data }) => setMyNewProducts(data.myNewProducts));
     //getProducts().then(({ data }) => setProducts(data.products));
   }, 10000);
 
