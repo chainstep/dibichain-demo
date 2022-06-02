@@ -32,7 +32,7 @@ export class Operator {
             number: product.number,
             hash
         };
-        await axios.post(this.url + "/products", { myNewProduct });
+        await axios.post(this.url + "/new-products", myNewProduct);
         return { ...myNewProduct, timestamp: 0 };
     }
 

@@ -5,11 +5,12 @@ export const config = {
         // "httpOrigin",
         // "newProduct",
         // "getNewProducts",
+        // "getMyNewProducts",
+        // "postMyNewProduct",
         // "postMyProductDetailsRequest",
         // "getMyProductDetailsRequests",
         // "productDetailsRequest",
         // "getProductDetailsRequests",
-        // "postProductDetailsResponse"
-        // "getMyNewProducts"
+        // "postProductDetailsResponse",
     ]
 };
