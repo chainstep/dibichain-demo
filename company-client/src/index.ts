@@ -9,6 +9,10 @@ import { EnvVars, RUN_CONTEXT } from "./lib/EnvVars";
 import { RPCProvider } from "./lib/RPCProvider";
 import { BlockchainInfoStore } from "./storage/blockchain/BlockchainInfoStore";
 import { createBlockchainInfoStore } from "./storage/blockchain/blockchainInfoStoreFactory";
+import { KeyStore } from "./storage/key/KeyStore";
+import { createKeyStore } from "./storage/key/KeyStoreFactory";
+import { MyNewProductStore } from "./storage/my-new-product/MyNewProductStore";
+import { createMyNewProductStore } from "./storage/my-new-product/myNewProductStoreFactory";
 import { MyProductDetailsRequestStore } from "./storage/my-product-details-request/MyProductDetailsRequestStore";
 import { createMyProductDetailsRequestStore } from "./storage/my-product-details-request/myProductDetailsRequestStoreFactory";
 import { MyProductStore } from "./storage/my-product/MyProductStore";
@@ -39,15 +43,19 @@ async function main(): Promise<void> {
         ProductStore.init(createProductStore(StorageType.IN_MEMORY));
         MyProductStore.init(createMyProductStore(StorageType.IN_MEMORY));
         NewProductStore.init(createNewProductStore(StorageType.IN_MEMORY));
+        MyNewProductStore.init(createMyNewProductStore(StorageType.IN_MEMORY));
         MyProductDetailsRequestStore.init(createMyProductDetailsRequestStore(StorageType.IN_MEMORY));
         ProductDetailsRequestStore.init(createProductDetailsRequestStore(StorageType.IN_MEMORY));
+        KeyStore.init(createKeyStore(StorageType.IN_MEMORY));
     } else {
         BlockchainInfoStore.init(createBlockchainInfoStore(StorageType.MONGO_DB));
         ProductStore.init(createProductStore(StorageType.MONGO_DB));
         MyProductStore.init(createMyProductStore(StorageType.MONGO_DB));
         NewProductStore.init(createNewProductStore(StorageType.MONGO_DB));
+        MyNewProductStore.init(createMyNewProductStore(StorageType.MONGO_DB));
         MyProductDetailsRequestStore.init(createMyProductDetailsRequestStore(StorageType.MONGO_DB));
         ProductDetailsRequestStore.init(createProductDetailsRequestStore(StorageType.MONGO_DB));
+        KeyStore.init(createKeyStore(StorageType.MONGO_DB));
     }
 
     logger.info("Init RPC provider...");

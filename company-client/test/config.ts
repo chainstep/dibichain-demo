@@ -3,12 +3,14 @@ export const config = {
         // "getMyProducts",
         // "postMyProduct",
         // "httpOrigin",
-        // "newProduct",
         // "getNewProducts",
+        // "getMyNewProducts",
+        // "postMyNewProduct",
         // "postMyProductDetailsRequest",
         // "getMyProductDetailsRequests",
-        // "productDetailsRequest",
         // "getProductDetailsRequests",
-        // "postProductDetailsResponse"
+        // "postMyProductDetailsResponse",
+        // "newProduct",
+        // "productDetailsRequest",
     ]
 };

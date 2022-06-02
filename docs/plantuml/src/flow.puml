@@ -10,7 +10,7 @@ participant "Operator" as OP
 participant "Blockchain" as BC
 
 
-== Issue New Product ==
+== Getting Product from SustainHub ==
 
 -> SUS: add product data
 SUS -> COMPA: send product data 
@@ -22,6 +22,10 @@ COMPAU -> COMPA: get my products
 note right
     GET /my-products
 end note
+|||
+
+== Announcing new Product ==
+
 COMPAU -> COMPA: anounce new product
 note right
     POST /my-new-products
@@ -47,7 +51,7 @@ note right
 end note
 |||
 
-== Request Product Details ==
+== Requesting Product Details ==
 
 COMPBU -> COMPB: request product details
 note right
@@ -74,7 +78,7 @@ note right
 end note
 |||
 
-== Provide Product Details ==
+== Providing Product Details ==
 COMPAU -> COMPA: send product details
 note right
     POST /my-product-details-responses
@@ -89,7 +93,7 @@ end note
 COMPA -> COMPA: update product details request\ndata with responded
 |||
 
-== Get Product Details ==
+== Getting Product Details ==
 
 COMPB -> OP: get encrypted product data\n(uid, pubKeyB)
 note right

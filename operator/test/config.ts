@@ -1,6 +1,6 @@
 export const config = {
     skipTests: <string[]> [
-        // "postProduct",
+        // "postNewProduct",
         // "httpOrigin",
         // "postProductDetailsRequest",
         // "postProductDetailsResponse",

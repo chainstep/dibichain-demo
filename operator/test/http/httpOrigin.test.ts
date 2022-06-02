@@ -30,7 +30,7 @@ if (!config.skipTests.includes("httpOrigin")) {
 
     it("should accept requests from known origins", async () => {
         await request(httpServer)
-            .post(ROUTE_NAMES.products)
+            .post(ROUTE_NAMES.newProducts)
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .send(TEST_NEW_PRODUCT)
             .expect(200);
@@ -39,7 +39,7 @@ if (!config.skipTests.includes("httpOrigin")) {
 
     it("should revert requests from unknown origins", async () => {
         await request(httpServer)
-        .post(ROUTE_NAMES.products)
+        .post(ROUTE_NAMES.newProducts)
         .set("Origin", "http://unknown.domain")
         .send(TEST_NEW_PRODUCT)
         .expect(401);

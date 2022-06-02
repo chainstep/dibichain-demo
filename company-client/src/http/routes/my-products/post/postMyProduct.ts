@@ -1,6 +1,4 @@
 import { body } from "express-validator";
-import { EnvVars } from "../../../../lib/EnvVars";
-import { Operator } from "../../../../lib/Operator";
 import { MyProductStore } from "../../../../storage/my-product/MyProductStore";
 import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
 import { createRouter } from "../../routerFactory";
@@ -27,9 +25,6 @@ export const postMyProductRouter = createRouter({
     ],
     service: new PostMyProductService({
         getMyProductStore: () => MyProductStore.get(),
-        operator: new Operator({
-            url: EnvVars.OPERATOR_URL
-        })
     })
 });
 
