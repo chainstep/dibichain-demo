@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 export enum RUN_CONTEXT {
     PRODUCTION,
     DEVELOPMENT,
+    DEVELOPMENT_1,
+    DEVELOPMENT_2,
     TEST
 }
 
@@ -78,6 +80,12 @@ export class EnvVars {
         if (process.env.RUN_CONTEXT === "development") {
             this.RUN_CONTEXT = RUN_CONTEXT.DEVELOPMENT;
             dotenv.config();
+        } else if (process.env.RUN_CONTEXT === "development-1") {
+            this.RUN_CONTEXT = RUN_CONTEXT.DEVELOPMENT;
+            dotenv.config({ path: __dirname + "/../../.env-dev-1" });
+        } else if (process.env.RUN_CONTEXT === "development-2") {
+            this.RUN_CONTEXT = RUN_CONTEXT.DEVELOPMENT;
+            dotenv.config({ path: __dirname + "/../../.env-dev-2" });
         } else if (process.env.RUN_CONTEXT === "test") {
             this.RUN_CONTEXT = RUN_CONTEXT.TEST;
             dotenv.config({ path: __dirname + "/../../test/.env-test" });
