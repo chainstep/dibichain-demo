@@ -1,16 +1,12 @@
 #!/bin/bash
 
-# Runs the development database container
+# Stops and removes the development database container
 
 ###################################################################################################
 # CONFIGURATION
 ###################################################################################################
 
-IMAGE_NAME="mongo:4.4.1-bionic"
-CONTAINER_NAME="operator-dev-db"
-
-INTERNAL_PORT=27017
-EXTERNAL_PORT=27019
+CONTAINER_NAME="company-backend-dev-db-2"
 
 
 ###################################################################################################
@@ -24,4 +20,5 @@ HERE="$(pwd)/$(dirname $0)"
 # MAIN
 ###################################################################################################
 
-docker run --publish ${EXTERNAL_PORT}:${INTERNAL_PORT} --detach --name ${CONTAINER_NAME} ${IMAGE_NAME}
+docker container stop ${CONTAINER_NAME}
+docker container rm ${CONTAINER_NAME}

@@ -31,3 +31,19 @@ yarn pause:docker
 # stop docker image
 yarn stop:docker
 ```
+
+To start 2 instances follow these steps:
+
+````bash
+# start dev db for instance 1
+./scripts/run-dev-db-1.sh
+
+# start dev db for instance 2
+./scripts/run-dev-db-2.sh
+
+# run instance 1 in dev mode
+yarn dev:1
+
+# run instance 2 in dev mode IN ANOTHER TERMINAL
+yarn dev:2
+````

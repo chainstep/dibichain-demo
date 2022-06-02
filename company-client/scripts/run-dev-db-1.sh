@@ -7,10 +7,10 @@
 ###################################################################################################
 
 IMAGE_NAME="mongo:4.4.1-bionic"
-CONTAINER_NAME="operator-dev-db"
+CONTAINER_NAME="company-backend-dev-db-1"
 
 INTERNAL_PORT=27017
-EXTERNAL_PORT=27019
+EXTERNAL_PORT=27017
 
 
 ###################################################################################################
