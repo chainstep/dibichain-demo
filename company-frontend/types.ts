@@ -15,6 +15,12 @@ export interface Product {
 
 export type MyProduct = Product
 
+export interface ResponseProduct extends Omit<Product, 'amount' | 'weight' | 'carbonFootprint' > {
+    amount?: string;
+    weight?: string;
+    carbonFootprint?: string;
+}
+
 export interface ProductEvent {
     uid: string;
     timestamp: number;
@@ -26,4 +32,29 @@ export interface NewProduct extends ProductEvent {
     type: string;
     number: string;
     hash: string;
+}
+
+export interface NewProductEventParams {
+    id: string;
+    uid: string;
+    name: string;
+    Type: string;
+    number: string;
+    hash: string;
+}
+
+export interface ProductDetailsRequestEventParams {
+    uid: string;
+    publicKey: string;
+    algorithm: string;
+}
+
+export interface ProductDetailsRequest extends ProductEvent {
+    publicKey: string;
+    algorithm: string;
+    responded: boolean;
+}
+
+export interface MyProductDetailsRequest extends ProductDetailsRequest {
+    privateKey: string;
 }
