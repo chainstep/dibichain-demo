@@ -10,5 +10,6 @@ export const config = {
         // "productDetailsRequest",
         // "getProductDetailsRequests",
         // "postProductDetailsResponse"
+        // "getMyNewProducts"
     ]
 };
