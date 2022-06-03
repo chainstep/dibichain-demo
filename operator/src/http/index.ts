@@ -10,7 +10,7 @@ import { EnvVars } from "../lib/EnvVars";
 import { logErrors } from "./middlewares/errorLogging";
 import { logHttp } from "./middlewares/httpLogging";
 import { postProductDetailsRequestRouter } from "./routes/product-details-request/post/postProductDetailsRequest";
-import { getProductDetailsResponseRouter } from "./routes/product-details-response/get/GetProductDetailsResponses";
+import { getProductDetailsResponseRouter } from "./routes/product-details-response/get/getProductDetailsResponses";
 import { postProductDetailsResponseRouter } from "./routes/product-details-response/post/postProductDetailsResponse";
 import { postNewProductRouter } from "./routes/new-products/post/postNewProduct";
 

@@ -11,6 +11,6 @@ export interface ProductDetailsResponse {
 
 export interface IProductDetailsResponseStore {
     upsert(response: ProductDetailsResponse): Promise<void>;
-    find(params: {uid: string, publicKey: string}): Promise<ProductDetailsResponse[]>;
+    find(params: {uid?: string, publicKey?: string}): Promise<ProductDetailsResponse[]>;
     delete(params: {uid: string}): Promise<void>;
 }
