@@ -1,0 +1,45 @@
+{
+  "scripts": {
+    "dev:local:company1": "env-cmd -f .env.local.company1 next -p 8081",
+    "dev:local:company2": "env-cmd -f .env.local.company2 next -p 8082",
+    "lint": "next lint",
+    "build": "yarn build:dev",
+    "build:prod": "env-cmd -f .env.company1 yarn build:cmd",
+    "build:dev": "env-cmd -f .env.company1 yarn build:cmd",
+    "build:cmd": "next build && next export",
+    "start": "next start",
+    "export": "next export",
+    "type-check": "tsc"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^12.0.8",
+    "@types/node": "^12.12.21",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
+    "@types/uuid": "^8.3.3",
+    "@typescript-eslint/eslint-plugin": "^4.30.0",
+    "@typescript-eslint/parser": "^4.30.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-react": "^7.25.1",
+    "typescript": "^4.4.2"
+  },
+  "dependencies": {
+    "@chakra-ui/gatsby-plugin": "^2.0.1",
+    "@chakra-ui/icons": "^1.0.15",
+    "@chakra-ui/react": "^1.6.9",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "axios": "^0.27.2",
+    "dotenv": "^10.0.0",
+    "env-cmd": "^10.1.0",
+    "framer-motion": "^4",
+    "next": "^12.1.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "sass": "^1.38.2",
+    "usehooks-ts": "^2.5.4"
+  }
+}
