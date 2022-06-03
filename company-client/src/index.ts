@@ -5,6 +5,7 @@ import { Contracts } from "./contract/Contracts";
 import { EventBus } from "./contract/interfaces/EventBus";
 import EventBusJSON from "./contract/interfaces/EventBus.json";
 import { initHttpServer } from "./http";
+import { initIntervals } from "./interval";
 import { EnvVars, RUN_CONTEXT } from "./lib/EnvVars";
 import { RPCProvider } from "./lib/RPCProvider";
 import { BlockchainInfoStore } from "./storage/blockchain/BlockchainInfoStore";
@@ -99,6 +100,10 @@ async function main(): Promise<void> {
     logger.info("Init contract listeners...");
     await initContractListeners(Contracts.getEventBus());
     logger.info("Listeners initialized");
+
+    logger.info("Init intervals...");
+    initIntervals();
+    logger.info("Intervals initialized");
 }
 
 

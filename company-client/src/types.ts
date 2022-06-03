@@ -64,3 +64,13 @@ export interface Key {
     publicKey: string;
     algorithm: string;
 }
+
+export interface ProductDetailsResponse {
+    publicKey: string,
+    uid: string;
+    message: {
+        secret: string;
+        cipherText: string;
+        initVector: string;
+    }
+}

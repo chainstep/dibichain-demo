@@ -1,6 +1,7 @@
-import axios from "axios";
-import { MyNewProduct, Product, ProductDetailsRequest } from "../types";
+import axios, { AxiosResponse } from "axios";
+import { Key, MyNewProduct, Product, ProductDetailsRequest, ProductDetailsResponse } from "../types";
 import { Crypto } from "./Crypto";
+
 
 export interface OperatorOptions {
     crypto?: Crypto
@@ -92,5 +93,60 @@ export class Operator {
             message,
             uid: product.uid
         });
+    }
+
+
+    public async getProducts(keys: Key[]): Promise<Product[]> {
+        if (!this.crypto) {
+            return [];
+        }
+
+        const publicKeys = keys.map(key => key.publicKey);
+        const productDetailsResponses = await this.getProductDetailsResponses(publicKeys);
+
+        const products = this.extractProducts(keys, productDetailsResponses);
+        return products;
+    }
+
+    private async getProductDetailsResponses(publicKeys: string[]): Promise<ProductDetailsResponse[]> {
+        const response = await axios.get<AxiosResponse<{productDetailsResponses: ProductDetailsResponse[]}>>(
+            this.url + "/product-details-responses",
+            { params: { publicKeys: JSON.stringify(publicKeys) } }
+        );
+        return response.data.data.productDetailsResponses;
+    }
+
+    private extractProducts(keys: Key[], productDetailsResponses: ProductDetailsResponse[]): Product[] {
+        const products = <Product[]> [];
+        productDetailsResponses.forEach((productDetailsResponse) => {
+            try {
+                const key = keys.filter(_key => _key.publicKey === productDetailsResponse.publicKey)[0];
+                const productString = this.crypto?.decrypt(key.privateKey, productDetailsResponse.message);
+
+                const product = <Product> JSON.parse(productString || "");
+                this.checkProduct(product);
+
+                products.push(product);
+                // eslint-disable-next-line no-empty
+            } catch (error) {}
+        });
+        return products;
+    }
+
+    private checkProduct(product: Product): void {
+        if (this.propertyExists(product, "amount") && this.propertyExists(product, "amountUnit") &&
+            this.propertyExists(product, "carbonFootprint") && this.propertyExists(product, "carbonFootprintUnit") &&
+            this.propertyExists(product, "documents") && this.propertyExists(product, "id") &&
+            this.propertyExists(product, "name") && this.propertyExists(product, "number") &&
+            this.propertyExists(product, "type") && this.propertyExists(product, "uid") &&
+            this.propertyExists(product, "weight") && this.propertyExists(product, "weightUnit")) {
+                return;
+        }
+        throw new Error("not a product");
+    }
+
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    private propertyExists(object: Object, key: string) {
+        return key in object;
     }
 }

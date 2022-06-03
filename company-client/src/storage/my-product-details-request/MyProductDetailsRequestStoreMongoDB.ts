@@ -8,7 +8,8 @@ const schema = new Schema<MyProductDetailsRequest>({
     uid: { type: String, required: true },
     algorithm: { type: String, required: true },
     publicKey: { type: String, required: true },
-    timestamp: { type: Number, required: true }
+    timestamp: { type: Number, required: true },
+    responded: { type: Boolean, required: true }
 });
 
 const MyProductDetailsRequestModel = model<MyProductDetailsRequest>("MyProductDetailsRequest", schema);
