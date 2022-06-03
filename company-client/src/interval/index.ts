@@ -3,6 +3,7 @@ import { EnvVars } from "../lib/EnvVars";
 import { Operator } from "../lib/Operator";
 import { KeyStore } from "../storage/key/KeyStore";
 import { MyProductDetailsRequestStore } from "../storage/my-product-details-request/MyProductDetailsRequestStore";
+import { NewProductStore } from "../storage/new-product/NewProductStore";
 import { ProductStore } from "../storage/product/ProductStore";
 import { IntervalHandler } from "./IntervalHandler";
 import { IntervalManager } from "./IntervalManager";
@@ -21,6 +22,7 @@ export function initIntervals(): void {
                     getKeyStore: () => KeyStore.get(),
                     getMyProductDetailsRequestStore: () => MyProductDetailsRequestStore.get(),
                     getProductStore: () => ProductStore.get(),
+                    getNewProductStore: () => NewProductStore.get(),
                     operator: new Operator({
                         url: EnvVars.OPERATOR_URL,
                         crypto: new Crypto()

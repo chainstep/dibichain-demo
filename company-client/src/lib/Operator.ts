@@ -1,17 +1,18 @@
 import axios, { AxiosResponse } from "axios";
-import { Key, MyNewProduct, Product, ProductDetailsRequest, ProductDetailsResponse } from "../types";
+import { logger } from "../utils/logger";
+import { EncMessage, Key, MyNewProduct, Product, ProductDetailsRequest, ProductDetailsResponse } from "../types";
 import { Crypto } from "./Crypto";
 
 
 export interface OperatorOptions {
-    crypto?: Crypto
+    crypto: Crypto
     url: string;
 }
 
 
 export class Operator {
     private readonly url: string;
-    private readonly crypto?: Crypto;
+    private readonly crypto: Crypto;
 
 
     constructor(options: OperatorOptions) {
@@ -21,9 +22,6 @@ export class Operator {
 
 
     public async announceNewProduct(product: Product): Promise<MyNewProduct> {
-        if (!this.crypto) {
-            return <MyNewProduct> {};
-        }
         const hash = this.crypto.hash(this.createNormalizedProduct(product));
         const myNewProduct = {
             id: product.id,
@@ -33,6 +31,7 @@ export class Operator {
             number: product.number,
             hash
         };
+
         await axios.post(this.url + "/new-products", myNewProduct);
         return { ...myNewProduct, timestamp: 0 };
     }
@@ -82,12 +81,10 @@ export class Operator {
             product: Product
         }
     ): Promise<void> {
-        if (!this.crypto) {
-            return;
-        }
         const { publicKey, product } = params;
-        const normalizedProduct = this.createNormalizedProduct(product);
-        const message = this.crypto.encrypt(publicKey, normalizedProduct);
+        const stringifiedProduct = JSON.stringify(product);
+        const message = this.crypto.encrypt(publicKey, stringifiedProduct);
+
         await axios.post(this.url + "/product-details-responses", {
             publicKey,
             message,
@@ -96,15 +93,11 @@ export class Operator {
     }
 
 
-    public async getProducts(keys: Key[]): Promise<Product[]> {
-        if (!this.crypto) {
-            return [];
-        }
-
-        const publicKeys = keys.map(key => key.publicKey);
+    public async getProducts(params: { key: Key, hash: string }[]): Promise<Product[]> {
+        const publicKeys = params.map(param => param.key.publicKey);
         const productDetailsResponses = await this.getProductDetailsResponses(publicKeys);
 
-        const products = this.extractProducts(keys, productDetailsResponses);
+        const products = this.extractProducts(params, productDetailsResponses);
         return products;
     }
 
@@ -116,31 +109,40 @@ export class Operator {
         return response.data.data.productDetailsResponses;
     }
 
-    private extractProducts(keys: Key[], productDetailsResponses: ProductDetailsResponse[]): Product[] {
+    private extractProducts(
+        params: { key: Key, hash: string }[],
+        productDetailsResponses: ProductDetailsResponse[]
+    ): Product[] {
         const products = <Product[]> [];
         productDetailsResponses.forEach((productDetailsResponse) => {
             try {
-                const key = keys.filter(_key => _key.publicKey === productDetailsResponse.publicKey)[0];
-                const productString = this.crypto?.decrypt(key.privateKey, productDetailsResponse.message);
+                const param = params.filter(_param => _param.key.publicKey === productDetailsResponse.publicKey)[0];
+                const product = this.decryptProduct(param.key.privateKey, productDetailsResponse.message);
 
-                const product = <Product> JSON.parse(productString || "");
-                this.checkProduct(product);
+                this.checkProductFormat(product);
+                this.verifyHash(product, param.hash);
 
                 products.push(product);
-                // eslint-disable-next-line no-empty
-            } catch (error) {}
+            } catch (error) {
+                logger.debug("operator:extractProducts -> " + (<Error> error).message);
+            }
         });
         return products;
     }
 
-    private checkProduct(product: Product): void {
+    private decryptProduct(privateKey: string, message: EncMessage): Product {
+        const productString = this.crypto.decrypt(privateKey, message);
+        return <Product> JSON.parse(productString || "");
+    }
+
+    private checkProductFormat(product: Product): void {
         if (this.propertyExists(product, "amount") && this.propertyExists(product, "amountUnit") &&
             this.propertyExists(product, "carbonFootprint") && this.propertyExists(product, "carbonFootprintUnit") &&
             this.propertyExists(product, "documents") && this.propertyExists(product, "id") &&
             this.propertyExists(product, "name") && this.propertyExists(product, "number") &&
             this.propertyExists(product, "type") && this.propertyExists(product, "uid") &&
             this.propertyExists(product, "weight") && this.propertyExists(product, "weightUnit")) {
-                return;
+            return;
         }
         throw new Error("not a product");
     }
@@ -148,5 +150,12 @@ export class Operator {
     // eslint-disable-next-line @typescript-eslint/ban-types
     private propertyExists(object: Object, key: string) {
         return key in object;
+    }
+
+    private verifyHash(product: Product, hash: string): void {
+        const calcHash = this.crypto.hash(this.createNormalizedProduct(product));
+        if (calcHash !== hash) {
+            throw new Error("product hash does not match");
+        }
     }
 }
