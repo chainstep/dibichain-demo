@@ -7,14 +7,22 @@ export class ProductDetailsResponseStoreInMemory extends AInMemoryStore implemen
 
 
     public async upsert(productDetailsResponse: ProductDetailsResponse): Promise<void> {
-        this._upsert(productDetailsResponse, "uid");
+        this._upsert(productDetailsResponse, Object.keys(productDetailsResponse));
     }
 
 
-    public async find(params: {uid: string, publicKey: string}): Promise<ProductDetailsResponse[]> {
+    public async find(params: {uid?: string, publicKey?: string}): Promise<ProductDetailsResponse[]> {
         const { uid, publicKey } = params;
         return this.store.filter((object) => {
-            return object.uid === uid && object.publicKey === publicKey;
+            if (uid && publicKey) {
+                return object.uid === uid && object.publicKey === publicKey;
+            } else if (uid) {
+                return object.uid === uid;
+            } else if (publicKey) {
+                return object.publicKey === publicKey;
+            } else {
+                return true;
+            }
         });
     }
 
