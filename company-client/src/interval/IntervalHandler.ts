@@ -33,7 +33,7 @@ export class IntervalHandler {
         this.intervalId = setInterval(async () => {
             logger.debug("Running interval of handler "+ this.name + "...");
             await this.runServices();
-            logger.debug("Interval of handler "+ this.name + "done");
+            logger.debug("Interval of handler "+ this.name + " done");
         }, this.intervalSec * 1000);
     }
 

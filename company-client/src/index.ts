@@ -1,15 +1,12 @@
 import { Provider } from "@ethersproject/providers";
 import { Contract } from "ethers";
-import { TEST_KEY, TEST_PRODUCT } from "../test/constants";
 import { initContractListeners } from "./contract";
 import { Contracts } from "./contract/Contracts";
 import { EventBus } from "./contract/interfaces/EventBus";
 import EventBusJSON from "./contract/interfaces/EventBus.json";
 import { initHttpServer } from "./http";
 import { initIntervals } from "./interval";
-import { Crypto } from "./lib/Crypto";
 import { EnvVars, RUN_CONTEXT } from "./lib/EnvVars";
-import { Operator } from "./lib/Operator";
 import { RPCProvider } from "./lib/RPCProvider";
 import { BlockchainInfoStore } from "./storage/blockchain/BlockchainInfoStore";
 import { createBlockchainInfoStore } from "./storage/blockchain/blockchainInfoStoreFactory";
@@ -106,7 +103,7 @@ async function main(): Promise<void> {
 
     logger.info("Init intervals...");
     initIntervals();
-    logger.info("Intervals initialized");
+    logger.info("Done.");
 }
 
 

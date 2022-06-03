@@ -18,6 +18,7 @@ import { getMyProductsRouter } from "./routes/my-products/get/getMyProducts";
 import { postMyProductRouter } from "./routes/my-products/post/postMyProduct";
 import { getNewProductsRouter } from "./routes/new-products/get/getNewProduct";
 import { getProductDetailsRequestsRouter } from "./routes/product-details-requests/get/getProductDetailsRequests";
+import { getProductsRouter } from "./routes/products/get/getProducts";
 
 
 export const httpServer = express();
@@ -35,6 +36,7 @@ httpServer.use(validateOrigin(EnvVars.ALLOWED_ORIGINS));
 
 httpServer.use(postMyProductRouter);
 httpServer.use(getMyProductsRouter);
+httpServer.use(getProductsRouter);
 httpServer.use(getNewProductsRouter);
 httpServer.use(getMyNewProductsRouter);
 httpServer.use(postMyNewProductRouter);
