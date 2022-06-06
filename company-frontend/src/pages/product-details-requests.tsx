@@ -10,46 +10,62 @@ import {
   Thead,
   Tooltip,
   Tr,
+  useToast,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useInterval } from 'usehooks-ts';
+import { InfoIcon } from '@chakra-ui/icons';
 import Layout from '../components/commons/Layout';
 import Page from '../components/commons/Page';
 
 import Header from '../components/commons/Header';
 import Footer from '../components/commons/Footer';
-import {
-  MyProductDetailsRequest,
-  Product,
-  ProductDetailsRequest,
-} from '../../types';
+import { MyProductDetailsRequest, ProductDetailsRequest } from '../../types';
 import {
   getMyProductDetailsRequest,
   getProductDetailsRequest,
-  postMyProductDetailsRequest,
   postMyProductDetailsResponse,
 } from '../api/product-details';
 
 const MyProductsPage: React.FC = () => {
-  const [productDetailsRequests, setProductDetailsRequests] = useState([
-  ] as ProductDetailsRequest[]);
-  const [myProductDetailsRequests, setMyProductDetailsRequests] = useState([
-  ] as MyProductDetailsRequest[]);
+  const [productDetailsRequests, setProductDetailsRequests] = useState(
+    [] as ProductDetailsRequest[]
+  );
+  const [myProductDetailsRequests, setMyProductDetailsRequests] = useState(
+    [] as MyProductDetailsRequest[]
+  );
+  const toast = useToast();
 
   useEffect(() => {
-    getProductDetailsRequest().then(({ data }) => setProductDetailsRequests(data.productDetailsRequests));
-    getMyProductDetailsRequest().then(({ data }) => setMyProductDetailsRequests(data.myProductDetailsRequests));
+    getAllProductDetailsRequests();
   }, []);
 
   useInterval(() => {
-    getProductDetailsRequest().then(({ data }) => setProductDetailsRequests(data.productDetailsRequests));
-    getMyProductDetailsRequest().then(({ data }) => setMyProductDetailsRequests(data.myProductDetailsRequests));
+    getAllProductDetailsRequests();
   }, 10000);
 
-  const onButtonClick = (productDetailsRequest: ProductDetailsRequest) => {
-    postMyProductDetailsResponse(productDetailsRequest).then(res =>
-      console.log(res)
+  const getAllProductDetailsRequests = () => {
+    getProductDetailsRequest().then(({ data }) =>
+      setProductDetailsRequests(data.productDetailsRequests)
     );
+    getMyProductDetailsRequest().then(({ data }) =>
+      setMyProductDetailsRequests(data.myProductDetailsRequests)
+    );
+  };
+
+  const onApproveButtonClick = async ({
+    uid,
+    publicKey,
+  }: ProductDetailsRequest) => {
+    await postMyProductDetailsResponse(uid, publicKey);
+    toast({
+      title: 'Product details request approved',
+      description: '',
+      status: 'success',
+      duration: 6000,
+      isClosable: true,
+    });
+    getAllProductDetailsRequests();
   };
 
   return (
@@ -68,21 +84,32 @@ const MyProductsPage: React.FC = () => {
             </Heading>
           ) : (
             <TableContainer>
-              <Table variant='simple'>
+              <Table variant='simple' size='md'>
                 <Thead>
                   <Tr>
                     <Th>UID</Th>
                     <Th>Timestamp</Th>
+                    <Th></Th>
                   </Tr>
                 </Thead>
                 <Tbody>
                   {myProductDetailsRequests.map(request => (
-                    <Tooltip placement='top' hasArrow label={request.publicKey}>
-                      <Tr key={request.uid}>
-                        <Td>{request.uid}</Td>
-                        <Td>{request.timestamp}</Td>
-                      </Tr>
-                    </Tooltip>
+                    <Tr key={request.uid}>
+                      <Td>{request.uid}</Td>
+                      <Td>
+                        {new Date(request.timestamp * 1000).toLocaleString()}
+                      </Td>
+                      <Td>
+                        <Tooltip
+                          hasArrow
+                          label={request.publicKey}
+                          bg='gray.300'
+                          color='black'
+                        >
+                          <InfoIcon />
+                        </Tooltip>
+                      </Td>
+                    </Tr>
                   ))}
                 </Tbody>
               </Table>
@@ -103,22 +130,24 @@ const MyProductsPage: React.FC = () => {
             </Heading>
           ) : (
             <TableContainer>
-              <Table variant='simple'>
+              <Table variant='simple' size='md'>
                 <Thead>
                   <Tr>
                     <Th>UID</Th>
                     <Th>Timestamp</Th>
-                    <Th>Responded</Th>
+                    <Th></Th>
                     <Th></Th>
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {productDetailsRequests.map(request => (
-                    <Tooltip placement='top' hasArrow label={request.publicKey}>
+                  {productDetailsRequests
+                    .filter(request => request.responded === false)
+                    .map(request => (
                       <Tr key={request.uid}>
                         <Td>{request.uid}</Td>
-                        <Td>{request.timestamp}</Td>
-                        <Td>{request.responded.toString()}</Td>
+                        <Td>
+                          {new Date(request.timestamp * 1000).toLocaleString()}
+                        </Td>
                         <Td>
                           <Button
                             mr={2}
@@ -129,14 +158,23 @@ const MyProductsPage: React.FC = () => {
                           </Button>
                           <Button
                             colorScheme='green'
-                            onClick={() => onButtonClick(request)}
+                            onClick={() => onApproveButtonClick(request)}
                           >
                             Approve
                           </Button>
                         </Td>
+                        <Td>
+                          <Tooltip
+                            hasArrow
+                            label={request.publicKey}
+                            bg='gray.300'
+                            color='black'
+                          >
+                            <InfoIcon />
+                          </Tooltip>
+                        </Td>
                       </Tr>
-                    </Tooltip>
-                  ))}
+                    ))}
                 </Tbody>
               </Table>
             </TableContainer>

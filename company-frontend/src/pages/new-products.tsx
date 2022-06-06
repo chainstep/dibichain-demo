@@ -9,6 +9,7 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useInterval } from 'usehooks-ts';
@@ -17,82 +18,42 @@ import Page from '../components/commons/Page';
 
 import Header from '../components/commons/Header';
 import Footer from '../components/commons/Footer';
-import { getMyNewProducts, getNewProducts } from '../api/products';
+import { getNewProducts } from '../api/products';
 import { Product } from '../../types';
 import { postMyProductDetailsRequest } from '../api/product-details';
 
 const MyProductsPage: React.FC = () => {
   const [newProducts, setNewProducts] = useState([] as Product[]);
-  const [myNewProducts, setMyNewProducts] = useState([] as Product[]);
+  const toast = useToast();
 
   useEffect(() => {
-    getNewProducts().then(({ data }) => setNewProducts(data.newProducts));
-    getMyNewProducts().then(({ data }) => setMyNewProducts(data.myNewProducts));
+    getAllNewProducts();
   }, []);
 
   useInterval(() => {
-    getNewProducts().then(({ data }) => setNewProducts(data.newProducts));
-    getMyNewProducts().then(({ data }) => setMyNewProducts(data.myNewProducts));
+    getAllNewProducts();
   }, 10000);
 
-  const onButtonClick = (uid: string) => {
-    postMyProductDetailsRequest(uid).then(res => console.log(res));
+  const getAllNewProducts = () => {
+    getNewProducts().then(({ data }) => setNewProducts(data.newProducts));
+  };
+
+  const onButtonClick = async (uid: string) => {
+    await postMyProductDetailsRequest(uid);
+    toast({
+      title: 'Details successfully requested',
+      description: '',
+      status: 'success',
+      duration: 6000,
+      isClosable: true,
+    });
+    getAllNewProducts();
   };
 
   return (
     <Page>
       <Layout>
         <Header />
-
-        <Container maxW='container.xl'>
-          <Heading mb={12} textAlign='center'>
-            My New Products
-          </Heading>
-
-          {myNewProducts.length === 0 ? (
-            <Heading size='md' mb={12} textAlign='center'>
-              No new products
-            </Heading>
-          ) : (
-            <TableContainer>
-              <Table variant='simple'>
-                <Thead>
-                  <Tr>
-                    <Th>Name</Th>
-                    <Th>Amount</Th>
-                    <Th>Number</Th>
-                    <Th>Type</Th>
-                    <Th>Weight</Th>
-                    <Th>Carbon Footprint</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {myNewProducts.map(product => (
-                    <Tr key={product.uid}>
-                      <Td>{product.name}</Td>
-                      <Td>
-                        {product.amount}{' '}
-                        {product.amountUnit === 'each'
-                          ? ''
-                          : product.amountUnit}
-                      </Td>
-                      <Td>{product.number}</Td>
-                      <Td>{product.type}</Td>
-                      <Td>
-                        {product.weight} {product.weightUnit}
-                      </Td>
-                      <Td>
-                        {product.carbonFootprint} {product.weightUnit}
-                      </Td>
-                    </Tr>
-                  ))}
-                </Tbody>
-              </Table>
-            </TableContainer>
-          )}
-        </Container>
-
-        <div style={{ height: '100px' }}></div>
 
         <Container maxW='container.xl'>
           <Heading mb={12} textAlign='center'>
@@ -105,7 +66,7 @@ const MyProductsPage: React.FC = () => {
             </Heading>
           ) : (
             <TableContainer>
-              <Table variant='simple'>
+              <Table variant='simple' size='md'>
                 <Thead>
                   <Tr>
                     <Th>Name</Th>

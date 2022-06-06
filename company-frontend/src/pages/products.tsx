@@ -8,7 +8,9 @@ import {
   Td,
   Th,
   Thead,
+  Tooltip,
   Tr,
+  useToast,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useInterval } from 'usehooks-ts';
@@ -29,26 +31,42 @@ const MyProductsPage: React.FC = () => {
   const [myProducts, setMyProducts] = useState([] as Product[]);
   const [myNewProducts, setMyNewProducts] = useState([] as Product[]);
   const [products, setProducts] = useState([] as Product[]);
+  const toast = useToast();
 
   useEffect(() => {
-    getMyProducts().then(({ data }) => setMyProducts(data.myProducts));
-    getMyNewProducts().then(({ data }) => setMyNewProducts(data.myNewProducts));
-    //getProducts().then(({ data }) => setProducts(data.products));
+    getAllProducts();
   }, []);
 
   useInterval(() => {
+    getAllProducts();
+  }, 10000);
+
+  const onButtonClick = async (uid: string) => {
+    await postMyNewProducts(uid);
+    toast({
+      title: 'Successfully broadcasted',
+      description: '',
+      status: 'success',
+      duration: 6000,
+      isClosable: true,
+    });
+    getAllProducts();
+  };
+
+  const getAllProducts = () => {
     getMyProducts().then(({ data }) => setMyProducts(data.myProducts));
     getMyNewProducts().then(({ data }) => setMyNewProducts(data.myNewProducts));
     //getProducts().then(({ data }) => setProducts(data.products));
-  }, 10000);
-
-  const onButtonClick = (uid: string) => {
-    postMyNewProducts(uid).then(res => console.log(res));
   };
 
   const isAlreadyBroadcasted = (uid: string) => {
     const uids = myNewProducts.map(newProduct => newProduct.uid);
     return uids.includes(uid);
+  };
+
+  const getBroadcastDate = (uid: string) => {
+    const product = myNewProducts.find(newProduct => newProduct.uid === uid);
+    return new Date(product['timestamp'] * 1000).toLocaleString();
   };
 
   return (
@@ -67,7 +85,7 @@ const MyProductsPage: React.FC = () => {
             </Heading>
           ) : (
             <TableContainer>
-              <Table variant='simple'>
+              <Table variant='simple' size='md'>
                 <Thead>
                   <Tr>
                     <Th>Name</Th>
@@ -98,7 +116,16 @@ const MyProductsPage: React.FC = () => {
                         {product.carbonFootprint} {product.weightUnit}
                       </Td>
                       <Td>
-                        {!isAlreadyBroadcasted(product.uid) && (
+                        {isAlreadyBroadcasted(product.uid) ? (
+                          <Tooltip
+                            hasArrow
+                            label={`on ${getBroadcastDate(product.uid)}`}
+                            shouldWrapChildren
+                            mt='3'
+                          >
+                            <Button isDisabled>Broadcasted</Button>
+                          </Tooltip>
+                        ) : (
                           <Button onClick={() => onButtonClick(product.uid)}>
                             Broadcast
                           </Button>
@@ -124,7 +151,7 @@ const MyProductsPage: React.FC = () => {
             </Heading>
           ) : (
             <TableContainer>
-              <Table variant='simple'>
+              <Table variant='simple' size='md'>
                 <Thead>
                   <Tr>
                     <Th>Name</Th>

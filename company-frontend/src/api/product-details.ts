@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { ProductDetailsRequest } from '../../types';
 import { BACKEND_BASE_URL } from '../constants';
 
 export const postMyProductDetailsRequest = async (uid: string): Promise<void> => {
@@ -57,7 +56,7 @@ export const getProductDetailsRequest = async (): Promise<unknown> => {
     }
 };
 
-export const postMyProductDetailsResponse = async ({ uid,publicKey }: ProductDetailsRequest): Promise<void> => {
+export const postMyProductDetailsResponse = async (uid: string, publicKey: string): Promise<void> => {
 
     const data = {
         uid,
