@@ -10,10 +10,21 @@ export const getProductDetailsResponseRouter = createRouter({
     route: ROUTE_NAMES.productDetailsResponses,
     inputPath: "query",
     inputChecks: [
-        query("uid").isUUID().withMessage(INVALID_INPUT_TEXT + "uid"),
-        query("publicKey").isString().withMessage(INVALID_INPUT_TEXT + "publicKey")
+        query("publicKeys").isString().custom(isArray).customSanitizer(toArray).withMessage(INVALID_INPUT_TEXT + "uid")
     ],
     service: new GetProductDetailsResponseService({
         getProductDetailsResponseStore: () => ProductDetailsResponseStore.get()
     })
 });
+
+function isArray(value: string): boolean {
+    try {
+        return Array.isArray(JSON.parse(value));
+    } catch (error) {
+        return false;
+    }
+}
+
+function toArray(value: string): boolean {
+    return JSON.parse(value);
+}

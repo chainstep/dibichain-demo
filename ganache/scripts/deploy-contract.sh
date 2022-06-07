@@ -1,6 +1,13 @@
 #!/bin/bash
 
-# resets ganache test chain changes
+# Deploys the contract to the local chain
+
+###################################################################################################
+# CONFIGURATION
+###################################################################################################
+
+RELATIVE_SMART_CONTRACTS_PATH="../../smart-contracts"
+
 
 ###################################################################################################
 # DEFINES
@@ -13,5 +20,5 @@ HERE="$(pwd)/$(dirname $0)"
 # MAIN
 ###################################################################################################
 
-cd ${HERE}/..
-rm -rf database
+cd ${HERE}/${RELATIVE_SMART_CONTRACTS_PATH}/scripts
+./deploy-local.sh

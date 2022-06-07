@@ -12,5 +12,7 @@ export const config = {
         // "postMyProductDetailsResponse",
         // "newProduct",
         // "productDetailsRequest",
+        // "pollProducts",
+        // "getProducts"
     ]
 };

@@ -27,26 +27,27 @@ export class ProductDetailsResponseStoreMongoDB implements IProductDetailsRespon
 
 
     public async upsert(productDetailsResponse: ProductDetailsResponse): Promise<void> {
+        const filter = productDetailsResponse;
+        const update = productDetailsResponse;
+
         await connect(this.mongoUrl);
-        await ProductDetailsResponseModel.updateOne(
-            { uid: productDetailsResponse.uid },
-            productDetailsResponse,
-            { upsert: true }
-        );
+        await ProductDetailsResponseModel.updateOne(filter, update, { upsert: true });
     }
 
 
-    public async find(params: {uid: string, publicKey: string}): Promise<ProductDetailsResponse[]> {
-        const query = params;
+    public async find(params: {uid?: string, publicKey?: string}): Promise<ProductDetailsResponse[]> {
+        const filter = params;
+
         await connect(this.mongoUrl);
-        const doc = await ProductDetailsResponseModel.find(query, REMOVE_MONGO_FIELDS).lean();
+        const doc = await ProductDetailsResponseModel.find(filter, REMOVE_MONGO_FIELDS).lean();
         return doc;
     }
 
 
     public async delete(params: {uid: string}): Promise<void> {
-        const { uid } = params;
+        const filter = params;
+
         await connect(this.mongoUrl);
-        await ProductDetailsResponseModel.deleteOne({ uid });
+        await ProductDetailsResponseModel.deleteOne(filter);
     }
 }

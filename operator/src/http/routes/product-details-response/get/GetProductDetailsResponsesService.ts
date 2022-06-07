@@ -7,8 +7,7 @@ export interface GetProductDetailsResponseServiceOptions {
 }
 
 interface Inputs {
-    uid: string;
-    publicKey: string;
+    publicKeys: string[];
 }
 
 interface Outputs {
@@ -26,8 +25,16 @@ export class GetProductDetailsResponseService implements RouteService {
 
 
     public async run(inputs: Inputs): Promise<Outputs> {
+        const { publicKeys } = inputs;
         const productDetailsResponseStore = this.getProductDetailsResponseStore();
-        const productDetailsResponses = await productDetailsResponseStore.find(inputs);
+
+        let productDetailsResponses = <ProductDetailsResponse[]> [];
+        for (let i = 0 ; i < publicKeys.length ; i++) {
+            const publicKey = publicKeys[i];
+            const _productDetailsResponses = await productDetailsResponseStore.find({ publicKey });
+            productDetailsResponses = [...productDetailsResponses, ..._productDetailsResponses];
+        }
+
         return { productDetailsResponses };
     }
 }

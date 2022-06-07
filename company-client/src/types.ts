@@ -64,3 +64,15 @@ export interface Key {
     publicKey: string;
     algorithm: string;
 }
+
+export interface EncMessage {
+    secret: string;
+    cipherText: string;
+    initVector: string;
+}
+
+export interface ProductDetailsResponse {
+    publicKey: string,
+    uid: string;
+    message: EncMessage
+}

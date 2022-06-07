@@ -16,20 +16,49 @@ if (!config.skipTests.includes("getProductDetailsResponse")) {
     });
 
 
-    it("should get a product details response", async () => {
+    it("should get product details responses", async () => {
+        const publicKeys = [ "pubKey0", "pubKey1", "pubKey2", "pubKey3" ];
         await productDetailsResponseStore.upsert({ ...TEST_PRODUCT_DETAILS_RESPONSE, timestamp: 0 });
+        await productDetailsResponseStore.upsert({
+            ...TEST_PRODUCT_DETAILS_RESPONSE,
+            timestamp: 0,
+            publicKey: publicKeys[0]
+        });
+        await productDetailsResponseStore.upsert({
+            ...TEST_PRODUCT_DETAILS_RESPONSE,
+            timestamp: 0,
+            publicKey: publicKeys[1]
+        });
+        await productDetailsResponseStore.upsert({
+            ...TEST_PRODUCT_DETAILS_RESPONSE,
+            timestamp: 0,
+            publicKey: publicKeys[2]
+        });
+        await productDetailsResponseStore.upsert({
+            ...TEST_PRODUCT_DETAILS_RESPONSE,
+            timestamp: 0,
+            publicKey: publicKeys[3]
+        });
+
         const response = await request(httpServer)
             .get("/product-details-responses")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .query({
-                publicKey: TEST_PRODUCT_DETAILS_RESPONSE.publicKey,
-                uid: TEST_PRODUCT_DETAILS_RESPONSE.uid
+                publicKeys: JSON.stringify([
+                    TEST_PRODUCT_DETAILS_RESPONSE.publicKey,
+                    publicKeys[0]
+                ])
             })
             .expect(200);
 
         const productDetailsResponses = <ProductDetailsResponse[]> response.body.data.productDetailsResponses;
-        expect(productDetailsResponses.length).toEqual(1);
+        expect(productDetailsResponses.length).toEqual(2);
         expect(productDetailsResponses[0]).toEqual({ ...TEST_PRODUCT_DETAILS_RESPONSE, timestamp: 0 });
+        expect(productDetailsResponses[1]).toEqual({
+            ...TEST_PRODUCT_DETAILS_RESPONSE,
+            timestamp: 0,
+            publicKey: publicKeys[0]
+        });
     });
 } else {
     test("dummy", () => {
