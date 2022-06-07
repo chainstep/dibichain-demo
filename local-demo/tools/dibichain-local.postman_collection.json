@@ -1,0 +1,244 @@
+{
+	"info": {
+		"_postman_id": "b125d085-b841-4d18-a97b-d881c9bac51f",
+		"name": "dibichain-local",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. post my products to logistex",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": \"1\",\n    \"amountUnit\": \"each\",\n    \"carbonFootprint\": \"1345\",\n    \"carbonFootprintUnit\": \"kg\",\n    \"documents\": [\n        \"8181c8ae-eef1-4703-8498-2cf25be2877b\"\n    ],\n    \"id\": \"81c0db28-9d72-4e36-b0f2-e166408bc839\",\n    \"name\": \"Bionic Partition\",\n    \"number\": \"EAN 20359483920\",\n    \"type\": \"purchase_part\",\n    \"weight\": \"65.53\",\n    \"weightUnit\": \"kg\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3100/my-products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"my-products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. get all my new products from logistex",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.logistex.dibichain.de/products",
+					"protocol": "https",
+					"host": [
+						"api",
+						"logistex",
+						"dibichain",
+						"de"
+					],
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "uid",
+							"value": "9199d04a-514a-4c62-9fd6-0e8ec1f36012",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. post my new product from logistex",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"uid\": \"fdf24087-a823-4b9e-a7f7-adfe29b5780b\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3100/my-new-products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"my-new-products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. get all my new products from logistex",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3100/my-new-products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"my-new-products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. get all new products from logistly",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3200/new-products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3200",
+					"path": [
+						"new-products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. post my product details request from logistly",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"uid\": \"a47b6744-4a52-422c-a192-d43b1f17044a\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3200/my-product-details-requests",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3200",
+					"path": [
+						"my-product-details-requests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. get all my product details requests from logistly",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3200/my-product-details-requests",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3200",
+					"path": [
+						"my-product-details-requests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. get all new product details requests from logistex",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3100/product-details-requests",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"product-details-requests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9. post my product details responses from logistex",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"uid\": \"a47b6744-4a52-422c-a192-d43b1f17044a\",\n    \"publicKey\": \"-----BEGIN RSA PUBLIC KEY-----\\nMIIBCgKCAQEAwzrH3S1/zLGDb+WKT3JeX8kFWmumr4XDp9lOy8I+nHVJSeTcIYK+\\nbF+V4nPuDm/ae8wxgn9xRGTEBksmoc93p4hAPJjtJYWdRv/OZcCFUjaKkbwKSR/L\\neXhgD0otK4ySxQYKDzoRwzvePzRF11f36JMyv+LTMRPmImoClq1+pvBMsuwkFYL/\\nTDWde05oQVZKyDLwAM5HYMqsYc0GSU0MxZOryyoaPisb8JLoClwN/Jsy8EbMJVpW\\nHA+WS9nZBpc5OIhSfCRRLldEIbTdakzQBjRflyuDyYGf1k487roykSlKwa13vjc5\\nKgQZ+nnNYGffvy8RGJlD7xhyQVloW//3bwIDAQAB\\n-----END RSA PUBLIC KEY-----\\n\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3100/my-product-details-responses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"my-product-details-responses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10. get products from logistly",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3200/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3200",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
