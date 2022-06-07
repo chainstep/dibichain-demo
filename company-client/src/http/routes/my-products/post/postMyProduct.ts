@@ -39,8 +39,9 @@ function isDocumentArray(value: string): boolean {
         return false;
     }
 
-    for (const id in value) {
-        if (!isUUID(id)) {
+    for (let i = 0 ; i < value.length ; i++) {
+        const documentId = <string> value[i];
+        if (typeof documentId === "string" && !isUUID(documentId)) {
             return false;
         }
     }
@@ -50,7 +51,7 @@ function isDocumentArray(value: string): boolean {
 
 function isUUID(id: string): boolean {
     const test = "" + id;
-    return !test.match("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
+    return !!test.match("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
 }
 
 function isAmountUnit(value: string): boolean {
