@@ -17,7 +17,7 @@ import { TEST_KEY, TEST_MESSAGE, TEST_MY_PRODUCT_DETAILS_REQUEST, TEST_NEW_PRODU
 // mock axios
 jest.mock("axios", () => {
     return {
-        get: async (url: string, data: never): Promise<any> => {
+        get: async (url: string, data: never): Promise<unknown> => {
             try {
                 const { params } = data;
                 const { publicKeys } = params;
