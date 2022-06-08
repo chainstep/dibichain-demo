@@ -76,3 +76,19 @@ export interface ProductDetailsResponse {
     uid: string;
     message: EncMessage
 }
+
+export interface Document {
+    uid: string;
+    name: string;
+    version: string;
+    type: string;
+    data: string;
+    uploaded: number;
+}
+
+export type MyDocument = Document
+
+export interface ProductPackage {
+    product: Product,
+    documents: Document[]
+}

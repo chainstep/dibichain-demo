@@ -6,7 +6,9 @@ export const ROUTE_NAMES = {
     myProductDetailsRequests: "/my-product-details-requests",
     productDetailsRequests: "/product-details-requests",
     myProductDetailsResponses: "/my-product-details-responses",
-    productDetailsResponses: "/my-product-details-responses"
+    productDetailsResponses: "/my-product-details-responses",
+    myDocuments: "/my-documents",
+    documents: "/documents"
 };
 
 export const INVALID_INPUT_TEXT = "missing or invalid ";

@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 import { logger } from "../utils/logger";
-import { EncMessage, Key, MyNewProduct, Product, ProductDetailsRequest, ProductDetailsResponse } from "../types";
+import { EncMessage, Key, MyDocument, MyNewProduct, MyProduct, Product, ProductDetailsRequest, ProductDetailsResponse, ProductPackage, Document } from "../types";
 import { Crypto } from "./Crypto";
+import { isAmountUnit, isCarbonFootprintUnit, isProductType, isWeightUnit } from "../utils/propertyCheckers";
 
 
 export interface OperatorOptions {
@@ -74,30 +75,31 @@ export class Operator {
     }
 
 
-    public async sendProductDetailsResponse(
+    public async sendProductDetails(
         params: {
             publicKey: string,
             algorithm: string,
-            product: Product
+            myProduct: MyProduct,
+            myDocuments: MyDocument[]
         }
     ): Promise<void> {
-        const { publicKey, product } = params;
-        const stringifiedProduct = JSON.stringify(product);
-        const message = this.crypto.encrypt(publicKey, stringifiedProduct);
+        const { publicKey, myProduct, myDocuments } = params;
+        const stringifiedProductPackage = JSON.stringify({ product: myProduct, documents: myDocuments });
+        const message = this.crypto.encrypt(publicKey, stringifiedProductPackage);
 
         await axios.post(this.url + "/product-details-responses", {
             publicKey,
             message,
-            uid: product.uid
+            uid: myProduct.uid
         });
     }
 
 
-    public async getProducts(params: { key: Key, hash: string }[]): Promise<Product[]> {
+    public async getProductPackages(params: { key: Key, hash: string }[]): Promise<ProductPackage[]> {
         const publicKeys = params.map(param => param.key.publicKey);
         const productDetailsResponses = await this.getProductDetailsResponses(publicKeys);
 
-        const products = this.extractProducts(params, productDetailsResponses);
+        const products = this.extractProductPackages(params, productDetailsResponses);
         return products;
     }
 
@@ -109,47 +111,77 @@ export class Operator {
         return response.data.data.productDetailsResponses;
     }
 
-    private extractProducts(
+    private extractProductPackages(
         params: { key: Key, hash: string }[],
         productDetailsResponses: ProductDetailsResponse[]
-    ): Product[] {
-        const products = <Product[]> [];
+    ): ProductPackage[] {
+        const productPackages = <ProductPackage[]> [];
         productDetailsResponses.forEach((productDetailsResponse) => {
             try {
                 const param = params.filter(_param => _param.key.publicKey === productDetailsResponse.publicKey)[0];
-                const product = this.decryptProduct(param.key.privateKey, productDetailsResponse.message);
+                const productPackage = this.decryptProductPackage(param.key.privateKey, productDetailsResponse.message);
 
-                this.checkProductFormat(product);
-                this.verifyHash(product, param.hash);
+                this.checkProductPackage(productPackage);
+                this.verifyHash(productPackage.product, param.hash);
 
-                products.push(product);
+                productPackages.push(productPackage);
             } catch (error) {
-                logger.debug("operator:extractProducts -> " + (<Error> error).message);
+                logger.debug("Operator:extractProductPackages -> " + (<Error> error).message);
             }
         });
-        return products;
+        return productPackages;
     }
 
-    private decryptProduct(privateKey: string, message: EncMessage): Product {
-        const productString = this.crypto.decrypt(privateKey, message);
-        return <Product> JSON.parse(productString || "");
+    private decryptProductPackage(privateKey: string, message: EncMessage): ProductPackage {
+        const productPackageString = this.crypto.decrypt(privateKey, message);
+        return <ProductPackage> JSON.parse(productPackageString || "");
     }
 
-    private checkProductFormat(product: Product): void {
-        if (this.propertyExists(product, "amount") && this.propertyExists(product, "amountUnit") &&
-            this.propertyExists(product, "carbonFootprint") && this.propertyExists(product, "carbonFootprintUnit") &&
-            this.propertyExists(product, "documents") && this.propertyExists(product, "id") &&
-            this.propertyExists(product, "name") && this.propertyExists(product, "number") &&
-            this.propertyExists(product, "type") && this.propertyExists(product, "uid") &&
-            this.propertyExists(product, "weight") && this.propertyExists(product, "weightUnit")) {
+    private checkProductPackage(productPackage: ProductPackage): void {
+        const { documents, product } = productPackage;
+
+        this.checkProduct(product);
+        if (documents.length !== 0) {
+            this.checkDocuments(documents, product.documents || []);
+        }
+    }
+
+    private checkProduct(product: Product): void {
+        if (product &&
+            typeof product.amount === "number" &&
+            typeof product.amountUnit === "string" && isAmountUnit(product.amountUnit) &&
+            typeof product.carbonFootprint === "number" &&
+            typeof product.carbonFootprintUnit === "string" && isCarbonFootprintUnit(product.carbonFootprintUnit) &&
+            Array.isArray(product.documents) &&
+            typeof product.id === "string" &&
+            typeof product.name === "string" &&
+            typeof product.number === "string" &&
+            typeof product.type === "string" && isProductType(product.type) &&
+            typeof product.uid === "string" &&
+            typeof product.weight === "number" &&
+            typeof product.weightUnit === "string" && isWeightUnit(product.weightUnit)) {
             return;
         }
         throw new Error("not a product");
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    private propertyExists(object: Object, key: string) {
-        return key in object;
+    private checkDocuments(documents: Document[], documentIds: string[]): void {
+        documents.forEach((document) => {
+            if (!documentIds.includes(document.uid)) {
+                throw new Error("document uid not found");
+            }
+
+            if (document &&
+                typeof document.data === "string" &&
+                typeof document.name === "string" &&
+                typeof document.type === "string" &&
+                typeof document.uid === "string" &&
+                typeof document.uploaded === "number" &&
+                typeof document.version === "string") {
+                return;
+            }
+            throw new Error("not a document");
+        });
     }
 
     private verifyHash(product: Product, hash: string): void {

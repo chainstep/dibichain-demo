@@ -5,28 +5,32 @@ export class IntervalManager {
     private static intervalHandlers: IntervalHandler[] = [];
 
 
-    public static addIntervalHandler(intervalHandler: IntervalHandler) {
-        if (this.getIntervalHandler(intervalHandler.getName())) {
+    public static add(intervalHandler: IntervalHandler) {
+        if (this.get(intervalHandler.getName())) {
             return;
         }
         this.intervalHandlers.push(intervalHandler);
     }
 
 
-    public static getIntervalHandler(name: string): IntervalHandler | undefined {
-        return this.intervalHandlers.find(intervalHandler => intervalHandler.getName() === name);
+    public static get(handlerName: string): IntervalHandler | undefined {
+        return this.intervalHandlers.find(intervalHandler => intervalHandler.getName() === handlerName);
     }
 
 
-    public static startIntervalHandler(name: string): void {
-        const handler = this.getIntervalHandler(name);
-        handler?.start();
+    public static start(handlerName?: string): void {
+        if (handlerName) {
+            const handler = this.get(handlerName);
+            handler?.start();
+        } else {
+            this.intervalHandlers.forEach(handler => handler.start());
+        }
     }
 
 
-    public static stopIntervalHandler(name?: string): void {
-        if (name) {
-            const handler = this.getIntervalHandler(name);
+    public static stop(handlerName?: string): void {
+        if (handlerName) {
+            const handler = this.get(handlerName);
             handler?.stop();
         } else {
             this.intervalHandlers.forEach(handler => handler.stop());
@@ -34,9 +38,9 @@ export class IntervalManager {
     }
 
 
-    public static removeIntervalHandler(name: string): void {
-        const handler = this.getIntervalHandler(name);
+    public static remove(handlerName: string): void {
+        const handler = this.get(handlerName);
         handler?.stop();
-        this.intervalHandlers = this.intervalHandlers.filter(handler => handler.getName() !== name);
+        this.intervalHandlers = this.intervalHandlers.filter(handler => handler.getName() !== handlerName);
     }
 }

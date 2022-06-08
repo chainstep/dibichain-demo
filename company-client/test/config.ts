@@ -13,6 +13,8 @@ export const config = {
         // "newProduct",
         // "productDetailsRequest",
         // "pollProducts",
-        // "getProducts"
+        // "getMyDocuments",
+        // "postMyDocuments",
+        // "getDocuments"
     ]
 };

@@ -7,7 +7,7 @@ participant "Company A" as COMPA
 participant "Company B UI" as COMPBU
 participant "Company B" as COMPB
 participant "Operator" as OP
-participant "Blockchain" as BC
+participant "EventBus" as BC
 
 
 == Getting Product from SustainHub ==
@@ -18,9 +18,19 @@ note right
     POST /my-products
 end note
 COMPA -> COMPA: store my product data
+-> SUS: add documents data
+SUS -> COMPA: send documents data 
+note right
+    POST /my-documents
+end note
+COMPA -> COMPA: store my product data
 COMPAU -> COMPA: get my products
 note right
     GET /my-products
+end note
+COMPAU -> COMPA: get my documents
+note right
+    GET /my-documents
 end note
 |||
 
@@ -85,8 +95,10 @@ note right
 end note
 
 COMPA -> COMPA: get product data
-COMPA -> COMPA: encrypt(product data, pubKeyB)
-COMPA -> OP: send encrypted product data\n(uid, pubKeyB, encData)
+COMPA -> COMPA: get documents data
+COMPA -> COMPA: merge documents\nand product data
+COMPA -> COMPA: encrypt(merged data, pubKeyB)
+COMPA -> OP: send encrypted merged data\n(uid, pubKeyB, encData)
 note right
     POST /product-details-responses
 end note
@@ -95,17 +107,23 @@ COMPA -> COMPA: update product details request\ndata with responded
 
 == Getting Product Details ==
 
-COMPB -> OP: get encrypted product data\n(uid, pubKeyB)
+COMPB -> OP: get encrypted merged data\n(uid, pubKeyB)
 note right
     GET /product-details-responses
 end note
-COMPB -> COMPB: decrypt product data
+COMPB -> COMPB: decrypt merged data
+COMPB -> COMPB: split documents and product data
 COMPB -> COMPB: hash product data
 COMPB -> COMPB: validate hashes
 COMPB -> COMPB: store product data
+COMPB -> COMPB: store documents data
 COMPBU -> COMPB: get products
 note right
     GET /products
+end note
+COMPBU -> COMPB: get documents
+note right
+    GET /documents
 end note
 
 |||

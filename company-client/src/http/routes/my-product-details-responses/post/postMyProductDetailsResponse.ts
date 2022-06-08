@@ -2,6 +2,7 @@ import { body } from "express-validator";
 import { Crypto } from "../../../../lib/Crypto";
 import { EnvVars } from "../../../../lib/EnvVars";
 import { Operator } from "../../../../lib/Operator";
+import { MyDocumentStore } from "../../../../storage/my-document/MyDocumentStore";
 import { MyProductStore } from "../../../../storage/my-product/MyProductStore";
 import { ProductDetailsRequestStore } from "../../../../storage/product-details-request/ProductDetailsRequestStore";
 import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
@@ -19,6 +20,7 @@ export const postMyProductDetailsResponsesRouter = createRouter({
     service: new PostMyProductDetailsResponseService({
         getProductDetailsRequestStore: () => ProductDetailsRequestStore.get(),
         getMyProductStore: () => MyProductStore.get(),
+        getMyDocumentStore: () => MyDocumentStore.get(),
         operator: new Operator({
             url: EnvVars.OPERATOR_URL,
             crypto: new Crypto()
