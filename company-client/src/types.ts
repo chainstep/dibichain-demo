@@ -87,3 +87,8 @@ export interface Document {
 }
 
 export type MyDocument = Document
+
+export interface ProductPackage {
+    product: Product,
+    documents: Document[]
+}

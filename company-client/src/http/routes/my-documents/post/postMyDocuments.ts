@@ -1,6 +1,7 @@
 import { body } from "express-validator";
 import { MyDocumentStore } from "../../../../storage/my-document/MyDocumentStore";
 import { MyDocument } from "../../../../types";
+import { isUUID } from "../../../../utils/propertyCheckers";
 import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
 import { createRouter } from "../../routerFactory";
 import { PostMyDocumentsService } from "./PostMyDocumentsService";
@@ -40,9 +41,4 @@ function isMyDocumentType(myDocument: MyDocument) {
         isUUID(myDocument.uid) &&
         typeof myDocument.uploaded === "number" &&
         typeof myDocument.version === "string";
-}
-
-function isUUID(id: string): boolean {
-    const test = "" + id;
-    return !!test.match("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
 }
