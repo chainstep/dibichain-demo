@@ -58,7 +58,7 @@ export class PostMyProductDetailsResponseService implements RouteService {
             throw new NotFoundError("product details request not found");
         }
 
-        await this.operator.sendProductDetailsResponse({
+        await this.operator.sendProductDetails({
             myProduct,
             myDocuments,
             publicKey: productDetailsRequests[0].publicKey,

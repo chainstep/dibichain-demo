@@ -75,7 +75,7 @@ export class Operator {
     }
 
 
-    public async sendProductDetailsResponse(
+    public async sendProductDetails(
         params: {
             publicKey: string,
             algorithm: string,
@@ -147,7 +147,8 @@ export class Operator {
     }
 
     private checkProduct(product: Product): void {
-        if (typeof product.amount === "number" &&
+        if (product &&
+            typeof product.amount === "number" &&
             typeof product.amountUnit === "string" && isAmountUnit(product.amountUnit) &&
             typeof product.carbonFootprint === "number" &&
             typeof product.carbonFootprintUnit === "string" && isCarbonFootprintUnit(product.carbonFootprintUnit) &&
@@ -170,7 +171,8 @@ export class Operator {
                 throw new Error("document uid not found");
             }
 
-            if (typeof document.data === "string" &&
+            if (document &&
+                typeof document.data === "string" &&
                 typeof document.name === "string" &&
                 typeof document.type === "string" &&
                 typeof document.uid === "string" &&
