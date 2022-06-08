@@ -14,7 +14,7 @@ import { PollProductsService } from "./services/PollProductsService";
 export function initIntervals(): void {
     const intervalName_10sec = "10-sec-interval";
 
-    IntervalManager.addIntervalHandler(
+    IntervalManager.add(
         new IntervalHandler({
             name: intervalName_10sec,
             pollingIntervalSec: 10,
@@ -34,5 +34,5 @@ export function initIntervals(): void {
         })
     );
 
-    IntervalManager.startIntervalHandler(intervalName_10sec);
+    IntervalManager.start(intervalName_10sec);
 }
