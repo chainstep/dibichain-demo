@@ -2,6 +2,8 @@ import { PollProductsService } from "../../src/interval/services/PollProductsSer
 import { Crypto } from "../../src/lib/Crypto";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { Operator } from "../../src/lib/Operator";
+import { DocumentStore } from "../../src/storage/document/DocumentStore";
+import { DocumentStoreInMemory } from "../../src/storage/document/DocumentStoreInMemory";
 import { KeyStore } from "../../src/storage/key/KeyStore";
 import { KeyStoreInMemory } from "../../src/storage/key/KeyStoreInMemory";
 import { MyProductDetailsRequestStore } from "../../src/storage/my-product-details-request/MyProductDetailsRequestStore";
@@ -11,7 +13,7 @@ import { NewProductStoreInMemory } from "../../src/storage/new-product/NewProduc
 import { ProductStore } from "../../src/storage/product/ProductStore";
 import { ProductStoreInMemory } from "../../src/storage/product/ProductStoreInMemory";
 import { config } from "../config";
-import { TEST_KEY, TEST_MESSAGE, TEST_MY_PRODUCT_DETAILS_REQUEST, TEST_NEW_PRODUCT, TEST_PRODUCT } from "../constants";
+import { TEST_DOCUMENT_1, TEST_DOCUMENT_2, TEST_DOCUMENT_3, TEST_KEY, TEST_MESSAGE, TEST_MY_PRODUCT_DETAILS_REQUEST, TEST_NEW_PRODUCT, TEST_PRODUCT } from "../constants";
 
 
 // mock axios
@@ -49,12 +51,14 @@ if (!config.skipTests.includes("pollProducts")) {
     const myProductDetailsRequestStore = (<MyProductDetailsRequestStoreInMemory> MyProductDetailsRequestStore.get());
     const keyStore = (<KeyStoreInMemory> KeyStore.get());
     const productStore = (<ProductStoreInMemory> ProductStore.get());
+    const documentStore = (<DocumentStoreInMemory> DocumentStore.get());
     const newProductStore = (<NewProductStoreInMemory> NewProductStore.get());
 
     beforeEach(async () => {
         myProductDetailsRequestStore.clear();
         keyStore.clear();
         productStore.clear();
+        documentStore.clear();
         newProductStore.clear();
     });
 
@@ -69,6 +73,7 @@ if (!config.skipTests.includes("pollProducts")) {
             getMyProductDetailsRequestStore: () => MyProductDetailsRequestStore.get(),
             getProductStore: () => ProductStore.get(),
             getNewProductStore: () => NewProductStore.get(),
+            getDocumentStore: () => DocumentStore.get(),
             operator: new Operator({
                 url: EnvVars.OPERATOR_URL,
                 crypto: new Crypto()
@@ -77,7 +82,16 @@ if (!config.skipTests.includes("pollProducts")) {
 
         await service.run();
         const product = productStore.store[0];
+        const documents = documentStore.store;
+
         expect(product).toEqual(TEST_PRODUCT);
+
+        let index = documents.findIndex(document => document.uid === TEST_DOCUMENT_1.uid);
+        expect(documents[index]).toEqual(TEST_DOCUMENT_1);
+        index = documents.findIndex(document => document.uid === TEST_DOCUMENT_2.uid);
+        expect(documents[index]).toEqual(TEST_DOCUMENT_2);
+        index = documents.findIndex(document => document.uid === TEST_DOCUMENT_3.uid);
+        expect(documents[index]).toEqual(TEST_DOCUMENT_3);
     });
 } else {
     test("dummy", () => {
