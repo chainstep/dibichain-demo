@@ -8,7 +8,7 @@ const theme = extendTheme({
     },
   },
   fonts: {
-    body: '',
+    body: '\'Open Sans\', sans-serif',
     heading: ''
   },
   components: {
@@ -18,6 +18,11 @@ const theme = extendTheme({
         fontWeight: '', // Normally, it is "semibold"
       },
     },
+    Heading: {
+      baseStyle: {
+        color: ''
+      }
+    }
   },
   colors: {
     orange: {

@@ -54,9 +54,15 @@ const MyProductsPage: React.FC = () => {
   };
 
   const getAllProducts = () => {
-    getMyProducts().then(({ data }) => setMyProducts(data.myProducts));
-    getMyNewProducts().then(({ data }) => setMyNewProducts(data.myNewProducts));
-    //getProducts().then(({ data }) => setProducts(data.products));
+    getMyProducts()
+      .then(({ data }) => setMyProducts(data.myProducts))
+      .catch(err => console.log(err));
+    getMyNewProducts()
+      .then(({ data }) => setMyNewProducts(data.myNewProducts))
+      .catch(err => console.log(err));
+    getProducts()
+      .then(({ data }) => setProducts(data.products))
+      .catch(err => console.log(err));
   };
 
   const isAlreadyBroadcasted = (uid: string) => {
@@ -75,7 +81,7 @@ const MyProductsPage: React.FC = () => {
         <Header />
 
         <Container maxW='container.xl'>
-          <Heading mb={12} textAlign='center'>
+          <Heading  color='#065384' mb={12} mt={8} textAlign='center'>
             My Products
           </Heading>
 
@@ -85,7 +91,7 @@ const MyProductsPage: React.FC = () => {
             </Heading>
           ) : (
             <TableContainer>
-              <Table variant='simple' size='md'>
+              <Table variant='simple' size='md' colorScheme='cyan'>
                 <Thead>
                   <Tr>
                     <Th>Name</Th>
@@ -141,7 +147,7 @@ const MyProductsPage: React.FC = () => {
 
         <div style={{ height: '100px' }}></div>
         <Container maxW='container.xl'>
-          <Heading mb={12} textAlign='center'>
+          <Heading color='#065384' mb={12} textAlign='center'>
             Products
           </Heading>
 
@@ -151,7 +157,7 @@ const MyProductsPage: React.FC = () => {
             </Heading>
           ) : (
             <TableContainer>
-              <Table variant='simple' size='md'>
+              <Table variant='simple' size='md' colorScheme='cyan'>
                 <Thead>
                   <Tr>
                     <Th>Name</Th>
