@@ -20,12 +20,17 @@ import Page from '../components/commons/Page';
 
 import Header from '../components/commons/Header';
 import Footer from '../components/commons/Footer';
-import { MyProductDetailsRequest, ProductDetailsRequest } from '../../types';
+import {
+  MyProductDetailsRequest,
+  Product,
+  ProductDetailsRequest,
+} from '../../types';
 import {
   getMyProductDetailsRequest,
   getProductDetailsRequest,
   postMyProductDetailsResponse,
-} from '../api/product-details';
+} from '../services/http/product-details';
+import { getMyProducts, getNewProducts } from '../services/http/products';
 
 const MyProductsPage: React.FC = () => {
   const [productDetailsRequests, setProductDetailsRequests] = useState(
@@ -34,23 +39,54 @@ const MyProductsPage: React.FC = () => {
   const [myProductDetailsRequests, setMyProductDetailsRequests] = useState(
     [] as MyProductDetailsRequest[]
   );
+  const [myProducts, setMyProducts] = useState([] as Product[]);
+  const [newProducts, setNewProducts] = useState([] as Product[]);
   const toast = useToast();
 
   useEffect(() => {
     getAllProductDetailsRequests();
+    getMyProductsData();
+    getNewProductsData();
   }, []);
 
   useInterval(() => {
     getAllProductDetailsRequests();
+    getMyProductsData();
+    getNewProductsData();
   }, 10000);
 
+
+  const getMyProductsData = () => {
+    getMyProducts()
+      .then(({ data }) => setMyProducts(data.myProducts))
+      .catch(err => console.log(err));
+  };
+
+  const getNewProductsData = () => {
+    getNewProducts()
+      .then(({ data }) => setNewProducts(data.newProducts))
+      .catch(err => console.log(err));
+  };
+
   const getAllProductDetailsRequests = () => {
-    getProductDetailsRequest().then(({ data }) =>
-      setProductDetailsRequests(data.productDetailsRequests)
-    );
-    getMyProductDetailsRequest().then(({ data }) =>
-      setMyProductDetailsRequests(data.myProductDetailsRequests)
-    );
+    getProductDetailsRequest()
+      .then(({ data }) =>
+        setProductDetailsRequests(
+          data.productDetailsRequests.filter(
+            request => request.responded === false
+          )
+        )
+      )
+      .catch(err => console.log(err));
+    getMyProductDetailsRequest()
+      .then(({ data }) =>
+        setMyProductDetailsRequests(
+          data.myProductDetailsRequests.filter(
+            request => request.responded === false
+          )
+        )
+      )
+      .catch(err => console.log(err));
   };
 
   const onApproveButtonClick = async ({
@@ -68,13 +104,23 @@ const MyProductsPage: React.FC = () => {
     getAllProductDetailsRequests();
   };
 
+  const getNameOfMyProduct = (uid: string): string => {
+    const myProduct = myProducts.find(product => product.uid === uid);
+    return myProduct?.name;
+  };
+
+  const getNameOfNewProduct = (uid: string): string => {
+    const newProduct = newProducts.find(product => product.uid === uid);
+    return newProduct?.name;
+  };
+
   return (
     <Page>
       <Layout>
         <Header />
 
         <Container maxW='container.xl'>
-          <Heading mb={12} textAlign='center'>
+          <Heading color='#065384' mb={12} mt={8} textAlign='center'>
             My Product Details Requests
           </Heading>
 
@@ -84,7 +130,7 @@ const MyProductsPage: React.FC = () => {
             </Heading>
           ) : (
             <TableContainer>
-              <Table variant='simple' size='md'>
+              <Table variant='simple' size='md' colorScheme='cyan'>
                 <Thead>
                   <Tr>
                     <Th>UID</Th>
@@ -95,7 +141,7 @@ const MyProductsPage: React.FC = () => {
                 <Tbody>
                   {myProductDetailsRequests.map(request => (
                     <Tr key={request.uid}>
-                      <Td>{request.uid}</Td>
+                      <Td>{getNameOfNewProduct(request.uid)}</Td>
                       <Td>
                         {new Date(request.timestamp * 1000).toLocaleString()}
                       </Td>
@@ -120,7 +166,7 @@ const MyProductsPage: React.FC = () => {
         <div style={{ height: '100px' }}></div>
 
         <Container maxW='container.xl'>
-          <Heading mb={12} textAlign='center'>
+          <Heading color='#065384' mb={12} textAlign='center'>
             Product Details Requests
           </Heading>
 
@@ -130,7 +176,7 @@ const MyProductsPage: React.FC = () => {
             </Heading>
           ) : (
             <TableContainer>
-              <Table variant='simple' size='md'>
+              <Table variant='simple' size='md' colorScheme='cyan'>
                 <Thead>
                   <Tr>
                     <Th>UID</Th>
@@ -144,9 +190,20 @@ const MyProductsPage: React.FC = () => {
                     .filter(request => request.responded === false)
                     .map(request => (
                       <Tr key={request.uid}>
-                        <Td>{request.uid}</Td>
+                        <Td>{getNameOfMyProduct(request.uid)}</Td>
                         <Td>
                           {new Date(request.timestamp * 1000).toLocaleString()}
+                        </Td>
+
+                        <Td>
+                          <Tooltip
+                            hasArrow
+                            label={request.publicKey}
+                            bg='gray.300'
+                            color='black'
+                          >
+                            <InfoIcon />
+                          </Tooltip>
                         </Td>
                         <Td>
                           <Button
@@ -162,16 +219,6 @@ const MyProductsPage: React.FC = () => {
                           >
                             Approve
                           </Button>
-                        </Td>
-                        <Td>
-                          <Tooltip
-                            hasArrow
-                            label={request.publicKey}
-                            bg='gray.300'
-                            color='black'
-                          >
-                            <InfoIcon />
-                          </Tooltip>
                         </Td>
                       </Tr>
                     ))}

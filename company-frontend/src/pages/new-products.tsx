@@ -18,24 +18,49 @@ import Page from '../components/commons/Page';
 
 import Header from '../components/commons/Header';
 import Footer from '../components/commons/Footer';
-import { getNewProducts } from '../api/products';
-import { Product } from '../../types';
-import { postMyProductDetailsRequest } from '../api/product-details';
+import { getNewProducts, getProducts } from '../services/http/products';
+import { MyProductDetailsRequest, Product } from '../../types';
+import {
+  getMyProductDetailsRequest,
+  postMyProductDetailsRequest,
+} from '../services/http/product-details';
 
 const MyProductsPage: React.FC = () => {
   const [newProducts, setNewProducts] = useState([] as Product[]);
+  const [myProductDetailsRequests, setMyProductDetailsRequests] = useState(
+    [] as MyProductDetailsRequest[]
+  );
   const toast = useToast();
 
   useEffect(() => {
     getAllNewProducts();
+    getMyProductDetails();
   }, []);
 
   useInterval(() => {
     getAllNewProducts();
+    getMyProductDetails();
   }, 10000);
 
-  const getAllNewProducts = () => {
-    getNewProducts().then(({ data }) => setNewProducts(data.newProducts));
+  const getAllNewProducts = async () => {
+    const products = await getProducts();
+    const uids = products['data'].products.map(product => product.uid);
+
+    getNewProducts()
+      .then(({ data }) =>
+        setNewProducts(
+          data.newProducts.filter(product => !uids.includes(product.uid))
+        )
+      )
+      .catch(err => console.log(err));
+  };
+
+  const getMyProductDetails = () => {
+    getMyProductDetailsRequest()
+      .then(({ data }) =>
+        setMyProductDetailsRequests(data.myProductDetailsRequests)
+      )
+      .catch(err => console.log(err));
   };
 
   const onButtonClick = async (uid: string) => {
@@ -48,6 +73,23 @@ const MyProductsPage: React.FC = () => {
       isClosable: true,
     });
     getAllNewProducts();
+    getMyProductDetails();
+  };
+
+  const productDetailsAlreadyRequested = (uid: string): boolean => {
+    const notRespondedRequests = myProductDetailsRequests.filter(
+      request => request.responded === false
+    );
+
+    const notRespondedRequest = notRespondedRequests.find(
+      request => request.uid === uid
+    );
+
+    if (notRespondedRequest) {
+      return true;
+    }
+
+    return false;
   };
 
   return (
@@ -56,7 +98,7 @@ const MyProductsPage: React.FC = () => {
         <Header />
 
         <Container maxW='container.xl'>
-          <Heading mb={12} textAlign='center'>
+          <Heading color='#065384' mb={12} mt={8} textAlign='center'>
             New Products
           </Heading>
 
@@ -66,7 +108,7 @@ const MyProductsPage: React.FC = () => {
             </Heading>
           ) : (
             <TableContainer>
-              <Table variant='simple' size='md'>
+              <Table variant='simple' size='md' colorScheme='cyan'>
                 <Thead>
                   <Tr>
                     <Th>Name</Th>
@@ -97,9 +139,17 @@ const MyProductsPage: React.FC = () => {
                         {product.carbonFootprint} {product.weightUnit}
                       </Td>
                       <Td>
-                        <Button onClick={() => onButtonClick(product.uid)}>
-                          Request Details
-                        </Button>
+                        {productDetailsAlreadyRequested(product.uid) ? (
+                          <Button
+                            isLoading
+                            loadingText='Waiting for approval'
+                            onClick={() => onButtonClick(product.uid)}
+                          ></Button>
+                        ) : (
+                          <Button onClick={() => onButtonClick(product.uid)}>
+                            Request Details
+                          </Button>
+                        )}
                       </Td>
                     </Tr>
                   ))}

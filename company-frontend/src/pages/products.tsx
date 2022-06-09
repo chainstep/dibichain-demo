@@ -14,6 +14,9 @@ import {
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useInterval } from 'usehooks-ts';
+import { DownloadIcon } from '@chakra-ui/icons';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 import Layout from '../components/commons/Layout';
 import Page from '../components/commons/Page';
 
@@ -24,8 +27,9 @@ import {
   getMyProducts,
   getProducts,
   postMyNewProducts,
-} from '../api/products';
-import { Product } from '../../types';
+} from '../services/http/products';
+import { Document, Product } from '../../types';
+import { getDocuments, getMyDocuments } from '../services/http/documents';
 
 const MyProductsPage: React.FC = () => {
   const [myProducts, setMyProducts] = useState([] as Product[]);
@@ -54,9 +58,15 @@ const MyProductsPage: React.FC = () => {
   };
 
   const getAllProducts = () => {
-    getMyProducts().then(({ data }) => setMyProducts(data.myProducts));
-    getMyNewProducts().then(({ data }) => setMyNewProducts(data.myNewProducts));
-    //getProducts().then(({ data }) => setProducts(data.products));
+    getMyProducts()
+      .then(({ data }) => setMyProducts(data.myProducts))
+      .catch(err => console.log(err));
+    getMyNewProducts()
+      .then(({ data }) => setMyNewProducts(data.myNewProducts))
+      .catch(err => console.log(err));
+    getProducts()
+      .then(({ data }) => setProducts(data.products))
+      .catch(err => console.log(err));
   };
 
   const isAlreadyBroadcasted = (uid: string) => {
@@ -69,13 +79,47 @@ const MyProductsPage: React.FC = () => {
     return new Date(product['timestamp'] * 1000).toLocaleString();
   };
 
+  const handleDownloadMyDocumentsClick = async (uids: string[]) => {
+    const zip = new JSZip();
+    const doc = zip.folder('my-documents');
+
+    for (const uid of uids) {
+      const data = await getMyDocuments(uid);
+      const document: Document = data['data'].myDocuments[0];
+      doc.file(`${document.name}.${document.type}`, document.data, {
+        base64: true,
+      });
+    }
+
+    const content = await zip.generateAsync({ type: 'blob' });
+
+    saveAs(content, 'my-documents.zip');
+  };
+
+  const handleDownloadDocumentsClick = async (uids: string[]) => {
+    const zip = new JSZip();
+    const doc = zip.folder('documents');
+
+    for (const uid of uids) {
+      const data = await getDocuments(uid);
+      const document: Document = data['data'].documents[0];
+      doc.file(`${document.name}.${document.type}`, document.data, {
+        base64: true,
+      });
+    }
+
+    const content = await zip.generateAsync({ type: 'blob' });
+
+    saveAs(content, 'documents.zip');
+  };
+
   return (
     <Page>
       <Layout>
         <Header />
 
         <Container maxW='container.xl'>
-          <Heading mb={12} textAlign='center'>
+          <Heading color='#065384' mb={12} mt={8} textAlign='center'>
             My Products
           </Heading>
 
@@ -85,7 +129,7 @@ const MyProductsPage: React.FC = () => {
             </Heading>
           ) : (
             <TableContainer>
-              <Table variant='simple' size='md'>
+              <Table variant='simple' size='md' colorScheme='cyan'>
                 <Thead>
                   <Tr>
                     <Th>Name</Th>
@@ -94,6 +138,7 @@ const MyProductsPage: React.FC = () => {
                     <Th>Type</Th>
                     <Th>Weight</Th>
                     <Th>Carbon Footprint</Th>
+                    <Th>Documents</Th>
                     <Th></Th>
                   </Tr>
                 </Thead>
@@ -115,6 +160,18 @@ const MyProductsPage: React.FC = () => {
                       <Td>
                         {product.carbonFootprint} {product.weightUnit}
                       </Td>
+                      <Td>
+                        {product.documents.length}{' '}
+                        {product.documents.length > 0 && (
+                          <DownloadIcon
+                            cursor='pointer'
+                            onClick={() =>
+                              handleDownloadMyDocumentsClick(product.documents)
+                            }
+                          />
+                        )}
+                      </Td>
+
                       <Td>
                         {isAlreadyBroadcasted(product.uid) ? (
                           <Tooltip
@@ -141,7 +198,7 @@ const MyProductsPage: React.FC = () => {
 
         <div style={{ height: '100px' }}></div>
         <Container maxW='container.xl'>
-          <Heading mb={12} textAlign='center'>
+          <Heading color='#065384' mb={12} textAlign='center'>
             Products
           </Heading>
 
@@ -151,7 +208,7 @@ const MyProductsPage: React.FC = () => {
             </Heading>
           ) : (
             <TableContainer>
-              <Table variant='simple' size='md'>
+              <Table variant='simple' size='md' colorScheme='cyan'>
                 <Thead>
                   <Tr>
                     <Th>Name</Th>
@@ -160,6 +217,7 @@ const MyProductsPage: React.FC = () => {
                     <Th>Type</Th>
                     <Th>Weight</Th>
                     <Th>Carbon Footprint</Th>
+                    <Th>Documents</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
@@ -179,6 +237,18 @@ const MyProductsPage: React.FC = () => {
                       </Td>
                       <Td>
                         {product.carbonFootprint} {product.weightUnit}
+                      </Td>
+
+                      <Td>
+                        {product.documents.length}{' '}
+                        {product.documents.length > 0 && (
+                          <DownloadIcon
+                            cursor='pointer'
+                            onClick={() =>
+                              handleDownloadDocumentsClick(product.documents)
+                            }
+                          />
+                        )}
                       </Td>
                     </Tr>
                   ))}
