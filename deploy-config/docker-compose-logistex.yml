@@ -36,5 +36,5 @@ services:
       # extern:intern
       - 3101:3000
     environment:
-      - NEXT_PUBLIC_BACKEND_BASE_URL="https://api.logistex.dibichain.de"
-      - NEXT_PUBLIC_COMPANY_NAME="Logistex (A)"
+      - NEXT_PUBLIC_BACKEND_BASE_URL=https://api.logistex.dibichain.de
+      - NEXT_PUBLIC_COMPANY_NAME=Logistex (A)
