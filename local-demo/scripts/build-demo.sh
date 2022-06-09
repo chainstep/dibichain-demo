@@ -25,6 +25,10 @@ echo "[INFO] Building company client image..."
 cd ${HERE}/${RELATIVE_COMPANY_CLIENT_PATH}
 ./scripts/build-docker-image.sh
 
+echo "[INFO] Building company frontend image..."
+cd ${HERE}/${RELATIVE_COMPANY_CLIENT_PATH}
+./scripts/build-docker-image.sh
+
 echo "[INFO] Building operator image..."
 cd ${HERE}/${RELATIVE_OPERATOR_PATH}
 ./scripts/build-docker-image.sh
