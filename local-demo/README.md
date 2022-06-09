@@ -81,4 +81,4 @@ ganache (the local chain) is not started yet. You need to wait some time (depend
 
 ### Cannot connect to frontend
 
-Since starting a company-frontend container involves creating an optimized production build, it can take up to 5 - 10 minutes until the frontend is started and running. This depends heavily on your machine. Just be patient and try it again after some time :).
+Since starting a company-frontend container involves creating an optimized production build, it can take up to 5 minutes until the frontend is started and running. This depends heavily on your machine. Just be patient and try it again after some time :).
