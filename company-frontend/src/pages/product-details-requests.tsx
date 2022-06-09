@@ -29,8 +29,8 @@ import {
   getMyProductDetailsRequest,
   getProductDetailsRequest,
   postMyProductDetailsResponse,
-} from '../api/product-details';
-import { getMyProducts } from '../api/products';
+} from '../services/http/product-details';
+import { getMyProducts, getNewProducts } from '../services/http/products';
 
 const MyProductsPage: React.FC = () => {
   const [productDetailsRequests, setProductDetailsRequests] = useState(
@@ -40,21 +40,33 @@ const MyProductsPage: React.FC = () => {
     [] as MyProductDetailsRequest[]
   );
   const [myProducts, setMyProducts] = useState([] as Product[]);
+  const [newProducts, setNewProducts] = useState([] as Product[]);
   const toast = useToast();
 
   useEffect(() => {
     getAllProductDetailsRequests();
-    getMyProducts()
-      .then(({ data }) => setMyProducts(data.myProducts))
-      .catch(err => console.log(err));
+    getMyProductsData();
+    getNewProductsData();
   }, []);
 
   useInterval(() => {
     getAllProductDetailsRequests();
+    getMyProductsData();
+    getNewProductsData();
+  }, 10000);
+
+
+  const getMyProductsData = () => {
     getMyProducts()
       .then(({ data }) => setMyProducts(data.myProducts))
       .catch(err => console.log(err));
-  }, 10000);
+  };
+
+  const getNewProductsData = () => {
+    getNewProducts()
+      .then(({ data }) => setNewProducts(data.newProducts))
+      .catch(err => console.log(err));
+  };
 
   const getAllProductDetailsRequests = () => {
     getProductDetailsRequest()
@@ -92,9 +104,14 @@ const MyProductsPage: React.FC = () => {
     getAllProductDetailsRequests();
   };
 
-  const getNameOfProduct = (uid: string): string => {
+  const getNameOfMyProduct = (uid: string): string => {
     const myProduct = myProducts.find(product => product.uid === uid);
     return myProduct?.name;
+  };
+
+  const getNameOfNewProduct = (uid: string): string => {
+    const newProduct = newProducts.find(product => product.uid === uid);
+    return newProduct?.name;
   };
 
   return (
@@ -124,7 +141,7 @@ const MyProductsPage: React.FC = () => {
                 <Tbody>
                   {myProductDetailsRequests.map(request => (
                     <Tr key={request.uid}>
-                      <Td>{request.uid}</Td>
+                      <Td>{getNameOfNewProduct(request.uid)}</Td>
                       <Td>
                         {new Date(request.timestamp * 1000).toLocaleString()}
                       </Td>
@@ -173,7 +190,7 @@ const MyProductsPage: React.FC = () => {
                     .filter(request => request.responded === false)
                     .map(request => (
                       <Tr key={request.uid}>
-                        <Td>{getNameOfProduct(request.uid)}</Td>
+                        <Td>{getNameOfMyProduct(request.uid)}</Td>
                         <Td>
                           {new Date(request.timestamp * 1000).toLocaleString()}
                         </Td>

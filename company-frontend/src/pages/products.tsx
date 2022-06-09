@@ -27,9 +27,9 @@ import {
   getMyProducts,
   getProducts,
   postMyNewProducts,
-} from '../api/products';
+} from '../services/http/products';
 import { Document, Product } from '../../types';
-import { getDocuments, getMyDocuments } from '../api/documents';
+import { getDocuments, getMyDocuments } from '../services/http/documents';
 
 const MyProductsPage: React.FC = () => {
   const [myProducts, setMyProducts] = useState([] as Product[]);
