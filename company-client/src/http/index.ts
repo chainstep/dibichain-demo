@@ -9,6 +9,9 @@ import { createServer, Server } from "http";
 import { EnvVars } from "../lib/EnvVars";
 import { logErrors } from "./middlewares/errorLogging";
 import { logHttp } from "./middlewares/httpLogging";
+import { getDocumentsRouter } from "./routes/documents/get/getDocuments";
+import { getMyDocumentsRouter } from "./routes/my-documents/get/getMyDocuments";
+import { postMyDocumentsRouter } from "./routes/my-documents/post/postMyDocuments";
 import { getMyNewProductsRouter } from "./routes/my-new-products/get/getMyNewProduct";
 import { postMyNewProductRouter } from "./routes/my-new-products/post/postMyNewProduct";
 import { getMyProductDetailsRequestsRouter } from "./routes/my-product-details-requests/get/getMyProductDetailsRequests";
@@ -44,6 +47,9 @@ httpServer.use(postMyProductDetailsRequestRouter);
 httpServer.use(getMyProductDetailsRequestsRouter);
 httpServer.use(getProductDetailsRequestsRouter);
 httpServer.use(postMyProductDetailsResponsesRouter);
+httpServer.use(postMyDocumentsRouter);
+httpServer.use(getMyDocumentsRouter);
+httpServer.use(getDocumentsRouter);
 
 httpServer.all("*", (request, response) => {
   throw new NotFoundError();

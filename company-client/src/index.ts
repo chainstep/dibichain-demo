@@ -10,8 +10,12 @@ import { EnvVars, RUN_CONTEXT } from "./lib/EnvVars";
 import { RPCProvider } from "./lib/RPCProvider";
 import { BlockchainInfoStore } from "./storage/blockchain/BlockchainInfoStore";
 import { createBlockchainInfoStore } from "./storage/blockchain/blockchainInfoStoreFactory";
+import { DocumentStore } from "./storage/document/DocumentStore";
+import { createDocumentStore } from "./storage/document/DocumentStoreFactory";
 import { KeyStore } from "./storage/key/KeyStore";
 import { createKeyStore } from "./storage/key/KeyStoreFactory";
+import { MyDocumentStore } from "./storage/my-document/MyDocumentStore";
+import { createMyDocumentStore } from "./storage/my-document/myDocumentStoreFactory";
 import { MyNewProductStore } from "./storage/my-new-product/MyNewProductStore";
 import { createMyNewProductStore } from "./storage/my-new-product/myNewProductStoreFactory";
 import { MyProductDetailsRequestStore } from "./storage/my-product-details-request/MyProductDetailsRequestStore";
@@ -48,6 +52,8 @@ async function main(): Promise<void> {
         MyProductDetailsRequestStore.init(createMyProductDetailsRequestStore(StorageType.IN_MEMORY));
         ProductDetailsRequestStore.init(createProductDetailsRequestStore(StorageType.IN_MEMORY));
         KeyStore.init(createKeyStore(StorageType.IN_MEMORY));
+        MyDocumentStore.init(createMyDocumentStore(StorageType.IN_MEMORY));
+        DocumentStore.init(createDocumentStore(StorageType.IN_MEMORY));
     } else {
         BlockchainInfoStore.init(createBlockchainInfoStore(StorageType.MONGO_DB));
         ProductStore.init(createProductStore(StorageType.MONGO_DB));
@@ -57,6 +63,8 @@ async function main(): Promise<void> {
         MyProductDetailsRequestStore.init(createMyProductDetailsRequestStore(StorageType.MONGO_DB));
         ProductDetailsRequestStore.init(createProductDetailsRequestStore(StorageType.MONGO_DB));
         KeyStore.init(createKeyStore(StorageType.MONGO_DB));
+        MyDocumentStore.init(createMyDocumentStore(StorageType.MONGO_DB));
+        DocumentStore.init(createDocumentStore(StorageType.MONGO_DB));
     }
 
     logger.info("Init RPC provider...");
