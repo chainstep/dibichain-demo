@@ -17,6 +17,7 @@ export interface PostMyProductDetailsResponseServiceOptions {
 interface Inputs {
     uid: string;
     publicKey: string;
+    decline?: boolean;
 }
 
 
@@ -36,7 +37,7 @@ export class PostMyProductDetailsResponseService implements RouteService {
 
 
     public async run(inputs: Inputs): Promise<void> {
-        const { uid, publicKey } = inputs;
+        const { uid, publicKey, decline } = inputs;
         const productDetailsRequestStore = this.getProductDetailsRequestStore();
         const myProductStore = this.getMyProductStore();
         const myDocumentStore = this.getMyDocumentStore();
@@ -51,21 +52,23 @@ export class PostMyProductDetailsResponseService implements RouteService {
             throw new NotFoundError("product not found");
         }
 
-        const myProduct = myProducts[0];
-        let myDocuments = <MyDocument[]> [];
-        if (myProduct.documents) {
-            for (let i = 0 ; i < myProduct.documents.length ; i++) {
-                const _myDocuments = await myDocumentStore.find({ uid: myProduct.documents[i] });
-                myDocuments = [...myDocuments, ..._myDocuments];
+        if (!decline) {
+            const myProduct = myProducts[0];
+            let myDocuments = <MyDocument[]> [];
+            if (myProduct.documents) {
+                for (let i = 0 ; i < myProduct.documents.length ; i++) {
+                    const _myDocuments = await myDocumentStore.find({ uid: myProduct.documents[i] });
+                    myDocuments = [...myDocuments, ..._myDocuments];
+                }
             }
-        }
 
-        await this.operator.sendProductDetails({
-            myProduct,
-            myDocuments,
-            publicKey: productDetailsRequests[0].publicKey,
-            algorithm: productDetailsRequests[0].algorithm
-        });
+            await this.operator.sendProductDetails({
+                myProduct,
+                myDocuments,
+                publicKey: productDetailsRequests[0].publicKey,
+                algorithm: productDetailsRequests[0].algorithm
+            });
+        }
 
         productDetailsRequests[0].responded = true;
         await productDetailsRequestStore.upsert(productDetailsRequests[0]);

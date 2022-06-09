@@ -10,10 +10,12 @@ import { TEST_PRODUCT, TEST_PRODUCT_DETAILS_REQUEST } from "../constants";
 
 
 // mock axios
+let messageSent = false;
 jest.mock("axios", () => {
     return {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         post: async (url: string, data: any): Promise<void> => {
+            messageSent = true;
             try {
                 const { publicKey, message, uid } = data;
                 expect(url).toEqual("http://operator.dummy.io/product-details-responses");
@@ -38,6 +40,7 @@ if (!config.skipTests.includes("postMyProductDetailsResponse")) {
     beforeEach(async () => {
         productDetailsRequestStore.clear();
         myProductStore.clear();
+        messageSent = false;
     });
 
 
@@ -55,7 +58,29 @@ if (!config.skipTests.includes("postMyProductDetailsResponse")) {
             .expect(200);
 
         const productDetailsRequests = await productDetailsRequestStore.find({ uid: TEST_PRODUCT_DETAILS_REQUEST.uid });
-        expect(productDetailsRequests.length).toEqual(1);
+
+        expect(messageSent).toEqual(true);
+        expect(productDetailsRequests[0].responded).toEqual(true);
+    });
+
+
+    it("should decline my product details response", async () => {
+        await myProductStore.upsert(TEST_PRODUCT);
+        await productDetailsRequestStore.upsert(TEST_PRODUCT_DETAILS_REQUEST);
+
+        await request(httpServer)
+            .post("/my-product-details-responses")
+            .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
+            .send({
+                uid: TEST_PRODUCT_DETAILS_REQUEST.uid,
+                publicKey: TEST_PRODUCT_DETAILS_REQUEST.publicKey,
+                decline: true
+            })
+            .expect(200);
+
+        const productDetailsRequests = await productDetailsRequestStore.find({ uid: TEST_PRODUCT_DETAILS_REQUEST.uid });
+
+        expect(messageSent).toEqual(false);
         expect(productDetailsRequests[0].responded).toEqual(true);
     });
 } else {
