@@ -24,9 +24,15 @@ You can run the dibichain demo locally on your unix based machine. If you're on 
 - operator
   - http://localhost:3000
 - logistex
-  - http://localhost:3100
+  - client
+    - http://localhost:3100
+  - frontend
+    - http://localhost:3101
 - logistly
-  - http://localhost:3200
+  - client
+    - http://localhost:3200
+  - frontend
+    - http://localhost:3201
 - explorer
   - http://localhost:4000
 
@@ -59,15 +65,20 @@ And reset the demo with:
 
 ## Trouble Shooting
 
-### Blockexplorer does not work
+### Block explorer does not work
 
 Unfortunately, there is a big chance that the block explorer is not working if you're on Apple Silicon. No fix right now.
 
 
-### Run script stops while Contract deployment
+### Run script stops while contract deployment
 
 If you face the following error message while deploying the contract:
 ```
 could not detect network (event="noNetwork", code=NETWORK_ERROR, version=providers/5.6.6)
 ```
 ganache (the local chain) is not started yet. You need to wait some time (depending on your machine) for ganache to be started. You can increase the waiting time by increasing the `BLOCK_CHAIN_WAITING_TIME_SECONDS` at the top of the `run-demo.sh` file. Default is 20 seconds.
+
+
+### Cannot connect to frontend
+
+Since starting a company-frontend container involves creating an optimized production build, it can take up to 5 - 10 minutes until the frontend is started and running. This depends heavily on your machine. Just be patient and try it again after some time :).

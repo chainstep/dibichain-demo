@@ -25,3 +25,18 @@ services:
       - logistly-network
     volumes:
       - ../data/logistly:/data/db
+  # frontend
+  logistly-frontend:
+    image: company-frontend
+    depends_on:
+      - logistly-client
+    networks:
+      - logistly-network
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      # extern:intern
+      - 3201:3000
+    environment:
+      - NEXT_PUBLIC_BACKEND_BASE_URL="http://logistly-client"
+      - NEXT_PUBLIC_COMPANY_NAME="Logistly (B)"

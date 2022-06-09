@@ -3,6 +3,7 @@ networks:
   logistex-network:
     external: false
 services:
+  # client
   logistex-client:
     image: company-client
     depends_on:
@@ -25,3 +26,18 @@ services:
       - logistex-network
     volumes:
       - ../data/logistex:/data/db
+  # frontend
+  logistex-frontend:
+    image: company-frontend
+    depends_on:
+      - logistex-client
+    networks:
+      - logistex-network
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      # extern:intern
+      - 3101:3000
+    environment:
+      - NEXT_PUBLIC_BACKEND_BASE_URL="http://logistex-client"
+      - NEXT_PUBLIC_COMPANY_NAME="Logistex (A)"
