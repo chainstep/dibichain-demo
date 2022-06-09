@@ -15,7 +15,8 @@ env:
   SERVER_FOLDER: dibichain-logistly
   
   # docker config
-  IMAGE_NAME: company-client
+  CLIENT_IMAGE_NAME: company-client
+  FRONTEND_IMAGE_NAME: company-frontend
   IMAGE_TAG: demo-latest
   REGISTRY_NAME: ghcr.io/chainstep/dibichain
   PROJECT_NAME: dibichain-logistly
@@ -58,7 +59,8 @@ jobs:
           ssh -t ${{ env.SSH_DOMAIN }} "
             sudo docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
             cd ${{ env.SERVER_FOLDER }}/docker
-            sudo docker pull ${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            sudo docker pull ${{ env.REGISTRY_NAME }}/${{ env.CLIENT_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            sudo docker pull ${{ env.REGISTRY_NAME }}/${{ env.FRONTEND_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
             sudo docker-compose -f ${{ env.COMPOSE_FILE }} -p ${{ env.PROJECT_NAME }} up -d --remove-orphans
             sudo rm -f /root/.docker/config.json
           "
