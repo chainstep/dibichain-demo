@@ -34,9 +34,9 @@ export class ProductDetailsRequestStoreMongoDB implements IProductDetailsRequest
     }
 
 
-    public async find(params: {uid?: string}): Promise<ProductDetailsRequest[]> {
-        const { uid } = params;
-        const query = uid ? { uid } : {};
+    public async find(params: {uid?: string, publicKey: string}): Promise<ProductDetailsRequest[]> {
+        const { uid, publicKey } = params;
+        const query = uid && publicKey ? { uid, publicKey } : uid ? { uid } : publicKey ? { publicKey } : {};
 
         await connect(this.mongoUrl);
         const doc = await ProductDetailsRequestModel.find(query, REMOVE_MONGO_FIELDS).lean();

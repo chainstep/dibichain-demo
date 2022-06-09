@@ -49,7 +49,8 @@ if (!config.skipTests.includes("postMyProductDetailsResponse")) {
             .post("/my-product-details-responses")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .send({
-                uid: TEST_PRODUCT_DETAILS_REQUEST.uid
+                uid: TEST_PRODUCT_DETAILS_REQUEST.uid,
+                publicKey: TEST_PRODUCT_DETAILS_REQUEST.publicKey
             })
             .expect(200);
 

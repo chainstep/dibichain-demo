@@ -15,7 +15,7 @@ export class NewProductStoreInMemory extends AInMemoryStore implements INewProdu
     public async find(params: {uid?: string}): Promise<NewProduct[]> {
         const { uid } = params;
         if (uid) {
-            return this._find("uid", uid);
+            return this._find(["uid"], [uid]);
         }
         return this.store;
     }
