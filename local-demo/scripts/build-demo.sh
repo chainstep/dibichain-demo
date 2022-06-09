@@ -7,6 +7,7 @@
 ###################################################################################################
 
 RELATIVE_COMPANY_CLIENT_PATH="../../company-client"
+RELATIVE_COMPANY_FRONTEND_PATH="../../company-frontend"
 RELATIVE_OPERATOR_PATH="../../operator"
 
 
@@ -26,7 +27,7 @@ cd ${HERE}/${RELATIVE_COMPANY_CLIENT_PATH}
 ./scripts/build-docker-image.sh
 
 echo "[INFO] Building company frontend image..."
-cd ${HERE}/${RELATIVE_COMPANY_CLIENT_PATH}
+cd ${HERE}/${RELATIVE_COMPANY_FRONTEND_PATH}
 ./scripts/build-docker-image.sh
 
 echo "[INFO] Building operator image..."
