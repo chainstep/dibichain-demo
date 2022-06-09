@@ -28,7 +28,7 @@ import {
   getProducts,
   postMyNewProducts,
 } from '../services/http/products';
-import { Document, Product } from '../../types';
+import { Document, Product } from '../types';
 import { getDocuments, getMyDocuments } from '../services/http/documents';
 
 const MyProductsPage: React.FC = () => {

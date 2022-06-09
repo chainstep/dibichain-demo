@@ -1,0 +1,17 @@
+version: "3.8"
+networks: 
+  company-frontend-network:
+    external: false
+services:
+  company-frontend:
+    image: company-frontend
+    # restart: always
+    networks:
+      - company-frontend-network
+    ports:
+      # extern:intern
+      - 3000:3000
+    environment:
+      - NEXT_PUBLIC_BASE_PATH=""
+      - NEXT_PUBLIC_BACKEND_BASE_URL="http://localhost:3100"
+      - NEXT_PUBLIC_COMPANY_NAME="Logistex (A)"
