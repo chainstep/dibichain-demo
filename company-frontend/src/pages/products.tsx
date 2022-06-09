@@ -158,7 +158,7 @@ const MyProductsPage: React.FC = () => {
                         {product.weight} {product.weightUnit}
                       </Td>
                       <Td>
-                        {product.carbonFootprint} {product.weightUnit}
+                        {product.carbonFootprint} {product.carbonFootprintUnit}
                       </Td>
                       <Td>
                         {product.documents.length}{' '}
@@ -236,7 +236,7 @@ const MyProductsPage: React.FC = () => {
                         {product.weight} {product.weightUnit}
                       </Td>
                       <Td>
-                        {product.carbonFootprint} {product.weightUnit}
+                        {product.carbonFootprint} {product.carbonFootprintUnit}
                       </Td>
 
                       <Td>
