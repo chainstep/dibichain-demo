@@ -5,6 +5,7 @@ networks:
 services:
   operator:
     image: ghcr.io/chainstep/dibichain/operator:demo-latest
+    restart: always
     depends_on:
       - operator-db
     networks:
@@ -19,6 +20,7 @@ services:
       - ETHEREUM_PRIVATE_KEY=0x786e523ddd21e8c2524ea5da3c8b9b0498b40419aee35e131a6219212ee66b76
   operator-db:
     image: mongo:4.4.1-bionic
+    restart: always
     networks:
       - operator-network
     volumes:
