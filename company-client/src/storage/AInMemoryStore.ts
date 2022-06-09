@@ -1,3 +1,7 @@
+
+type Value = string | boolean | number;
+
+
 export abstract class AInMemoryStore {
     public abstract store: unknown[];
 
@@ -18,8 +22,15 @@ export abstract class AInMemoryStore {
     }
 
 
-    protected _find<T>(key: string, value: string | boolean | number): T[] {
-        return (<T[]> this.store).filter(object => (<never> object)[key] === value);
+    protected _find<T>(keys: string[], values: Value[]): T[] {
+        return (<T[]> this.store).filter((object) => {
+            for (let i = 0 ; i < keys.length ; i++) {
+                if ((<never> object)[keys[i]] !== values[i]) {
+                    return false;
+                }
+            }
+            return true;
+        });
     }
 
 
