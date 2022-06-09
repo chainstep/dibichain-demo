@@ -15,7 +15,7 @@ export class DocumentStoreInMemory extends AInMemoryStore implements IDocumentSt
     public async find(params: {uid?: string}): Promise<Document[]> {
         const { uid } = params;
         if (uid) {
-            return this._find("uid", uid);
+            return this._find(["uid"], [uid]);
         }
         return this.store;
     }

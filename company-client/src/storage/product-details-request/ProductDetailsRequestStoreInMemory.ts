@@ -12,10 +12,16 @@ export class ProductDetailsRequestStoreInMemory extends AInMemoryStore implement
     }
 
 
-    public async find(params: {uid?: string}): Promise<ProductDetailsRequest[]> {
-        const { uid } = params;
+    public async find(params: {uid?: string, publicKey?: string}): Promise<ProductDetailsRequest[]> {
+        const { uid, publicKey } = params;
+        if (uid && publicKey) {
+            return this._find(["uid", "publicKey"], [uid, publicKey]);
+        }
         if (uid) {
-            return this._find("uid", uid);
+            return this._find(["uid"], [uid]);
+        }
+        if (publicKey) {
+            return this._find(["publicKey"], [publicKey]);
         }
         return this.store;
     }

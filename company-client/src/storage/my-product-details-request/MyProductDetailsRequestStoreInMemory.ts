@@ -15,7 +15,7 @@ export class MyProductDetailsRequestStoreInMemory extends AInMemoryStore impleme
     public async find(params: {uid?: string}): Promise<MyProductDetailsRequest[]> {
         const { uid } = params;
         if (uid) {
-            return this._find("uid", uid);
+            return this._find(["uid"], [uid]);
         }
         return this.store;
     }
