@@ -16,6 +16,7 @@ export interface PostMyProductDetailsResponseServiceOptions {
 
 interface Inputs {
     uid: string;
+    publicKey: string;
 }
 
 
@@ -35,11 +36,17 @@ export class PostMyProductDetailsResponseService implements RouteService {
 
 
     public async run(inputs: Inputs): Promise<void> {
+        const { uid, publicKey } = inputs;
         const productDetailsRequestStore = this.getProductDetailsRequestStore();
         const myProductStore = this.getMyProductStore();
         const myDocumentStore = this.getMyDocumentStore();
 
-        const myProducts = await myProductStore.find(inputs);
+        const productDetailsRequests = await productDetailsRequestStore.find({ uid, publicKey });
+        if (productDetailsRequests.length === 0) {
+            throw new NotFoundError("product details request not found");
+        }
+
+        const myProducts = await myProductStore.find({ uid });
         if (myProducts.length === 0) {
             throw new NotFoundError("product not found");
         }
@@ -51,11 +58,6 @@ export class PostMyProductDetailsResponseService implements RouteService {
                 const _myDocuments = await myDocumentStore.find({ uid: myProduct.documents[i] });
                 myDocuments = [...myDocuments, ..._myDocuments];
             }
-        }
-
-        const productDetailsRequests = await productDetailsRequestStore.find(inputs);
-        if (productDetailsRequests.length === 0) {
-            throw new NotFoundError("product details request not found");
         }
 
         await this.operator.sendProductDetails({
