@@ -15,13 +15,28 @@ services:
       # extern:intern
       - 3200:3000
     environment:
-        - MONGO_DB_URL=mongodb://logistly-client-db:27017
-        - OPERATOR_URL=http://host.docker.internal:3000
-        - RPC_URL=http://host.docker.internal:8545
-        - EVENT_BUS_CONTRACT_ADDRESS=0xC0156004b2dC4AA2FA30FD0F5E06b7022c718da7
+      - MONGO_DB_URL=mongodb://logistly-client-db:27017
+      - OPERATOR_URL=http://host.docker.internal:3000
+      - RPC_URL=http://host.docker.internal:8545
+      - EVENT_BUS_CONTRACT_ADDRESS=0xC0156004b2dC4AA2FA30FD0F5E06b7022c718da7
   logistly-client-db:
     image: mongo:4.4.1-bionic
     networks:
       - logistly-network
     volumes:
       - ../data/logistly:/data/db
+  # frontend
+  logistly-frontend:
+    image: company-frontend
+    depends_on:
+      - logistly-client
+    networks:
+      - logistly-network
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      # extern:intern
+      - 3201:3000
+    environment:
+      - NEXT_PUBLIC_BACKEND_BASE_URL=http://logistly-client
+      - NEXT_PUBLIC_COMPANY_NAME=Logistly (B)

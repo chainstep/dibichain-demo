@@ -19,7 +19,7 @@ import Page from '../components/commons/Page';
 import Header from '../components/commons/Header';
 import Footer from '../components/commons/Footer';
 import { getNewProducts, getProducts } from '../services/http/products';
-import { MyProductDetailsRequest, Product } from '../../types';
+import { MyProductDetailsRequest, Product } from '../types';
 import {
   getMyProductDetailsRequest,
   postMyProductDetailsRequest,

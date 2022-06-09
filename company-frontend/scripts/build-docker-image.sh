@@ -1,14 +1,12 @@
 #!/bin/bash
 
-# Builds demo images on your machine
+# Builds the docker image
 
 ###################################################################################################
 # CONFIGURATION
 ###################################################################################################
 
-RELATIVE_COMPANY_CLIENT_PATH="../../company-client"
-RELATIVE_COMPANY_FRONTEND_PATH="../../company-frontend"
-RELATIVE_OPERATOR_PATH="../../operator"
+IMAGE_NAME="company-frontend"
 
 
 ###################################################################################################
@@ -22,16 +20,11 @@ HERE="$(pwd)/$(dirname $0)"
 # MAIN
 ###################################################################################################
 
-echo "[INFO] Building company client image..."
-cd ${HERE}/${RELATIVE_COMPANY_CLIENT_PATH}
-./scripts/build-docker-image.sh
 
-echo "[INFO] Building company frontend image..."
-cd ${HERE}/${RELATIVE_COMPANY_FRONTEND_PATH}
-./scripts/build-docker-image.sh
+# multi-arch build -> https://blog.jaimyn.dev/how-to-build-multi-architecture-docker-images-on-an-m1-mac/
+BUILD_CMD="build"
+if [[ $(uname) == "Darwin" && $(uname -a) == *"arm64"* ]]; then
+    BUILD_CMD="buildx build --platform linux/amd64 --load"
+fi
 
-echo "[INFO] Building operator image..."
-cd ${HERE}/${RELATIVE_OPERATOR_PATH}
-./scripts/build-docker-image.sh
-
-echo "[INFO] Done."
+docker ${BUILD_CMD} -f ${HERE}/../docker/Dockerfile ${HERE}/.. -t ${IMAGE_NAME}

@@ -13,5 +13,5 @@ RUN yarn install --prod
 # Copy source files
 COPY dist/src ./dist/src
 
-# Start agent
+# Start node
 CMD [ "yarn", "start" ]

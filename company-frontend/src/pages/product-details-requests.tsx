@@ -24,7 +24,7 @@ import {
   MyProductDetailsRequest,
   Product,
   ProductDetailsRequest,
-} from '../../types';
+} from '../types';
 import {
   getMyProductDetailsRequest,
   getProductDetailsRequest,
