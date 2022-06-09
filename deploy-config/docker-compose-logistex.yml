@@ -15,9 +15,23 @@ services:
     environment:
       - MONGO_DB_URL=mongodb://logistex-client-db:27017
       - OPERATOR_URL=https://api.operator.dibichain.de
+      - RPC_URL=https://chain.dibichain.de
+      - EVENT_BUS_CONTRACT_ADDRESS=0xC0156004b2dC4AA2FA30FD0F5E06b7022c718da7
   logistex-client-db:
     image: mongo:4.4.1-bionic
     networks:
       - logistex-network
     volumes:
       - ./../data:/data/db
+  logistex-frontend:
+    image: ghcr.io/chainstep/dibichain/company-frontend:demo-latest
+    depends_on:
+      - logistex-client
+    networks:
+      - logistex-network
+    ports:
+      # extern:intern
+      - 3101:3000
+    environment:
+      - NEXT_PUBLIC_BACKEND_BASE_URL="https://api.logistex.dibichain.de"
+      - NEXT_PUBLIC_COMPANY_NAME="Logistex (A)"
