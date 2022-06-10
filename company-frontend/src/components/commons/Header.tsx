@@ -32,6 +32,16 @@ const Header: React.FC = (props) => {
           Product Details Requests
         </Link>
       </NextLink>
+      <NextLink href='/upload'>
+        <Link
+          color={
+            router.pathname === '/upload' ? '#065384' : ''
+          }
+          ml={8}
+        >
+          Upload
+        </Link>
+      </NextLink>
       <Spacer />
 
       <Text mr={10} fontWeight={600} fontSize='24px'>
