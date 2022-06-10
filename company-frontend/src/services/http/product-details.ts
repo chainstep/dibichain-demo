@@ -56,11 +56,12 @@ export const getProductDetailsRequest = async (): Promise<unknown> => {
     }
 };
 
-export const postMyProductDetailsResponse = async (uid: string, publicKey: string): Promise<void> => {
+export const postMyProductDetailsResponse = async (uid: string, publicKey: string, decline?: boolean): Promise<void> => {
 
     const data = {
         uid,
-        publicKey
+        publicKey,
+        decline
     };
 
     try {

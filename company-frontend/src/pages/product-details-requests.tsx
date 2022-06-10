@@ -104,6 +104,21 @@ const MyProductsPage: React.FC = () => {
     getAllProductDetailsRequests();
   };
 
+  const onDeclineButtonClick = async ({
+    uid,
+    publicKey,
+  }: ProductDetailsRequest) => {
+    await postMyProductDetailsResponse(uid, publicKey, true);
+    toast({
+      title: 'Product details request declined',
+      description: '',
+      status: 'warning',
+      duration: 6000,
+      isClosable: true,
+    });
+    getAllProductDetailsRequests();
+  };
+
   const getNameOfMyProduct = (uid: string): string => {
     const myProduct = myProducts.find(product => product.uid === uid);
     return myProduct?.name;
@@ -209,7 +224,7 @@ const MyProductsPage: React.FC = () => {
                           <Button
                             mr={2}
                             colorScheme='red'
-                            onClick={() => console.log('Declined')}
+                            onClick={() => onDeclineButtonClick(request)}
                           >
                             Decline
                           </Button>
