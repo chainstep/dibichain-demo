@@ -2,8 +2,13 @@ import {
   Button,
   Container,
   Heading,
+  Tab,
   Table,
   TableContainer,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   Tbody,
   Td,
   Th,
@@ -98,65 +103,78 @@ const MyProductsPage: React.FC = () => {
         <Header />
 
         <Container maxW='container.xl'>
-          <Heading color='#065384' mb={12} mt={8} textAlign='center'>
-            New Products
-          </Heading>
-
-          {newProducts.length === 0 ? (
-            <Heading size='md' mb={12} textAlign='center'>
-              No new products
-            </Heading>
-          ) : (
-            <TableContainer>
-              <Table variant='simple' size='md' colorScheme='cyan'>
-                <Thead>
-                  <Tr>
-                    <Th>Name</Th>
-                    <Th>Amount</Th>
-                    <Th>Number</Th>
-                    <Th>Type</Th>
-                    <Th>Weight</Th>
-                    <Th>Carbon Footprint</Th>
-                    <Th></Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {newProducts.map(product => (
-                    <Tr key={product.uid}>
-                      <Td>{product.name}</Td>
-                      <Td>
-                        {product.amount}{' '}
-                        {product.amountUnit === 'each'
-                          ? ''
-                          : product.amountUnit}
-                      </Td>
-                      <Td>{product.number}</Td>
-                      <Td>{product.type}</Td>
-                      <Td>
-                        {product.weight} {product.weightUnit}
-                      </Td>
-                      <Td>
-                        {product.carbonFootprint} {product.weightUnit}
-                      </Td>
-                      <Td>
-                        {productDetailsAlreadyRequested(product.uid) ? (
-                          <Button
-                            isLoading
-                            loadingText='Waiting for approval'
-                            onClick={() => onButtonClick(product.uid)}
-                          ></Button>
-                        ) : (
-                          <Button onClick={() => onButtonClick(product.uid)}>
-                            Request Details
-                          </Button>
-                        )}
-                      </Td>
-                    </Tr>
-                  ))}
-                </Tbody>
-              </Table>
-            </TableContainer>
-          )}
+          <Tabs mt={8} isFitted variant='enclosed'>
+            <TabList mb='1em'>
+              <Tab>
+                <Heading fontSize={22}>New Products</Heading>
+              </Tab>
+              <Tab isDisabled></Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                {newProducts.length === 0 ? (
+                  <Heading size='md' mb={12} textAlign='center'>
+                    No new products
+                  </Heading>
+                ) : (
+                  <TableContainer>
+                    <Table variant='simple' size='md' colorScheme='cyan'>
+                      <Thead>
+                        <Tr>
+                          <Th>Name</Th>
+                          <Th>Amount</Th>
+                          <Th>Number</Th>
+                          <Th>Type</Th>
+                          <Th>Weight</Th>
+                          <Th>Carbon Footprint</Th>
+                          <Th></Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {newProducts.map(product => (
+                          <Tr key={product.uid}>
+                            <Td>{product.name}</Td>
+                            <Td>
+                              {product.amount}{' '}
+                              {product.amountUnit === 'each'
+                                ? ''
+                                : product.amountUnit}
+                            </Td>
+                            <Td>{product.number}</Td>
+                            <Td>{product.type}</Td>
+                            <Td>
+                              {product.weight} {product.weightUnit}
+                            </Td>
+                            <Td>
+                              {product.carbonFootprint} {product.weightUnit}
+                            </Td>
+                            <Td>
+                              {productDetailsAlreadyRequested(product.uid) ? (
+                                <Button
+                                  isLoading
+                                  loadingText='Waiting for approval'
+                                  onClick={() => onButtonClick(product.uid)}
+                                ></Button>
+                              ) : (
+                                <Button
+                                  onClick={() => onButtonClick(product.uid)}
+                                >
+                                  Request Details
+                                </Button>
+                              )}
+                            </Td>
+                          </Tr>
+                        ))}
+                      </Tbody>
+                    </Table>
+                  </TableContainer>
+                )}
+              </TabPanel>
+              <TabPanel>
+                <p>two!</p>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
         </Container>
 
         <Footer></Footer>
