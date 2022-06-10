@@ -129,7 +129,7 @@ const MyProductsPage: React.FC = () => {
       <Layout>
         <Header />
 
-        <Container maxW='container.xl'>
+        <Container maxW='90vw'>
           <Tabs mt={8} isFitted variant='enclosed'>
             <TabList mb='1em'>
               <Tab>
