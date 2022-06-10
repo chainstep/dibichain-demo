@@ -17,6 +17,7 @@ export const postMyProductDetailsResponsesRouter = createRouter({
     inputChecks: [
         body("uid").isUUID().withMessage(INVALID_INPUT_TEXT + "uid"),
         body("publicKey").isString().withMessage(INVALID_INPUT_TEXT + "publicKey"),
+        body("decline").optional().isBoolean().withMessage(INVALID_INPUT_TEXT + "decline")
     ],
     service: new PostMyProductDetailsResponseService({
         getProductDetailsRequestStore: () => ProductDetailsRequestStore.get(),
