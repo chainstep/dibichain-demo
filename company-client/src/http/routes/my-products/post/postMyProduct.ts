@@ -18,13 +18,41 @@ export const postMyProductRouter = createRouter({
         body("number").isString().withMessage(INVALID_INPUT_TEXT + "number"),
         body("documents").optional().custom(isDocumentIdArray).withMessage(INVALID_INPUT_TEXT + "documents"),
         body("amount").optional().isNumeric().withMessage(INVALID_INPUT_TEXT + "amount"),
-        body("amountUnit").optional().isString().toLowerCase().custom(isAmountUnit).withMessage(INVALID_INPUT_TEXT + "amountUnit"),
+        body("amountUnit").optional().toLowerCase().custom(isAmountUnit).customSanitizer(toAmountUnit).withMessage(INVALID_INPUT_TEXT + "amountUnit"),
         body("weight").optional().isNumeric().withMessage(INVALID_INPUT_TEXT + "weight"),
-        body("weightUnit").optional().toLowerCase().custom(isWeightUnit).withMessage(INVALID_INPUT_TEXT + "weightUnit"),
+        body("weightUnit").optional().toLowerCase().custom(isWeightUnit).customSanitizer(toWeightUnit).withMessage(INVALID_INPUT_TEXT + "weightUnit"),
         body("carbonFootprint").optional().isNumeric().withMessage(INVALID_INPUT_TEXT + "carbonFootprint"),
-        body("carbonFootprintUnit").optional().toLowerCase().custom(isCarbonFootprintUnit).withMessage(INVALID_INPUT_TEXT + "carbonFootprintUnit")
+        body("carbonFootprintUnit").optional().toLowerCase().custom(isCarbonFootprintUnit).customSanitizer(toCarbonFootprintUnit).withMessage(INVALID_INPUT_TEXT + "carbonFootprintUnit")
     ],
     service: new PostMyProductService({
         getMyProductStore: () => MyProductStore.get(),
     })
 });
+
+function toAmountUnit(value: string): unknown {
+    return value === "each" ? "each"
+         : value === "liter" || value === "l" ? "liter"
+         : value === "centimeter" || value === "cm" ? "centimeter"
+         : value === "square_centimeter" || value === "cm2" ? "square_centimeter"
+         : value === "cubic_centimeter" || value === "cm3" ? "cubic_centimeter"
+         : value === "meter" || value === "m" ? "meter"
+         : value === "square_meter" || value === "m2" ? "square_meter"
+         : value === "cubic_meter" || value === "m3" ? "cubic_meter"
+         : "";
+}
+
+function toWeightUnit(value: string): unknown {
+    return value === "milligram" || value === "mg" ? "milligram"
+         : value === "gram" || value === "g" ? "gram"
+         : value === "kilogram" || value === "kg" ? "kilogram"
+         : value === "percentage" || value === "%" ? "percentage"
+         : value === "parts_per_million" || value === "ppm" ? "parts_per_million"
+         : "";
+}
+
+function toCarbonFootprintUnit(value: string): unknown {
+    return value === "milligram" || value === "mg" ? "milligram"
+         : value === "gram" || value === "g" ? "gram"
+         : value === "kilogram" || value === "kg" ? "kilogram"
+         : "";
+}
