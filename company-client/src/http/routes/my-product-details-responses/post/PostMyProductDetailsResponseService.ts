@@ -3,7 +3,7 @@ import { Operator } from "../../../../lib/Operator";
 import { IMyDocumentStore } from "../../../../storage/my-document/IMyDocumentStore";
 import { IMyProductStore } from "../../../../storage/my-product/IMyProductStore";
 import { IProductDetailsRequestStore } from "../../../../storage/product-details-request/IProductDetailsRequestStore";
-import { MyDocument } from "../../../../types";
+import { MyDocument, MyProduct } from "../../../../types";
 import { RouteService } from "../../routerFactory";
 
 
@@ -54,13 +54,7 @@ export class PostMyProductDetailsResponseService implements RouteService {
 
         if (!decline) {
             const myProduct = myProducts[0];
-            let myDocuments = <MyDocument[]> [];
-            if (myProduct.documents) {
-                for (let i = 0 ; i < myProduct.documents.length ; i++) {
-                    const _myDocuments = await myDocumentStore.find({ uid: myProduct.documents[i] });
-                    myDocuments = [...myDocuments, ..._myDocuments];
-                }
-            }
+            const myDocuments = await this.getMyProductDocuments(myProduct, myDocumentStore);
 
             await this.operator.sendProductDetails({
                 myProduct,
@@ -72,5 +66,16 @@ export class PostMyProductDetailsResponseService implements RouteService {
 
         productDetailsRequests[0].responded = true;
         await productDetailsRequestStore.upsert(productDetailsRequests[0]);
+    }
+
+    private async getMyProductDocuments(myProduct: MyProduct, myDocumentStore: IMyDocumentStore) {
+        let myDocuments = <MyDocument[]> [];
+        if (myProduct.documents) {
+            for (let i = 0 ; i < myProduct.documents.length ; i++) {
+                const _myDocuments = await myDocumentStore.find({ uid: myProduct.documents[i] });
+                myDocuments = [...myDocuments, ..._myDocuments];
+            }
+        }
+        return myDocuments;
     }
 }

@@ -1,4 +1,5 @@
 import { IProductDetailsResponseStore } from "../../../../storage/product-details-response/IProductDetailsResponseStore";
+import { EncMessage } from "../../../../types";
 import { RouteService } from "../../routerFactory";
 
 
@@ -9,11 +10,7 @@ export interface PostProductDetailsResponseServiceOptions {
 interface Inputs {
     uid: string;
     publicKey: string;
-    message: {
-        secret: string;
-        cipherText: string;
-        initVector: string;
-    };
+    message: EncMessage;
 }
 
 
@@ -29,6 +26,7 @@ export class PostProductDetailsResponseService implements RouteService {
     public async run(inputs: Inputs): Promise<void> {
         const { uid, message, publicKey } = inputs;
         const productDetailsResponseStore = this.getProductDetailsResponseStore();
+
         const timestamp = Math.floor(new Date().getTime() / 1000);
         await productDetailsResponseStore.upsert({
             message,

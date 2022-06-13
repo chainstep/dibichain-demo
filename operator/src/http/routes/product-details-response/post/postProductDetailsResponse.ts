@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { body } from "express-validator";
 import { ProductDetailsResponseStore } from "../../../../storage/product-details-response/ProductDetailsResponseStore";
+import { EncMessage } from "../../../../types";
 import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
 import { createRouter } from "../../routerFactory";
 import { PostProductDetailsResponseService } from "./PostProductDetailsResponseService";
@@ -29,11 +30,7 @@ function cleanseInputs(request: Request, response: Response, next: NextFunction)
     const newBody: {
         uid: string,
         publicKey: string,
-        message: {
-            secret: string,
-            cipherText: string,
-            initVector: string
-        }
+        message: EncMessage
     } = {
         publicKey: request.body.publicKey,
         uid: request.body.uid,

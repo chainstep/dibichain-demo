@@ -4,7 +4,7 @@ import { IKeyStore } from "../../storage/key/IKeyStore";
 import { IMyProductDetailsRequestStore } from "../../storage/my-product-details-request/IMyProductDetailsRequestStore";
 import { INewProductStore } from "../../storage/new-product/INewProductStore";
 import { IProductStore } from "../../storage/product/IProductStore";
-import { Key } from "../../types";
+import { Key, MyProductDetailsRequest, ProductPackage } from "../../types";
 import { IntervalService } from "../IntervalHandler";
 
 
@@ -49,31 +49,69 @@ export class PollProductsService implements IntervalService {
             return !myProductDetailsRequest.responded;
         });
 
-        const params = <{key: Key, hash: string}[]> [];
-        for (let i = 0 ; i < notRespondedRequests.length ; i++) {
-            const publicKey = notRespondedRequests[i].publicKey;
-            const uid = notRespondedRequests[i].uid;
+        const keysAndHashes = await this.getKeysAndHashes(
+            notRespondedRequests,
+            keyStore,
+            newProductStore
+        );
+
+        const productPackages = await this.operator.getProductDetails(keysAndHashes);
+        for (let i = 0 ; i < productPackages.length ; i++) {
+            const productPackage = productPackages[i];
+
+            await this.updateProductAndDocumentStores(
+                productPackage,
+                productStore,
+                documentStore
+            );
+
+            await this.updateMyProductDetailsRequestStore(
+                notRespondedRequests,
+                productPackage.product.uid,
+                myProductDetailsRequestStore
+            );
+        }
+    }
+
+    private async getKeysAndHashes(
+        requests: MyProductDetailsRequest[],
+        keyStore: IKeyStore,
+        newProductStore: INewProductStore
+    ): Promise<{key: Key, hash: string}[]> {
+        const keysAndHashes = <{key: Key, hash: string}[]> [];
+        for (let i = 0 ; i < requests.length ; i++) {
+            const publicKey = requests[i].publicKey;
+            const uid = requests[i].uid;
 
             const key = (await keyStore.find({ publicKey }))[0];
             const hash = (await newProductStore.find({ uid }))[0].hash;
 
-            params.push({ key, hash });
+            keysAndHashes.push({ key, hash });
         }
+        return keysAndHashes;
+    }
 
-        const productPackages = await this.operator.getProductDetails(params);
-        for (let i = 0 ; i < productPackages.length ; i++) {
-            const { product, documents } = productPackages[i];
+    private async updateProductAndDocumentStores(
+        productPackage: ProductPackage,
+        productStore: IProductStore,
+        documentStore: IDocumentStore
+    ): Promise<void> {
+        const { product, documents } = productPackage;
+        await productStore.upsert(product);
+        for (let i = 0 ; i < documents.length ; i++) {
+            await documentStore.upsert(documents[i]);
+        }
+    }
 
-            await productStore.upsert(product);
-            for (let j = 0 ; j < documents.length ; j++) {
-                await documentStore.upsert(documents[j]);
-            }
-
-            const respondedRequest = notRespondedRequests.find(request => request.uid === product.uid);
-            if (respondedRequest) {
-                respondedRequest.responded = true;
-                await myProductDetailsRequestStore.upsert(respondedRequest);
-            }
+    private async updateMyProductDetailsRequestStore(
+        requests: MyProductDetailsRequest[],
+        uid: string,
+        myProductDetailsRequestStore: IMyProductDetailsRequestStore
+    ): Promise<void> {
+        const respondedRequest = requests.find(request => request.uid === uid);
+        if (respondedRequest) {
+            respondedRequest.responded = true;
+            await myProductDetailsRequestStore.upsert(respondedRequest);
         }
     }
 }
