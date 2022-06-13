@@ -1,3 +1,4 @@
+import { NextFunction, Request, Response } from "express";
 import { body } from "express-validator";
 import { MyDocumentStore } from "../../../../storage/my-document/MyDocumentStore";
 import { MyDocument } from "../../../../types";
@@ -7,6 +8,11 @@ import { createRouter } from "../../routerFactory";
 import { PostMyDocumentsService } from "./PostMyDocumentsService";
 
 
+interface MyDocumentParams extends Omit<MyDocument, "timestamp"> {
+    timestamp?: number;
+    uploaded?: number;
+}
+
 export const postMyDocumentsRouter = createRouter({
     method: "post",
     route: ROUTE_NAMES.myDocuments,
@@ -14,6 +20,7 @@ export const postMyDocumentsRouter = createRouter({
     inputChecks: [
         body("myDocuments").custom(isDocumentArray).withMessage(INVALID_INPUT_TEXT + "myDocuments"),
     ],
+    middlewares: [ cleanseParams],
     service: new PostMyDocumentsService({
         getMyDocumentStore: () => MyDocumentStore.get(),
     })
@@ -25,7 +32,7 @@ function isDocumentArray(value: string): boolean {
     }
 
     for (let i = 0 ; i < value.length ; i++) {
-        const myDocument = <MyDocument> value[i];
+        const myDocument = <MyDocumentParams> value[i];
         if (!isMyDocumentType(myDocument)) {
             return false;
         }
@@ -33,12 +40,32 @@ function isDocumentArray(value: string): boolean {
     return true;
 }
 
-function isMyDocumentType(myDocument: MyDocument) {
+function isMyDocumentType(myDocument: MyDocumentParams) {
     return typeof myDocument.data === "string" &&
         typeof myDocument.name === "string" &&
         typeof myDocument.type === "string" &&
         typeof myDocument.uid === "string" &&
         isUUID(myDocument.uid) &&
-        typeof myDocument.uploaded === "number" &&
-        typeof myDocument.version === "string";
+        typeof myDocument.version === "string" &&
+        (typeof myDocument.timestamp === "number" || typeof myDocument.uploaded === "number");
+}
+
+function cleanseParams(request: Request, response: Response, next: NextFunction): void {
+    const newBody = {
+        myDocuments: <MyDocument[]> []
+    };
+
+    (<MyDocumentParams[]> request.body.myDocuments).forEach((myDocument) => {
+        newBody.myDocuments.push({
+            data: myDocument.data,
+            name: myDocument.name,
+            type: myDocument.type,
+            uid: myDocument.uid,
+            version: myDocument.version,
+            timestamp: myDocument.timestamp || myDocument.uploaded || 0,
+        });
+    });
+
+    request.body = newBody;
+    next();
 }
