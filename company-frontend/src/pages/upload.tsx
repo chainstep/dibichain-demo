@@ -63,7 +63,7 @@ const UploadPage: React.FC = () => {
     const uid = uuid();
     setDocuments([
       ...documents,
-      { name, type, data, version, uid, uploaded: Date.now() },
+      { name, type, data, version, uid, timestamp: Date.now() },
     ]);
   };
 
