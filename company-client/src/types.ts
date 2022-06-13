@@ -83,7 +83,7 @@ export interface Document {
     version: string;
     type: string;
     data: string;
-    uploaded: number;
+    timestamp: number;
 }
 
 export type MyDocument = Document

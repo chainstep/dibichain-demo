@@ -95,7 +95,7 @@ export class Operator {
     }
 
 
-    public async getProductPackages(params: { key: Key, hash: string }[]): Promise<ProductPackage[]> {
+    public async getProductDetails(params: { key: Key, hash: string }[]): Promise<ProductPackage[]> {
         const publicKeys = params.map(param => param.key.publicKey);
         const productDetailsResponses = await this.getProductDetailsResponses(publicKeys);
 
@@ -176,7 +176,7 @@ export class Operator {
                 typeof document.name === "string" &&
                 typeof document.type === "string" &&
                 typeof document.uid === "string" &&
-                typeof document.uploaded === "number" &&
+                typeof document.timestamp === "number" &&
                 typeof document.version === "string") {
                 return;
             }

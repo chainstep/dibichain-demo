@@ -60,7 +60,7 @@ export class PollProductsService implements IntervalService {
             params.push({ key, hash });
         }
 
-        const productPackages = await this.operator.getProductPackages(params);
+        const productPackages = await this.operator.getProductDetails(params);
         for (let i = 0 ; i < productPackages.length ; i++) {
             const { product, documents } = productPackages[i];
 
