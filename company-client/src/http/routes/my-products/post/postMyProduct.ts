@@ -32,7 +32,7 @@ export const postMyProductRouter = createRouter({
         body("carbonFootprint").optional().isNumeric().withMessage(INVALID_INPUT_TEXT + "carbonFootprint"),
         body("carbonFootprintUnit").optional().toLowerCase().custom(isCarbonFootprintUnit).customSanitizer(toCarbonFootprintUnit).withMessage(INVALID_INPUT_TEXT + "carbonFootprintUnit")
     ],
-    middlewares: [ cleanseParams ],
+    middlewares: [ cleanseInputs ],
     service: new PostMyProductService({
         getMyProductStore: () => MyProductStore.get(),
     })
@@ -66,7 +66,7 @@ function toCarbonFootprintUnit(value: string): unknown {
          : "";
 }
 
-function cleanseParams(request: Request, response: Response, next: NextFunction): void {
+function cleanseInputs(request: Request, response: Response, next: NextFunction): void {
     const newBody = <MyProductParams> {
         name: request.body.name,
         number: request.body.number,

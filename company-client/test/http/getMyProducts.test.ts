@@ -22,7 +22,7 @@ if (!config.skipTests.includes("getMyProducts")) {
         const response = await request(httpServer)
             .get("/my-products")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
-            .query({ uid: TEST_PRODUCT.uid, temp: "fffff" })
+            .query({ uid: TEST_PRODUCT.uid })
             .expect(200);
 
         const myProduct = (<MyProduct[]> response.body.data.myProducts)[0];

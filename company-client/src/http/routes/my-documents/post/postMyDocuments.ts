@@ -20,7 +20,7 @@ export const postMyDocumentsRouter = createRouter({
     inputChecks: [
         body("myDocuments").custom(isDocumentArray).withMessage(INVALID_INPUT_TEXT + "myDocuments"),
     ],
-    middlewares: [ cleanseParams],
+    middlewares: [ cleanseInputs],
     service: new PostMyDocumentsService({
         getMyDocumentStore: () => MyDocumentStore.get(),
     })
@@ -50,7 +50,7 @@ function isMyDocumentType(myDocument: MyDocumentParams) {
         (typeof myDocument.timestamp === "number" || typeof myDocument.uploaded === "number");
 }
 
-function cleanseParams(request: Request, response: Response, next: NextFunction): void {
+function cleanseInputs(request: Request, response: Response, next: NextFunction): void {
     const newBody = {
         myDocuments: <MyDocument[]> []
     };
