@@ -15,6 +15,7 @@ export const config = {
         // "pollProducts",
         // "getMyDocuments",
         // "postMyDocuments",
-        // "getDocuments"
+        // "getDocuments",
+        // "productDetailsRequestTimeout"
     ]
 };
