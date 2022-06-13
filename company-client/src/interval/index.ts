@@ -13,12 +13,9 @@ import { PollProductsService } from "./services/PollProductsService";
 
 
 export function initIntervals(): void {
-    const interval10sec = "10-sec-interval";
-    const detailsRequestTimeoutCheckInterval = "details-request-timeout-check-interval";
-
     IntervalManager.add(
         new IntervalHandler({
-            name: interval10sec,
+            name: "10-sec-interval",
             pollingIntervalSec: 10,
             services: [
                 new PollProductsService({
@@ -38,7 +35,7 @@ export function initIntervals(): void {
 
     IntervalManager.add(
         new IntervalHandler({
-            name: detailsRequestTimeoutCheckInterval,
+            name: "product-details-request-timeout-check-interval",
             pollingIntervalSec: 5 * 60,
             services: [
                 new ProductDetailsRequestTimeoutService({
