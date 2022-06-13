@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 
 export function cleanseUidQueryInput(request: Request, response: Response, next: NextFunction): void {
-    const newQuery = <{uid?: string}> {};
+    const newQuery: {uid?: string} = {};
     if (request.query.uid) {
         newQuery.uid = <string> request.query.uid;
     }
@@ -12,7 +12,7 @@ export function cleanseUidQueryInput(request: Request, response: Response, next:
 }
 
 export function cleanseUidBodyInput(request: Request, response: Response, next: NextFunction): void {
-    const newBody = <{uid?: string}> {};
+    const newBody: {uid?: string} = {};
     if (request.body.uid) {
         newBody.uid = <string> request.body.uid;
     }

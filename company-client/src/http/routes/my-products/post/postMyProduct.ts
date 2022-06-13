@@ -67,7 +67,7 @@ function toCarbonFootprintUnit(value: string): unknown {
 }
 
 function cleanseInputs(request: Request, response: Response, next: NextFunction): void {
-    const newBody = <MyProductParams> {
+    const newBody: MyProductParams = {
         name: request.body.name,
         number: request.body.number,
         type: request.body.type,

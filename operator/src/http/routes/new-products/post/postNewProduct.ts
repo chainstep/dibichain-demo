@@ -1,3 +1,4 @@
+import { NextFunction, Request, Response } from "express";
 import { body } from "express-validator";
 import { Contracts } from "../../../../contract/Contracts";
 import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
@@ -17,6 +18,7 @@ export const postNewProductRouter = createRouter({
         body("number").isString().withMessage(INVALID_INPUT_TEXT + "number"),
         body("hash").isHash("sha256").withMessage(INVALID_INPUT_TEXT + "hash")
     ],
+    middlewares: [ cleanseInputs],
     service: new PostNewProductService({
         getEventBus: () => Contracts.getEventBus()
     })
@@ -26,4 +28,18 @@ function isProductType(value: string): boolean {
     return value.includes("assembly")
         || value.includes("purchase_part")
         || value.includes("standard_part");
+}
+
+function cleanseInputs(request: Request, response: Response, next: NextFunction): void {
+    const newBody: {uid: string, id: string, name: string, type: string, number: string, hash: string} = {
+        hash: request.body.hash,
+        id: request.body.id,
+        name: request.body.name,
+        number: request.body.number,
+        type: request.body.type,
+        uid: request.body.uid
+    };
+
+    request.body = newBody;
+    next();
 }

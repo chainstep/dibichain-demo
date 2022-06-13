@@ -23,7 +23,7 @@ export function createRouter(params: RouterParams): Router {
     const { method, route, inputPath, inputChecks, service, middlewares, successCode } = params;
     const router = express.Router();
 
-    router[method](route, inputChecks || [], [...middlewares || [], ...[validateRequest]],
+    router[method](route, inputChecks || [], ...[validateRequest], [...middlewares || []],
         async (request: Request, response: Response) => {
            const inputs = inputPath === "body" ? request.body
                         : inputPath === "query" ? request.query

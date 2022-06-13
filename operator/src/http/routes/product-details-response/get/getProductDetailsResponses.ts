@@ -1,3 +1,4 @@
+import { NextFunction, Request, Response } from "express";
 import { query } from "express-validator";
 import { ProductDetailsResponseStore } from "../../../../storage/product-details-response/ProductDetailsResponseStore";
 import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
@@ -16,6 +17,7 @@ export const getProductDetailsResponseRouter = createRouter({
             .customSanitizer(toArray)
             .withMessage(INVALID_INPUT_TEXT + "uid")
     ],
+    middlewares: [ cleanseInputs],
     service: new GetProductDetailsResponseService({
         getProductDetailsResponseStore: () => ProductDetailsResponseStore.get()
     })
@@ -40,4 +42,18 @@ function isStringifiedStringArray(value: string): boolean {
 
 function toArray(value: string): unknown {
     return JSON.parse(value);
+}
+
+
+function cleanseInputs(request: Request, response: Response, next: NextFunction): void {
+    const newBody = {
+        publicKeys: <string[]> []
+    };
+
+    (<string[]> request.body.publicKeys).forEach((publicKey) => {
+        newBody.publicKeys.push(publicKey);
+    });
+
+    request.body = newBody;
+    next();
 }

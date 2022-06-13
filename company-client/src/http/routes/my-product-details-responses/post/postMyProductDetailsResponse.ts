@@ -33,7 +33,7 @@ export const postMyProductDetailsResponsesRouter = createRouter({
 });
 
 function cleanseInputs(request: Request, response: Response, next: NextFunction): void {
-    const newBody = <{uid: string, publicKey: string, decline: boolean}> {
+    const newBody: {uid: string, publicKey: string, decline: boolean} = {
         decline: request.body.decline,
         publicKey: request.body.publicKey,
         uid: request.body.uid
