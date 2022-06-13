@@ -1,8 +1,8 @@
 
 export function isProductType(value: string): boolean {
-    return value.includes("assembly")
-        || value.includes("purchase_part")
-        || value.includes("standard_part");
+    return value === "assembly"
+        || value === "purchase_part"
+        || value === "standard_part";
 }
 
 
@@ -29,28 +29,28 @@ export function isUUID(id: string): boolean {
 
 
 export function isAmountUnit(value: string): boolean {
-    return value.includes("each")
-        || value.includes("liter")
-        || value.includes("centimeter")
-        || value.includes("square_centimeter")
-        || value.includes("cubic_centimeter")
-        || value.includes("meter")
-        || value.includes("square_meter")
-        || value.includes("cubic_meter");
+    return value === "each"
+        || value === "liter" || value === "l"
+        || value === "centimeter" || value === "cm"
+        || value === "square_centimeter" || value === "cm2"
+        || value === "cubic_centimeter" || value === "cm3"
+        || value === "meter" || value === "m"
+        || value === "square_meter" || value === "m2"
+        || value === "cubic_meter" || value === "m3";
 }
 
 
 export function isWeightUnit(value: string): boolean {
-    return value.includes("mg")
-        || value.includes("g")
-        || value.includes("kg")
-        || value.includes("%")
-        || value.includes("ppm");
+    return value === "milligram" || value === "mg"
+        || value === "gram" || value === "g"
+        || value === "kilogram" || value === "kg"
+        || value === "percentage" || value === "%"
+        || value === "parts_per_million" || value === "ppm";
 }
 
 
 export function isCarbonFootprintUnit(value: string): boolean {
-    return value.includes("mg")
-        || value.includes("g")
-        || value.includes("kg");
+    return value === "milligram" || value === "mg"
+        || value === "gram" || value === "g"
+        || value === "kilogram" || value === "kg";
 }

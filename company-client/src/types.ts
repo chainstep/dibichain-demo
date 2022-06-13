@@ -8,9 +8,9 @@ export interface Product {
     amount?: number;
     amountUnit?: "each" | "liter" | "centimeter" | "square_centimeter" | "cubic_centimeter" | "meter" | "square_meter" | "cubic_meter";
     weight?: number;
-    weightUnit?: "mg" | "g" | "kg" | "%" | "ppm";
+    weightUnit?: "milligram" | "gram" | "kilogram" | "percentage" | "parts_per_million";
     carbonFootprint?: number;
-    carbonFootprintUnit?: "mg" | "g" | "kg";
+    carbonFootprintUnit?: "milligram" | "gram" | "kilogram";
 }
 
 export type MyProduct = Product
