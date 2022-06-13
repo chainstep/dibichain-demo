@@ -38,6 +38,6 @@ function isStringifiedStringArray(value: string): boolean {
     }
 }
 
-function toArray(value: string): boolean {
+function toArray(value: string): unknown {
     return JSON.parse(value);
 }
