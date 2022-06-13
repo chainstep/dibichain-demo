@@ -35,6 +35,8 @@ import {
 } from '../services/http/products';
 import { Document, Product } from '../types';
 import { getDocuments, getMyDocuments } from '../services/http/documents';
+import { translateUnitToAbbreviation } from '../services/translation/unit-translation';
+import { translateType } from '../services/translation/type-translation';
 
 const MyProductsPage: React.FC = () => {
   const [myProducts, setMyProducts] = useState([] as Product[]);
@@ -141,141 +143,131 @@ const MyProductsPage: React.FC = () => {
             </TabList>
             <TabPanels>
               <TabPanel>
-                {myProducts.length === 0 ? (
-                  <Heading size='md' mb={12} textAlign='center'>
-                    No products
-                  </Heading>
-                ) : (
-                  <TableContainer>
-                    <Table variant='simple' size='md' colorScheme='cyan'>
-                      <Thead>
-                        <Tr>
-                          <Th>Name</Th>
-                          <Th>Amount</Th>
-                          <Th>Number</Th>
-                          <Th>Type</Th>
-                          <Th>Weight</Th>
-                          <Th>Carbon Footprint</Th>
-                          <Th>Documents</Th>
-                          <Th></Th>
-                        </Tr>
-                      </Thead>
-                      <Tbody>
-                        {myProducts.map(product => (
-                          <Tr key={product.uid}>
-                            <Td>{product.name}</Td>
-                            <Td>
-                              {product.amount}{' '}
-                              {product.amountUnit === 'each'
-                                ? ''
-                                : product.amountUnit}
-                            </Td>
-                            <Td>{product.number}</Td>
-                            <Td>{product.type}</Td>
-                            <Td>
-                              {product.weight} {product.weightUnit}
-                            </Td>
-                            <Td>
-                              {product.carbonFootprint}{' '}
-                              {product.carbonFootprintUnit}
-                            </Td>
-                            <Td>
-                              {product.documents.length}{' '}
-                              {product.documents.length > 0 && (
-                                <DownloadIcon
-                                  cursor='pointer'
-                                  onClick={() =>
-                                    handleDownloadMyDocumentsClick(
-                                      product.documents
-                                    )
-                                  }
-                                />
-                              )}
-                            </Td>
+                <TableContainer h='500px' overflowY='scroll'>
+                  <Table variant='simple' size='sm' colorScheme='cyan'>
+                    <Thead>
+                      <Tr>
+                        <Th>Name</Th>
+                        <Th>Amount</Th>
+                        <Th>Number</Th>
+                        <Th>Type</Th>
+                        <Th>Weight</Th>
+                        <Th>Carbon Footprint</Th>
+                        <Th>Documents</Th>
+                        <Th></Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {myProducts.map(product => (
+                        <Tr key={product.uid}>
+                          <Td>{product.name}</Td>
+                          <Td>
+                            {product.amount}{' '}
+                            {translateUnitToAbbreviation(product.amountUnit)}
+                          </Td>
+                          <Td>{product.number}</Td>
+                          <Td>{translateType(product.type)}</Td>
+                          <Td>
+                            {product.weight}{' '}
+                            {translateUnitToAbbreviation(product.weightUnit)}
+                          </Td>
+                          <Td>
+                            {product.carbonFootprint}{' '}
+                            {translateUnitToAbbreviation(
+                              product.carbonFootprintUnit
+                            )}
+                          </Td>
+                          <Td>
+                            {product.documents.length}{' '}
+                            {product.documents.length > 0 && (
+                              <DownloadIcon
+                                cursor='pointer'
+                                onClick={() =>
+                                  handleDownloadMyDocumentsClick(
+                                    product.documents
+                                  )
+                                }
+                              />
+                            )}
+                          </Td>
 
-                            <Td>
-                              {isAlreadyBroadcasted(product.uid) ? (
-                                <Tooltip
-                                  hasArrow
-                                  label={`on ${getBroadcastDate(product.uid)}`}
-                                  shouldWrapChildren
-                                  mt='3'
-                                >
-                                  <Button isDisabled>Broadcasted</Button>
-                                </Tooltip>
-                              ) : (
-                                <Button
-                                  onClick={() => onButtonClick(product.uid)}
-                                >
-                                  Broadcast
-                                </Button>
-                              )}
-                            </Td>
-                          </Tr>
-                        ))}
-                      </Tbody>
-                    </Table>
-                  </TableContainer>
-                )}
+                          <Td>
+                            {isAlreadyBroadcasted(product.uid) ? (
+                              <Tooltip
+                                hasArrow
+                                label={`on ${getBroadcastDate(product.uid)}`}
+                                shouldWrapChildren
+                                mt='3'
+                              >
+                                <Button isDisabled>Broadcasted</Button>
+                              </Tooltip>
+                            ) : (
+                              <Button
+                                onClick={() => onButtonClick(product.uid)}
+                              >
+                                Broadcast
+                              </Button>
+                            )}
+                          </Td>
+                        </Tr>
+                      ))}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
               </TabPanel>
               <TabPanel>
-                {products.length === 0 ? (
-                  <Heading size='md' mb={12} textAlign='center'>
-                    No products
-                  </Heading>
-                ) : (
-                  <TableContainer>
-                    <Table variant='simple' size='md' colorScheme='cyan'>
-                      <Thead>
-                        <Tr>
-                          <Th>Name</Th>
-                          <Th>Amount</Th>
-                          <Th>Number</Th>
-                          <Th>Type</Th>
-                          <Th>Weight</Th>
-                          <Th>Carbon Footprint</Th>
-                          <Th>Documents</Th>
-                        </Tr>
-                      </Thead>
-                      <Tbody>
-                        {products.map(product => (
-                          <Tr key={product.uid}>
-                            <Td>{product.name}</Td>
-                            <Td>
-                              {product.amount}{' '}
-                              {product.amountUnit === 'each'
-                                ? ''
-                                : product.amountUnit}
-                            </Td>
-                            <Td>{product.number}</Td>
-                            <Td>{product.type}</Td>
-                            <Td>
-                              {product.weight} {product.weightUnit}
-                            </Td>
-                            <Td>
-                              {product.carbonFootprint}{' '}
-                              {product.carbonFootprintUnit}
-                            </Td>
+                <TableContainer h='500px' overflowY='scroll'>
+                  <Table variant='simple' size='sm' colorScheme='cyan'>
+                    <Thead>
+                      <Tr>
+                        <Th>Name</Th>
+                        <Th>Amount</Th>
+                        <Th>Number</Th>
+                        <Th>Type</Th>
+                        <Th>Weight</Th>
+                        <Th>Carbon Footprint</Th>
+                        <Th>Documents</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {products.map(product => (
+                        <Tr key={product.uid}>
+                          <Td>{product.name}</Td>
+                          <Td>
+                            {product.amount}{' '}
+                            {translateUnitToAbbreviation(product.amountUnit)}
+                          </Td>
+                          <Td>{product.number}</Td>
+                          <Td>{translateType(product.type)}</Td>
+                          <Td>
+                            {product.weight}{' '}
+                            {translateUnitToAbbreviation(product.weightUnit)}
+                          </Td>
+                          <Td>
+                            {product.carbonFootprint}{' '}
+                            {translateUnitToAbbreviation(
+                              product.carbonFootprintUnit
+                            )}
+                          </Td>
 
-                            <Td>
-                              {product.documents.length}{' '}
-                              {product.documents.length > 0 && (
-                                <DownloadIcon
-                                  cursor='pointer'
-                                  onClick={() =>
-                                    handleDownloadDocumentsClick(
-                                      product.documents
-                                    )
-                                  }
-                                />
-                              )}
-                            </Td>
-                          </Tr>
-                        ))}
-                      </Tbody>
-                    </Table>
-                  </TableContainer>
-                )}
+                          <Td>
+                            {product.documents.length}{' '}
+                            {product.documents.length > 0 && (
+                              <DownloadIcon
+                                cursor='pointer'
+                                onClick={() =>
+                                  handleDownloadDocumentsClick(
+                                    product.documents
+                                  )
+                                }
+                              />
+                            )}
+                          </Td>
+                        </Tr>
+                      ))}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
               </TabPanel>
             </TabPanels>
           </Tabs>

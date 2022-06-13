@@ -12,23 +12,39 @@ import {
   NumberInputStepper,
   Select,
   SimpleGrid,
+  Tag,
+  TagCloseButton,
+  TagLabel,
+  VStack,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
+import { useRouter } from 'next/router';
 import Layout from '../components/commons/Layout';
 import Page from '../components/commons/Page';
 
 import Header from '../components/commons/Header';
 import Footer from '../components/commons/Footer';
 import FileUploader from '../components/commons/FileUploader';
+import { postMyProduct } from '../services/http/products';
+import { Document } from '../types';
+import { postMyDocuments } from '../services/http/documents';
 
 const UploadPage: React.FC = () => {
+  const router = useRouter();
   const { register, handleSubmit } = useForm();
-  const [documents, setDocuments] = useState([]);
+  const [documents, setDocuments] = useState([] as Document[]);
 
-  const sendProduct = (data) => {
-    console.log(data);
+
+  const sendProduct = async (data) => {
+    await postMyDocuments(documents);
+
+    const docUids = documents.map(doc => doc.uid);
+    const product = { ...data, documents: docUids };
+    await postMyProduct(product);
+
+    router.push('/products');
   };
 
   const handleFile = (file, filename) => {
@@ -37,11 +53,15 @@ const UploadPage: React.FC = () => {
     const name = filename.substring(0, filename.lastIndexOf('.')) || filename;
     const version = '1.0';
     const uid = uuid();
+    setDocuments([
+      ...documents,
+      { name, type, data, version, uid, uploaded: Date.now() },
+    ]);
+  };
 
-    console.log({ name, type, data, version, uid });
-
-    setDocuments([{ name, type, data, version, uid }]);
-
+  const handleRemoveButtonClick = (uid: string) => {
+    const newDocuments = documents.filter(doc => doc.uid !== uid);
+    setDocuments(newDocuments);
   };
 
   return (
@@ -70,9 +90,9 @@ const UploadPage: React.FC = () => {
                   id='type'
                   placeholder='Select type'
                 >
-                  <option>assembly</option>
-                  <option>purchase_part</option>
-                  <option>standard_part</option>
+                  <option value='assembly'>Assembly</option>
+                  <option value='purchase_part'>Purchase Part</option>
+                  <option value='standard_part'>Standard Part</option>
                 </Select>
               </FormControl>
 
@@ -107,14 +127,14 @@ const UploadPage: React.FC = () => {
                     id='amountUnit'
                     placeholder='Select unit'
                   >
-                    <option>each</option>
-                    <option>liter</option>
-                    <option>centimeter</option>
-                    <option>square_centimeter</option>
-                    <option>cubic_centimeter</option>
-                    <option>meter</option>
-                    <option>square_meter</option>
-                    <option>cubic_meter</option>
+                    <option value='each'>each</option>
+                    <option value='liter'>l</option>
+                    <option value='centimeter'>cm</option>
+                    <option value='square_centimeter'>cm2</option>
+                    <option value='cubic_centimeter'>cm3</option>
+                    <option value='meter'>m</option>
+                    <option value='square_meter'>m2</option>
+                    <option value='cubic_meter'>m3</option>
                   </Select>
                 </FormControl>
               </SimpleGrid>
@@ -141,11 +161,11 @@ const UploadPage: React.FC = () => {
                     id='weightUnit'
                     placeholder='Select unit'
                   >
-                    <option>mg</option>
-                    <option>g</option>
-                    <option>kg</option>
-                    <option>%</option>
-                    <option>ppm</option>
+                    <option value='milligram'>mg</option>
+                    <option value='gram'>g</option>
+                    <option value='kilogram'>kg</option>
+                    <option value='percentage'>%</option>
+                    <option value='parts_per_million'>ppm</option>
                   </Select>
                 </FormControl>
               </SimpleGrid>
@@ -174,20 +194,37 @@ const UploadPage: React.FC = () => {
                     id='carbonFootprintUnit'
                     placeholder='Select unit'
                   >
-                    <option>mg</option>
-                    <option>g</option>
-                    <option>kg</option>
+                    <option value='milligram'>mg</option>
+                    <option value='gram'>g</option>
+                    <option value='kilogram'>kg</option>
                   </Select>
                 </FormControl>
               </SimpleGrid>
 
               <FileUploader handleFile={handleFile}></FileUploader>
 
+              <VStack align='start' spacing={4}>
+                {documents.map(doc => (
+                  <Tag
+                    size='sm'
+                    key={doc.uid}
+                    borderRadius='full'
+                    variant='solid'
+                  >
+                    <TagLabel>{doc.name}</TagLabel>
+                    <TagCloseButton
+                      onClick={() => handleRemoveButtonClick(doc.uid)}
+                    />
+                  </Tag>
+                ))}
+              </VStack>
 
-              <Button type='submit'>Send</Button>
+              <Button colorScheme='green' type='submit'>Send</Button>
             </SimpleGrid>
           </form>
         </Container>
+
+        <div style={{ height: '30px' }}></div>
 
         <Footer></Footer>
       </Layout>

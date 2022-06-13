@@ -29,6 +29,8 @@ import {
   getMyProductDetailsRequest,
   postMyProductDetailsRequest,
 } from '../services/http/product-details';
+import { translateType } from '../services/translation/type-translation';
+import { translateUnitToAbbreviation } from '../services/translation/unit-translation';
 
 const MyProductsPage: React.FC = () => {
   const [newProducts, setNewProducts] = useState([] as Product[]);
@@ -112,63 +114,57 @@ const MyProductsPage: React.FC = () => {
             </TabList>
             <TabPanels>
               <TabPanel>
-                {newProducts.length === 0 ? (
-                  <Heading size='md' mb={12} textAlign='center'>
-                    No new products
-                  </Heading>
-                ) : (
-                  <TableContainer>
-                    <Table variant='simple' size='md' colorScheme='cyan'>
-                      <Thead>
-                        <Tr>
-                          <Th>Name</Th>
-                          <Th>Amount</Th>
-                          <Th>Number</Th>
-                          <Th>Type</Th>
-                          <Th>Weight</Th>
-                          <Th>Carbon Footprint</Th>
-                          <Th></Th>
+                <TableContainer h='500px' overflowY='scroll'>
+                  <Table variant='simple' size='sm' colorScheme='cyan'>
+                    <Thead>
+                      <Tr>
+                        <Th>Name</Th>
+                        <Th>Amount</Th>
+                        <Th>Number</Th>
+                        <Th>Type</Th>
+                        <Th>Weight</Th>
+                        <Th>Carbon Footprint</Th>
+                        <Th></Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {newProducts.map(product => (
+                        <Tr key={product.uid}>
+                          <Td>{product.name}</Td>
+                          <Td>
+                            {product.amount}{' '}
+                            {translateUnitToAbbreviation(product.amountUnit)}
+                          </Td>
+                          <Td>{product.number}</Td>
+                          <Td>{translateType(product.type)}</Td>
+                          <Td>
+                            {product.weight}{' '}
+                            {translateUnitToAbbreviation(product.weightUnit)}
+                          </Td>
+                          <Td>
+                            {product.carbonFootprint}{' '}
+                            {translateUnitToAbbreviation(product.weightUnit)}
+                          </Td>
+                          <Td>
+                            {productDetailsAlreadyRequested(product.uid) ? (
+                              <Button
+                                isLoading
+                                loadingText='Waiting for approval'
+                                onClick={() => onButtonClick(product.uid)}
+                              ></Button>
+                            ) : (
+                              <Button
+                                onClick={() => onButtonClick(product.uid)}
+                              >
+                                Request Details
+                              </Button>
+                            )}
+                          </Td>
                         </Tr>
-                      </Thead>
-                      <Tbody>
-                        {newProducts.map(product => (
-                          <Tr key={product.uid}>
-                            <Td>{product.name}</Td>
-                            <Td>
-                              {product.amount}{' '}
-                              {product.amountUnit === 'each'
-                                ? ''
-                                : product.amountUnit}
-                            </Td>
-                            <Td>{product.number}</Td>
-                            <Td>{product.type}</Td>
-                            <Td>
-                              {product.weight} {product.weightUnit}
-                            </Td>
-                            <Td>
-                              {product.carbonFootprint} {product.weightUnit}
-                            </Td>
-                            <Td>
-                              {productDetailsAlreadyRequested(product.uid) ? (
-                                <Button
-                                  isLoading
-                                  loadingText='Waiting for approval'
-                                  onClick={() => onButtonClick(product.uid)}
-                                ></Button>
-                              ) : (
-                                <Button
-                                  onClick={() => onButtonClick(product.uid)}
-                                >
-                                  Request Details
-                                </Button>
-                              )}
-                            </Td>
-                          </Tr>
-                        ))}
-                      </Tbody>
-                    </Table>
-                  </TableContainer>
-                )}
+                      ))}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
               </TabPanel>
               <TabPanel>
                 <p>two!</p>

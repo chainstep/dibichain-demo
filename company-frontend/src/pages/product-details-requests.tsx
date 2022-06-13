@@ -150,29 +150,63 @@ const MyProductsPage: React.FC = () => {
             </TabList>
             <TabPanels>
               <TabPanel>
-                {myProductDetailsRequests.length === 0 ? (
-                  <Heading size='md' mb={12} textAlign='center'>
-                    No product details requests
-                  </Heading>
-                ) : (
-                  <TableContainer>
-                    <Table variant='simple' size='md' colorScheme='cyan'>
-                      <Thead>
-                        <Tr>
-                          <Th>UID</Th>
-                          <Th>Timestamp</Th>
-                          <Th></Th>
+                <TableContainer h='500px' overflowY='scroll'>
+                  <Table variant='simple' size='sm' colorScheme='cyan'>
+                    <Thead>
+                      <Tr>
+                        <Th>UID</Th>
+                        <Th>Timestamp</Th>
+                        <Th></Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {myProductDetailsRequests.map(request => (
+                        <Tr key={request.uid}>
+                          <Td>{getNameOfNewProduct(request.uid)}</Td>
+                          <Td>
+                            {new Date(
+                              request.timestamp * 1000
+                            ).toLocaleString()}
+                          </Td>
+                          <Td>
+                            <Tooltip
+                              hasArrow
+                              label={request.publicKey}
+                              bg='gray.300'
+                              color='black'
+                            >
+                              <InfoIcon />
+                            </Tooltip>
+                          </Td>
                         </Tr>
-                      </Thead>
-                      <Tbody>
-                        {myProductDetailsRequests.map(request => (
+                      ))}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
+              </TabPanel>
+              <TabPanel>
+                <TableContainer h='500px' overflowY='scroll'>
+                  <Table variant='simple' size='sm' colorScheme='cyan'>
+                    <Thead>
+                      <Tr>
+                        <Th>UID</Th>
+                        <Th>Timestamp</Th>
+                        <Th></Th>
+                        <Th></Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {productDetailsRequests
+                        .filter(request => request.responded === false)
+                        .map(request => (
                           <Tr key={request.uid}>
-                            <Td>{getNameOfNewProduct(request.uid)}</Td>
+                            <Td>{getNameOfMyProduct(request.uid)}</Td>
                             <Td>
                               {new Date(
                                 request.timestamp * 1000
                               ).toLocaleString()}
                             </Td>
+
                             <Td>
                               <Tooltip
                                 hasArrow
@@ -183,72 +217,26 @@ const MyProductsPage: React.FC = () => {
                                 <InfoIcon />
                               </Tooltip>
                             </Td>
+                            <Td>
+                              <Button
+                                mr={2}
+                                colorScheme='red'
+                                onClick={() => onDeclineButtonClick(request)}
+                              >
+                                Decline
+                              </Button>
+                              <Button
+                                colorScheme='green'
+                                onClick={() => onApproveButtonClick(request)}
+                              >
+                                Approve
+                              </Button>
+                            </Td>
                           </Tr>
                         ))}
-                      </Tbody>
-                    </Table>
-                  </TableContainer>
-                )}
-              </TabPanel>
-              <TabPanel>
-                {productDetailsRequests.length === 0 ? (
-                  <Heading size='md' mb={12} textAlign='center'>
-                    No product details requests
-                  </Heading>
-                ) : (
-                  <TableContainer>
-                    <Table variant='simple' size='md' colorScheme='cyan'>
-                      <Thead>
-                        <Tr>
-                          <Th>UID</Th>
-                          <Th>Timestamp</Th>
-                          <Th></Th>
-                          <Th></Th>
-                        </Tr>
-                      </Thead>
-                      <Tbody>
-                        {productDetailsRequests
-                          .filter(request => request.responded === false)
-                          .map(request => (
-                            <Tr key={request.uid}>
-                              <Td>{getNameOfMyProduct(request.uid)}</Td>
-                              <Td>
-                                {new Date(
-                                  request.timestamp * 1000
-                                ).toLocaleString()}
-                              </Td>
-
-                              <Td>
-                                <Tooltip
-                                  hasArrow
-                                  label={request.publicKey}
-                                  bg='gray.300'
-                                  color='black'
-                                >
-                                  <InfoIcon />
-                                </Tooltip>
-                              </Td>
-                              <Td>
-                                <Button
-                                  mr={2}
-                                  colorScheme='red'
-                                  onClick={() => onDeclineButtonClick(request)}
-                                >
-                                  Decline
-                                </Button>
-                                <Button
-                                  colorScheme='green'
-                                  onClick={() => onApproveButtonClick(request)}
-                                >
-                                  Approve
-                                </Button>
-                              </Td>
-                            </Tr>
-                          ))}
-                      </Tbody>
-                    </Table>
-                  </TableContainer>
-                )}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
               </TabPanel>
             </TabPanels>
           </Tabs>

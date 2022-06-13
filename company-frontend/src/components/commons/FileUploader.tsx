@@ -26,21 +26,7 @@ const FileUploader: React.FC<Props> = ({ handleFile }) => {
   };
   return (
     <>
-      <Button
-        color='#F9F7FB'
-        fontFamily='Campton-medium'
-        fontSize='18px'
-        backgroundImage='linear-gradient(to right, #EF7383 0%, #FDA291 50%,#EF7383 100%)'
-        backgroundSize='200% auto'
-        transition='0.5s'
-        _hover={{
-          backgroundPosition: 'right center',
-        }}
-        _active={{ backgroundImage: 'linear-gradient(to right, #220069 0%, #220069 50%,#220069 100%)' }}
-        onClick={handleClick}
-      >
-        Upload a file
-      </Button>
+      <Button onClick={handleClick}>Upload document</Button>
       <input
         type='file'
         ref={hiddenFileInput}
