@@ -27,6 +27,7 @@ export class EnvVars {
     public static WS_RPC_RECONNECT_DELAY_SEC = 0;
     public static CATCH_UP_ALL_CONTRACT_EVENTS = false;
     public static EVENT_BUS_CONTRACT_ADDRESS = "";
+    public static PRODUCT_DETAILS_REQUEST_TIMEOUT_MIN = 0;
 
 
     public static load(): void {
@@ -42,7 +43,7 @@ export class EnvVars {
             this.MONGO_DB_URL = String(envVar);
         });
         this.setVar("USE_MONGO_DB", (envVar) => {
-            this.USE_MONGO_DB = Boolean(envVar);
+            this.USE_MONGO_DB = this.Boolean(envVar);
         }, false);
         this.setVar("PORT", (envVar) => {
             this.PORT = Number(envVar);
@@ -69,11 +70,14 @@ export class EnvVars {
             this.WS_RPC_RECONNECT_DELAY_SEC = Number(envVar);
         }, 2);
         this.setVar("CATCH_UP_ALL_CONTRACT_EVENTS", (envVar) => {
-            this.CATCH_UP_ALL_CONTRACT_EVENTS = Boolean(envVar);
+            this.CATCH_UP_ALL_CONTRACT_EVENTS = this.Boolean(envVar);
         }, false);
         this.setVar("EVENT_BUS_CONTRACT_ADDRESS", (envVar) => {
             this.EVENT_BUS_CONTRACT_ADDRESS = String(envVar);
         });
+        this.setVar("PRODUCT_DETAILS_REQUEST_TIMEOUT_MIN", (envVar) => {
+            this.PRODUCT_DETAILS_REQUEST_TIMEOUT_MIN = Number(envVar);
+        }, 24 * 60);
     }
 
     private static set_RUN_CONTEXT(): void {
@@ -110,6 +114,10 @@ export class EnvVars {
         } else {
             throw new Error(`${envVarName} must be defined`);
         }
+    }
+
+    private static Boolean(value: unknown): boolean {
+        return value === true ? true : value === "true";
     }
 }
 

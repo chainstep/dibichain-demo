@@ -8,15 +8,14 @@ import { NewProductStore } from "../storage/new-product/NewProductStore";
 import { ProductStore } from "../storage/product/ProductStore";
 import { IntervalHandler } from "./IntervalHandler";
 import { IntervalManager } from "./IntervalManager";
+import { ProductDetailsRequestTimeoutService } from "./services/ProductDetailsRequestTimeoutService";
 import { PollProductsService } from "./services/PollProductsService";
 
 
 export function initIntervals(): void {
-    const intervalName_10sec = "10-sec-interval";
-
     IntervalManager.add(
         new IntervalHandler({
-            name: intervalName_10sec,
+            name: "10-sec-interval",
             pollingIntervalSec: 10,
             services: [
                 new PollProductsService({
@@ -34,5 +33,18 @@ export function initIntervals(): void {
         })
     );
 
-    IntervalManager.start(intervalName_10sec);
+    IntervalManager.add(
+        new IntervalHandler({
+            name: "product-details-request-timeout-check-interval",
+            pollingIntervalSec: 5 * 60,
+            services: [
+                new ProductDetailsRequestTimeoutService({
+                    getMyProductDetailsRequestStore: () => MyProductDetailsRequestStore.get(),
+                    timeoutMin: EnvVars.PRODUCT_DETAILS_REQUEST_TIMEOUT_MIN
+                })
+            ]
+        })
+    );
+
+    IntervalManager.start();
 }
