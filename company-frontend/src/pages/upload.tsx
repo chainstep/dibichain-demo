@@ -15,6 +15,7 @@ import {
   Tag,
   TagCloseButton,
   TagLabel,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
@@ -33,9 +34,9 @@ import { postMyDocuments } from '../services/http/documents';
 
 const UploadPage: React.FC = () => {
   const router = useRouter();
+  const toast = useToast();
   const { register, handleSubmit } = useForm();
   const [documents, setDocuments] = useState([] as Document[]);
-
 
   const sendProduct = async (data) => {
     await postMyDocuments(documents);
@@ -45,6 +46,13 @@ const UploadPage: React.FC = () => {
     await postMyProduct(product);
 
     router.push('/products');
+    toast({
+      title: 'Product successfully uploaded',
+      description: '',
+      status: 'success',
+      duration: 6000,
+      isClosable: true,
+    });
   };
 
   const handleFile = (file, filename) => {
@@ -219,7 +227,9 @@ const UploadPage: React.FC = () => {
                 ))}
               </VStack>
 
-              <Button colorScheme='green' type='submit'>Send</Button>
+              <Button colorScheme='green' type='submit'>
+                Submit
+              </Button>
             </SimpleGrid>
           </form>
         </Container>
