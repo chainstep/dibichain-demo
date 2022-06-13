@@ -1,10 +1,18 @@
+import { randomUUID } from "crypto";
+import { NextFunction, Request, Response } from "express";
 import { body } from "express-validator";
 import { MyProductStore } from "../../../../storage/my-product/MyProductStore";
+import { MyProduct } from "../../../../types";
 import { isProductType, isAmountUnit, isWeightUnit, isCarbonFootprintUnit, isDocumentIdArray } from "../../../../utils/propertyCheckers";
 import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
 import { createRouter } from "../../routerFactory";
 import { PostMyProductService } from "./PostMyProductService";
 
+
+interface MyProductParams extends Omit<MyProduct, "id" | "uid"> {
+    id?: string;
+    uid?: string;
+}
 
 export const postMyProductRouter = createRouter({
     method: "post",
@@ -24,6 +32,7 @@ export const postMyProductRouter = createRouter({
         body("carbonFootprint").optional().isNumeric().withMessage(INVALID_INPUT_TEXT + "carbonFootprint"),
         body("carbonFootprintUnit").optional().toLowerCase().custom(isCarbonFootprintUnit).customSanitizer(toCarbonFootprintUnit).withMessage(INVALID_INPUT_TEXT + "carbonFootprintUnit")
     ],
+    middlewares: [ cleanseParams ],
     service: new PostMyProductService({
         getMyProductStore: () => MyProductStore.get(),
     })
@@ -55,4 +64,31 @@ function toCarbonFootprintUnit(value: string): unknown {
          : value === "gram" || value === "g" ? "gram"
          : value === "kilogram" || value === "kg" ? "kilogram"
          : "";
+}
+
+function cleanseParams(request: Request, response: Response, next: NextFunction): void {
+    const newBody = <MyProductParams> {
+        name: request.body.name,
+        number: request.body.number,
+        type: request.body.type,
+        amount: request.body.amount,
+        amountUnit: request.body.amountUnit,
+        carbonFootprint: request.body.carbonFootprint,
+        carbonFootprintUnit: request.body.carbonFootprintUnit,
+        documents: request.body.documents,
+        id: request.body.id,
+        uid: request.body.uid,
+        weight: request.body.weight,
+        weightUnit: request.body.weightUnit
+    };
+
+    if (!newBody.uid) {
+        newBody.uid = randomUUID();
+    }
+    if (!newBody.id) {
+        newBody.id = newBody.uid;
+    }
+
+    request.body = newBody;
+    next();
 }
