@@ -46,14 +46,14 @@ function toArray(value: string): unknown {
 
 
 function cleanseInputs(request: Request, response: Response, next: NextFunction): void {
-    const newBody = {
+    const newQuery = {
         publicKeys: <string[]> []
     };
 
-    (<string[]> request.body.publicKeys).forEach((publicKey) => {
-        newBody.publicKeys.push(publicKey);
+    (<string[]> request.query.publicKeys).forEach((publicKey) => {
+        newQuery.publicKeys.push(publicKey);
     });
 
-    request.body = newBody;
+    request.query = newQuery;
     next();
 }
