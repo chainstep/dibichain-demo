@@ -1,28 +1,30 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 import { body } from "express-validator";
 import { Contracts } from "../../../../contract/Contracts";
 import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
-import { createRouter } from "../../routerFactory";
+import { createRouter } from "../../../routerFactory";
 import { PostNewProductService } from "./PostNewProductService";
 
 
-export const postNewProductRouter = createRouter({
-    method: "post",
-    route: ROUTE_NAMES.newProducts,
-    inputPath: "body",
-    inputChecks: [
-        body("uid").isUUID().withMessage(INVALID_INPUT_TEXT + "uid"),
-        body("id").isString().withMessage(INVALID_INPUT_TEXT + "id"),
-        body("name").isString().withMessage(INVALID_INPUT_TEXT + "name"),
-        body("type").isString().toLowerCase().custom(isProductType).withMessage(INVALID_INPUT_TEXT + "type"),
-        body("number").isString().withMessage(INVALID_INPUT_TEXT + "number"),
-        body("hash").isHash("sha256").withMessage(INVALID_INPUT_TEXT + "hash")
-    ],
-    middlewares: [ cleanseInputs],
-    service: new PostNewProductService({
-        getEventBus: () => Contracts.getEventBus()
-    })
-});
+export function createPostNewProductRouter(): Router {
+    return createRouter({
+        method: "post",
+        route: ROUTE_NAMES.newProducts,
+        inputPath: "body",
+        inputChecks: [
+            body("uid").isUUID().withMessage(INVALID_INPUT_TEXT + "uid"),
+            body("id").isString().withMessage(INVALID_INPUT_TEXT + "id"),
+            body("name").isString().withMessage(INVALID_INPUT_TEXT + "name"),
+            body("type").isString().toLowerCase().custom(isProductType).withMessage(INVALID_INPUT_TEXT + "type"),
+            body("number").isString().withMessage(INVALID_INPUT_TEXT + "number"),
+            body("hash").isHash("sha256").withMessage(INVALID_INPUT_TEXT + "hash")
+        ],
+        middlewares: [ cleanseInputs],
+        service: new PostNewProductService({
+            eventBus: Contracts.getEventBus()
+        })
+    });
+}
 
 function isProductType(value: string): boolean {
     return value.includes("assembly")

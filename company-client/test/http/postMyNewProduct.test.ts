@@ -1,5 +1,5 @@
 import request from "supertest";
-import { httpServer } from "../../src/http";
+import { initHttpServer } from "../../src/http";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { MyNewProductStore } from "../../src/storage/my-new-product/MyNewProductStore";
 import { MyNewProductStoreInMemory } from "../../src/storage/my-new-product/MyNewProductStoreInMemory";
@@ -32,6 +32,7 @@ jest.mock("axios", () => {
 
 
 if (!config.skipTests.includes("postMyNewProduct")) {
+    const server = initHttpServer();
     const myProductStore = (<MyProductStoreInMemory> MyProductStore.get());
     const myNewProductStore = (<MyNewProductStoreInMemory> MyNewProductStore.get());
 
@@ -44,7 +45,7 @@ if (!config.skipTests.includes("postMyNewProduct")) {
     it("should post my new product", async () => {
         await myProductStore.upsert(TEST_PRODUCT);
 
-        await request(httpServer)
+        await request(server)
             .post("/my-new-products")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .send(TEST_NEW_PRODUCT)

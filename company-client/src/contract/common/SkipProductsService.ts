@@ -1,5 +1,5 @@
 import { logger } from "../../utils/logger";
-import { ContractEventHandlerService, ContractEventServiceCode } from "../listeners/contractEventHandlerFactory";
+import { ContractEventService, ContractEventServiceCode } from "../ContractEventHandler";
 
 
 interface Store {
@@ -7,29 +7,27 @@ interface Store {
 }
 
 interface SkipProductServiceOptions {
-    getStores: (() => Store)[];
+    stores: Store[];
     skipIfNotFound?: boolean
 }
 
 
-export class SkipProductService implements ContractEventHandlerService {
-    private readonly getStores: (() => Store)[];
+export class SkipProductService implements ContractEventService {
+    private readonly stores: Store[];
     private readonly skipNonExistingProduct?: boolean;
 
 
     constructor(options: SkipProductServiceOptions) {
-        this.getStores = options.getStores;
+        this.stores = options.stores;
         this.skipNonExistingProduct = options.skipIfNotFound;
     }
 
 
     public async run(inputs: unknown[]): Promise<ContractEventServiceCode> {
         const product = <{uid: string}> inputs[1];
-        const stores = <Store[]> [];
-        this.getStores.forEach(getStore => stores.push(getStore()));
 
         try {
-            const products = await this.getProducts(stores, product.uid);
+            const products = await this.getProducts(this.stores, product.uid);
 
             if (!this.skipNonExistingProduct && products.length !== 0) {
                 return ContractEventServiceCode.STOP;

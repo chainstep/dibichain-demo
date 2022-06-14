@@ -12,6 +12,6 @@ initLogger({
     level: "all",
     transports: [
         new DummyTransport(),
-        // new ConsoleTransport(),
+        // new ConsoleTransport()
     ]
 });

@@ -1,10 +1,10 @@
 import { IMyProductStore } from "../../../../storage/my-product/IMyProductStore";
 import { MyProduct } from "../../../../types";
-import { RouteService } from "../../routerFactory";
+import { RouteService } from "../../../routerFactory";
 
 
 export interface GetMyProductsServiceOptions {
-    getMyProductStore: () => IMyProductStore;
+    myProductStore: IMyProductStore;
 }
 
 interface Inputs {
@@ -15,19 +15,18 @@ interface Outputs {
     myProducts: MyProduct[];
 }
 
+
 export class GetMyProductsService implements RouteService {
-    private readonly getMyProductStore: () => IMyProductStore;
+    private readonly myProductStore: IMyProductStore;
 
 
     constructor(options: GetMyProductsServiceOptions) {
-        this.getMyProductStore = options.getMyProductStore;
+        this.myProductStore = options.myProductStore;
     }
 
 
     public async run(inputs: Inputs): Promise<Outputs> {
-        const myProductStore = this.getMyProductStore();
-
-        const myProducts = await myProductStore.find(inputs);
+        const myProducts = await this.myProductStore.find(inputs);
         return { myProducts };
     }
 }

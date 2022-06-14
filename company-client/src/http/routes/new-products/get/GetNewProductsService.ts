@@ -1,10 +1,10 @@
 import { INewProductStore } from "../../../../storage/new-product/INewProductStore";
 import { NewProduct } from "../../../../types";
-import { RouteService } from "../../routerFactory";
+import { RouteService } from "../../../routerFactory";
 
 
 export interface GetNewProductsServiceOptions {
-    getNewProductStore: () => INewProductStore;
+    newProductStore: INewProductStore;
 }
 
 
@@ -18,18 +18,16 @@ interface Outputs {
 
 
 export class GetNewProductsService implements RouteService {
-    private readonly getNewProductStore: () => INewProductStore;
+    private readonly newProductStore: INewProductStore;
 
 
     constructor(options: GetNewProductsServiceOptions) {
-        this.getNewProductStore = options.getNewProductStore;
+        this.newProductStore = options.newProductStore;
     }
 
 
     public async run(inputs: Inputs): Promise<Outputs> {
-        const newProductStore = this.getNewProductStore();
-
-        const newProducts =await newProductStore.find(inputs);
+        const newProducts = await this.newProductStore.find(inputs);
         return { newProducts };
     }
 }

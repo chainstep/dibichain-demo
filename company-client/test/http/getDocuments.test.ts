@@ -1,5 +1,5 @@
 import request from "supertest";
-import { httpServer } from "../../src/http";
+import { initHttpServer } from "../../src/http";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { DocumentStore } from "../../src/storage/document/DocumentStore";
 import { DocumentStoreInMemory } from "../../src/storage/document/DocumentStoreInMemory";
@@ -9,6 +9,7 @@ import { TEST_DOCUMENT_1 } from "../constants";
 
 
 if (!config.skipTests.includes("getDocuments")) {
+    const server = initHttpServer();
     const documentStore = (<DocumentStoreInMemory> DocumentStore.get());
 
     beforeEach(async () => {
@@ -19,7 +20,7 @@ if (!config.skipTests.includes("getDocuments")) {
     it("should get all documents", async () => {
         await documentStore.upsert(TEST_DOCUMENT_1);
 
-        const response = await request(httpServer)
+        const response = await request(server)
             .get("/documents")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .expect(200);

@@ -1,27 +1,26 @@
 import { EventBus } from "../../../../contract/interfaces/EventBus";
 import { NewProduct } from "../../../../types";
-import { RouteService } from "../../routerFactory";
+import { RouteService } from "../../../routerFactory";
 
 
 export interface PostNewProductServiceOptions {
-    getEventBus: () => EventBus
+    eventBus: EventBus
 }
 
 type Inputs = NewProduct
 
 
 export class PostNewProductService implements RouteService {
-    private readonly getEventBus: () => EventBus;
+    private readonly eventBus: EventBus;
 
 
     constructor(options: PostNewProductServiceOptions) {
-        this.getEventBus = options.getEventBus;
+        this.eventBus = options.eventBus;
     }
 
 
     public async run(inputs: Inputs): Promise<void> {
-        const eventBus = this.getEventBus();
-        await eventBus.broadcastNewProduct({
+        await this.eventBus.broadcastNewProduct({
             uid: inputs.uid,
             Type: inputs.type,
             hash: inputs.hash,

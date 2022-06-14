@@ -2,7 +2,7 @@ import { MyNewProductStore } from "../../../storage/my-new-product/MyNewProductS
 import { NewProductStore } from "../../../storage/new-product/NewProductStore";
 import { ProductStore } from "../../../storage/product/ProductStore";
 import { SkipProductService } from "../../common/SkipProductsService";
-import { ContractEventListener } from "../contractEventHandlerFactory";
+import { ContractEventListener } from "../../ContractEventHandler";
 import { NewProductService } from "./NewProductService";
 
 
@@ -11,13 +11,13 @@ export function createNewProductListener(): ContractEventListener {
         eventName: "NewProduct",
         services: [
             new SkipProductService({
-                getStores: [
-                    () => ProductStore.get()
+                stores: [
+                    ProductStore.get()
                 ]
             }),
             new NewProductService({
-                getNewProductStore: () => NewProductStore.get(),
-                getMyNewProductStore: () => MyNewProductStore.get()
+                newProductStore: NewProductStore.get(),
+                myNewProductStore: MyNewProductStore.get()
             })
         ]
     };
