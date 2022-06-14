@@ -3,7 +3,7 @@ import { IMyProductDetailsRequestStore } from "../../../storage/my-product-detai
 import { IProductDetailsRequestStore } from "../../../storage/product-details-request/IProductDetailsRequestStore";
 import { ProductDetailsRequestEventParams } from "../../../types";
 import { logger } from "../../../utils/logger";
-import { ContractEventHandlerService } from "../contractEventHandlerFactory";
+import { ContractEventService } from "../../ContractEventHandler";
 
 
 interface ProductDetailsRequestServiceOptions {
@@ -12,7 +12,7 @@ interface ProductDetailsRequestServiceOptions {
 }
 
 
-export class ProductDetailsRequestService implements ContractEventHandlerService {
+export class ProductDetailsRequestService implements ContractEventService {
     private readonly productDetailsRequestStore: IProductDetailsRequestStore;
     private readonly myProductDetailsRequestStore: IMyProductDetailsRequestStore;
 

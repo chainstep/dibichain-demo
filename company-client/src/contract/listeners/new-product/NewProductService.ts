@@ -3,7 +3,7 @@ import { IMyNewProductStore } from "../../../storage/my-new-product/IMyNewProduc
 import { INewProductStore } from "../../../storage/new-product/INewProductStore";
 import { NewProductEventParams } from "../../../types";
 import { logger } from "../../../utils/logger";
-import { ContractEventHandlerService } from "../contractEventHandlerFactory";
+import { ContractEventService } from "../../ContractEventHandler";
 
 
 interface NewProductServiceOptions {
@@ -12,7 +12,7 @@ interface NewProductServiceOptions {
 }
 
 
-export class NewProductService implements ContractEventHandlerService {
+export class NewProductService implements ContractEventService {
     private readonly newProductStore: INewProductStore;
     private readonly myNewProductStore: IMyNewProductStore;
 

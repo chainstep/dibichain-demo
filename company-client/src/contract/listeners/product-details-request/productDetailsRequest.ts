@@ -2,7 +2,7 @@ import { MyProductDetailsRequestStore } from "../../../storage/my-product-detail
 import { MyProductStore } from "../../../storage/my-product/MyProductStore";
 import { ProductDetailsRequestStore } from "../../../storage/product-details-request/ProductDetailsRequestStore";
 import { SkipProductService } from "../../common/SkipProductsService";
-import { ContractEventListener } from "../contractEventHandlerFactory";
+import { ContractEventListener } from "../../ContractEventHandler";
 import { ProductDetailsRequestService } from "./ProductDetailsRequestService";
 
 

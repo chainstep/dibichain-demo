@@ -1,11 +1,7 @@
 import { Contract, Event } from "ethers";
-import { ContractEventListener, ContractEventServiceCode } from "./contractEventHandlerFactory";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
+import { ContractEventListener, ContractEventServiceCode } from "./ContractEventHandler";
 
-
-export interface EventHandlerService {
-    run(args: unknown[], contract?: Contract): Promise<void>
-}
 
 export interface EventSetups {
     eventListener: ContractEventListener;
@@ -109,7 +105,7 @@ async function callServices(
                     for (let j = 0 ; j < services.length ; j++) {
                         const code = await services[j].run([...event.args || [], event]);
                         if (code && code === ContractEventServiceCode.STOP) {
-                            return;
+                            break;
                         }
                     }
                 } catch (error) {

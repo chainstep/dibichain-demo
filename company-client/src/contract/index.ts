@@ -1,8 +1,8 @@
 import { EnvVars } from "../lib/EnvVars";
 import { BlockchainInfoStore } from "../storage/blockchain/BlockchainInfoStore";
 import { EventBus } from "./interfaces/EventBus";
-import { createContractEventHandler } from "./listeners/contractEventHandlerFactory";
-import { catchUpEvents } from "./listeners/eventCatchUpper";
+import { ContractEventHandler } from "./ContractEventHandler";
+import { catchUpEvents } from "./eventCatchUpper";
 import { createNewProductListener } from "./listeners/new-product/newProduct";
 import { createProductDetailsRequestListener } from "./listeners/product-details-request/productDetailsRequest";
 
@@ -29,10 +29,10 @@ export async function initContractListeners(contract: EventBus): Promise<void> {
         });
     }
 
+    const eventHandler = new ContractEventHandler({ contract });
+    await eventHandler.init();
+
     eventListeners.forEach((eventListener) => {
-        createContractEventHandler({
-            contract,
-            eventListener
-        });
+        eventHandler.add(eventListener);
     });
 }

@@ -1,5 +1,5 @@
 import { logger } from "../../utils/logger";
-import { ContractEventHandlerService, ContractEventServiceCode } from "../listeners/contractEventHandlerFactory";
+import { ContractEventService, ContractEventServiceCode } from "../ContractEventHandler";
 
 
 interface Store {
@@ -12,7 +12,7 @@ interface SkipProductServiceOptions {
 }
 
 
-export class SkipProductService implements ContractEventHandlerService {
+export class SkipProductService implements ContractEventService {
     private readonly stores: Store[];
     private readonly skipNonExistingProduct?: boolean;
 

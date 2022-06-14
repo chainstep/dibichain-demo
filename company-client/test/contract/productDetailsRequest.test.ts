@@ -19,6 +19,11 @@ const mockContract = <unknown> {
         if (event === "ProductDetailsRequest") {
             productDetailsRequestListener = listener;
         }
+    },
+    provider: {
+        getBlockNumber: (): number => {
+            return 9;
+        }
     }
 };
 
