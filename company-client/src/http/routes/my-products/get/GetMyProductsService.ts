@@ -1,5 +1,5 @@
 import { IMyProductStore } from "../../../../storage/my-product/IMyProductStore";
-import { ResponseProduct } from "../../../../types";
+import { MyProduct } from "../../../../types";
 import { RouteService } from "../../routerFactory";
 
 
@@ -12,7 +12,7 @@ interface Inputs {
 }
 
 interface Outputs {
-    myProducts: ResponseProduct[];
+    myProducts: MyProduct[];
 }
 
 export class GetMyProductsService implements RouteService {
@@ -25,16 +25,9 @@ export class GetMyProductsService implements RouteService {
 
 
     public async run(inputs: Inputs): Promise<Outputs> {
-        const { uid } = inputs;
         const myProductStore = this.getMyProductStore();
 
-        const myProducts = (await myProductStore.find({ uid })).map((product) => {
-            const _product = <ResponseProduct> product;
-            _product.amount = "" + product.amount;
-            _product.weight = "" + product.weight;
-            _product.carbonFootprint = "" + product.carbonFootprint;
-            return _product;
-        });
+        const myProducts = await myProductStore.find(inputs);
         return { myProducts };
     }
 }

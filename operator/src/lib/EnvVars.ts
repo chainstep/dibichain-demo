@@ -50,7 +50,7 @@ export class EnvVars {
             this.MONGO_DB_URL = String(envVar);
         });
         this.setVar("USE_MONGO_DB", (envVar) => {
-            this.USE_MONGO_DB = Boolean(envVar);
+            this.USE_MONGO_DB = this.Boolean(envVar);
         }, false);
     }
 
@@ -82,6 +82,10 @@ export class EnvVars {
         } else {
             throw new Error(`${envVarName} must be defined`);
         }
+    }
+
+    private static Boolean(value: unknown): boolean {
+        return value === true ? true : value === "true";
     }
 }
 

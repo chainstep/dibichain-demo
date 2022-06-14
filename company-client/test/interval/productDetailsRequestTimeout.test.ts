@@ -1,4 +1,4 @@
-import { ProductDetailsRequestTimeoutService } from "../../src/interval/services/ProductDetailsRequestTimeoutService";
+import { ProductDetailsRequestTimeoutService } from "../../src/interval/handlers/product-details-request-timeout/ProductDetailsRequestTimeoutService";
 import { MyProductDetailsRequestStore } from "../../src/storage/my-product-details-request/MyProductDetailsRequestStore";
 import { MyProductDetailsRequestStoreInMemory } from "../../src/storage/my-product-details-request/MyProductDetailsRequestStoreInMemory";
 import { config } from "../config";

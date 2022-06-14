@@ -23,18 +23,13 @@ export class SkipProductService implements ContractEventHandlerService {
     }
 
 
-    async run(inputs: unknown[]): Promise<ContractEventServiceCode> {
+    public async run(inputs: unknown[]): Promise<ContractEventServiceCode> {
         const product = <{uid: string}> inputs[1];
         const stores = <Store[]> [];
         this.getStores.forEach(getStore => stores.push(getStore()));
 
         try {
-            let products = <{uid: string}[]> [];
-            for (let i = 0 ; i < stores.length ; i++) {
-                const store = stores[i];
-                const _products = await store.find({ uid: product.uid });
-                products = [...products, ..._products];
-            }
+            const products = await this.getProducts(stores, product.uid);
 
             if (!this.skipNonExistingProduct && products.length !== 0) {
                 return ContractEventServiceCode.STOP;
@@ -48,5 +43,15 @@ export class SkipProductService implements ContractEventHandlerService {
         }
 
         return ContractEventServiceCode.CONTINUE;
+    }
+
+    private async getProducts(stores: Store[], uid: string): Promise<{uid: string}[]> {
+        let products = <{uid: string}[]> [];
+        for (let i = 0 ; i < stores.length ; i++) {
+            const store = stores[i];
+            const _products = await store.find({ uid });
+            products = [...products, ..._products];
+        }
+        return products;
     }
 }

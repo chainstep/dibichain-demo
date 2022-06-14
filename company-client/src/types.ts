@@ -15,12 +15,6 @@ export interface Product {
 
 export type MyProduct = Product
 
-export interface ResponseProduct extends Omit<Product, "amount" | "weight" | "carbonFootprint" > {
-    amount?: string;
-    weight?: string;
-    carbonFootprint?: string;
-}
-
 export interface ProductEvent {
     uid: string;
     timestamp: number;
@@ -83,7 +77,7 @@ export interface Document {
     version: string;
     type: string;
     data: string;
-    uploaded: number;
+    timestamp: number;
 }
 
 export type MyDocument = Document

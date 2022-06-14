@@ -6,6 +6,7 @@ import { KeyStore } from "../../../../storage/key/KeyStore";
 import { MyProductDetailsRequestStore } from "../../../../storage/my-product-details-request/MyProductDetailsRequestStore";
 import { NewProductStore } from "../../../../storage/new-product/NewProductStore";
 import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
+import { cleanseUidBodyInput } from "../../../middlewares/uidInputCleansing";
 import { createRouter } from "../../routerFactory";
 import { PostMyProductDetailsRequestService } from "./PostMyProductDetailsService";
 
@@ -17,6 +18,7 @@ export const postMyProductDetailsRequestRouter = createRouter({
     inputChecks: [
         body("uid").isUUID().withMessage(INVALID_INPUT_TEXT + " uid"),
     ],
+    middlewares: [ cleanseUidBodyInput ],
     service: new PostMyProductDetailsRequestService({
         getKeyStore: () => KeyStore.get(),
         getMyProductDetailsRequestStore: () => MyProductDetailsRequestStore.get(),

@@ -10,7 +10,7 @@ const schema = new Schema<Document>({
     type: { type: String, required: true },
     version: { type: String, required: true },
     data: { type: String, required: true },
-    uploaded: { type: Number, required: true }
+    timestamp: { type: Number, required: true }
 });
 
 const DocumentModel = model<Document>("Document", schema);

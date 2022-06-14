@@ -32,6 +32,7 @@ export class PostMyNewProductService implements RouteService {
     public async run(inputs: Inputs): Promise<void> {
         const myNewProductStore = this.getMyNewProductStore();
         const myProductStore = this.getMyProductStore();
+
         const myProducts = await myProductStore.find(inputs);
         if (myProducts.length === 0) {
             throw new BadRequestError("product not found");
