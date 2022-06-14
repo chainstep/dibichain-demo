@@ -4,7 +4,7 @@ import { RouteService } from "../../../routerFactory";
 
 
 export interface GetProductDetailsRequestsServiceOptions {
-    getProductDetailsRequestStore: () => IProductDetailsRequestStore;
+    productDetailsRequestStore: IProductDetailsRequestStore;
 }
 
 
@@ -18,18 +18,16 @@ interface Inputs {
 
 
 export class GetProductDetailsRequestsService implements RouteService {
-    private readonly getProductDetailsRequestStore: () => IProductDetailsRequestStore;
+    private readonly productDetailsRequestStore: IProductDetailsRequestStore;
 
 
     constructor(options: GetProductDetailsRequestsServiceOptions) {
-        this.getProductDetailsRequestStore = options.getProductDetailsRequestStore;
+        this.productDetailsRequestStore = options.productDetailsRequestStore;
     }
 
 
     public async run(inputs: Inputs): Promise<Outputs> {
-        const productDetailsRequestStore = this.getProductDetailsRequestStore();
-
-        const productDetailsRequests = await productDetailsRequestStore.find(inputs);
+        const productDetailsRequests = await this.productDetailsRequestStore.find(inputs);
         return { productDetailsRequests };
     }
 }

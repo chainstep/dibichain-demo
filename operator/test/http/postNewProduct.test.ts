@@ -33,10 +33,9 @@ const mockContract = <unknown> {
 
 
 if (!config.skipTests.includes("postNewProduct")) {
+    Contracts.init({ eventBus: <EventBus> mockContract });
     const server = initHttpServer();
-    Contracts.init({
-        eventBus: <EventBus> mockContract
-    });
+
 
     it("should post a new product", async () => {
         await request(server)

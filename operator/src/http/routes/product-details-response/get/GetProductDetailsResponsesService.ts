@@ -3,7 +3,7 @@ import { RouteService } from "../../../routerFactory";
 
 
 export interface GetProductDetailsResponseServiceOptions {
-    getProductDetailsResponseStore: () => IProductDetailsResponseStore;
+    productDetailsResponseStore: IProductDetailsResponseStore;
 }
 
 interface Inputs {
@@ -16,22 +16,21 @@ interface Outputs {
 
 
 export class GetProductDetailsResponseService implements RouteService {
-    private readonly getProductDetailsResponseStore: () => IProductDetailsResponseStore;
+    private readonly productDetailsResponseStore: IProductDetailsResponseStore;
 
 
     constructor(options: GetProductDetailsResponseServiceOptions) {
-        this.getProductDetailsResponseStore = options.getProductDetailsResponseStore;
+        this.productDetailsResponseStore = options.productDetailsResponseStore;
     }
 
 
     public async run(inputs: Inputs): Promise<Outputs> {
         const { publicKeys } = inputs;
-        const productDetailsResponseStore = this.getProductDetailsResponseStore();
 
         let productDetailsResponses = <ProductDetailsResponse[]> [];
         for (let i = 0 ; i < publicKeys.length ; i++) {
             const publicKey = publicKeys[i];
-            const _productDetailsResponses = await productDetailsResponseStore.find({ publicKey });
+            const _productDetailsResponses = await this.productDetailsResponseStore.find({ publicKey });
             productDetailsResponses = [...productDetailsResponses, ..._productDetailsResponses];
         }
 

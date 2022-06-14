@@ -18,7 +18,7 @@ export function createPostProductDetailsRequestRouter(): Router {
         ],
         middlewares: [ cleanseInputs],
         service: new PostProductDetailsRequestService({
-            getEventBus: () => Contracts.getEventBus()
+            eventBus: Contracts.getEventBus()
         })
     });
 }

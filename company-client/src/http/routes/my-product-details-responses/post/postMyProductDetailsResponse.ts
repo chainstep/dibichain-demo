@@ -23,9 +23,9 @@ export function createPostMyProductDetailsResponsesRouter(): Router {
         ],
         middlewares: [ cleanseInputs],
         service: new PostMyProductDetailsResponseService({
-            getProductDetailsRequestStore: () => ProductDetailsRequestStore.get(),
-            getMyProductStore: () => MyProductStore.get(),
-            getMyDocumentStore: () => MyDocumentStore.get(),
+            productDetailsRequestStore: ProductDetailsRequestStore.get(),
+            myProductStore: MyProductStore.get(),
+            myDocumentStore: MyDocumentStore.get(),
             operator: new Operator({
                 url: EnvVars.OPERATOR_URL,
                 crypto: new Crypto()

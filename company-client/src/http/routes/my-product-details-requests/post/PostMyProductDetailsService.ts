@@ -10,9 +10,9 @@ import { BadRequestError } from "@atz3n/express-utils";
 export interface PostMyProductDetailsRequestServiceOptions {
     crypto: Crypto;
     operator: Operator;
-    getMyProductDetailsRequestStore: () => IMyProductDetailsRequestStore;
-    getNewProductStore: () => INewProductStore;
-    getKeyStore: () => IKeyStore;
+    myProductDetailsRequestStore: IMyProductDetailsRequestStore;
+    newProductStore: INewProductStore;
+    keyStore: IKeyStore;
 }
 
 interface Inputs {
@@ -23,27 +23,24 @@ interface Inputs {
 export class PostMyProductDetailsRequestService implements RouteService {
     private readonly crypto: Crypto;
     private readonly operator: Operator;
-    private readonly getMyProductDetailsRequestStore: () => IMyProductDetailsRequestStore;
-    private readonly getNewProductStore: () => INewProductStore;
-    private readonly getKeyStore: () => IKeyStore;
+    private readonly myProductDetailsRequestStore: IMyProductDetailsRequestStore;
+    private readonly newProductStore: INewProductStore;
+    private readonly keyStore: IKeyStore;
 
 
     constructor(options: PostMyProductDetailsRequestServiceOptions) {
-        this.getMyProductDetailsRequestStore = options.getMyProductDetailsRequestStore;
-        this.getNewProductStore = options.getNewProductStore;
-        this.getKeyStore = options.getKeyStore;
+        this.myProductDetailsRequestStore = options.myProductDetailsRequestStore;
+        this.newProductStore = options.newProductStore;
+        this.keyStore = options.keyStore;
         this.crypto = options.crypto;
         this.operator = options.operator;
     }
 
 
     public async run(inputs: Inputs): Promise<void> {
-        const myProductDetailsRequestStore = this.getMyProductDetailsRequestStore();
-        const newProductStore = this.getNewProductStore();
-        const keyStore = this.getKeyStore();
         const key = this.crypto.generateKeyPair();
 
-        const newProducts = await newProductStore.find(inputs);
+        const newProducts = await this.newProductStore.find(inputs);
         if (newProducts.length === 0) {
             throw new BadRequestError("new product not found");
         }
@@ -54,7 +51,7 @@ export class PostMyProductDetailsRequestService implements RouteService {
             uid: inputs.uid
         });
 
-        await myProductDetailsRequestStore.upsert({
+        await this.myProductDetailsRequestStore.upsert({
             algorithm: key.algorithm,
             publicKey: key.publicKey,
             uid: inputs.uid,
@@ -62,6 +59,6 @@ export class PostMyProductDetailsRequestService implements RouteService {
             timestamp: 0
         });
 
-        await keyStore.upsert(key);
+        await this.keyStore.upsert(key);
     }
 }

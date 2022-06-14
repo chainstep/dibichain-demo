@@ -21,8 +21,8 @@ export function createPostMyNewProductRouter(): Router {
         ],
         middlewares: [ cleanseUidBodyInput ],
         service: new PostMyNewProductService({
-            getMyProductStore: () => MyProductStore.get(),
-            getMyNewProductStore: () => MyNewProductStore.get(),
+            myProductStore: MyProductStore.get(),
+            myNewProductStore: MyNewProductStore.get(),
             operator: new Operator({
                 url: EnvVars.OPERATOR_URL,
                 crypto: new Crypto()

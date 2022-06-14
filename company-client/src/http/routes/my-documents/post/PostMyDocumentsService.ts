@@ -4,7 +4,7 @@ import { RouteService } from "../../../routerFactory";
 
 
 interface PostMyDocumentsServiceOptions {
-    getMyDocumentStore: () => IMyDocumentStore;
+    myDocumentStore: IMyDocumentStore;
 }
 
 interface Inputs {
@@ -13,20 +13,19 @@ interface Inputs {
 
 
 export class PostMyDocumentsService implements RouteService {
-    private readonly getMyDocumentStore: () => IMyDocumentStore;
+    private readonly myDocumentStore: IMyDocumentStore;
 
 
     constructor(options: PostMyDocumentsServiceOptions) {
-        this.getMyDocumentStore = options.getMyDocumentStore;
+        this.myDocumentStore = options.myDocumentStore;
     }
 
 
     public async run(inputs: Inputs): Promise<void> {
         const myDocuments = inputs.myDocuments;
-        const myDocumentStore = this.getMyDocumentStore();
 
         for (let i = 0 ; i < myDocuments.length ; i++) {
-            await myDocumentStore.upsert(myDocuments[i]);
+            await this.myDocumentStore.upsert(myDocuments[i]);
         }
     }
 }

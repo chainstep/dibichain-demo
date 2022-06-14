@@ -36,7 +36,7 @@ export function createPostMyProductRouter(): Router {
         ],
         middlewares: [ cleanseInputs ],
         service: new PostMyProductService({
-            getMyProductStore: () => MyProductStore.get(),
+            myProductStore: MyProductStore.get(),
         })
     });
 }

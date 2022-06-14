@@ -17,7 +17,7 @@ export function createGetDocumentsRouter(): Router {
         ],
         middlewares: [ cleanseUidQueryInput ],
         service: new GetDocumentsService({
-            getDocumentStore: () => DocumentStore.get()
+            documentStore: DocumentStore.get()
         })
     });
 }

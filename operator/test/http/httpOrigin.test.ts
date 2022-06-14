@@ -24,10 +24,9 @@ const mockContract = <unknown> {
 
 
 if (!config.skipTests.includes("httpOrigin")) {
+    Contracts.init({ eventBus: <EventBus> mockContract });
     const server = initHttpServer();
-    Contracts.init({
-        eventBus: <EventBus> mockContract
-    });
+
 
     it("should accept requests from known origins", async () => {
         await request(server)

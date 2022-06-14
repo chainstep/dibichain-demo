@@ -20,7 +20,7 @@ export function createGetProductDetailsResponseRouter(): Router {
         ],
         middlewares: [ cleanseInputs ],
         service: new GetProductDetailsResponseService({
-            getProductDetailsResponseStore: () => ProductDetailsResponseStore.get()
+            productDetailsResponseStore: ProductDetailsResponseStore.get()
         })
     });
 }

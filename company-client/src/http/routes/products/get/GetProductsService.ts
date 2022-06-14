@@ -4,7 +4,7 @@ import { RouteService } from "../../../routerFactory";
 
 
 export interface GetProductsServiceOptions {
-    getProductStore: () => IProductStore;
+    productStore: IProductStore;
 }
 
 interface Inputs {
@@ -16,18 +16,16 @@ interface Outputs {
 }
 
 export class GetProductsService implements RouteService {
-    private readonly getProductStore: () => IProductStore;
+    private readonly productStore: IProductStore;
 
 
     constructor(options: GetProductsServiceOptions) {
-        this.getProductStore = options.getProductStore;
+        this.productStore = options.productStore;
     }
 
 
     public async run(inputs: Inputs): Promise<Outputs> {
-        const productStore = this.getProductStore();
-
-        const products = await productStore.find(inputs);
+        const products = await this.productStore.find(inputs);
         return { products };
     }
 }

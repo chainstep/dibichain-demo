@@ -4,7 +4,7 @@ import { RouteService } from "../../../routerFactory";
 
 
 export interface PostProductDetailsResponseServiceOptions {
-    getProductDetailsResponseStore: () => IProductDetailsResponseStore;
+    productDetailsResponseStore: IProductDetailsResponseStore;
 }
 
 interface Inputs {
@@ -15,20 +15,19 @@ interface Inputs {
 
 
 export class PostProductDetailsResponseService implements RouteService {
-    private readonly getProductDetailsResponseStore: () => IProductDetailsResponseStore;
+    private readonly productDetailsResponseStore:  IProductDetailsResponseStore;
 
 
     constructor(options: PostProductDetailsResponseServiceOptions) {
-        this.getProductDetailsResponseStore = options.getProductDetailsResponseStore;
+        this.productDetailsResponseStore = options.productDetailsResponseStore;
     }
 
 
     public async run(inputs: Inputs): Promise<void> {
         const { uid, message, publicKey } = inputs;
-        const productDetailsResponseStore = this.getProductDetailsResponseStore();
 
         const timestamp = Math.floor(new Date().getTime() / 1000);
-        await productDetailsResponseStore.upsert({
+        await this.productDetailsResponseStore.upsert({
             message,
             publicKey,
             timestamp,

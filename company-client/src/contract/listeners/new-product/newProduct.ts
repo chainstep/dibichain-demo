@@ -11,13 +11,13 @@ export function createNewProductListener(): ContractEventListener {
         eventName: "NewProduct",
         services: [
             new SkipProductService({
-                getStores: [
-                    () => ProductStore.get()
+                stores: [
+                    ProductStore.get()
                 ]
             }),
             new NewProductService({
-                getNewProductStore: () => NewProductStore.get(),
-                getMyNewProductStore: () => MyNewProductStore.get()
+                newProductStore: NewProductStore.get(),
+                myNewProductStore: MyNewProductStore.get()
             })
         ]
     };

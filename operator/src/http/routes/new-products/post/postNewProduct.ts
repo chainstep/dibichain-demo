@@ -21,7 +21,7 @@ export function createPostNewProductRouter(): Router {
         ],
         middlewares: [ cleanseInputs],
         service: new PostNewProductService({
-            getEventBus: () => Contracts.getEventBus()
+            eventBus: Contracts.getEventBus()
         })
     });
 }

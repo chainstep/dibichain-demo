@@ -3,7 +3,7 @@ import { RouteService } from "../../../routerFactory";
 
 
 export interface PostProductDetailsRequestServiceOptions {
-    getEventBus: () => EventBus;
+    eventBus: EventBus;
 }
 
 interface Inputs {
@@ -14,16 +14,15 @@ interface Inputs {
 
 
 export class PostProductDetailsRequestService implements RouteService {
-    private readonly getEventBus: () => EventBus;
+    private readonly eventBus: EventBus;
 
 
     constructor(options: PostProductDetailsRequestServiceOptions) {
-        this.getEventBus = options.getEventBus;
+        this.eventBus = options.eventBus;
     }
 
 
     public async run(inputs: Inputs): Promise<void> {
-        const eventBus = this.getEventBus();
-        await eventBus.broadcastProductDetailsRequest(inputs);
+        await this.eventBus.broadcastProductDetailsRequest(inputs);
     }
 }

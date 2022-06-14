@@ -24,7 +24,7 @@ export function createPostMyDocumentsRouter(): Router {
         ],
         middlewares: [ cleanseInputs],
         service: new PostMyDocumentsService({
-            getMyDocumentStore: () => MyDocumentStore.get(),
+            myDocumentStore: MyDocumentStore.get()
         })
     });
 }

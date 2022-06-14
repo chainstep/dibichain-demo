@@ -17,7 +17,7 @@ export function createGetProductDetailsRequestsRouter(): Router {
         ],
         middlewares: [ cleanseUidQueryInput ],
         service: new GetProductDetailsRequestsService({
-            getProductDetailsRequestStore: () => ProductDetailsRequestStore.get()
+            productDetailsRequestStore: ProductDetailsRequestStore.get()
         })
     });
 }

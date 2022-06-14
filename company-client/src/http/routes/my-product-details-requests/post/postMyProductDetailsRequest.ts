@@ -22,9 +22,9 @@ export function createPostMyProductDetailsRequestRouter(): Router {
         ],
         middlewares: [ cleanseUidBodyInput ],
         service: new PostMyProductDetailsRequestService({
-            getKeyStore: () => KeyStore.get(),
-            getMyProductDetailsRequestStore: () => MyProductDetailsRequestStore.get(),
-            getNewProductStore: () => NewProductStore.get(),
+            keyStore: KeyStore.get(),
+            myProductDetailsRequestStore:  MyProductDetailsRequestStore.get(),
+            newProductStore: NewProductStore.get(),
             crypto: new Crypto(),
             operator: new Operator({
                 url: EnvVars.OPERATOR_URL,

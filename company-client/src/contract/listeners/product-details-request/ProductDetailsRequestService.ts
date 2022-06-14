@@ -7,26 +7,23 @@ import { ContractEventHandlerService } from "../contractEventHandlerFactory";
 
 
 interface ProductDetailsRequestServiceOptions {
-    getProductDetailsRequestStore: () => IProductDetailsRequestStore;
-    getMyProductDetailsRequestStore: () => IMyProductDetailsRequestStore;
+    productDetailsRequestStore: IProductDetailsRequestStore;
+    myProductDetailsRequestStore: IMyProductDetailsRequestStore;
 }
 
 
 export class ProductDetailsRequestService implements ContractEventHandlerService {
-    private readonly getProductDetailsRequestStore: () => IProductDetailsRequestStore;
-    private readonly getMyProductDetailsRequestStore: () => IMyProductDetailsRequestStore;
+    private readonly productDetailsRequestStore: IProductDetailsRequestStore;
+    private readonly myProductDetailsRequestStore: IMyProductDetailsRequestStore;
 
 
     constructor(options: ProductDetailsRequestServiceOptions) {
-        this.getProductDetailsRequestStore = options.getProductDetailsRequestStore;
-        this.getMyProductDetailsRequestStore = options.getMyProductDetailsRequestStore;
+        this.productDetailsRequestStore = options.productDetailsRequestStore;
+        this.myProductDetailsRequestStore = options.myProductDetailsRequestStore;
     }
 
 
     async run(inputs: unknown[]): Promise<void> {
-        const productDetailsRequestStore = this.getProductDetailsRequestStore();
-        const myProductDetailsRequestStore = this.getMyProductDetailsRequestStore();
-
         const productDetailsRequest = <ProductDetailsRequestEventParams> inputs[1];
         const event = <Event> inputs[2];
 
@@ -36,7 +33,7 @@ export class ProductDetailsRequestService implements ContractEventHandlerService
 
         try {
             const block = await event.getBlock();
-            const myProductDetailsRequests = await myProductDetailsRequestStore.find({
+            const myProductDetailsRequests = await this.myProductDetailsRequestStore.find({
                 uid: productDetailsRequest.uid
             });
             const _productDetailsRequest = {
@@ -48,9 +45,9 @@ export class ProductDetailsRequestService implements ContractEventHandlerService
             };
 
             if (myProductDetailsRequests.length === 0) {
-                await productDetailsRequestStore.upsert(_productDetailsRequest);
+                await this.productDetailsRequestStore.upsert(_productDetailsRequest);
             } else if (myProductDetailsRequests[0].timestamp === 0) {
-                await myProductDetailsRequestStore.upsert(_productDetailsRequest);
+                await this.myProductDetailsRequestStore.upsert(_productDetailsRequest);
             }
         } catch (error) {
             logger.error((<Error> error).message,

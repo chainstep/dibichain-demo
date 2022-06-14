@@ -17,7 +17,7 @@ export function createGetMyNewProductsRouter(): Router {
         ],
         middlewares: [ cleanseUidQueryInput ],
         service: new GetMyNewProductsService({
-            getMyNewProductStore: () => MyNewProductStore.get()
+            myNewProductStore: MyNewProductStore.get()
         })
     });
 }

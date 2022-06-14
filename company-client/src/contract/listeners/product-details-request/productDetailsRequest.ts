@@ -11,15 +11,15 @@ export function createProductDetailsRequestListener(): ContractEventListener {
         eventName: "ProductDetailsRequest",
         services: [
             new SkipProductService({
-                getStores: [
-                    () => MyProductStore.get(),
-                    () => MyProductDetailsRequestStore.get()
+                stores: [
+                    MyProductStore.get(),
+                    MyProductDetailsRequestStore.get()
                 ],
                 skipIfNotFound: true
             }),
             new ProductDetailsRequestService({
-                getProductDetailsRequestStore: () => ProductDetailsRequestStore.get(),
-                getMyProductDetailsRequestStore: () => MyProductDetailsRequestStore.get()
+                productDetailsRequestStore: ProductDetailsRequestStore.get(),
+                myProductDetailsRequestStore: MyProductDetailsRequestStore.get()
             })
         ]
     };
