@@ -1,6 +1,6 @@
 import { IProductDetailsRequestStore } from "../../../../storage/product-details-request/IProductDetailsRequestStore";
 import { ProductDetailsRequest } from "../../../../types";
-import { RouteService } from "../../routerFactory";
+import { RouteService } from "../../../routerFactory";
 
 
 export interface GetProductDetailsRequestsServiceOptions {

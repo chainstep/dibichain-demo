@@ -2,7 +2,7 @@ import { Crypto } from "../../../../lib/Crypto";
 import { Operator } from "../../../../lib/Operator";
 import { IMyProductDetailsRequestStore } from "../../../../storage/my-product-details-request/IMyProductDetailsRequestStore";
 import { IKeyStore } from "../../../../storage/key/IKeyStore";
-import { RouteService } from "../../routerFactory";
+import { RouteService } from "../../../routerFactory";
 import { INewProductStore } from "../../../../storage/new-product/INewProductStore";
 import { BadRequestError } from "@atz3n/express-utils";
 

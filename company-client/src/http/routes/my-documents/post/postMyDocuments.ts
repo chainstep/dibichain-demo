@@ -1,10 +1,10 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 import { body } from "express-validator";
 import { MyDocumentStore } from "../../../../storage/my-document/MyDocumentStore";
 import { MyDocument } from "../../../../types";
 import { isUUID } from "../../../../utils/propertyCheckers";
 import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
-import { createRouter } from "../../routerFactory";
+import { createRouter } from "../../../routerFactory";
 import { PostMyDocumentsService } from "./PostMyDocumentsService";
 
 
@@ -13,18 +13,21 @@ interface MyDocumentParams extends Omit<MyDocument, "timestamp"> {
     uploaded?: number;
 }
 
-export const postMyDocumentsRouter = createRouter({
-    method: "post",
-    route: ROUTE_NAMES.myDocuments,
-    inputPath: "body",
-    inputChecks: [
-        body("myDocuments").custom(isDocumentArray).withMessage(INVALID_INPUT_TEXT + "myDocuments"),
-    ],
-    middlewares: [ cleanseInputs],
-    service: new PostMyDocumentsService({
-        getMyDocumentStore: () => MyDocumentStore.get(),
-    })
-});
+
+export function createPostMyDocumentsRouter(): Router {
+    return createRouter({
+        method: "post",
+        route: ROUTE_NAMES.myDocuments,
+        inputPath: "body",
+        inputChecks: [
+            body("myDocuments").custom(isDocumentArray).withMessage(INVALID_INPUT_TEXT + "myDocuments"),
+        ],
+        middlewares: [ cleanseInputs],
+        service: new PostMyDocumentsService({
+            getMyDocumentStore: () => MyDocumentStore.get(),
+        })
+    });
+}
 
 function isDocumentArray(value: string): boolean {
     if (!Array.isArray(value)) {

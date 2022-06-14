@@ -9,55 +9,55 @@ import { createServer, Server } from "http";
 import { EnvVars } from "../lib/EnvVars";
 import { logErrors } from "./middlewares/errorLogging";
 import { logHttp } from "./middlewares/httpLogging";
-import { getDocumentsRouter } from "./routes/documents/get/getDocuments";
-import { getMyDocumentsRouter } from "./routes/my-documents/get/getMyDocuments";
-import { postMyDocumentsRouter } from "./routes/my-documents/post/postMyDocuments";
-import { getMyNewProductsRouter } from "./routes/my-new-products/get/getMyNewProduct";
-import { postMyNewProductRouter } from "./routes/my-new-products/post/postMyNewProduct";
-import { getMyProductDetailsRequestsRouter } from "./routes/my-product-details-requests/get/getMyProductDetailsRequests";
-import { postMyProductDetailsRequestRouter } from "./routes/my-product-details-requests/post/postMyProductDetailsRequest";
-import { postMyProductDetailsResponsesRouter } from "./routes/my-product-details-responses/post/postMyProductDetailsResponse";
-import { getMyProductsRouter } from "./routes/my-products/get/getMyProducts";
-import { postMyProductRouter } from "./routes/my-products/post/postMyProduct";
-import { getNewProductsRouter } from "./routes/new-products/get/getNewProduct";
-import { getProductDetailsRequestsRouter } from "./routes/product-details-requests/get/getProductDetailsRequests";
-import { getProductsRouter } from "./routes/products/get/getProducts";
+import { createGetDocumentsRouter } from "./routes/documents/get/getDocuments";
+import { createGetMyDocumentsRouter } from "./routes/my-documents/get/getMyDocuments";
+import { createPostMyDocumentsRouter } from "./routes/my-documents/post/postMyDocuments";
+import { createGetMyNewProductsRouter } from "./routes/my-new-products/get/getMyNewProduct";
+import { createPostMyNewProductRouter } from "./routes/my-new-products/post/postMyNewProduct";
+import { createGetMyProductDetailsRequestsRouter } from "./routes/my-product-details-requests/get/getMyProductDetailsRequests";
+import { createPostMyProductDetailsRequestRouter } from "./routes/my-product-details-requests/post/postMyProductDetailsRequest";
+import { createPostMyProductDetailsResponsesRouter } from "./routes/my-product-details-responses/post/postMyProductDetailsResponse";
+import { createGetMyProductsRouter } from "./routes/my-products/get/getMyProducts";
+import { createPostMyProductRouter } from "./routes/my-products/post/postMyProduct";
+import { createGetNewProductsRouter } from "./routes/new-products/get/getNewProduct";
+import { createGetProductDetailsRequestsRouter } from "./routes/product-details-requests/get/getProductDetailsRequests";
+import { createGetProductsRouter } from "./routes/products/get/getProducts";
 
-
-export const httpServer = express();
-
-httpServer.use(logHttp);
-httpServer.use(helmet());
-httpServer.use(cors());
-httpServer.use(json({ limit: "50mb" }));
-httpServer.use(rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: EnvVars.MAX_REQUESTS_PER_15_MIN,
-    standardHeaders: true
-}));
-httpServer.use(validateOrigin(EnvVars.ALLOWED_ORIGINS));
-
-httpServer.use(postMyProductRouter);
-httpServer.use(getMyProductsRouter);
-httpServer.use(getProductsRouter);
-httpServer.use(getNewProductsRouter);
-httpServer.use(getMyNewProductsRouter);
-httpServer.use(postMyNewProductRouter);
-httpServer.use(postMyProductDetailsRequestRouter);
-httpServer.use(getMyProductDetailsRequestsRouter);
-httpServer.use(getProductDetailsRequestsRouter);
-httpServer.use(postMyProductDetailsResponsesRouter);
-httpServer.use(postMyDocumentsRouter);
-httpServer.use(getMyDocumentsRouter);
-httpServer.use(getDocumentsRouter);
-
-httpServer.all("*", (request, response) => {
-  throw new NotFoundError();
-});
-
-httpServer.use(logErrors);
-httpServer.use(errorHandler);
 
 export function initHttpServer(): Server {
+    const httpServer = express();
+
+    httpServer.use(logHttp);
+    httpServer.use(helmet());
+    httpServer.use(cors());
+    httpServer.use(json({ limit: "50mb" }));
+    httpServer.use(rateLimit({
+        windowMs: 15 * 60 * 1000, // 15 minutes
+        max: EnvVars.MAX_REQUESTS_PER_15_MIN,
+        standardHeaders: true
+    }));
+    httpServer.use(validateOrigin(EnvVars.ALLOWED_ORIGINS));
+
+    httpServer.use(createPostMyProductRouter());
+    httpServer.use(createGetMyProductsRouter());
+    httpServer.use(createGetProductsRouter());
+    httpServer.use(createGetNewProductsRouter());
+    httpServer.use(createGetMyNewProductsRouter());
+    httpServer.use(createPostMyNewProductRouter());
+    httpServer.use(createPostMyProductDetailsRequestRouter());
+    httpServer.use(createGetMyProductDetailsRequestsRouter());
+    httpServer.use(createGetProductDetailsRequestsRouter());
+    httpServer.use(createPostMyProductDetailsResponsesRouter());
+    httpServer.use(createPostMyDocumentsRouter());
+    httpServer.use(createGetMyDocumentsRouter());
+    httpServer.use(createGetDocumentsRouter());
+
+    httpServer.all("*", (request, response) => {
+    throw new NotFoundError();
+    });
+
+    httpServer.use(logErrors);
+    httpServer.use(errorHandler);
+
     return createServer(httpServer);
 }

@@ -1,5 +1,5 @@
 import { IProductDetailsResponseStore, ProductDetailsResponse } from "../../../../storage/product-details-response/IProductDetailsResponseStore";
-import { RouteService } from "../../routerFactory";
+import { RouteService } from "../../../routerFactory";
 
 
 export interface GetProductDetailsResponseServiceOptions {

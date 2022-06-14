@@ -1,7 +1,7 @@
 import { BadRequestError } from "@atz3n/express-utils";
 import { IMyProductStore } from "../../../../storage/my-product/IMyProductStore";
 import { MyProduct } from "../../../../types";
-import { RouteService } from "../../routerFactory";
+import { RouteService } from "../../../routerFactory";
 
 
 export interface PostMyProductServiceOptions {

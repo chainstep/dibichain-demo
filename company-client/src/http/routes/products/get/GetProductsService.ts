@@ -1,6 +1,6 @@
 import { IProductStore } from "../../../../storage/product/IProductStore";
 import { Product } from "../../../../types";
-import { RouteService } from "../../routerFactory";
+import { RouteService } from "../../../routerFactory";
 
 
 export interface GetProductsServiceOptions {

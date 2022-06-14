@@ -2,7 +2,7 @@ import { BadRequestError } from "@atz3n/express-utils";
 import { Operator } from "../../../../lib/Operator";
 import { IMyNewProductStore } from "../../../../storage/my-new-product/IMyNewProductStore";
 import { IMyProductStore } from "../../../../storage/my-product/IMyProductStore";
-import { RouteService } from "../../routerFactory";
+import { RouteService } from "../../../routerFactory";
 
 
 export interface PostMyNewProductServiceOptions {

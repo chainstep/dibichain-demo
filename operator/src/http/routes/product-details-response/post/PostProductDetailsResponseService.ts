@@ -1,6 +1,6 @@
 import { IProductDetailsResponseStore } from "../../../../storage/product-details-response/IProductDetailsResponseStore";
 import { EncMessage } from "../../../../types";
-import { RouteService } from "../../routerFactory";
+import { RouteService } from "../../../routerFactory";
 
 
 export interface PostProductDetailsResponseServiceOptions {

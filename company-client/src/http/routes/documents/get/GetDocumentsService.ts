@@ -1,6 +1,6 @@
 import { IDocumentStore } from "../../../../storage/document/IDocumentStore";
 import { Document } from "../../../../types";
-import { RouteService } from "../../routerFactory";
+import { RouteService } from "../../../routerFactory";
 
 
 interface GetDocumentsServiceOptions {

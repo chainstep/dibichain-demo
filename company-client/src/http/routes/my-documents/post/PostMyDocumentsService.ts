@@ -1,6 +1,6 @@
 import { IMyDocumentStore } from "../../../../storage/my-document/IMyDocumentStore";
 import { MyDocument } from "../../../../types";
-import { RouteService } from "../../routerFactory";
+import { RouteService } from "../../../routerFactory";
 
 
 interface PostMyDocumentsServiceOptions {

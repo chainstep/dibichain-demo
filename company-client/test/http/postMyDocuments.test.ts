@@ -1,5 +1,5 @@
 import request from "supertest";
-import { httpServer } from "../../src/http";
+import { initHttpServer } from "../../src/http";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { MyDocumentStore } from "../../src/storage/my-document/MyDocumentStore";
 import { MyDocumentStoreInMemory } from "../../src/storage/my-document/MyDocumentStoreInMemory";
@@ -8,6 +8,7 @@ import { TEST_DOCUMENT_1, TEST_DOCUMENT_2 } from "../constants";
 
 
 if (!config.skipTests.includes("postMyDocuments")) {
+    const server = initHttpServer();
     const myDocumentStore = (<MyDocumentStoreInMemory> MyDocumentStore.get());
 
     beforeEach(async () => {
@@ -16,7 +17,7 @@ if (!config.skipTests.includes("postMyDocuments")) {
 
 
     it("should post my documents", async () => {
-        await request(httpServer)
+        await request(server)
             .post("/my-documents")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .send({

@@ -1,6 +1,6 @@
 import { EventBus } from "../../../../contract/interfaces/EventBus";
 import { NewProduct } from "../../../../types";
-import { RouteService } from "../../routerFactory";
+import { RouteService } from "../../../routerFactory";
 
 
 export interface PostNewProductServiceOptions {

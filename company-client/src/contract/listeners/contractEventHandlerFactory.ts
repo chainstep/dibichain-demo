@@ -20,7 +20,9 @@ export interface ContractEventHandlerFactoryParams {
     contract: Contract;
     eventListener: ContractEventListener;
 }
-
+// provider.once("block", () => {
+//     factoryContract.on('TokenCreated', newToken);
+// });
 
 export function createContractEventHandler(params: ContractEventHandlerFactoryParams): void {
     const { contract, eventListener } = params;

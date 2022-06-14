@@ -4,7 +4,7 @@ import { IMyDocumentStore } from "../../../../storage/my-document/IMyDocumentSto
 import { IMyProductStore } from "../../../../storage/my-product/IMyProductStore";
 import { IProductDetailsRequestStore } from "../../../../storage/product-details-request/IProductDetailsRequestStore";
 import { MyDocument, MyProduct } from "../../../../types";
-import { RouteService } from "../../routerFactory";
+import { RouteService } from "../../../routerFactory";
 
 
 export interface PostMyProductDetailsResponseServiceOptions {

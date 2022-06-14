@@ -1,5 +1,5 @@
 import { EventBus } from "../../../../contract/interfaces/EventBus";
-import { RouteService } from "../../routerFactory";
+import { RouteService } from "../../../routerFactory";
 
 
 export interface PostProductDetailsRequestServiceOptions {

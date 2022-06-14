@@ -1,5 +1,5 @@
 import request from "supertest";
-import { httpServer } from "../../src/http";
+import { initHttpServer } from "../../src/http";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { ProductDetailsRequestStore } from "../../src/storage/product-details-request/ProductDetailsRequestStore";
 import { ProductDetailsRequestStoreInMemory } from "../../src/storage/product-details-request/ProductDetailsRequestStoreInMemory";
@@ -9,6 +9,7 @@ import { TEST_PRODUCT_DETAILS_REQUEST } from "../constants";
 
 
 if (!config.skipTests.includes("getProductDetailsRequests")) {
+    const server = initHttpServer();
     const productDetailsRequestStore = (<ProductDetailsRequestStoreInMemory> ProductDetailsRequestStore.get());
 
     beforeEach(async () => {
@@ -22,7 +23,7 @@ if (!config.skipTests.includes("getProductDetailsRequests")) {
         productDetailsRequest.uid = "8181c8ae-eef1-4703-8498-2cf25be2877c";
         await productDetailsRequestStore.upsert(productDetailsRequest);
 
-        const response = await request(httpServer)
+        const response = await request(server)
             .get("/product-details-requests")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .expect(200);
