@@ -28,6 +28,7 @@ export class GetProductDetailsRequestsService implements RouteService {
 
     public async run(inputs: Inputs): Promise<Outputs> {
         const productDetailsRequestStore = this.getProductDetailsRequestStore();
+
         const productDetailsRequests = await productDetailsRequestStore.find(inputs);
         return { productDetailsRequests };
     }

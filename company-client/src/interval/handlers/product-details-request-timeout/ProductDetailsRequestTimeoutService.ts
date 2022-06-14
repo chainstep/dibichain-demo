@@ -1,5 +1,5 @@
-import { IMyProductDetailsRequestStore } from "../../storage/my-product-details-request/IMyProductDetailsRequestStore";
-import { IntervalService } from "../IntervalHandler";
+import { IMyProductDetailsRequestStore } from "../../../storage/my-product-details-request/IMyProductDetailsRequestStore";
+import { IntervalService } from "../../IntervalHandler";
 
 
 export interface ProductDetailsRequestTimeoutServiceOptions {
@@ -31,10 +31,14 @@ export class ProductDetailsRequestTimeoutService implements IntervalService {
         for (let i = 0 ; i < notRespondedRequests.length ; i++) {
             const notRespondedRequest = notRespondedRequests[i];
 
-            if (notRespondedRequests[i].timestamp + this.timeout <= now) {
+            if (this.isTimeout(notRespondedRequest.timestamp, now)) {
                 notRespondedRequest.responded = true;
                 await myProductDetailsRequestStore.upsert(notRespondedRequest);
             }
         }
+    }
+
+    private isTimeout(timestamp: number, now: number): boolean {
+        return timestamp + this.timeout <= now;
     }
 }

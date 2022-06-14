@@ -1,4 +1,4 @@
-import { PollProductsService } from "../../src/interval/services/PollProductsService";
+import { PollProductsService } from "../../src/interval/handlers/poll-products/PollProductsService";
 import { Crypto } from "../../src/lib/Crypto";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { Operator } from "../../src/lib/Operator";
