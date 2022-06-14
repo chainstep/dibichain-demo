@@ -1,7 +1,7 @@
 import request from "supertest";
 import { Contracts } from "../../src/contract/Contracts";
 import { EventBus } from "../../src/contract/interfaces/EventBus";
-import { httpServer } from "../../src/http";
+import { initHttpServer } from "../../src/http";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { config } from "../config";
 import { TEST_NEW_PRODUCT } from "../constants";
@@ -33,12 +33,12 @@ const mockContract = <unknown> {
 
 
 if (!config.skipTests.includes("postNewProduct")) {
-    Contracts.init({
-        eventBus: <EventBus> mockContract
-    });
+    Contracts.init({ eventBus: <EventBus> mockContract });
+    const server = initHttpServer();
+
 
     it("should post a new product", async () => {
-        await request(httpServer)
+        await request(server)
             .post("/new-products")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .send(TEST_NEW_PRODUCT)

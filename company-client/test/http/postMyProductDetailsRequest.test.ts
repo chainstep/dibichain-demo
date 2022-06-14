@@ -1,5 +1,5 @@
 import request from "supertest";
-import { httpServer } from "../../src/http";
+import { initHttpServer } from "../../src/http";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { KeyStore } from "../../src/storage/key/KeyStore";
 import { KeyStoreInMemory } from "../../src/storage/key/KeyStoreInMemory";
@@ -48,6 +48,7 @@ jest.mock("../../src/lib/Crypto", () => {
 
 
 if (!config.skipTests.includes("postMyProductDetailsRequest")) {
+    const server = initHttpServer();
     const newProductStore = (<NewProductStoreInMemory> NewProductStore.get());
     const myProductDetailsRequestStore = (<MyProductDetailsRequestStoreInMemory> MyProductDetailsRequestStore.get());
     const keyStore = (<KeyStoreInMemory> KeyStore.get());
@@ -62,7 +63,7 @@ if (!config.skipTests.includes("postMyProductDetailsRequest")) {
     it("should post my product details request", async () => {
         await newProductStore.upsert(TEST_NEW_PRODUCT);
 
-        await request(httpServer)
+        await request(server)
             .post("/my-product-details-requests")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .send({

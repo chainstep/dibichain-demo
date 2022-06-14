@@ -3,26 +3,24 @@ import { IntervalService } from "../../IntervalHandler";
 
 
 export interface ProductDetailsRequestTimeoutServiceOptions {
-    getMyProductDetailsRequestStore: () => IMyProductDetailsRequestStore;
+    myProductDetailsRequestStore: IMyProductDetailsRequestStore;
     timeoutMin: number
 }
 
 
 export class ProductDetailsRequestTimeoutService implements IntervalService {
-    private readonly getMyProductDetailsRequestStore: () => IMyProductDetailsRequestStore;
+    private readonly myProductDetailsRequestStore: IMyProductDetailsRequestStore;
     private readonly timeout: number;
 
 
     constructor(options: ProductDetailsRequestTimeoutServiceOptions) {
-        this.getMyProductDetailsRequestStore = options.getMyProductDetailsRequestStore;
+        this.myProductDetailsRequestStore = options.myProductDetailsRequestStore;
         this.timeout = options.timeoutMin * 60;
     }
 
 
     public async run(): Promise<void> {
-        const myProductDetailsRequestStore = this.getMyProductDetailsRequestStore();
-
-        const myProductDetailsRequests = await myProductDetailsRequestStore.find({});
+        const myProductDetailsRequests = await this.myProductDetailsRequestStore.find({});
         const notRespondedRequests = myProductDetailsRequests.filter((myProductDetailsRequest) => {
             return !myProductDetailsRequest.responded;
         });
@@ -33,7 +31,7 @@ export class ProductDetailsRequestTimeoutService implements IntervalService {
 
             if (this.isTimeout(notRespondedRequest.timestamp, now)) {
                 notRespondedRequest.responded = true;
-                await myProductDetailsRequestStore.upsert(notRespondedRequest);
+                await this.myProductDetailsRequestStore.upsert(notRespondedRequest);
             }
         }
     }

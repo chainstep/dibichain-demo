@@ -18,7 +18,7 @@ if (!config.skipTests.includes("productDetailsRequestTimeout")) {
         await myProductDetailsRequestStore.upsert({ ...TEST_MY_PRODUCT_DETAILS_REQUEST, timestamp: nowMinus2min });
 
         const service = new ProductDetailsRequestTimeoutService({
-            getMyProductDetailsRequestStore: () => MyProductDetailsRequestStore.get(),
+            myProductDetailsRequestStore: MyProductDetailsRequestStore.get(),
             timeoutMin: 1
         });
 

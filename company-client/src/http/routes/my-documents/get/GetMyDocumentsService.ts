@@ -1,10 +1,10 @@
 import { IMyDocumentStore } from "../../../../storage/my-document/IMyDocumentStore";
 import { MyDocument } from "../../../../types";
-import { RouteService } from "../../routerFactory";
+import { RouteService } from "../../../routerFactory";
 
 
 interface GetMyDocumentsServiceOptions {
-    getMyDocumentStore: () => IMyDocumentStore;
+    myDocumentStore: IMyDocumentStore;
 }
 
 interface Inputs {
@@ -17,18 +17,16 @@ interface Outputs {
 
 
 export class GetMyDocumentsService implements RouteService {
-    private readonly getMyDocumentStore: () => IMyDocumentStore;
+    private readonly myDocumentStore: IMyDocumentStore;
 
 
     constructor(options: GetMyDocumentsServiceOptions) {
-        this.getMyDocumentStore = options.getMyDocumentStore;
+        this.myDocumentStore = options.myDocumentStore;
     }
 
 
     public async run(inputs: Inputs): Promise<Outputs> {
-        const myDocumentStore = this.getMyDocumentStore();
-
-        const myDocuments = await myDocumentStore.find(inputs);
+        const myDocuments = await this.myDocumentStore.find(inputs);
         return { myDocuments };
     }
 }

@@ -10,7 +10,7 @@ export function createProductDetailsRequestTimeoutHandler(): IntervalHandler {
         pollingIntervalSec: 5 * 60,
         services: [
             new ProductDetailsRequestTimeoutService({
-                getMyProductDetailsRequestStore: () => MyProductDetailsRequestStore.get(),
+                myProductDetailsRequestStore: MyProductDetailsRequestStore.get(),
                 timeoutMin: EnvVars.PRODUCT_DETAILS_REQUEST_TIMEOUT_MIN
             })
         ]

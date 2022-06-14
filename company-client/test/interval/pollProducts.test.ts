@@ -69,11 +69,11 @@ if (!config.skipTests.includes("pollProducts")) {
         await newProductStore.upsert(TEST_NEW_PRODUCT);
 
         const service = new PollProductsService({
-            getKeyStore: () => KeyStore.get(),
-            getMyProductDetailsRequestStore: () => MyProductDetailsRequestStore.get(),
-            getProductStore: () => ProductStore.get(),
-            getNewProductStore: () => NewProductStore.get(),
-            getDocumentStore: () => DocumentStore.get(),
+            keyStore: KeyStore.get(),
+            myProductDetailsRequestStore: MyProductDetailsRequestStore.get(),
+            productStore: ProductStore.get(),
+            newProductStore: NewProductStore.get(),
+            documentStore: DocumentStore.get(),
             operator: new Operator({
                 url: EnvVars.OPERATOR_URL,
                 crypto: new Crypto()

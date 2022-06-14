@@ -9,50 +9,44 @@ import { IntervalService } from "../../IntervalHandler";
 
 
 export interface PollProductsServiceOptions {
-    getMyProductDetailsRequestStore: () => IMyProductDetailsRequestStore;
-    getKeyStore: () => IKeyStore;
-    getProductStore: () => IProductStore;
-    getDocumentStore: () => IDocumentStore;
-    getNewProductStore: () => INewProductStore;
+    myProductDetailsRequestStore: IMyProductDetailsRequestStore;
+    keyStore: IKeyStore;
+    productStore: IProductStore;
+    documentStore: IDocumentStore;
+    newProductStore: INewProductStore;
     operator: Operator;
 }
 
 
 export class PollProductsService implements IntervalService {
-    private readonly getMyProductDetailsRequestStore: () => IMyProductDetailsRequestStore;
-    private readonly getKeyStore: () => IKeyStore;
-    private readonly getProductStore: () => IProductStore;
-    private readonly getDocumentStore: () => IDocumentStore;
-    private readonly getNewProductStore: () => INewProductStore;
+    private readonly myProductDetailsRequestStore: IMyProductDetailsRequestStore;
+    private readonly keyStore: IKeyStore;
+    private readonly productStore: IProductStore;
+    private readonly documentStore: IDocumentStore;
+    private readonly newProductStore: INewProductStore;
     private readonly operator: Operator;
 
 
     constructor(options: PollProductsServiceOptions) {
-        this.getMyProductDetailsRequestStore = options.getMyProductDetailsRequestStore;
-        this.getKeyStore = options.getKeyStore;
-        this.getProductStore = options.getProductStore;
-        this.getDocumentStore = options.getDocumentStore;
-        this.getNewProductStore = options.getNewProductStore;
+        this.myProductDetailsRequestStore = options.myProductDetailsRequestStore;
+        this.keyStore = options.keyStore;
+        this.productStore = options.productStore;
+        this.documentStore = options.documentStore;
+        this.newProductStore = options.newProductStore;
         this.operator = options.operator;
     }
 
 
     public async run(): Promise<void> {
-        const myProductDetailsRequestStore = this.getMyProductDetailsRequestStore();
-        const keyStore = this.getKeyStore();
-        const productStore = this.getProductStore();
-        const documentStore = this.getDocumentStore();
-        const newProductStore = this.getNewProductStore();
-
-        const myProductDetailsRequests = await myProductDetailsRequestStore.find({});
+        const myProductDetailsRequests = await this.myProductDetailsRequestStore.find({});
         const notRespondedRequests = myProductDetailsRequests.filter((myProductDetailsRequest) => {
             return !myProductDetailsRequest.responded;
         });
 
         const keysAndHashes = await this.getKeysAndHashes(
             notRespondedRequests,
-            keyStore,
-            newProductStore
+            this.keyStore,
+            this.newProductStore
         );
 
         const productPackages = await this.operator.getProductDetails(keysAndHashes);
@@ -61,14 +55,14 @@ export class PollProductsService implements IntervalService {
 
             await this.updateProductAndDocumentStores(
                 productPackage,
-                productStore,
-                documentStore
+                this.productStore,
+                this.documentStore
             );
 
             await this.updateMyProductDetailsRequestStore(
                 notRespondedRequests,
                 productPackage.product.uid,
-                myProductDetailsRequestStore
+                this.myProductDetailsRequestStore
             );
         }
     }

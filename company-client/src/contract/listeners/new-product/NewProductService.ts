@@ -3,30 +3,27 @@ import { IMyNewProductStore } from "../../../storage/my-new-product/IMyNewProduc
 import { INewProductStore } from "../../../storage/new-product/INewProductStore";
 import { NewProductEventParams } from "../../../types";
 import { logger } from "../../../utils/logger";
-import { ContractEventHandlerService } from "../contractEventHandlerFactory";
+import { ContractEventService } from "../../ContractEventHandler";
 
 
 interface NewProductServiceOptions {
-    getNewProductStore: () => INewProductStore;
-    getMyNewProductStore: () => IMyNewProductStore;
+    newProductStore: INewProductStore;
+    myNewProductStore: IMyNewProductStore;
 }
 
 
-export class NewProductService implements ContractEventHandlerService {
-    private readonly getNewProductStore: () => INewProductStore;
-    private readonly getMyNewProductStore: () => IMyNewProductStore;
+export class NewProductService implements ContractEventService {
+    private readonly newProductStore: INewProductStore;
+    private readonly myNewProductStore: IMyNewProductStore;
 
 
     constructor(options: NewProductServiceOptions) {
-        this.getNewProductStore = options.getNewProductStore;
-        this.getMyNewProductStore = options.getMyNewProductStore;
+        this.newProductStore = options.newProductStore;
+        this.myNewProductStore = options.myNewProductStore;
     }
 
 
     async run(inputs: unknown[]): Promise<void> {
-        const newProductStore = this.getNewProductStore();
-        const myNewProductStore = this.getMyNewProductStore();
-
         const newProduct = <NewProductEventParams> inputs[1];
         const event = <Event> inputs[2];
 
@@ -36,7 +33,7 @@ export class NewProductService implements ContractEventHandlerService {
 
         try {
             const block = await event.getBlock();
-            const myNewProducts =  await myNewProductStore.find({ uid: newProduct.uid });
+            const myNewProducts =  await this.myNewProductStore.find({ uid: newProduct.uid });
             const _newProduct = {
                 hash: newProduct.hash,
                 id: newProduct.id,
@@ -48,9 +45,9 @@ export class NewProductService implements ContractEventHandlerService {
             };
 
             if (myNewProducts.length === 0) {
-                await newProductStore.upsert(_newProduct);
+                await this.newProductStore.upsert(_newProduct);
             } else if (myNewProducts[0].timestamp === 0) {
-                await myNewProductStore.upsert(_newProduct);
+                await this.myNewProductStore.upsert(_newProduct);
             }
         } catch (error) {
             logger.error((<Error> error).message,

@@ -1,5 +1,5 @@
 import request from "supertest";
-import { httpServer } from "../../src/http";
+import { initHttpServer } from "../../src/http";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { ProductDetailsResponseStore } from "../../src/storage/product-details-response/ProductDetailsResponseStore";
 import { ProductDetailsResponseStoreInMemory } from "../../src/storage/product-details-response/ProductDetailsResponseStoreInMemory";
@@ -8,6 +8,7 @@ import { TEST_PRODUCT_DETAILS_RESPONSE } from "../constants";
 
 
 if (!config.skipTests.includes("postProductDetailsResponse")) {
+    const server = initHttpServer();
     const productDetailsResponseStore = (<ProductDetailsResponseStoreInMemory> ProductDetailsResponseStore.get());
 
     beforeEach(async () => {
@@ -16,7 +17,7 @@ if (!config.skipTests.includes("postProductDetailsResponse")) {
 
 
     it("should post a product details response", async () => {
-        await request(httpServer)
+        await request(server)
             .post("/product-details-responses")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .send(TEST_PRODUCT_DETAILS_RESPONSE)

@@ -1,8 +1,8 @@
 import request from "supertest";
 import { Contracts } from "../../src/contract/Contracts";
 import { EventBus } from "../../src/contract/interfaces/EventBus";
+import { initHttpServer } from "../../src/http";
 import { ROUTE_NAMES } from "../../src/http/constants";
-import { httpServer } from "../../src/http";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { config } from "../config";
 import { TEST_NEW_PRODUCT } from "../constants";
@@ -24,12 +24,12 @@ const mockContract = <unknown> {
 
 
 if (!config.skipTests.includes("httpOrigin")) {
-    Contracts.init({
-        eventBus: <EventBus> mockContract
-    });
+    Contracts.init({ eventBus: <EventBus> mockContract });
+    const server = initHttpServer();
+
 
     it("should accept requests from known origins", async () => {
-        await request(httpServer)
+        await request(server)
             .post(ROUTE_NAMES.newProducts)
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .send(TEST_NEW_PRODUCT)
@@ -38,7 +38,7 @@ if (!config.skipTests.includes("httpOrigin")) {
 
 
     it("should revert requests from unknown origins", async () => {
-        await request(httpServer)
+        await request(server)
         .post(ROUTE_NAMES.newProducts)
         .set("Origin", "http://unknown.domain")
         .send(TEST_NEW_PRODUCT)
