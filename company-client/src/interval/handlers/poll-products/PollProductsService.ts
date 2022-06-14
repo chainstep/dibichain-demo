@@ -1,11 +1,11 @@
-import { Operator } from "../../lib/Operator";
-import { IDocumentStore } from "../../storage/document/IDocumentStore";
-import { IKeyStore } from "../../storage/key/IKeyStore";
-import { IMyProductDetailsRequestStore } from "../../storage/my-product-details-request/IMyProductDetailsRequestStore";
-import { INewProductStore } from "../../storage/new-product/INewProductStore";
-import { IProductStore } from "../../storage/product/IProductStore";
-import { Key, MyProductDetailsRequest, ProductPackage } from "../../types";
-import { IntervalService } from "../IntervalHandler";
+import { Operator } from "../../../lib/Operator";
+import { IDocumentStore } from "../../../storage/document/IDocumentStore";
+import { IKeyStore } from "../../../storage/key/IKeyStore";
+import { IMyProductDetailsRequestStore } from "../../../storage/my-product-details-request/IMyProductDetailsRequestStore";
+import { INewProductStore } from "../../../storage/new-product/INewProductStore";
+import { IProductStore } from "../../../storage/product/IProductStore";
+import { Key, MyProductDetailsRequest, ProductPackage } from "../../../types";
+import { IntervalService } from "../../IntervalHandler";
 
 
 export interface PollProductsServiceOptions {

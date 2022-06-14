@@ -1,5 +1,5 @@
-import { IMyProductDetailsRequestStore } from "../../storage/my-product-details-request/IMyProductDetailsRequestStore";
-import { IntervalService } from "../IntervalHandler";
+import { IMyProductDetailsRequestStore } from "../../../storage/my-product-details-request/IMyProductDetailsRequestStore";
+import { IntervalService } from "../../IntervalHandler";
 
 
 export interface ProductDetailsRequestTimeoutServiceOptions {
