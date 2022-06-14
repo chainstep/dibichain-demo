@@ -10,9 +10,9 @@ const IndexPage: React.FC = () => {
   return (
     <Page>
       <Layout>
-        <Header />
+      <Header />
 
-        <Heading textAlign='center'>HELLO {COMPANY_NAME}</Heading>
+        <Heading p={10} textAlign='center'>HELLO {COMPANY_NAME}</Heading>
         <Footer></Footer>
       </Layout>
     </Page>

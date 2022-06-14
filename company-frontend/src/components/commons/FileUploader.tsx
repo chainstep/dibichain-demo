@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
 
 interface Props {
   handleFile;
@@ -26,7 +27,7 @@ const FileUploader: React.FC<Props> = ({ handleFile }) => {
   };
   return (
     <>
-      <Button onClick={handleClick}>Upload document</Button>
+      <Button rightIcon={<AddIcon height={3} />} onClick={handleClick}>Upload document</Button>
       <input
         type='file'
         ref={hiddenFileInput}

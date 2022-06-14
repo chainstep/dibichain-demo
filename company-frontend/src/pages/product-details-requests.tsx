@@ -2,13 +2,8 @@ import {
   Button,
   Container,
   Heading,
-  Tab,
   Table,
   TableContainer,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
   Tbody,
   Td,
   Th,
@@ -16,6 +11,7 @@ import {
   Tooltip,
   Tr,
   useToast,
+  Text
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useInterval } from 'usehooks-ts';
@@ -23,69 +19,43 @@ import { InfoIcon } from '@chakra-ui/icons';
 import Layout from '../components/commons/Layout';
 import Page from '../components/commons/Page';
 
-import Header from '../components/commons/Header';
 import Footer from '../components/commons/Footer';
+import { Product, ProductDetailsRequest } from '../types';
 import {
-  MyProductDetailsRequest,
-  Product,
-  ProductDetailsRequest,
-} from '../types';
-import {
-  getMyProductDetailsRequest,
   getProductDetailsRequest,
   postMyProductDetailsResponse,
 } from '../services/http/product-details';
-import { getMyProducts, getNewProducts } from '../services/http/products';
+import { getMyProducts } from '../services/http/products';
+import Header from '../components/commons/Header';
 
 const MyProductsPage: React.FC = () => {
   const [productDetailsRequests, setProductDetailsRequests] = useState(
     [] as ProductDetailsRequest[]
   );
-  const [myProductDetailsRequests, setMyProductDetailsRequests] = useState(
-    [] as MyProductDetailsRequest[]
-  );
   const [myProducts, setMyProducts] = useState([] as Product[]);
-  const [newProducts, setNewProducts] = useState([] as Product[]);
   const toast = useToast();
 
   useEffect(() => {
-    getAllProductDetailsRequests();
-    getMyProductsData();
-    getNewProductsData();
+    retrieveProductDetailsRequests();
+    retrieveMyProducts();
   }, []);
 
   useInterval(() => {
-    getAllProductDetailsRequests();
-    getMyProductsData();
-    getNewProductsData();
+    retrieveProductDetailsRequests();
+    retrieveMyProducts();
   }, 10000);
 
-  const getMyProductsData = () => {
+  const retrieveMyProducts = () => {
     getMyProducts()
       .then(({ data }) => setMyProducts(data.myProducts))
       .catch(err => console.log(err));
   };
 
-  const getNewProductsData = () => {
-    getNewProducts()
-      .then(({ data }) => setNewProducts(data.newProducts))
-      .catch(err => console.log(err));
-  };
-
-  const getAllProductDetailsRequests = () => {
+  const retrieveProductDetailsRequests = () => {
     getProductDetailsRequest()
       .then(({ data }) =>
         setProductDetailsRequests(
           data.productDetailsRequests.filter(
-            request => request.responded === false
-          )
-        )
-      )
-      .catch(err => console.log(err));
-    getMyProductDetailsRequest()
-      .then(({ data }) =>
-        setMyProductDetailsRequests(
-          data.myProductDetailsRequests.filter(
             request => request.responded === false
           )
         )
@@ -105,7 +75,7 @@ const MyProductsPage: React.FC = () => {
       duration: 6000,
       isClosable: true,
     });
-    getAllProductDetailsRequests();
+    retrieveProductDetailsRequests();
   };
 
   const onDeclineButtonClick = async ({
@@ -120,7 +90,7 @@ const MyProductsPage: React.FC = () => {
       duration: 6000,
       isClosable: true,
     });
-    getAllProductDetailsRequests();
+    retrieveProductDetailsRequests();
   };
 
   const getNameOfMyProduct = (uid: string): string => {
@@ -128,118 +98,72 @@ const MyProductsPage: React.FC = () => {
     return myProduct?.name;
   };
 
-  const getNameOfNewProduct = (uid: string): string => {
-    const newProduct = newProducts.find(product => product.uid === uid);
-    return newProduct?.name;
-  };
-
   return (
     <Page>
       <Layout>
         <Header />
 
-        <Container maxW='90vw'>
-          <Tabs mt={8} isFitted variant='enclosed'>
-            <TabList mb='1em'>
-              <Tab>
-                <Heading fontSize={22}>My Product Details Requests</Heading>
-              </Tab>
-              <Tab>
-                <Heading fontSize={22}>Product Details Requests</Heading>
-              </Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                <TableContainer h='500px' overflowY='scroll'>
-                  <Table variant='simple' size='sm' colorScheme='cyan'>
-                    <Thead>
-                      <Tr>
-                        <Th>UID</Th>
-                        <Th>Timestamp</Th>
-                        <Th></Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      {myProductDetailsRequests.map(request => (
-                        <Tr key={request.uid}>
-                          <Td>{getNameOfNewProduct(request.uid)}</Td>
-                          <Td>
-                            {new Date(
-                              request.timestamp * 1000
-                            ).toLocaleString()}
-                          </Td>
-                          <Td>
-                            <Tooltip
-                              hasArrow
-                              label={request.publicKey}
-                              bg='gray.300'
-                              color='black'
-                            >
-                              <InfoIcon />
-                            </Tooltip>
-                          </Td>
-                        </Tr>
-                      ))}
-                    </Tbody>
-                  </Table>
-                </TableContainer>
-              </TabPanel>
-              <TabPanel>
-                <TableContainer h='500px' overflowY='scroll'>
-                  <Table variant='simple' size='sm' colorScheme='cyan'>
-                    <Thead>
-                      <Tr>
-                        <Th>UID</Th>
-                        <Th>Timestamp</Th>
-                        <Th></Th>
-                        <Th></Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      {productDetailsRequests
-                        .filter(request => request.responded === false)
-                        .map(request => (
-                          <Tr key={request.uid}>
-                            <Td>{getNameOfMyProduct(request.uid)}</Td>
-                            <Td>
-                              {new Date(
-                                request.timestamp * 1000
-                              ).toLocaleString()}
-                            </Td>
+        <Heading p={10} textAlign='center'>
+          Products Details Requests
+        </Heading>
 
-                            <Td>
-                              <Tooltip
-                                hasArrow
-                                label={request.publicKey}
-                                bg='gray.300'
-                                color='black'
-                              >
-                                <InfoIcon />
-                              </Tooltip>
-                            </Td>
-                            <Td>
-                              <Button
-                                mr={2}
-                                colorScheme='red'
-                                onClick={() => onDeclineButtonClick(request)}
-                              >
-                                Decline
-                              </Button>
-                              <Button
-                                colorScheme='green'
-                                onClick={() => onApproveButtonClick(request)}
-                              >
-                                Approve
-                              </Button>
-                            </Td>
-                          </Tr>
-                        ))}
-                    </Tbody>
-                  </Table>
-                </TableContainer>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
+        <Container maxW='90vw'>
+          <TableContainer h='500px' overflowY='scroll'>
+            <Table variant='simple' size='sm' colorScheme='cyan'>
+              <Thead>
+                <Tr>
+                  <Th>UID</Th>
+                  <Th>Name</Th>
+                  <Th>Timestamp</Th>
+                  <Th>Info</Th>
+                  <Th>Action</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {productDetailsRequests
+                  .filter(request => request.responded === false)
+                  .map(request => (
+                    <Tr key={request.uid}>
+                      <Td>
+                      <Tooltip label={request.uid} >
+                        <Text>{request.uid.substring(0, 5)}...</Text>
+                      </Tooltip>
+                    </Td>
+                      <Td>{getNameOfMyProduct(request.uid)}</Td>
+                      <Td>
+                        {new Date(request.timestamp * 1000).toLocaleString()}
+                      </Td>
+
+                      <Td>
+                        <Tooltip
+                          hasArrow
+                          label={request.publicKey}
+                          bg='gray.300'
+                          color='black'
+                        >
+                          <InfoIcon />
+                        </Tooltip>
+                      </Td>
+                      <Td>
+                        <Button
+                          mr={2}
+                          colorScheme='red'
+                          onClick={() => onDeclineButtonClick(request)}
+                        >
+                          Decline
+                        </Button>
+                        <Button
+                          colorScheme='green'
+                          onClick={() => onApproveButtonClick(request)}
+                        >
+                          Approve
+                        </Button>
+                      </Td>
+                    </Tr>
+                  ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
         </Container>
 
         <Footer></Footer>

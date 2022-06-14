@@ -25,12 +25,12 @@ import { useRouter } from 'next/router';
 import Layout from '../components/commons/Layout';
 import Page from '../components/commons/Page';
 
-import Header from '../components/commons/Header';
 import Footer from '../components/commons/Footer';
 import FileUploader from '../components/commons/FileUploader';
 import { postMyProduct } from '../services/http/products';
 import { Document } from '../types';
 import { postMyDocuments } from '../services/http/documents';
+import Header from '../components/commons/Header';
 
 const UploadPage: React.FC = () => {
   const router = useRouter();
@@ -45,7 +45,7 @@ const UploadPage: React.FC = () => {
     const product = { ...data, documents: docUids };
     await postMyProduct(product);
 
-    router.push('/products');
+    router.push('/my-products');
     toast({
       title: 'Product successfully uploaded',
       description: '',
@@ -77,7 +77,9 @@ const UploadPage: React.FC = () => {
       <Layout>
         <Header />
 
-        <Heading textAlign='center'>Upload New Product</Heading>
+        <Heading p={10} textAlign='center'>
+          Upload New Product
+        </Heading>
 
         <Container maxW='container.md'>
           <form onSubmit={handleSubmit(data => sendProduct(data))}>
@@ -87,7 +89,6 @@ const UploadPage: React.FC = () => {
                 <Input
                   {...register('name', { required: true })}
                   id='name'
-                  placeholder='Bionic Partition'
                 />
               </FormControl>
 
@@ -109,7 +110,6 @@ const UploadPage: React.FC = () => {
                 <Input
                   {...register('number', { required: true })}
                   id='number'
-                  placeholder='EAN 20359483920'
                 />
               </FormControl>
 
