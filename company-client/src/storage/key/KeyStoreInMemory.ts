@@ -19,4 +19,10 @@ export class KeyStoreInMemory extends AInMemoryStore implements IKeyStore {
         }
         return this.store;
     }
+
+
+    public async delete(params: {publicKey: string}): Promise<void> {
+        const { publicKey } = params;
+        this._delete("publicKey", publicKey);
+    }
 }

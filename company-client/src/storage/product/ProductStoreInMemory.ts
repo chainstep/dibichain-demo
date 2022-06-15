@@ -25,4 +25,10 @@ export class ProductStoreInMemory extends AInMemoryStore implements IProductStor
         }
         return this.store;
     }
+
+
+    public async delete(params: {uid: string}): Promise<void> {
+        const { uid } = params;
+        this._delete("uid", uid);
+    }
 }
