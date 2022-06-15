@@ -15,8 +15,8 @@ const Page: React.FC<Props> = (props) => {
         <meta charSet='utf-8' />
         <link
           rel='shortcut icon'
-          type='image/svg'
-          href={`${process.env.NEXT_PUBLIC_BASE_PATH}/assets/favicon.jpg`}
+          type='image/png'
+          href={`${process.env.NEXT_PUBLIC_BASE_PATH}/assets/dibichain_logo.png`}
         />
       </Head>
       {props.children}

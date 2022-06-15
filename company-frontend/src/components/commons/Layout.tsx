@@ -9,7 +9,6 @@ const Layout: React.FC<Props> = (props) => {
     <Flex
       flexDirection='column'
       minHeight='100vh'
-      overflow='hidden'
     >
       {props.children}
     </Flex>

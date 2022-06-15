@@ -18,7 +18,6 @@ import {
   HamburgerIcon,
   CloseIcon,
   ChevronDownIcon,
-  ChevronRightIcon,
 } from '@chakra-ui/icons';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -139,26 +138,15 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
         display={'block'}
         p={2}
         rounded={'md'}
-        _hover={{ bg: useColorModeValue('#76c1e9', 'gray.900') }}
+        _hover={{ bg: useColorModeValue('#5DAB6A', 'gray.900') }}
       >
         <Stack direction={'row'} align={'center'}>
           <Box>
-            <Text transition={'all .3s ease'} fontWeight={500}>
+            <Text  fontWeight={500} _groupHover={{ color: 'white' }}>
               {label}
             </Text>
             <Text fontSize={'sm'}>{subLabel}</Text>
           </Box>
-          <Flex
-            transition={'all .3s ease'}
-            transform={'translateX(-10px)'}
-            opacity={0}
-            _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
-            justify={'flex-end'}
-            align={'center'}
-            flex={1}
-          >
-            <Icon w={5} h={5} as={ChevronRightIcon} />
-          </Flex>
         </Stack>
       </Link>
     </NextLink>

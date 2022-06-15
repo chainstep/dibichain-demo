@@ -66,53 +66,56 @@ const MyProductsPage: React.FC = () => {
   return (
     <Page>
       <Layout>
-        <Header />
+        <div style={{ flex: '1 0 auto' }}>
+          <Header />
 
-        <Heading p={10} textAlign='center'>
-          My Products Details Requests
-        </Heading>
+          <Heading p={10} textAlign='center'>
+            My Products Details Requests
+          </Heading>
 
-        <Container maxW='90vw'>
-          <TableContainer h='500px' overflowY='scroll'>
-            <Table variant='simple' size='sm' colorScheme='cyan'>
-              <Thead>
-                <Tr>
-                  <Th>UID</Th>
-                  <Th>Name</Th>
-                  <Th>Timestamp</Th>
-                  <Th></Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {myProductDetailsRequests.map(request => (
-                  <Tr key={request.uid}>
-                    <Td>
-                      <Tooltip label={request.uid}>
-                        <Text>{request.uid.substring(0, 5)}...</Text>
-                      </Tooltip>
-                    </Td>
-                    <Td>{getNameOfNewProduct(request.uid)}</Td>
-                    <Td>
-                      {new Date(request.timestamp * 1000).toLocaleString()}
-                    </Td>
-                    <Td>
-                      <Tooltip
-                        hasArrow
-                        label={request.publicKey}
-                        bg='gray.300'
-                        color='black'
-                      >
-                        <InfoIcon />
-                      </Tooltip>
-                    </Td>
+          <Container maxW='90vw'>
+            <TableContainer maxH='45vh' overflowY='scroll'>
+              <Table variant='simple' size='sm' colorScheme='cyan'>
+                <Thead>
+                  <Tr>
+                    <Th>UID</Th>
+                    <Th>Name</Th>
+                    <Th>Timestamp</Th>
+                    <Th></Th>
                   </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
-        </Container>
-
-        <Footer></Footer>
+                </Thead>
+                <Tbody>
+                  {myProductDetailsRequests.map(request => (
+                    <Tr key={request.uid}>
+                      <Td>
+                        <Tooltip label={request.uid}>
+                          <Text>{request.uid.substring(0, 5)}...</Text>
+                        </Tooltip>
+                      </Td>
+                      <Td>{getNameOfNewProduct(request.uid)}</Td>
+                      <Td>
+                        {new Date(request.timestamp * 1000).toLocaleString()}
+                      </Td>
+                      <Td>
+                        <Tooltip
+                          hasArrow
+                          label={request.publicKey}
+                          bg='gray.300'
+                          color='black'
+                        >
+                          <InfoIcon />
+                        </Tooltip>
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </Container>
+        </div>
+        <div style={{ flexShrink: '0' }}>
+          <Footer></Footer>
+        </div>
       </Layout>
     </Page>
   );

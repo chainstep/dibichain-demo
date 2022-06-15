@@ -75,168 +75,169 @@ const UploadPage: React.FC = () => {
   return (
     <Page>
       <Layout>
-        <Header />
+        <div style={{ flex: '1 0 auto' }}>
+          <Header />
 
-        <Heading p={10} textAlign='center'>
-          Upload New Product
-        </Heading>
+          <Heading p={10} textAlign='center'>
+            Upload New Product
+          </Heading>
 
-        <Container maxW='container.md'>
-          <form onSubmit={handleSubmit(data => sendProduct(data))}>
-            <SimpleGrid gap={5}>
-              <FormControl>
-                <FormLabel htmlFor='name'>Name</FormLabel>
-                <Input
-                  {...register('name', { required: true })}
-                  id='name'
-                />
-              </FormControl>
-
-              <FormControl>
-                <FormLabel htmlFor='type'>Type</FormLabel>
-                <Select
-                  {...register('type', { required: true })}
-                  id='type'
-                  placeholder='Select type'
-                >
-                  <option value='assembly'>Assembly</option>
-                  <option value='purchase_part'>Purchase Part</option>
-                  <option value='standard_part'>Standard Part</option>
-                </Select>
-              </FormControl>
-
-              <FormControl>
-                <FormLabel htmlFor='number'>Number</FormLabel>
-                <Input
-                  {...register('number', { required: true })}
-                  id='number'
-                />
-              </FormControl>
-
-              <SimpleGrid templateColumns='2fr 1fr' gap={3}>
+          <Container maxW='container.md'>
+            <form onSubmit={handleSubmit(data => sendProduct(data))}>
+              <SimpleGrid gap={5}>
                 <FormControl>
-                  <FormLabel htmlFor='amount'>Amount</FormLabel>
-                  <NumberInput>
-                    <NumberInputField
-                      {...register('amount', { required: true })}
-                      id='amount'
-                    />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
+                  <FormLabel htmlFor='name'>Name</FormLabel>
+                  <Input {...register('name', { required: true })} id='name' />
                 </FormControl>
 
                 <FormControl>
-                  <FormLabel htmlFor='amountUnit'>Unit</FormLabel>
+                  <FormLabel htmlFor='type'>Type</FormLabel>
                   <Select
-                    {...register('amountUnit', { required: true })}
-                    id='amountUnit'
-                    placeholder='Select unit'
+                    {...register('type', { required: true })}
+                    id='type'
+                    placeholder='Select type'
                   >
-                    <option value='each'>each</option>
-                    <option value='liter'>l</option>
-                    <option value='centimeter'>cm</option>
-                    <option value='square_centimeter'>cm2</option>
-                    <option value='cubic_centimeter'>cm3</option>
-                    <option value='meter'>m</option>
-                    <option value='square_meter'>m2</option>
-                    <option value='cubic_meter'>m3</option>
+                    <option value='assembly'>Assembly</option>
+                    <option value='purchase_part'>Purchase Part</option>
+                    <option value='standard_part'>Standard Part</option>
                   </Select>
                 </FormControl>
+
+                <FormControl>
+                  <FormLabel htmlFor='number'>Number</FormLabel>
+                  <Input
+                    {...register('number', { required: true })}
+                    id='number'
+                  />
+                </FormControl>
+
+                <SimpleGrid templateColumns='2fr 1fr' gap={3}>
+                  <FormControl>
+                    <FormLabel htmlFor='amount'>Amount</FormLabel>
+                    <NumberInput>
+                      <NumberInputField
+                        {...register('amount', { required: true })}
+                        id='amount'
+                      />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </FormControl>
+
+                  <FormControl>
+                    <FormLabel htmlFor='amountUnit'>Unit</FormLabel>
+                    <Select
+                      {...register('amountUnit', { required: true })}
+                      id='amountUnit'
+                      placeholder='Select unit'
+                    >
+                      <option value='each'>each</option>
+                      <option value='liter'>l</option>
+                      <option value='centimeter'>cm</option>
+                      <option value='square_centimeter'>cm2</option>
+                      <option value='cubic_centimeter'>cm3</option>
+                      <option value='meter'>m</option>
+                      <option value='square_meter'>m2</option>
+                      <option value='cubic_meter'>m3</option>
+                    </Select>
+                  </FormControl>
+                </SimpleGrid>
+
+                <SimpleGrid templateColumns='2fr 1fr' gap={3}>
+                  <FormControl>
+                    <FormLabel htmlFor='weight'>Weight</FormLabel>
+                    <NumberInput>
+                      <NumberInputField
+                        {...register('weight', { required: true })}
+                        id='weight'
+                      />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </FormControl>
+
+                  <FormControl>
+                    <FormLabel htmlFor='weightUnit'>Unit</FormLabel>
+                    <Select
+                      {...register('weightUnit', { required: true })}
+                      id='weightUnit'
+                      placeholder='Select unit'
+                    >
+                      <option value='milligram'>mg</option>
+                      <option value='gram'>g</option>
+                      <option value='kilogram'>kg</option>
+                      <option value='percentage'>%</option>
+                      <option value='parts_per_million'>ppm</option>
+                    </Select>
+                  </FormControl>
+                </SimpleGrid>
+
+                <SimpleGrid templateColumns='2fr 1fr' gap={3}>
+                  <FormControl>
+                    <FormLabel htmlFor='carbonFootprint'>
+                      Carbon Footprint
+                    </FormLabel>
+                    <NumberInput>
+                      <NumberInputField
+                        {...register('carbonFootprint', { required: true })}
+                        id='carbonFootprint'
+                      />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </FormControl>
+
+                  <FormControl>
+                    <FormLabel htmlFor='carbonFootprintUnit'>Unit</FormLabel>
+                    <Select
+                      {...register('carbonFootprintUnit', { required: true })}
+                      id='carbonFootprintUnit'
+                      placeholder='Select unit'
+                    >
+                      <option value='milligram'>mg</option>
+                      <option value='gram'>g</option>
+                      <option value='kilogram'>kg</option>
+                    </Select>
+                  </FormControl>
+                </SimpleGrid>
+
+                <FileUploader handleFile={handleFile}></FileUploader>
+
+                <VStack align='start' spacing={4}>
+                  {documents.map(doc => (
+                    <Tag
+                      size='sm'
+                      key={doc.uid}
+                      borderRadius='full'
+                      variant='solid'
+                    >
+                      <TagLabel>{doc.name}</TagLabel>
+                      <TagCloseButton
+                        onClick={() => handleRemoveButtonClick(doc.uid)}
+                      />
+                    </Tag>
+                  ))}
+                </VStack>
+
+                <Button colorScheme='green' type='submit'>
+                  Submit
+                </Button>
               </SimpleGrid>
-
-              <SimpleGrid templateColumns='2fr 1fr' gap={3}>
-                <FormControl>
-                  <FormLabel htmlFor='weight'>Weight</FormLabel>
-                  <NumberInput>
-                    <NumberInputField
-                      {...register('weight', { required: true })}
-                      id='weight'
-                    />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                </FormControl>
-
-                <FormControl>
-                  <FormLabel htmlFor='weightUnit'>Unit</FormLabel>
-                  <Select
-                    {...register('weightUnit', { required: true })}
-                    id='weightUnit'
-                    placeholder='Select unit'
-                  >
-                    <option value='milligram'>mg</option>
-                    <option value='gram'>g</option>
-                    <option value='kilogram'>kg</option>
-                    <option value='percentage'>%</option>
-                    <option value='parts_per_million'>ppm</option>
-                  </Select>
-                </FormControl>
-              </SimpleGrid>
-
-              <SimpleGrid templateColumns='2fr 1fr' gap={3}>
-                <FormControl>
-                  <FormLabel htmlFor='carbonFootprint'>
-                    Carbon Footprint
-                  </FormLabel>
-                  <NumberInput>
-                    <NumberInputField
-                      {...register('carbonFootprint', { required: true })}
-                      id='carbonFootprint'
-                    />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                </FormControl>
-
-                <FormControl>
-                  <FormLabel htmlFor='carbonFootprintUnit'>Unit</FormLabel>
-                  <Select
-                    {...register('carbonFootprintUnit', { required: true })}
-                    id='carbonFootprintUnit'
-                    placeholder='Select unit'
-                  >
-                    <option value='milligram'>mg</option>
-                    <option value='gram'>g</option>
-                    <option value='kilogram'>kg</option>
-                  </Select>
-                </FormControl>
-              </SimpleGrid>
-
-              <FileUploader handleFile={handleFile}></FileUploader>
-
-              <VStack align='start' spacing={4}>
-                {documents.map(doc => (
-                  <Tag
-                    size='sm'
-                    key={doc.uid}
-                    borderRadius='full'
-                    variant='solid'
-                  >
-                    <TagLabel>{doc.name}</TagLabel>
-                    <TagCloseButton
-                      onClick={() => handleRemoveButtonClick(doc.uid)}
-                    />
-                  </Tag>
-                ))}
-              </VStack>
-
-              <Button colorScheme='green' type='submit'>
-                Submit
-              </Button>
-            </SimpleGrid>
-          </form>
-        </Container>
+            </form>
+          </Container>
+        </div>
 
         <div style={{ height: '30px' }}></div>
 
-        <Footer></Footer>
+        <div style={{ flexShrink: '0' }}>
+          <Footer></Footer>
+        </div>
       </Layout>
     </Page>
   );

@@ -9,7 +9,7 @@ import {
   Thead,
   Tooltip,
   Tr,
-  Text
+  Text,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useInterval } from 'usehooks-ts';
@@ -67,67 +67,75 @@ const MyProductsPage: React.FC = () => {
   return (
     <Page>
       <Layout>
-        <Header />
+        <div style={{ flex: '1 0 auto' }}>
+          <Header />
 
-        <Heading p={10} textAlign='center'>Products</Heading>
+          <Heading p={10} textAlign='center'>
+            Products
+          </Heading>
 
-        <Container maxW='90vw'>
-          <TableContainer h='500px' overflowY='scroll'>
-            <Table variant='simple' size='sm' colorScheme='cyan'>
-              <Thead>
-                <Tr>
-                <Th>UID</Th>
-                  <Th>Name</Th>
-                  <Th>Amount</Th>
-                  <Th>Number</Th>
-                  <Th>Type</Th>
-                  <Th>Weight</Th>
-                  <Th>Carbon Footprint</Th>
-                  <Th>Documents</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {products.map(product => (
-                  <Tr key={product.uid}>
-                    <Td>
-                      <Tooltip label={product.uid}>
-                        <Text>{product.uid.substring(0, 5)}...</Text>
-                      </Tooltip>
-                    </Td>
-                    <Td>{product.name}</Td>
-                    <Td>
-                      {product.amount}{' '}
-                      {translateUnitToAbbreviation(product.amountUnit)}
-                    </Td>
-                    <Td>{product.number}</Td>
-                    <Td>{translateType(product.type)}</Td>
-                    <Td>
-                      {product.weight}{' '}
-                      {translateUnitToAbbreviation(product.weightUnit)}
-                    </Td>
-                    <Td>
-                      {product.carbonFootprint}{' '}
-                      {translateUnitToAbbreviation(product.carbonFootprintUnit)}
-                    </Td>
-
-                    <Td>
-                      {product.documents.length}{' '}
-                      {product.documents.length > 0 && (
-                        <DownloadIcon
-                          cursor='pointer'
-                          onClick={() =>
-                            handleDownloadDocumentsClick(product.documents)
-                          }
-                        />
-                      )}
-                    </Td>
+          <Container maxW='90vw'>
+            <TableContainer maxH='45vh' overflowY='scroll'>
+              <Table variant='simple' size='sm' colorScheme='cyan'>
+                <Thead>
+                  <Tr>
+                    <Th>UID</Th>
+                    <Th>Name</Th>
+                    <Th>Amount</Th>
+                    <Th>Number</Th>
+                    <Th>Type</Th>
+                    <Th>Weight</Th>
+                    <Th>Carbon Footprint</Th>
+                    <Th>Documents</Th>
                   </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
-        </Container>
-        <Footer></Footer>
+                </Thead>
+                <Tbody>
+                  {products.map(product => (
+                    <Tr key={product.uid}>
+                      <Td>
+                        <Tooltip label={product.uid}>
+                          <Text>{product.uid.substring(0, 5)}...</Text>
+                        </Tooltip>
+                      </Td>
+                      <Td>{product.name}</Td>
+                      <Td>
+                        {product.amount}{' '}
+                        {translateUnitToAbbreviation(product.amountUnit)}
+                      </Td>
+                      <Td>{product.number}</Td>
+                      <Td>{translateType(product.type)}</Td>
+                      <Td>
+                        {product.weight}{' '}
+                        {translateUnitToAbbreviation(product.weightUnit)}
+                      </Td>
+                      <Td>
+                        {product.carbonFootprint}{' '}
+                        {translateUnitToAbbreviation(
+                          product.carbonFootprintUnit
+                        )}
+                      </Td>
+
+                      <Td>
+                        {product.documents.length}{' '}
+                        {product.documents.length > 0 && (
+                          <DownloadIcon
+                            cursor='pointer'
+                            onClick={() =>
+                              handleDownloadDocumentsClick(product.documents)
+                            }
+                          />
+                        )}
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </Container>
+        </div>
+        <div style={{ flexShrink: '0' }}>
+          <Footer></Footer>
+        </div>
       </Layout>
     </Page>
   );

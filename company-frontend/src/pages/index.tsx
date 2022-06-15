@@ -10,10 +10,17 @@ const IndexPage: React.FC = () => {
   return (
     <Page>
       <Layout>
-      <Header />
+        <div style={{ flex: '1 0 auto' }}>
+          <Header />
 
-        <Heading p={10} textAlign='center'>HELLO {COMPANY_NAME}</Heading>
-        <Footer></Footer>
+          <Heading p={10} textAlign='center'>
+            HELLO {COMPANY_NAME}
+          </Heading>
+        </div>
+
+        <div style={{ flexShrink: '0' }}>
+          <Footer></Footer>
+        </div>
       </Layout>
     </Page>
   );

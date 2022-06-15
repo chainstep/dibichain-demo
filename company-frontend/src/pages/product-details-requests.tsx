@@ -11,7 +11,7 @@ import {
   Tooltip,
   Tr,
   useToast,
-  Text
+  Text,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useInterval } from 'usehooks-ts';
@@ -101,72 +101,75 @@ const MyProductsPage: React.FC = () => {
   return (
     <Page>
       <Layout>
-        <Header />
+        <div style={{ flex: '1 0 auto' }}>
+          <Header />
 
-        <Heading p={10} textAlign='center'>
-          Products Details Requests
-        </Heading>
+          <Heading p={10} textAlign='center'>
+            Products Details Requests
+          </Heading>
 
-        <Container maxW='90vw'>
-          <TableContainer h='500px' overflowY='scroll'>
-            <Table variant='simple' size='sm' colorScheme='cyan'>
-              <Thead>
-                <Tr>
-                  <Th>UID</Th>
-                  <Th>Name</Th>
-                  <Th>Timestamp</Th>
-                  <Th>Info</Th>
-                  <Th>Action</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {productDetailsRequests
-                  .filter(request => request.responded === false)
-                  .map(request => (
-                    <Tr key={request.uid}>
-                      <Td>
-                      <Tooltip label={request.uid} >
-                        <Text>{request.uid.substring(0, 5)}...</Text>
-                      </Tooltip>
-                    </Td>
-                      <Td>{getNameOfMyProduct(request.uid)}</Td>
-                      <Td>
-                        {new Date(request.timestamp * 1000).toLocaleString()}
-                      </Td>
+          <Container maxW='90vw'>
+            <TableContainer maxH='45vh' overflowY='scroll'>
+              <Table variant='simple' size='sm' colorScheme='cyan'>
+                <Thead>
+                  <Tr>
+                    <Th>UID</Th>
+                    <Th>Name</Th>
+                    <Th>Timestamp</Th>
+                    <Th>Info</Th>
+                    <Th>Action</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {productDetailsRequests
+                    .filter(request => request.responded === false)
+                    .map(request => (
+                      <Tr key={request.uid}>
+                        <Td>
+                          <Tooltip label={request.uid}>
+                            <Text>{request.uid.substring(0, 5)}...</Text>
+                          </Tooltip>
+                        </Td>
+                        <Td>{getNameOfMyProduct(request.uid)}</Td>
+                        <Td>
+                          {new Date(request.timestamp * 1000).toLocaleString()}
+                        </Td>
 
-                      <Td>
-                        <Tooltip
-                          hasArrow
-                          label={request.publicKey}
-                          bg='gray.300'
-                          color='black'
-                        >
-                          <InfoIcon />
-                        </Tooltip>
-                      </Td>
-                      <Td>
-                        <Button
-                          mr={2}
-                          colorScheme='red'
-                          onClick={() => onDeclineButtonClick(request)}
-                        >
-                          Decline
-                        </Button>
-                        <Button
-                          colorScheme='green'
-                          onClick={() => onApproveButtonClick(request)}
-                        >
-                          Approve
-                        </Button>
-                      </Td>
-                    </Tr>
-                  ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
-        </Container>
-
-        <Footer></Footer>
+                        <Td>
+                          <Tooltip
+                            hasArrow
+                            label={request.publicKey}
+                            bg='gray.300'
+                            color='black'
+                          >
+                            <InfoIcon />
+                          </Tooltip>
+                        </Td>
+                        <Td>
+                          <Button
+                            mr={2}
+                            colorScheme='red'
+                            onClick={() => onDeclineButtonClick(request)}
+                          >
+                            Decline
+                          </Button>
+                          <Button
+                            colorScheme='green'
+                            onClick={() => onApproveButtonClick(request)}
+                          >
+                            Approve
+                          </Button>
+                        </Td>
+                      </Tr>
+                    ))}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </Container>
+        </div>
+        <div style={{ flexShrink: '0' }}>
+          <Footer></Footer>
+        </div>
       </Layout>
     </Page>
   );
