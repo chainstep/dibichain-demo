@@ -92,7 +92,7 @@ const MyProductsPage: React.FC = () => {
                 <Tbody>
                   {products.map(product => (
                     <Tr key={product.uid}>
-                      <Td>
+                      <Td p={5}>
                         <Tooltip label={product.uid}>
                           <Text>{product.uid.substring(0, 5)}...</Text>
                         </Tooltip>

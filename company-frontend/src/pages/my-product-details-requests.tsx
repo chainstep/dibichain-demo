@@ -87,7 +87,7 @@ const MyProductsPage: React.FC = () => {
                 <Tbody>
                   {myProductDetailsRequests.map(request => (
                     <Tr key={request.uid}>
-                      <Td>
+                      <Td p={5}>
                         <Tooltip label={request.uid}>
                           <Text>{request.uid.substring(0, 5)}...</Text>
                         </Tooltip>
