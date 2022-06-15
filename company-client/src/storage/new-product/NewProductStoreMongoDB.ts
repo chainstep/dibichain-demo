@@ -1,50 +1,37 @@
-import { connect, model, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 import { NewProduct } from "../../types";
-import { REMOVE_MONGO_FIELDS } from "../constants";
+import { AMongoDBStore } from "../AMongoDBStore";
 import { INewProductStore } from "./INewProductStore";
 
 
-const schema = new Schema<NewProduct>({
-    uid: { type: String, required: true },
-    id: { type: String, required: true },
-    name: { type: String, required: true },
-    type: { type: String, required: true },
-    number: { type: String, required: true },
-    hash: { type: String, required: true },
-    timestamp: { type: Number, required: true }
-});
-
-const NewProductModel = model<NewProduct>("NewProduct", schema);
-
-
-export class NewProductStoreMongoDB implements INewProductStore {
-    private readonly mongoUrl: string;
-
-
+export class NewProductStoreMongoDB extends AMongoDBStore implements INewProductStore {
     constructor(options: { mongoUrl: string }) {
-        this.mongoUrl = options.mongoUrl;
+        super({
+            model: model<NewProduct>("NewProduct", new Schema<NewProduct>({
+                uid: { type: String, required: true },
+                id: { type: String, required: true },
+                name: { type: String, required: true },
+                type: { type: String, required: true },
+                number: { type: String, required: true },
+                hash: { type: String, required: true },
+                timestamp: { type: Number, required: true }
+            })),
+            url: options.mongoUrl
+        });
     }
 
 
-    public async upsert(product: NewProduct): Promise<void> {
-        await connect(this.mongoUrl);
-        await NewProductModel.updateOne({ uid: product.uid }, product, { upsert: true });
+    public async upsert(newProduct: NewProduct): Promise<void> {
+        await this._upsert({ uid: newProduct.uid }, newProduct);
     }
 
 
     public async find(params: {uid?: string}): Promise<NewProduct[]> {
-        const { uid } = params;
-        const query = uid ? { uid } : {};
-
-        await connect(this.mongoUrl);
-        const doc = await NewProductModel.find(query, REMOVE_MONGO_FIELDS).lean();
-        return doc;
+        return await this._find(params);
     }
 
 
     public async delete(params: {uid: string}): Promise<void> {
-        const { uid } = params;
-        await connect(this.mongoUrl);
-        await NewProductModel.deleteOne({ uid });
+        return await this._delete(params);
     }
 }
