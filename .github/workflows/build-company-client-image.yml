@@ -6,11 +6,11 @@ on:
     branches:
       - main
     paths:
-      - company-client/**
+      - packages/company-client/**
 
 env:
   # github config
-  SOURCE_DIR: company-client
+  SOURCE_DIR: packages/company-client
   
   # docker config
   IMAGE_NAME: company-client

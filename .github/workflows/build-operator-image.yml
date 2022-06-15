@@ -6,11 +6,11 @@ on:
     branches:
       - main
     paths:
-      - operator/**
+      - packages/operator/**
 
 env:
   # github config
-  SOURCE_DIR: operator
+  SOURCE_DIR: packages/operator
   
   # docker config
   IMAGE_NAME: operator
