@@ -110,7 +110,7 @@ const MyProductsPage: React.FC = () => {
 
           <Container maxW='90vw'>
             <TableContainer maxH='45vh' overflowY='scroll'>
-              <Table variant='simple' size='sm' colorScheme='cyan'>
+              <Table variant='simple' size='sm' colorScheme='green'>
                 <Thead>
                   <Tr>
                     <Th>UID</Th>
