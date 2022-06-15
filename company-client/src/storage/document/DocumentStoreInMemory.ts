@@ -19,4 +19,10 @@ export class DocumentStoreInMemory extends AInMemoryStore implements IDocumentSt
         }
         return this.store;
     }
+
+
+    public async delete(params: {uid: string}): Promise<void> {
+        const { uid } = params;
+        this._delete("uid", uid);
+    }
 }
