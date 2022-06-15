@@ -1,12 +1,12 @@
 version: "3.8"
 networks: 
-  dibichain-chain-network:
+  chain-network:
     external: false
 services:
-  dibichain-ganache:
+  ganache:
     image: trufflesuite/ganache-cli
     networks: 
-      - dibichain-chain-network
+      - chain-network
     ports:
       # extern:intern
       - 8545:8545
@@ -21,10 +21,10 @@ services:
       - ../data/ganache:/app/database
 
 # blockscout -> https://github.com/blockscout/blockscout/tree/master/docker-compose
-  dibichain-explorer-db:
+  explorer-db:
     image: postgres:13.6
     networks: 
-      - dibichain-chain-network
+      - chain-network
     restart: always
     environment:
         POSTGRES_PASSWORD: ''
@@ -33,16 +33,16 @@ services:
     ports:
       - 7432:5432
 
-  dibichain-explorer:
+  explorer:
     depends_on:
-      - dibichain-ganache
-      - dibichain-explorer-db
+      - ganache
+      - explorer-db
     image: blockscout/blockscout:4.1.3
     networks: 
-      - dibichain-chain-network
+      - chain-network
     restart: always
     links:
-      - dibichain-explorer-db:database
+      - explorer-db:database
     command: 'mix do ecto.create, ecto.migrate, phx.server'
     extra_hosts:
       - 'host.docker.internal:host-gateway'

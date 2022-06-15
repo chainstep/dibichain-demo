@@ -3,7 +3,7 @@
     "dev:local:company1": "env-cmd -f .env.local.company1 next -p 8081",
     "dev:local:company2": "env-cmd -f .env.local.company2 next -p 8082",
     "lint": "next lint",
-    "build": "next build",
+    "build": "rm -rf ./.next && next build",
     "start": "next start -p 3000",
     "start:build": "yarn build && yarn start",
     "type-check": "tsc"
