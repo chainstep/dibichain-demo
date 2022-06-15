@@ -38,5 +38,5 @@ services:
       # extern:intern
       - 3201:3000
     environment:
-      - NEXT_PUBLIC_BACKEND_BASE_URL=http://localhost:3200
-      - NEXT_PUBLIC_COMPANY_NAME=Logistly (B)
+      - BACKEND_BASE_URL=http://localhost:3200
+      - COMPANY_NAME=Logistly (B)
