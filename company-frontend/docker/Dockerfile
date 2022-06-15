@@ -16,6 +16,7 @@ COPY yarn.lock .
 RUN yarn install
 
 # Copy source files
+COPY public ./public
 COPY src ./src
 
 # Start agent
