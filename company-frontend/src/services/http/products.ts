@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { BACKEND_BASE_URL } from '../../constants';
+import { Product } from '../../types';
 
 export const getMyProducts = async (): Promise<unknown> => {
     try {
@@ -77,6 +78,23 @@ export const getProducts = async (): Promise<unknown> => {
 export const getNewProducts = async (): Promise<unknown> => {
     try {
         const response = await axios.get(`${BACKEND_BASE_URL}/new-products`);
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+        } else if (error.request) {
+            console.log(error.request);
+        } else {
+            console.log('Error', error.message);
+        }
+    }
+};
+
+export const postMyProduct = async (product: Product): Promise<unknown> => {
+    try {
+        const response = await axios.post(`${BACKEND_BASE_URL}/my-products`, product);
         return response.data;
     } catch (error) {
         if (error.response) {

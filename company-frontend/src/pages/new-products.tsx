@@ -2,26 +2,22 @@ import {
   Button,
   Container,
   Heading,
-  Tab,
   Table,
   TableContainer,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
   Tbody,
   Td,
   Th,
   Thead,
+  Tooltip,
   Tr,
   useToast,
+  Text,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useInterval } from 'usehooks-ts';
 import Layout from '../components/commons/Layout';
 import Page from '../components/commons/Page';
 
-import Header from '../components/commons/Header';
 import Footer from '../components/commons/Footer';
 import { getNewProducts, getProducts } from '../services/http/products';
 import { MyProductDetailsRequest, Product } from '../types';
@@ -29,6 +25,8 @@ import {
   getMyProductDetailsRequest,
   postMyProductDetailsRequest,
 } from '../services/http/product-details';
+import { translateType } from '../services/translation/type-translation';
+import Header from '../components/commons/Header';
 
 const MyProductsPage: React.FC = () => {
   const [newProducts, setNewProducts] = useState([] as Product[]);
@@ -100,84 +98,65 @@ const MyProductsPage: React.FC = () => {
   return (
     <Page>
       <Layout>
-        <Header />
+        <div style={{ flex: '1 0 auto' }}>
+          <Header />
 
-        <Container maxW='90vw'>
-          <Tabs mt={8} isFitted variant='enclosed'>
-            <TabList mb='1em'>
-              <Tab>
-                <Heading fontSize={22}>New Products</Heading>
-              </Tab>
-              <Tab isDisabled></Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                {newProducts.length === 0 ? (
-                  <Heading size='md' mb={12} textAlign='center'>
-                    No new products
-                  </Heading>
-                ) : (
-                  <TableContainer>
-                    <Table variant='simple' size='md' colorScheme='cyan'>
-                      <Thead>
-                        <Tr>
-                          <Th>Name</Th>
-                          <Th>Amount</Th>
-                          <Th>Number</Th>
-                          <Th>Type</Th>
-                          <Th>Weight</Th>
-                          <Th>Carbon Footprint</Th>
-                          <Th></Th>
-                        </Tr>
-                      </Thead>
-                      <Tbody>
-                        {newProducts.map(product => (
-                          <Tr key={product.uid}>
-                            <Td>{product.name}</Td>
-                            <Td>
-                              {product.amount}{' '}
-                              {product.amountUnit === 'each'
-                                ? ''
-                                : product.amountUnit}
-                            </Td>
-                            <Td>{product.number}</Td>
-                            <Td>{product.type}</Td>
-                            <Td>
-                              {product.weight} {product.weightUnit}
-                            </Td>
-                            <Td>
-                              {product.carbonFootprint} {product.weightUnit}
-                            </Td>
-                            <Td>
-                              {productDetailsAlreadyRequested(product.uid) ? (
-                                <Button
-                                  isLoading
-                                  loadingText='Waiting for approval'
-                                  onClick={() => onButtonClick(product.uid)}
-                                ></Button>
-                              ) : (
-                                <Button
-                                  onClick={() => onButtonClick(product.uid)}
-                                >
-                                  Request Details
-                                </Button>
-                              )}
-                            </Td>
-                          </Tr>
-                        ))}
-                      </Tbody>
-                    </Table>
-                  </TableContainer>
-                )}
-              </TabPanel>
-              <TabPanel>
-                <p>two!</p>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </Container>
+          <Heading p={10} textAlign='center'>
+            New Products
+          </Heading>
 
-        <Footer></Footer>
+          <Container maxW='90vw'>
+            <TableContainer maxH='45vh' overflowY='scroll'>
+              <Table variant='simple' size='sm' colorScheme='green'>
+                <Thead>
+                  <Tr>
+                    <Th>UID</Th>
+                    <Th>Name</Th>
+                    <Th>Amount</Th>
+                    <Th>Number</Th>
+                    <Th>Type</Th>
+                    <Th>Weight</Th>
+                    <Th>Carbon Footprint</Th>
+                    <Th></Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {newProducts.map(product => (
+                    <Tr key={product.uid}>
+                      <Td>
+                        <Tooltip label={product.uid}>
+                          <Text>{product.uid.substring(0, 5)}...</Text>
+                        </Tooltip>
+                      </Td>
+                      <Td>{product.name}</Td>
+                      <Td>xxx</Td>
+                      <Td>{product.number}</Td>
+                      <Td>{translateType(product.type)}</Td>
+                      <Td>xxx</Td>
+                      <Td>xxx</Td>
+                      <Td>
+                        {productDetailsAlreadyRequested(product.uid) ? (
+                          <Button
+                            isLoading
+                            loadingText='Waiting for approval'
+                            onClick={() => onButtonClick(product.uid)}
+                          ></Button>
+                        ) : (
+                          <Button onClick={() => onButtonClick(product.uid)}>
+                            Request Details
+                          </Button>
+                        )}
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </Container>
+        </div>
+        <div style={{ flexShrink: '0' }}>
+          <Footer></Footer>
+        </div>
       </Layout>
     </Page>
   );

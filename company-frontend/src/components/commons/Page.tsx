@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { COMPANY_NAME } from '../../constants';
+import { COMPANY_NAME, PUBLIC_BASE_PATH } from '../../constants';
 
 interface Props {
   title?: string;
@@ -15,8 +15,8 @@ const Page: React.FC<Props> = (props) => {
         <meta charSet='utf-8' />
         <link
           rel='shortcut icon'
-          type='image/svg'
-          href={`${process.env.NEXT_PUBLIC_BASE_PATH}/assets/favicon.jpg`}
+          type='image/png'
+          href={`${PUBLIC_BASE_PATH}/assets/dibichain_logo.png`}
         />
       </Head>
       {props.children}

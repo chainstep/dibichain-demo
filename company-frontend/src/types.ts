@@ -8,18 +8,13 @@ export interface Product {
     amount?: number;
     amountUnit?: 'each' | 'liter' | 'centimeter' | 'square_centimeter' | 'cubic_centimeter' | 'meter' | 'square_meter' | 'cubic_meter';
     weight?: number;
-    weightUnit?: 'mg' | 'g' | 'kg' | '%' | 'ppm';
+    weightUnit?: 'milligram' | 'gram' | 'kilogram' | 'percentage' | 'parts_per_million';
     carbonFootprint?: number;
-    carbonFootprintUnit?: 'mg' | 'g' | 'kg';
+    carbonFootprintUnit?: 'milligram' | 'gram' | 'kilogram';
 }
 
 export type MyProduct = Product
 
-export interface ResponseProduct extends Omit<Product, 'amount' | 'weight' | 'carbonFootprint' > {
-    amount?: string;
-    weight?: string;
-    carbonFootprint?: string;
-}
 
 export interface ProductEvent {
     uid: string;
@@ -36,14 +31,6 @@ export interface NewProduct extends ProductEvent {
 
 export type MyNewProduct = NewProduct
 
-export interface NewProductEventParams {
-    id: string;
-    uid: string;
-    name: string;
-    Type: string;
-    number: string;
-    hash: string;
-}
 
 export interface ProductDetailsRequestEventParams {
     uid: string;
@@ -59,24 +46,13 @@ export interface ProductDetailsRequest extends ProductEvent {
 
 export type MyProductDetailsRequest = ProductDetailsRequest
 
-export interface Key {
-    privateKey: string;
-    publicKey: string;
-    algorithm: string;
-}
-
 export interface Document {
     uid: string;
     name: string;
     version: string;
     type: string;
     data: string;
-    uploaded: number;
+    timestamp: number;
 }
 
 export type MyDocument = Document
-
-export interface ProductPackage {
-    product: Product,
-    documents: Document[]
-}
