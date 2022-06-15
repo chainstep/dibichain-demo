@@ -1,11 +1,8 @@
 import {
-  Box,
-  Text,
-  Flex,
-  useColorModeValue,
-  Img,
+    Box, Flex, Img, Text, useColorModeValue
 } from '@chakra-ui/react';
 import React from 'react';
+import { PUBLIC_BASE_PATH } from '../../constants';
 
 const Footer: React.FC = () => {
   return (
@@ -29,7 +26,7 @@ const Footer: React.FC = () => {
         >
           <Img
             w='50px'
-            src={`${process.env.NEXT_PUBLIC_BASE_PATH}/assets/dibichain_logo.png`}
+            src={`${PUBLIC_BASE_PATH}/assets/dibichain_logo.png`}
           ></Img>
         </Flex>
         <Text pt={6} fontSize={'lg'} textAlign={'center'}>
