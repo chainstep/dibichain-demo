@@ -6,11 +6,11 @@ on:
     branches:
       - main
     paths:
-      - company-frontend/**
+      - packages/company-frontend/**
 
 env:
   # github config
-  SOURCE_DIR: company-frontend
+  SOURCE_DIR: packages/company-frontend
   
   # docker config
   IMAGE_NAME: company-frontend
