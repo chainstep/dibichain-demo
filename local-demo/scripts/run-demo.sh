@@ -9,7 +9,7 @@
 BLOCK_CHAIN_WAITING_TIME_SECONDS=20
 
 BUILD_IMAGES=false
-RELATIVE_SMART_CONTRACTS_PATH="../../smart-contracts"
+RELATIVE_SMART_CONTRACTS_PATH="../../packages/smart-contracts"
 
 
 ###################################################################################################

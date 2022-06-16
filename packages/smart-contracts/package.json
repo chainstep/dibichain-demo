@@ -6,8 +6,8 @@
     "build:clean": "rm -rf artifacts/ cache/ typechain/ && npx hardhat compile",
     "test": "REPORT_GAS=true npx hardhat test",
     "coverage": "npx hardhat coverage",
-    "deploy:remote": "REMOTE=true npx hardhat run --network ganache deployment/deploy.ts",
-    "deploy:local": "LOCAL=true npx hardhat run --network ganache deployment/deploy.ts"
+    "deploy:remote": "REMOTE=true npx hardhat run --network evm deployment/deploy.ts",
+    "deploy:local": "LOCAL=true npx hardhat run --network evm deployment/deploy.ts"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",

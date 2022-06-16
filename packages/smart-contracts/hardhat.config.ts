@@ -30,7 +30,7 @@ const config: HardhatUserConfig = {
         hardhat: {
             initialBaseFeePerGas: 0, // workaround from https://github.com/sc-forks/solidity-coverage/issues/652#issuecomment-896330136 . Remove when that issue is closed.
         },
-        ganache: {
+        evm: {
             url: process.env.PROVIDER_URL || "",
             accounts: process.env.DEPLOYER_SECRET !== undefined ? [process.env.DEPLOYER_SECRET] : []
         }

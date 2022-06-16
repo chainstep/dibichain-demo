@@ -6,9 +6,9 @@
 # CONFIGURATION
 ###################################################################################################
 
-RELATIVE_COMPANY_CLIENT_PATH="../../company-client"
-RELATIVE_COMPANY_FRONTEND_PATH="../../company-frontend"
-RELATIVE_OPERATOR_PATH="../../operator"
+RELATIVE_COMPANY_CLIENT_PATH="../../packages/company-client"
+RELATIVE_COMPANY_FRONTEND_PATH="../../packages/company-frontend"
+RELATIVE_OPERATOR_PATH="../../packages/operator"
 
 
 ###################################################################################################
