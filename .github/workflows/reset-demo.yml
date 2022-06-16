@@ -65,22 +65,26 @@ jobs:
     needs:
       - stop-and-reset-chain
     uses: ./.github/workflows/deploy-chain.yml
+    secrets: inherit
 
   restart-operator:
     needs:
       - stop-and-reset-services
       - restart-chain
     uses: ./.github/workflows/deploy-operator.yml
+    secrets: inherit
   
   restart-logistex:
     needs:
       - restart-operator
     uses: ./.github/workflows/deploy-logistex.yml
+    secrets: inherit
   
   restart-logistly:
     needs:
       - restart-operator
     uses: ./.github/workflows/deploy-logistly.yml
+    secrets: inherit
 
     # steps:
     #   - name: Checkout
