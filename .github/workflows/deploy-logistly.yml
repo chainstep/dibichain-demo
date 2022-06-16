@@ -2,6 +2,7 @@ name: deploy logistly
 
 on:
   workflow_dispatch:
+  workflow_call:
 
 # You also need to add a RUNNER_PRIVATE_KEY action secret
 # and fill it with an ssh private key of the server user

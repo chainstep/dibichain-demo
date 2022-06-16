@@ -60,7 +60,7 @@ sleep ${BLOCK_CHAIN_WAITING_TIME_SECONDS}
 
 echo "[INFO] Deploying contract..."
 cd ${HERE}/${RELATIVE_SMART_CONTRACTS_PATH}/scripts
-./deploy-local.sh
+./deploy.sh -d local
 EXIT_CODE=$(echo $?)
 
 if [ ${EXIT_CODE} == 1 ]; then

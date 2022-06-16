@@ -1,0 +1,70 @@
+name: deploy chain and contract
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+# You also need to add a RUNNER_PRIVATE_KEY action secret
+# and fill it with an ssh private key of the server user
+env:
+  # github config
+  CHAIN_SOURCE_DIR: ganache
+  CHAIN_COMPOSE_FILE: docker-compose.yml
+  CONTRACT_SOURCE_DIR: packages/smart-contracts
+
+  # server config
+  SERVER_DOMAIN: chain.dibichain.de
+  SERVER_USER: dibichain
+  SERVER_FOLDER: dibichain-ganache
+
+jobs: 
+  deploy-chain:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Prepare runner
+        run: |
+          mkdir -p ~/.ssh
+          touch ~/.ssh/known_hosts
+          ssh-keyscan ${{ env.SERVER_DOMAIN }} >> ~/.ssh/known_hosts
+          touch ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "${{ secrets.RUNNER_PRIVATE_KEY }}" >> ~/.ssh/id_ed25519
+          echo "SSH_DOMAIN=${{ env.SERVER_USER }}@${{ env.SERVER_DOMAIN }}" >> $GITHUB_ENV &&
+          echo "SSH_SERVER_FOLDER=${{ env.SERVER_USER }}@${{ env.SERVER_DOMAIN }}:${{ env.SERVER_FOLDER }}" >> $GITHUB_ENV
+
+      - name: Prepare server
+        run: |
+          ssh -t ${{ env.SSH_DOMAIN }} "mkdir -p ${{ env.SSH_SERVER_FOLDER }}/scripts"
+          ssh -t ${{ env.SSH_DOMAIN }} "mkdir -p ${{ env.SSH_SERVER_FOLDER }}/docker"
+          scp ./${{ env.CHAIN_SOURCE_DIR }}/scripts/run-docker.sh ${{ env.SSH_SERVER_FOLDER }}/scripts
+          scp ./${{ env.CHAIN_SOURCE_DIR }}/scripts/stop-docker.sh ${{ env.SSH_SERVER_FOLDER }}/scripts
+          scp ./${{ env.CHAIN_SOURCE_DIR }}/docker/${{ env.CHAIN_COMPOSE_FILE }} ${{ env.SSH_SERVER_FOLDER}}/docker
+
+      - name: Deploy
+        run: |
+          ssh -t ${{ env.SSH_DOMAIN }} "
+            cd ${{ env.SERVER_FOLDER }}/docker
+            ./run-docker.sh
+          "
+
+  deploy-contract:
+    runs-on: ubuntu-latest
+    needs:
+      - deploy-chain
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2 
+        with:
+          node-version: 16
+
+      - name: Deploy contract
+        run: |
+         sleep 20
+         ./${{ env.CONTRACT_SOURCE_DIR }}/deploy.sh -d remote
