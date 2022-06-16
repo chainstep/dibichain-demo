@@ -85,16 +85,3 @@ jobs:
       - restart-operator
     uses: ./.github/workflows/deploy-logistly.yml
     secrets: inherit
-
-    # steps:
-    #   - name: Checkout
-    #     uses: actions/checkout@v2
-      
-    #   - name: deploy operator
-    #     uses: ./.github/workflows/deploy-operator.yml
-
-    #   - name: deploy logistex
-    #     uses: ./.github/workflows/deploy-logistex.yml
-
-    #   - name: deploy logistly
-    #     uses: ./.github/workflows/deploy-logistly.yml
