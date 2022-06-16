@@ -100,6 +100,7 @@ const UploadPage: React.FC = () => {
                     <option value='assembly'>Assembly</option>
                     <option value='purchase_part'>Purchase Part</option>
                     <option value='standard_part'>Standard Part</option>
+                    <option value='article'>Article</option>
                   </Select>
                 </FormControl>
 
