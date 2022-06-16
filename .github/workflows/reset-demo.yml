@@ -64,23 +64,23 @@ jobs:
   restart-chain:
     needs:
       - stop-and-reset-chain
-    uses: ./.github/workflows/deploy-chain.yml@main
+    uses: ./.github/workflows/deploy-chain.yml
 
   restart-operator:
     needs:
       - stop-and-reset-services
       - restart-chain
-    uses: ./.github/workflows/deploy-operator.yml@main
+    uses: ./.github/workflows/deploy-operator.yml
   
   restart-logistex:
     needs:
       - restart-operator
-    uses: ./.github/workflows/deploy-logistex.yml@main
+    uses: ./.github/workflows/deploy-logistex.yml
   
   restart-logistly:
     needs:
       - restart-operator
-    uses: ./.github/workflows/deploy-logistly.yml@main
+    uses: ./.github/workflows/deploy-logistly.yml
 
     # steps:
     #   - name: Checkout
