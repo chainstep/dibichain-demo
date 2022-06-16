@@ -27,9 +27,10 @@ export function createPostNewProductRouter(): Router {
 }
 
 function isProductType(value: string): boolean {
-    return value.includes("assembly")
-        || value.includes("purchase_part")
-        || value.includes("standard_part");
+    return value === "assembly"
+        || value === "purchase_part"
+        || value === "article"
+        || value === "standard_part";
 }
 
 function cleanseInputs(request: Request, response: Response, next: NextFunction): void {
