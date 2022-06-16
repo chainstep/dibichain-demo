@@ -5,41 +5,46 @@ on:
 
 # You also need to add a RUNNER_PRIVATE_KEY action secret
 # and fill it with an ssh private key of the server user
-env:
+# env:
   # services server config
-  SERVICES_SERVER_DOMAIN: services.dibichain.de
-  SERVICES_SERVER_USER: dibichain
-  OPERATOR_SERVER_FOLDER: dibichain-operator
-  LOGISTEX_SERVER_FOLDER: dibichain-logistex
-  LOGISTLY_SERVER_FOLDER: dibichain-logistly
+  # SERVICES_SERVER_DOMAIN: services.dibichain.de
+  # SERVICES_SERVER_USER: dibichain
+  # OPERATOR_SERVER_FOLDER: dibichain-operator
+  # LOGISTEX_SERVER_FOLDER: dibichain-logistex
+  # LOGISTLY_SERVER_FOLDER: dibichain-logistly
 
-  # chain server config
-  CHAIN_SERVER_DOMAIN: chain.dibichain.de
-  CHAIN_SERVER_USER: dibichain
-  CHAIN_SERVER_FOLDER: dibichain-ganache
+  # # chain server config
+  # CHAIN_SERVER_DOMAIN: chain.dibichain.de
+  # CHAIN_SERVER_USER: dibichain
+  # CHAIN_SERVER_FOLDER: dibichain-ganache
 
 jobs:
-  stop-and-reset-services:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Prepare runner
-        run: |
-          mkdir -p ~/.ssh
-          touch ~/.ssh/known_hosts
-          ssh-keyscan ${{ env.SERVICES_SERVER_DOMAIN }} >> ~/.ssh/known_hosts
-          touch ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          echo "${{ secrets.RUNNER_PRIVATE_KEY }}" >> ~/.ssh/id_ed25519
-          echo "SSH_DOMAIN=${{ env.SERVICES_SERVER_USER }}@${{ env.SERVICES_SERVER_DOMAIN }}" >> $GITHUB_ENV &&
+      - name: Checkout
+        uses: actions/checkout@v2  
+  # stop-and-reset-services:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Prepare runner
+  #       run: |
+  #         mkdir -p ~/.ssh
+  #         touch ~/.ssh/known_hosts
+  #         ssh-keyscan ${{ env.SERVICES_SERVER_DOMAIN }} >> ~/.ssh/known_hosts
+  #         touch ~/.ssh/id_ed25519
+  #         chmod 600 ~/.ssh/id_ed25519
+  #         echo "${{ secrets.RUNNER_PRIVATE_KEY }}" >> ~/.ssh/id_ed25519
+  #         echo "SSH_DOMAIN=${{ env.SERVICES_SERVER_USER }}@${{ env.SERVICES_SERVER_DOMAIN }}" >> $GITHUB_ENV &&
 
-      - name: Stop and reset services
-        run: |
-          ssh -t ${{ env.SSH_DOMAIN }} "
-            sudo docker kill $(sudo docker ps -q)
-            rm -rf ${{ env.OPERATOR_SERVER_FOLDER }}
-            rm -rf ${{ env.LOGISTEX_SERVER_FOLDER }}
-            rm -rf ${{ env.LOGISTLY_SERVER_FOLDER }}
-          "
+  #     - name: Stop and reset services
+  #       run: |
+  #         ssh -t ${{ env.SSH_DOMAIN }} "
+  #           sudo docker kill $(sudo docker ps -q)
+  #           rm -rf ${{ env.OPERATOR_SERVER_FOLDER }}
+  #           rm -rf ${{ env.LOGISTEX_SERVER_FOLDER }}
+  #           rm -rf ${{ env.LOGISTLY_SERVER_FOLDER }}
+  #         "
 
   # stop-and-reset-chain:
   #   runs-on: ubuntu-latest
