@@ -37,8 +37,8 @@ jobs:
 
       - name: Prepare server
         run: |
-          ssh -t ${{ env.SSH_DOMAIN }} "mkdir -p ${{ env.SSH_SERVER_FOLDER }}/scripts"
-          ssh -t ${{ env.SSH_DOMAIN }} "mkdir -p ${{ env.SSH_SERVER_FOLDER }}/docker"
+          ssh -t ${{ env.SSH_DOMAIN }} "mkdir -p ${{ env.SERVER_FOLDER }}/scripts"
+          ssh -t ${{ env.SSH_DOMAIN }} "mkdir -p ${{ env.SERVER_FOLDER }}/docker"
           scp ./${{ env.CHAIN_SOURCE_DIR }}/scripts/run-docker.sh ${{ env.SSH_SERVER_FOLDER }}/scripts
           scp ./${{ env.CHAIN_SOURCE_DIR }}/scripts/stop-docker.sh ${{ env.SSH_SERVER_FOLDER }}/scripts
           scp ./${{ env.CHAIN_SOURCE_DIR }}/docker/${{ env.CHAIN_COMPOSE_FILE }} ${{ env.SSH_SERVER_FOLDER}}/docker
