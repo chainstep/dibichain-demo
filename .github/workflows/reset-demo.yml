@@ -36,9 +36,9 @@ jobs:
         run: |
           ssh -t ${{ env.SSH_DOMAIN }} "
             sudo docker kill $(sudo docker ps -q)
-            rm -rf ${{ env.OPERATOR_SERVER_FOLDER }}
-            rm -rf ${{ env.LOGISTEX_SERVER_FOLDER }}
-            rm -rf ${{ env.LOGISTLY_SERVER_FOLDER }}
+            sudo rm -rf ${{ env.OPERATOR_SERVER_FOLDER }}
+            sudo rm -rf ${{ env.LOGISTEX_SERVER_FOLDER }}
+            sudo rm -rf ${{ env.LOGISTLY_SERVER_FOLDER }}
           "
 
   stop-and-reset-chain:
@@ -58,7 +58,7 @@ jobs:
         run: |
           ssh -t ${{ env.SSH_DOMAIN }} "
             sudo docker kill $(sudo docker ps -q)
-            rm -rf ${{ env.CHAIN_SERVER_FOLDER }}
+            sudo rm -rf ${{ env.CHAIN_SERVER_FOLDER }}
           "
 
   restart-chain:
