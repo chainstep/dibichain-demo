@@ -2,15 +2,15 @@ export interface Product {
     id: string;
     uid: string;
     name: string;
-    type: "assembly" | "purchase_part" | "standard_part";
+    type: string;
     number: string;
     documents?: string[];
     amount?: number;
-    amountUnit?: "each" | "liter" | "centimeter" | "square_centimeter" | "cubic_centimeter" | "meter" | "square_meter" | "cubic_meter";
+    amountUnit?: string;
     weight?: number;
-    weightUnit?: "milligram" | "gram" | "kilogram" | "percentage" | "parts_per_million";
+    weightUnit?: string;
     carbonFootprint?: number;
-    carbonFootprintUnit?: "milligram" | "gram" | "kilogram";
+    carbonFootprintUnit?: string;
 }
 
 export type MyProduct = Product
