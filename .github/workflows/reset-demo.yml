@@ -5,18 +5,18 @@ on:
 
 # You also need to add a RUNNER_PRIVATE_KEY action secret
 # and fill it with an ssh private key of the server user
-# env:
+env:
   # services server config
-  # SERVICES_SERVER_DOMAIN: services.dibichain.de
-  # SERVICES_SERVER_USER: dibichain
-  # OPERATOR_SERVER_FOLDER: dibichain-operator
-  # LOGISTEX_SERVER_FOLDER: dibichain-logistex
-  # LOGISTLY_SERVER_FOLDER: dibichain-logistly
+  SERVICES_SERVER_DOMAIN: services.dibichain.de
+  SERVICES_SERVER_USER: dibichain
+  OPERATOR_SERVER_FOLDER: dibichain-operator
+  LOGISTEX_SERVER_FOLDER: dibichain-logistex
+  LOGISTLY_SERVER_FOLDER: dibichain-logistly
 
-  # # chain server config
-  # CHAIN_SERVER_DOMAIN: chain.dibichain.de
-  # CHAIN_SERVER_USER: dibichain
-  # CHAIN_SERVER_FOLDER: dibichain-ganache
+  # chain server config
+  CHAIN_SERVER_DOMAIN: chain.dibichain.de
+  CHAIN_SERVER_USER: dibichain
+  CHAIN_SERVER_FOLDER: dibichain-ganache
 
 jobs:
   test:
