@@ -62,30 +62,35 @@ jobs:
           "
 
   restart-chain:
-    runs-on: ubuntu-latest
     needs:
-     - stop-and-reset-chain
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      
-      - name: deploy chain
-        uses: ./.github/workflows/deploy-chain.yml
+      - stop-and-reset-chain
+    uses: ./.github/workflows/deploy-chain.yml@main
 
-  restart-services:
-    runs-on: ubuntu-latest
+  restart-operator:
     needs:
-     - stop-and-reset-services
-     - restart-chain
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - stop-and-reset-services
+      - restart-chain
+    uses: ./.github/workflows/deploy-operator.yml@main
+  
+  restart-logistex:
+    needs:
+      - restart-operator
+    uses: ./.github/workflows/deploy-logistex.yml@main
+  
+  restart-logistly:
+    needs:
+      - restart-operator
+    uses: ./.github/workflows/deploy-logistly.yml@main
+
+    # steps:
+    #   - name: Checkout
+    #     uses: actions/checkout@v2
       
-      - name: deploy operator
-        uses: ./.github/workflows/deploy-operator.yml
+    #   - name: deploy operator
+    #     uses: ./.github/workflows/deploy-operator.yml
 
-      - name: deploy logistex
-        uses: ./.github/workflows/deploy-logistex.yml
+    #   - name: deploy logistex
+    #     uses: ./.github/workflows/deploy-logistex.yml
 
-      - name: deploy logistly
-        uses: ./.github/workflows/deploy-logistly.yml
+    #   - name: deploy logistly
+    #     uses: ./.github/workflows/deploy-logistly.yml
