@@ -29,7 +29,6 @@ export function createPostNewProductRouter(): Router {
 function isProductType(value: string): boolean {
     return value === "assembly"
         || value === "purchase_part"
-        || value === "article"
         || value === "standard_part";
 }
 

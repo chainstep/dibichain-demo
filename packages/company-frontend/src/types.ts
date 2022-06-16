@@ -2,7 +2,7 @@ export interface Product {
     id: string;
     uid: string;
     name: string;
-    type: 'assembly' | 'purchase_part' | 'standard_part'| 'article';
+    type: 'assembly' | 'purchase_part' | 'standard_part';
     number: string;
     documents?: string[];
     amount?: number;

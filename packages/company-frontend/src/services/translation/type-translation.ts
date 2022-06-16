@@ -9,9 +9,6 @@ export const translateType = (type: string): string => {
         case 'standard_part': {
             return 'Standard Part';
         }
-        case 'article': {
-            return 'Article';
-        }
         default: {
             return '';
         }
