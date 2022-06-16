@@ -29,6 +29,7 @@ export function createPostNewProductRouter(): Router {
 function isProductType(value: string): boolean {
     return value.includes("assembly")
         || value.includes("purchase_part")
+        || value.includes("article")
         || value.includes("standard_part");
 }
 

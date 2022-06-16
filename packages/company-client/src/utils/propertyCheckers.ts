@@ -1,6 +1,7 @@
 
 export function isProductType(value: string): boolean {
     return value === "assembly"
+        || value === "article"
         || value === "purchase_part"
         || value === "standard_part";
 }
