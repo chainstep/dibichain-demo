@@ -67,4 +67,4 @@ jobs:
       - name: Deploy contract
         run: |
          sleep 20
-         ./${{ env.CONTRACT_SOURCE_DIR }}/deploy.sh -d remote
+         ./${{ env.CONTRACT_SOURCE_DIR }}/scripts/deploy.sh -d remote
