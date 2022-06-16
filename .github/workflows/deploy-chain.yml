@@ -46,7 +46,7 @@ jobs:
       - name: Deploy
         run: |
           ssh -t ${{ env.SSH_DOMAIN }} "
-            cd ${{ env.SERVER_FOLDER }}/docker
+            cd ${{ env.SERVER_FOLDER }}/scripts
             ./run-docker.sh
           "
 
