@@ -9,7 +9,7 @@
 CONTRACT_ADDRESS="0xC0156004b2dC4AA2FA30FD0F5E06b7022c718da7"
 
 RPC_URL_LOCAL="http://localhost:8545"
-RPC_URL_REMOTE="chain.dibichain.de"
+RPC_URL_REMOTE="https://chain.dibichain.de"
 
 DESTINATION="local"
 
