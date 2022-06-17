@@ -34,13 +34,12 @@ services:
       - 7432:5432
 
   explorer:
+    image: blockscout/blockscout:4.1.3
     depends_on:
       - ganache
       - explorer-db
-    image: blockscout/blockscout:4.1.3
     networks: 
       - chain-network
-    restart: always
     links:
       - explorer-db:database
     command: 'mix do ecto.create, ecto.migrate, phx.server'
