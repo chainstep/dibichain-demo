@@ -7,7 +7,7 @@ import { IDocumentStore } from "./IDocumentStore";
 export class DocumentStoreMongoDB extends AMongoDBStore implements IDocumentStore {
     constructor(options: { mongoUrl: string }) {
         super({
-            model: model<Document>("Document", new Schema<Document>({
+            model: model("Document", new Schema<Document>({
                 uid: { type: String, required: true },
                 name: { type: String, required: true },
                 type: { type: String, required: true },

@@ -7,7 +7,7 @@ import { IMyProductDetailsRequestStore } from "./IMyProductDetailsRequestStore";
 export class MyProductDetailsRequestStoreMongoDB extends AMongoDBStore implements IMyProductDetailsRequestStore {
     constructor(options: { mongoUrl: string }) {
         super({
-            model: model<MyProductDetailsRequest>("MyProductDetailsRequest", new Schema<MyProductDetailsRequest>({
+            model: model("MyProductDetailsRequest", new Schema<MyProductDetailsRequest>({
                 uid: { type: String, required: true },
                 algorithm: { type: String, required: true },
                 publicKey: { type: String, required: true },

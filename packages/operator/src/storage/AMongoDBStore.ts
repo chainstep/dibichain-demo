@@ -22,7 +22,7 @@ export abstract class AMongoDBStore {
 
     protected async _find<T>(filter: object): Promise<T[]> {
         await connect(this.url);
-        return await this.model.find(filter, this.REMOVE_MONGO_FIELDS).lean();
+        return await this.model.find<T>(filter, this.REMOVE_MONGO_FIELDS).lean();
     }
 
 
