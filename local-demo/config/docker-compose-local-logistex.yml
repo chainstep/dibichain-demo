@@ -39,5 +39,5 @@ services:
       # extern:intern
       - 3101:3000
     environment:
-      - NEXT_PUBLIC_BACKEND_BASE_URL=http://localhost:3100
-      - NEXT_PUBLIC_COMPANY_NAME=Logistex (A)
+      - BACKEND_BASE_URL=http://localhost:3100
+      - COMPANY_NAME=Logistex (A)

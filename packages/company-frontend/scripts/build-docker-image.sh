@@ -20,7 +20,6 @@ HERE="$(pwd)/$(dirname $0)"
 # MAIN
 ###################################################################################################
 
-
 # multi-arch build -> https://blog.jaimyn.dev/how-to-build-multi-architecture-docker-images-on-an-m1-mac/
 BUILD_CMD="build"
 if [[ $(uname) == "Darwin" && $(uname -a) == *"arm64"* ]]; then
