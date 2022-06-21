@@ -1,6 +1,8 @@
-FROM node:16-alpine as builder
+###################################################################################################
+# BUILD PROJECT
+###################################################################################################
 
-WORKDIR /usr/app
+FROM node:16-alpine as builder
 
 # Copy meta files
 COPY .eslintignore .
@@ -10,14 +12,12 @@ COPY tsconfig.json .
 COPY next.config.js .
 COPY package.json .
 COPY yarn.lock .
-COPY docker/entrypoint.sh .
+
+# Install dependencies
+RUN yarn install
 
 # Copy source files
-COPY public ./public
 COPY src ./src
-
-# Install deps
-RUN yarn
 
 # Building app
 # 1. set dummy values for environment variables
@@ -26,16 +26,31 @@ RUN NEXT_PUBLIC_COMPANY_NAME=APP_NEXT_PUBLIC_COMPANY_NAME \
     NEXT_PUBLIC_BACKEND_BASE_URL=APP_NEXT_PUBLIC_BACKEND_BASE_URL \
     yarn build
 
+
+###################################################################################################
+# BUILD IMAGE
+###################################################################################################
+
 FROM node:16-alpine as runner
 
 WORKDIR /usr/app/
 
-COPY --from=builder /usr/app/public ./public
-COPY --from=builder /usr/app/.next ./.next
-COPY --from=builder /usr/app/node_modules ./node_modules
-COPY --from=builder /usr/app/package.json ./package.json
-COPY --from=builder /usr/app/entrypoint.sh ./entrypoint.sh
+# Copy meta data
+COPY --from=builder package.json ./package.json
+COPY --from=builder yarn.lock ./yarn.lock
 
+# Install dependencies
+RUN yarn install --prod
+
+# Copy compiled files
+COPY --from=builder .next ./.next
+
+# Copy misc files
+COPY docker/entrypoint.sh .
+COPY public ./public
+
+# Set entrypoint
 ENTRYPOINT ["/usr/app/entrypoint.sh"]
 
+# Set start command
 CMD [ "yarn", "start" ]
