@@ -33,6 +33,7 @@ RUN NEXT_PUBLIC_COMPANY_NAME=APP_NEXT_PUBLIC_COMPANY_NAME \
 
 FROM node:16-alpine as runner
 
+# Set working directory
 WORKDIR /usr/app/
 
 # Copy meta data
