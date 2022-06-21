@@ -20,6 +20,8 @@ COPY src ./src
 RUN yarn
 
 # Building app
+# 1. set dummy values for environment variables
+# 2. build page with dummy values
 RUN NEXT_PUBLIC_COMPANY_NAME=APP_NEXT_PUBLIC_COMPANY_NAME \
     NEXT_PUBLIC_BACKEND_BASE_URL=APP_NEXT_PUBLIC_BACKEND_BASE_URL \
     yarn build
