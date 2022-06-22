@@ -4,7 +4,7 @@ autonumber "<b>[00]"
 participant "Company A" as COMPA
 participant "Company B" as COMPB
 participant "Operator" as OP
-participant "EventBus" as BC
+participant "EventBus Contract" as BC
 
 
 == Announcing new Product ==
