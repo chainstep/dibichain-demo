@@ -12,8 +12,8 @@ if [ -z "$COMPANY_NAME" ]; then
 fi
 
 # Replace dummy values with environment variables values
-find /usr/app/.next \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "s#APP_NEXT_PUBLIC_BACKEND_BASE_URL#$BACKEND_BASE_URL#g"
-find /usr/app/.next \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "s#APP_NEXT_PUBLIC_COMPANY_NAME#$COMPANY_NAME#g"
+find /usr/app/out \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "s#APP_NEXT_PUBLIC_BACKEND_BASE_URL#$BACKEND_BASE_URL#g"
+find /usr/app/out \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "s#APP_NEXT_PUBLIC_COMPANY_NAME#$COMPANY_NAME#g"
 
 
 echo "Starting Nextjs..."

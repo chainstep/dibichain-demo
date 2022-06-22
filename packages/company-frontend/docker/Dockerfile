@@ -2,7 +2,7 @@
 # BUILD PROJECT
 ###################################################################################################
 
-FROM node:16-alpine as builder
+FROM node:16.15.1-alpine3.16 as builder
 
 # Copy meta files
 COPY .eslintignore .
@@ -18,6 +18,7 @@ RUN yarn install
 
 # Copy source files
 COPY src ./src
+COPY public ./public
 
 # Building app
 # 1. set dummy values for environment variables
@@ -31,7 +32,7 @@ RUN NEXT_PUBLIC_COMPANY_NAME=APP_NEXT_PUBLIC_COMPANY_NAME \
 # BUILD IMAGE
 ###################################################################################################
 
-FROM node:16-alpine as runner
+FROM node:16.15.1-alpine3.16 as runner
 
 # Set working directory
 WORKDIR /usr/app/
@@ -44,14 +45,13 @@ COPY --from=builder yarn.lock ./yarn.lock
 RUN yarn install --prod
 
 # Copy compiled files
-COPY --from=builder .next ./.next
+COPY --from=builder out ./out
 
 # Copy misc files
 COPY docker/entrypoint.sh .
-COPY public ./public
 
 # Set entrypoint
 ENTRYPOINT ["/usr/app/entrypoint.sh"]
 
 # Set start command
-CMD [ "yarn", "start" ]
+CMD [ "npm", "run", "start" ]
