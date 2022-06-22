@@ -6,7 +6,8 @@
     "build": "next build && next export",
     "start": "serve out/ -p 3000",
     "start:build": "yarn build && yarn start",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "test": "yarn build"
   },
   "license": "MIT",
   "devDependencies": {
