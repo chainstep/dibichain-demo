@@ -58,7 +58,7 @@ services:
         - ECTO_USE_SSL=false
         - ETHEREUM_JSONRPC_TRACE_URL=http://host.docker.internal:8545/
         - NETWORK=Dibichain
-        - SUBNETWORK=Dibichain Demo Local
+        - SUBNETWORK=Dibichain Demo
         - LOGO=/images/blockscout_logo.svg
         - LOGO_FOOTER=/images/blockscout_logo.svg
         - ETHEREUM_JSONRPC_TRANSPORT=http
