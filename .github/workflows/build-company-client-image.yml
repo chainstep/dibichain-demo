@@ -10,7 +10,8 @@ on:
 
 env:
   # github config
-  SOURCE_DIR: packages/company-client
+  PROJECT_DIR: packages/company-client
+  TEST_WORKFLOW_FILE: test-company-client
   
   # docker config
   IMAGE_NAME: company-client
@@ -19,31 +20,8 @@ env:
 
 jobs:
   test-project:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2 
-        with:
-          node-version: 16
-
-      - name: Install dependencies
-        run: cd ./${{ env.SOURCE_DIR }} && yarn install
-    
-      - name: Lint project
-        run: cd ./${{ env.SOURCE_DIR }} && yarn lint
-
-      - name: Run tests
-        run: cd ./${{ env.SOURCE_DIR }} && yarn test
-      
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        id: cache-dependencies
-        with:
-          path: ./${{ env.SOURCE_DIR }}/node_modules
-          key: ${{ github.sha }}
+    uses: ./.github/workflows/${{ env.TEST_WORKFLOW_FILE }}.yml
+    secrets: inherit
 
   build-image:
     runs-on: ubuntu-latest
@@ -52,21 +30,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2 
-        with:
-          node-version: 16
-      
-      - name: Restore dependencies
-        uses: actions/cache@v2
-        id: cache-dependencies
-        with:
-          path: ./${{ env.SOURCE_DIR }}/node_modules
-          key: ${{ github.sha }}
-
-      - name: Build project
-        run: cd ./${{ env.SOURCE_DIR }} && yarn build
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -84,8 +47,8 @@ jobs:
       - name: Build and push image
         uses: docker/build-push-action@v2
         with:
-          file: ./${{ env.SOURCE_DIR }}/docker/Dockerfile
-          context: ./${{ env.SOURCE_DIR }}
+          file: ./${{ env.PROJECT_DIR }}/docker/Dockerfile
+          context: ./${{ env.PROJECT_DIR }}
           platforms: linux/amd64
           push: true
           tags: |
