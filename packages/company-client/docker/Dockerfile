@@ -2,7 +2,7 @@
 # BUILD PROJECT
 ###################################################################################################
 
-FROM node:16-alpine as builder
+FROM node:16.15.1-alpine3.16 as builder
 
 # Copy meta files
 COPY .eslintignore .
@@ -28,7 +28,7 @@ RUN yarn build
 # BUILD IMAGE
 ###################################################################################################
 
-FROM node:16-alpine as runner
+FROM node:16.15.1-alpine3.16 as runner
 
 # Set working directory
 WORKDIR /usr/app/
