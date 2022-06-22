@@ -1,4 +1,18 @@
 ###################################################################################################
+# GET PRODUCTION DEPENDENCIES
+###################################################################################################
+
+FROM node:16.15.1-alpine3.16 as deps-collector
+
+# Copy meta data
+COPY package.json .
+COPY yarn.lock .
+
+# Install dependencies
+RUN yarn install --prod --frozen-lockfile
+
+
+###################################################################################################
 # BUILD PROJECT
 ###################################################################################################
 
@@ -14,7 +28,7 @@ COPY package.json .
 COPY yarn.lock .
 
 # Install dependencies
-RUN yarn install
+RUN yarn install --frozen-lockfile
 
 # Copy source files
 COPY src ./src
@@ -38,11 +52,10 @@ FROM node:16.15.1-alpine3.16 as runner
 WORKDIR /usr/app/
 
 # Copy meta data
-COPY --from=builder package.json ./package.json
-COPY --from=builder yarn.lock ./yarn.lock
+COPY package.json .
 
-# Install dependencies
-RUN yarn install --prod
+# Copy production dependencies
+COPY --from=deps-collector node_modules ./node_modules
 
 # Copy compiled files
 COPY --from=builder out ./out
@@ -54,4 +67,4 @@ COPY docker/entrypoint.sh .
 ENTRYPOINT ["/usr/app/entrypoint.sh"]
 
 # Set start command
-CMD [ "npm", "run", "start" ]
+CMD [ "yarn", "start" ]
