@@ -114,7 +114,7 @@ const UploadPage: React.FC = () => {
                 <SimpleGrid templateColumns='2fr 1fr' gap={3}>
                   <FormControl>
                     <FormLabel htmlFor='amount'>Amount</FormLabel>
-                    <NumberInput>
+                    <NumberInput min={0}>
                       <NumberInputField
                         {...register('amount', { required: true })}
                         id='amount'
@@ -148,7 +148,7 @@ const UploadPage: React.FC = () => {
                 <SimpleGrid templateColumns='2fr 1fr' gap={3}>
                   <FormControl>
                     <FormLabel htmlFor='weight'>Weight</FormLabel>
-                    <NumberInput>
+                    <NumberInput min={0}>
                       <NumberInputField
                         {...register('weight', { required: true })}
                         id='weight'
@@ -181,7 +181,7 @@ const UploadPage: React.FC = () => {
                     <FormLabel htmlFor='carbonFootprint'>
                       Carbon Footprint
                     </FormLabel>
-                    <NumberInput>
+                    <NumberInput min={0}>
                       <NumberInputField
                         {...register('carbonFootprint', { required: true })}
                         id='carbonFootprint'
