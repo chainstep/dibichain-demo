@@ -147,19 +147,19 @@ export class Operator {
     }
 
     private checkProduct(product: Product): void {
-        if (product &&
-            typeof product.amount === "number" &&
-            typeof product.amountUnit === "string" && isAmountUnit(product.amountUnit) &&
-            typeof product.carbonFootprint === "number" &&
-            typeof product.carbonFootprintUnit === "string" && isCarbonFootprintUnit(product.carbonFootprintUnit) &&
-            Array.isArray(product.documents) &&
-            typeof product.id === "string" &&
-            typeof product.name === "string" &&
-            typeof product.number === "string" &&
-            typeof product.type === "string" && isProductType(product.type) &&
-            typeof product.uid === "string" &&
-            typeof product.weight === "number" &&
-            typeof product.weightUnit === "string" && isWeightUnit(product.weightUnit)) {
+        if (product
+         && typeof product.amount === "number"
+         && typeof product.amountUnit === "string" && isAmountUnit(product.amountUnit)
+         && typeof product.carbonFootprint === "number"
+         && typeof product.carbonFootprintUnit === "string" && isCarbonFootprintUnit(product.carbonFootprintUnit)
+         && Array.isArray(product.documents)
+         && typeof product.id === "string"
+         && typeof product.name === "string"
+         && typeof product.number === "string"
+         && typeof product.type === "string" && isProductType(product.type)
+         && typeof product.uid === "string"
+         && typeof product.weight === "number"
+         && typeof product.weightUnit === "string" && isWeightUnit(product.weightUnit)) {
             return;
         }
         throw new Error("not a product");
@@ -171,13 +171,13 @@ export class Operator {
                 throw new Error("document uid not found");
             }
 
-            if (document &&
-                typeof document.data === "string" &&
-                typeof document.name === "string" &&
-                typeof document.type === "string" &&
-                typeof document.uid === "string" &&
-                typeof document.timestamp === "number" &&
-                typeof document.version === "string") {
+            if (document
+             && typeof document.data === "string"
+             && typeof document.name === "string"
+             && typeof document.type === "string"
+             && typeof document.uid === "string"
+             && typeof document.timestamp === "number"
+             && typeof document.version === "string") {
                 return;
             }
             throw new Error("not a document");

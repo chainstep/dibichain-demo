@@ -7,7 +7,7 @@ import { IKeyStore } from "./IKeyStore";
 export class KeyStoreMongoDB extends AMongoDBStore implements IKeyStore {
     constructor(options: { mongoUrl: string }) {
         super({
-            model: model<Key>("Key", new Schema<Key>({
+            model: model("Key", new Schema<Key>({
                 publicKey: { type: String, required: true },
                 privateKey: { type: String, required: true },
                 algorithm: { type: String, required: true }

@@ -10,7 +10,7 @@ export class ProductDetailsRequestStoreMongoDB extends AMongoDBStore implements 
 
     constructor(options: { mongoUrl: string }) {
         super({
-            model: model<ProductDetailsRequest>("ProductDetailsRequest", new Schema<ProductDetailsRequest>({
+            model: model("ProductDetailsRequest", new Schema<ProductDetailsRequest>({
                 uid: { type: String, required: true },
                 algorithm: { type: String, required: true },
                 publicKey: { type: String, required: true },

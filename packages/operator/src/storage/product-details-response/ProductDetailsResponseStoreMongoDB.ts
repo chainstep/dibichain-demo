@@ -1,53 +1,37 @@
-import { connect, model, Schema } from "mongoose";
-import { REMOVE_MONGO_FIELDS } from "../constants";
+import { model, Schema } from "mongoose";
+import { AMongoDBStore } from "../AMongoDBStore";
 import { IProductDetailsResponseStore, ProductDetailsResponse } from "./IProductDetailsResponseStore";
 
 
-const schema = new Schema<ProductDetailsResponse>({
-    uid: { type: String, required: true },
-    publicKey: { type: String, required: true },
-    message: {
-        secret: { type: String, required: true },
-        cipherText: { type: String, required: true },
-        initVector: { type: String, required: true }
-    },
-    timestamp: { type: Number, required: true }
-});
-
-const ProductDetailsResponseModel = model<ProductDetailsResponse>("ProductDetailsResponse", schema);
-
-
-export class ProductDetailsResponseStoreMongoDB implements IProductDetailsResponseStore {
-    private readonly mongoUrl: string;
-
-
+export class ProductDetailsResponseStoreMongoDB extends AMongoDBStore implements IProductDetailsResponseStore {
     constructor(options: { mongoUrl: string }) {
-        this.mongoUrl = options.mongoUrl;
+        super({
+            model: model("ProductDetailsResponse", new Schema<ProductDetailsResponse>({
+                uid: { type: String, required: true },
+                publicKey: { type: String, required: true },
+                message: {
+                    secret: { type: String, required: true },
+                    cipherText: { type: String, required: true },
+                    initVector: { type: String, required: true }
+                },
+                timestamp: { type: Number, required: true }
+            })),
+            url: options.mongoUrl
+        });
     }
 
 
     public async upsert(productDetailsResponse: ProductDetailsResponse): Promise<void> {
-        const filter = productDetailsResponse;
-        const update = productDetailsResponse;
-
-        await connect(this.mongoUrl);
-        await ProductDetailsResponseModel.updateOne(filter, update, { upsert: true });
+        await this._upsert(productDetailsResponse, productDetailsResponse);
     }
 
 
     public async find(params: {uid?: string, publicKey?: string}): Promise<ProductDetailsResponse[]> {
-        const filter = params;
-
-        await connect(this.mongoUrl);
-        const doc = await ProductDetailsResponseModel.find(filter, REMOVE_MONGO_FIELDS).lean();
-        return doc;
+        return await this._find(params);
     }
 
 
     public async delete(params: {uid: string}): Promise<void> {
-        const filter = params;
-
-        await connect(this.mongoUrl);
-        await ProductDetailsResponseModel.deleteOne(filter);
+        return await this._delete(params);
     }
 }

@@ -1,6 +1,7 @@
 name: test operator
 
 on:
+  workflow_call:
   pull_request:
     branches:
       - main
@@ -9,7 +10,7 @@ on:
 
 env:
   # github config
-  SOURCE_DIR: packages/operator
+  PROJECT_DIR: packages/operator
 
 jobs:
   test-project:
@@ -24,10 +25,16 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        run: cd ./${{ env.SOURCE_DIR }} && yarn install
+        run: |
+          cd ./${{ env.PROJECT_DIR }}
+          yarn install
     
       - name: Lint project
-        run: cd ./${{ env.SOURCE_DIR }} && yarn lint
+        run: |
+          cd ./${{ env.PROJECT_DIR }}
+          yarn lint
 
       - name: Run tests
-        run: cd ./${{ env.SOURCE_DIR }} && yarn test
+        run: |
+          cd ./${{ env.PROJECT_DIR }}
+          yarn test

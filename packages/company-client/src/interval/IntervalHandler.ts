@@ -62,6 +62,7 @@ export class IntervalHandler {
         this.intervalId = <ReturnType<typeof setInterval>> {};
     }
 
+
     public getName(): string {
         return this.name;
     }

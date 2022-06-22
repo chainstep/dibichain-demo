@@ -7,7 +7,7 @@ import { IProductStore } from "./IProductStore";
 export class ProductStoreMongoDB extends AMongoDBStore implements IProductStore {
     constructor(options: { mongoUrl: string }) {
         super({
-            model: model<Product>("Product", new Schema<Product>({
+            model: model("Product", new Schema<Product>({
                 id: { type: String, required: true },
                 uid: { type: String, required: true },
                 name: { type: String, required: true },

@@ -3,15 +3,11 @@ import { REMOVE_MONGO_FIELDS } from "../constants";
 import { BlockchainInfo, IBlockchainInfoStore } from "./IBlockchainInfoStore";
 
 
-const schema = new Schema<BlockchainInfo>({
-    blockHeight: { type: Number, required: true },
-});
-
-const BlockchainInfoModel = model<BlockchainInfo>("BlockchainInfo", schema);
-
-
 export class BlockchainInfoStoreMongoDb implements IBlockchainInfoStore {
     private readonly mongoUrl: string;
+    private readonly model = model("BlockchainInfo", new Schema<BlockchainInfo>({
+        blockHeight: { type: Number, required: true },
+    }));
 
 
     constructor(options: { mongoUrl: string }) {
@@ -26,7 +22,7 @@ export class BlockchainInfoStoreMongoDb implements IBlockchainInfoStore {
         };
 
         await connect(this.mongoUrl);
-        await BlockchainInfoModel.updateOne(filter, update, { upsert: true });
+        await this.model.updateOne(filter, update, { upsert: true });
     }
 
 
@@ -34,7 +30,7 @@ export class BlockchainInfoStoreMongoDb implements IBlockchainInfoStore {
         const filter = {};
 
         await connect(this.mongoUrl);
-        const doc = await BlockchainInfoModel.findOne(filter, REMOVE_MONGO_FIELDS).lean();
+        const doc = await this.model.findOne(filter, REMOVE_MONGO_FIELDS).lean();
         return doc || undefined;
     }
 }
