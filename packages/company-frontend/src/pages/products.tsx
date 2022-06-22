@@ -76,7 +76,7 @@ const MyProductsPage: React.FC = () => {
 
           <Container maxW='90vw'>
           <TableContainer
-              maxH='45vh'
+              h='50vh'
               overflowY='scroll'
               boxShadow='var(--chakra-shadows-md)'
             >
