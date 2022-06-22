@@ -11,7 +11,6 @@ on:
 env:
   # github config
   PROJECT_DIR: packages/operator
-  TEST_WORKFLOW_FILE: test-operator
   
   # docker config
   IMAGE_NAME: operator
@@ -20,7 +19,7 @@ env:
 
 jobs:
   test-project:
-    uses: ./.github/workflows/${{ env.TEST_WORKFLOW_FILE }}.yml
+    uses: ./.github/workflows/test-operator.yml
     secrets: inherit
 
   build-image:

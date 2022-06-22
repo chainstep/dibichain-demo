@@ -11,7 +11,6 @@ on:
 env:
   # github config
   PROJECT_DIR: packages/company-frontend
-  TEST_WORKFLOW_FILE: test-company-frontend
   
   # docker config
   IMAGE_NAME: company-frontend
@@ -20,7 +19,7 @@ env:
 
 jobs:
   test-project:
-    uses: ./.github/workflows/${{ env.TEST_WORKFLOW_FILE }}.yml
+    uses: ./.github/workflows/test-company-frontend.yml
     secrets: inherit
 
   build-image:
