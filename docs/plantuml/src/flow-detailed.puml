@@ -1,7 +1,7 @@
 @startuml
 autonumber "<b>[00]"
 
-participant "SustainHub" as SUS
+participant "Third Party" as TP3
 participant "Company A UI" as COMPAU
 participant "Company A" as COMPA
 participant "Company B UI" as COMPBU
@@ -10,16 +10,16 @@ participant "Operator" as OP
 participant "EventBus" as BC
 
 
-== Getting Product from SustainHub ==
+== Getting Product information from third party ==
 
--> SUS: add product data
-SUS -> COMPA: send product data 
+-> TP3: add product data
+TP3 -> COMPA: send product data 
 note right
     POST /my-products
 end note
 COMPA -> COMPA: store my product data
--> SUS: add documents data
-SUS -> COMPA: send documents data 
+-> TP3: add documents data
+TP3 -> COMPA: send documents data 
 note right
     POST /my-documents
 end note
