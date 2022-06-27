@@ -1,4 +1,8 @@
-# Custom Chain
+# Ganache Test Chain
+
+This folder holds the configuration to setup a custom test chain. It facilitates [Truffles](https://trufflesuite.com) [Ganache](https://github.com/trufflesuite/ganache) development chain and the [Blockscout](https://github.com/blockscout/blockscout) explorer.
+
+The setup is also used for the custom chain of the deployed dibichain demo. 
 
 ## Access
 
@@ -24,9 +28,6 @@
 
 # stop and remove chain including explorer
 ./scripts/stop-docker.sh
-
-# deploy chain including explorer (works with known ssh key only)
-./scripts/deploy.sh
 ```
 
 
