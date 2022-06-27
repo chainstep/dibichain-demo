@@ -25,13 +25,16 @@ const theme = extendTheme({
     }
   },
   colors: {
+    dibichain: {
+      100: '#5DAB6A',
+    },
     orange: {
-     500: '#E39183',
+      500: '#E39183',
     },
     blue: {
       500: '#160045',
       600: '#160045',
-     }
+    }
   },
   shadows: {
     outline: ''

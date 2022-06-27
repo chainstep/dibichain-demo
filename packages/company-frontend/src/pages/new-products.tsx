@@ -106,18 +106,27 @@ const MyProductsPage: React.FC = () => {
           </Heading>
 
           <Container maxW='90vw'>
-            <TableContainer maxH='45vh' overflowY='scroll'>
-              <Table variant='simple' size='sm' colorScheme='green'>
-                <Thead>
+          <TableContainer
+              h='50vh'
+              overflowY='scroll'
+              boxShadow='var(--chakra-shadows-md)'
+            >
+              <Table variant='simple' size='sm' colorScheme='dibichain'>
+                <Thead
+                  position='sticky'
+                  insetBlockStart={0}
+                  bg='#5DAB6A'
+                  zIndex={10}
+                >
                   <Tr>
-                    <Th>UID</Th>
-                    <Th>Name</Th>
-                    <Th>Amount</Th>
-                    <Th>Number</Th>
-                    <Th>Type</Th>
-                    <Th>Weight</Th>
-                    <Th>Carbon Footprint</Th>
-                    <Th></Th>
+                    <Th color='white'>UID</Th>
+                    <Th color='white'>Name</Th>
+                    <Th color='white'>Amount</Th>
+                    <Th color='white'>Number</Th>
+                    <Th color='white'>Type</Th>
+                    <Th color='white'>Weight</Th>
+                    <Th color='white'>Carbon Footprint</Th>
+                    <Th color='white'></Th>
                   </Tr>
                 </Thead>
                 <Tbody>
