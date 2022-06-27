@@ -47,7 +47,7 @@ HERE="$(pwd)/$(dirname $0)"
 ###################################################################################################
 
 RPC_URL=""
-if [ ${DESTINATION} == "remote" ]; then # not deployed
+if [ ${DESTINATION} == "remote" ]; then
     RPC_URL=${RPC_URL_REMOTE}
 else
     RPC_URL=${RPC_URL_LOCAL}
