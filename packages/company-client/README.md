@@ -1,35 +1,29 @@
-# Company Backend #
+# Company Client
+
+This folder contains the company's client project. To begin development, you must have [Node.js](https://nodejs.org/en/) and the [Yarn](https://yarnpkg.com) package manager installed.
+
+You also need a valid `.env` file. The easiest way to get one is by copying the `example.env` file and rename the copy to `.env`. The default setup should be good to go.
+
+## Commands
 
 ```bash
-# start in production mode
-yarn start
-
 # start in watch mode
 yarn dev
-
-# build production
-yarn build
 
 # lint
 yarn lint
 
 # autofix lint errors
-yarn fix:lint
+yarn lint:fix
 
 # test
 yarn test
 
-# build docker image
-yarn build:docker
+# build production
+yarn build
 
-# start docker image
-yarn start:docker
-
-# pause docker image
-yarn pause:docker
-
-# stop docker image
-yarn stop:docker
+# start in production mode
+yarn start
 ```
 
 To start 2 instances follow these steps:
@@ -41,9 +35,14 @@ To start 2 instances follow these steps:
 # start dev db for instance 2
 ./scripts/run-dev-db-2.sh
 
-# run instance 1 in dev mode
+# run pre-configured instance 1 in dev mode
 yarn dev:1
 
-# run instance 2 in dev mode IN ANOTHER TERMINAL
+# run pre-configured instance 2 in dev mode IN ANOTHER TERMINAL
 yarn dev:2
 ````
+
+To build the docker image, run:
+``` bash
+./scripts/build-docker-image.sh
+```
