@@ -4,15 +4,6 @@ This folder holds the configuration to setup a custom test chain. It facilitates
 
 The setup is also used for the custom chain of the deployed dibichain demo. 
 
-## Access
-
-- RPC URL:
-  - `http://localhost:8545`
-- Chain ID
-  - `4243`
-- Blockexplorer
-  - `http://localhost:4000`
-
 
 ## Commands
 
@@ -31,7 +22,18 @@ The setup is also used for the custom chain of the deployed dibichain demo.
 ```
 
 
+## Access
+
+- RPC URL:
+  - `http://localhost:8545`
+- Chain ID
+  - `4243`
+- Blockexplorer
+  - `http://localhost:4000`
+
+
 ## Accounts
+
 ```ts
 const ACCOUNTS = [
     {
