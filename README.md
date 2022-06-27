@@ -13,6 +13,7 @@ This repository hosts the source code of the Dibichain demonstrator.
       - [Logistex](#logistex)
       - [Logistly](#logistly)
       - [Operator](#operator)
+      - [Block explorer](#block-explorer)
 
 </p>
 </details>
@@ -67,3 +68,8 @@ To access the deployed setup follow these links:
 #### Operator
 
 - api url: https://api.operator.dibichain.de
+
+
+#### Block explorer
+
+- explorer url: https://explorer.dibichain.de
