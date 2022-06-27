@@ -1,7 +1,8 @@
 {
   "scripts": {
-    "dev:local:company1": "env-cmd -f .env.local.company1 next -p 8081",
-    "dev:local:company2": "env-cmd -f .env.local.company2 next -p 8082",
+    "dev": "env-cmd -f .env next -p 8080",
+    "dev:1": "env-cmd -f dev1.env next -p 8081",
+    "dev:2": "env-cmd -f dev2.env next -p 8082",
     "lint": "next lint",
     "build": "next build && next export",
     "start": "serve out/ -p 3000",

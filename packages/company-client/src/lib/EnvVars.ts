@@ -84,15 +84,15 @@ export class EnvVars {
         if (process.env.RUN_CONTEXT === "development") {
             this.RUN_CONTEXT = RUN_CONTEXT.DEVELOPMENT;
             dotenv.config();
-        } else if (process.env.RUN_CONTEXT === "development-1") {
+        } else if (process.env.RUN_CONTEXT === "development1") {
             this.RUN_CONTEXT = RUN_CONTEXT.DEVELOPMENT;
-            dotenv.config({ path: __dirname + "/../../.env-dev-1" });
-        } else if (process.env.RUN_CONTEXT === "development-2") {
+            dotenv.config({ path: __dirname + "/../../dev1.env" });
+        } else if (process.env.RUN_CONTEXT === "development2") {
             this.RUN_CONTEXT = RUN_CONTEXT.DEVELOPMENT;
-            dotenv.config({ path: __dirname + "/../../.env-dev-2" });
+            dotenv.config({ path: __dirname + "/../../dev2.env" });
         } else if (process.env.RUN_CONTEXT === "test") {
             this.RUN_CONTEXT = RUN_CONTEXT.TEST;
-            dotenv.config({ path: __dirname + "/../../test/.env-test" });
+            dotenv.config({ path: __dirname + "/../../test/test.env" });
         } else {
             dotenv.config();
         }

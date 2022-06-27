@@ -5,8 +5,8 @@
     "scripts": {
         "start": "node ./dist/src/index.js",
         "dev": "RUN_CONTEXT=development ts-node-dev ./src/index",
-        "dev:1": "RUN_CONTEXT=development-1 ts-node-dev ./src/index",
-        "dev:2": "RUN_CONTEXT=development-2 ts-node-dev ./src/index",
+        "dev:1": "RUN_CONTEXT=development1 ts-node-dev ./src/index",
+        "dev:2": "RUN_CONTEXT=development2 ts-node-dev ./src/index",
         "build": "rm -rf ./dist && tsc",
         "lint": "eslint ./ --ext .ts",
         "fix:lint": "eslint ./ --fix --ext .ts",
