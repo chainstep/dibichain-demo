@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { query } from "express-validator";
 import { DocumentStore } from "../../../../storage/document/DocumentStore";
-import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
+import { INVALID_INPUT_TEXT } from "../../../constants";
 import { cleanseUidQueryInput } from "../../../middlewares/uidInputCleansing";
 import { createRouter } from "../../../routerFactory";
 import { GetDocumentsService } from "./GetDocumentsService";
@@ -10,7 +10,7 @@ import { GetDocumentsService } from "./GetDocumentsService";
 export function createGetDocumentsRouter(): Router {
     return createRouter({
         method: "get",
-        route: ROUTE_NAMES.documents,
+        route: "/documents",
         inputPath: "query",
         inputChecks: [
             query("uid").optional().isUUID().withMessage(INVALID_INPUT_TEXT + "uid")

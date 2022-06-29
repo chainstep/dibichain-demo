@@ -1,6 +1,5 @@
 import request from "supertest";
 import { initHttpServer } from "../../src/http";
-import { ROUTE_NAMES } from "../../src/http/constants";
 import { EnvVars } from "../../src/lib/EnvVars";
 import { MyProductStore } from "../../src/storage/my-product/MyProductStore";
 import { MyProductStoreInMemory } from "../../src/storage/my-product/MyProductStoreInMemory";
@@ -20,7 +19,7 @@ if (!config.skipTests.includes("httpOrigin")) {
     it("should accept requests from known origins", async () => {
         await myProductStore.upsert(TEST_PRODUCT);
         await request(server)
-            .get(ROUTE_NAMES.myProducts)
+            .get("/my-products")
             .set("Origin", EnvVars.ALLOWED_ORIGINS[0])
             .expect(200);
     });
@@ -28,7 +27,7 @@ if (!config.skipTests.includes("httpOrigin")) {
 
     it("should revert requests from unknown origins", async () => {
         await request(server)
-            .get(ROUTE_NAMES.myProducts)
+            .get("/my-products")
             .set("Origin", "http://unknown.domain")
             .expect(401);
     });

@@ -6,7 +6,7 @@ import { Operator } from "../../../../lib/Operator";
 import { MyDocumentStore } from "../../../../storage/my-document/MyDocumentStore";
 import { MyProductStore } from "../../../../storage/my-product/MyProductStore";
 import { ProductDetailsRequestStore } from "../../../../storage/product-details-request/ProductDetailsRequestStore";
-import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
+import { INVALID_INPUT_TEXT } from "../../../constants";
 import { createRouter } from "../../../routerFactory";
 import { PostMyProductDetailsResponseService } from "./PostMyProductDetailsResponseService";
 
@@ -14,7 +14,7 @@ import { PostMyProductDetailsResponseService } from "./PostMyProductDetailsRespo
 export function createPostMyProductDetailsResponsesRouter(): Router {
     return createRouter({
         method: "post",
-        route: ROUTE_NAMES.myProductDetailsResponses,
+        route: "/my-product-details-responses",
         inputPath: "body",
         inputChecks: [
             body("uid").isUUID().withMessage(INVALID_INPUT_TEXT + "uid"),

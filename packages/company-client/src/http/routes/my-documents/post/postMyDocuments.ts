@@ -3,7 +3,7 @@ import { body } from "express-validator";
 import { MyDocumentStore } from "../../../../storage/my-document/MyDocumentStore";
 import { MyDocument } from "../../../../types";
 import { isUUID } from "../../../../utils/propertyCheckers";
-import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
+import { INVALID_INPUT_TEXT } from "../../../constants";
 import { createRouter } from "../../../routerFactory";
 import { PostMyDocumentsService } from "./PostMyDocumentsService";
 
@@ -17,7 +17,7 @@ interface MyDocumentParams extends Omit<MyDocument, "timestamp"> {
 export function createPostMyDocumentsRouter(): Router {
     return createRouter({
         method: "post",
-        route: ROUTE_NAMES.myDocuments,
+        route: "/my-documents",
         inputPath: "body",
         inputChecks: [
             body("myDocuments").custom(isDocumentArray).withMessage(INVALID_INPUT_TEXT + "myDocuments"),

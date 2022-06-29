@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { query } from "express-validator";
 import { MyProductDetailsRequestStore } from "../../../../storage/my-product-details-request/MyProductDetailsRequestStore";
-import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
+import { INVALID_INPUT_TEXT } from "../../../constants";
 import { cleanseUidQueryInput } from "../../../middlewares/uidInputCleansing";
 import { createRouter } from "../../../routerFactory";
 import { GetMyProductDetailsRequestsService } from "./GetMyProductDetailsRequestsService";
@@ -10,7 +10,7 @@ import { GetMyProductDetailsRequestsService } from "./GetMyProductDetailsRequest
 export function createGetMyProductDetailsRequestsRouter(): Router {
     return createRouter({
         method: "get",
-        route: ROUTE_NAMES.myProductDetailsRequests,
+        route: "/my-product-details-requests",
         inputPath: "query",
         inputChecks: [
             query("uid").optional().isUUID().withMessage(INVALID_INPUT_TEXT + "uid")

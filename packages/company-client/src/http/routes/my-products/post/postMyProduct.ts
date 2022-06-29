@@ -10,7 +10,7 @@ import { createRouter } from "../../../routerFactory";
 import { PostMyProductService } from "./PostMyProductService";
 
 
- interface MyProductParams extends Omit<MyProduct, "id" | "uid"> {
+interface MyProductParams extends Omit<MyProduct, "id" | "uid"> {
     id?: string;
     uid?: string;
 }
@@ -87,7 +87,6 @@ import { PostMyProductService } from "./PostMyProductService";
  *             schema:
  *               type: object
  */
-
 export function createPostMyProductRouter(): Router {
     return createRouter({
         method: "post",
