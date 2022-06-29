@@ -34,14 +34,14 @@ The following diagram should give a high level overview of the Dibichain demonst
 
 ## Getting started
 
-To demonstrate the workflow, a setup with two virtual companies has been added and can be run in a local environment on your machine or accessed in the cloud. The first company (**Company A**) is named **logistex** and the second company (**Company B**) **logistly**.
+To demonstrate the workflow, a setup with two virtual companies has been added and can be run in a local environment on your machine or accessed in the cloud. The first company (**Company A**) is named **Logistex** and the second company (**Company B**) **Logistly**.
 Each company consists of a dibichain client and frontend.
 
 The [**client**](packages/company-client/) contains the business logic and can be integrated into a companies infrastructure with the help of the provided docker files.
 
 The [**frontend**](packages/company-frontend/) acts as an human interface and should be used to interact with the dibichain demonstrator for all non-machine interactions.
 
-The [**operator**](packages/operator/) acts, as descibed above, as an intermediate for company-to-company communication and is used to abstract blockchain specific complexity from the company clients. It should be mentioned that even if the operator is able to track the company-to-company messages, it is not able to see the product details due to the end-to-end encryption.
+The [**operator**](packages/operator/) acts, as described above, as an intermediate for company-to-company communication and is used to abstract blockchain specific complexity from the company clients. It should be mentioned that even if the operator is able to track the company-to-company messages, it is not able to see the product details due to the end-to-end encryption.
 
 
 ### Local setup
