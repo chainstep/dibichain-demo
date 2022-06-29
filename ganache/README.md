@@ -1,13 +1,8 @@
-# Custom Chain
+# Ganache Test Chain
 
-## Access
+This folder holds the configuration to setup a custom test chain. It facilitates [Truffles](https://trufflesuite.com) [Ganache](https://github.com/trufflesuite/ganache) development chain and the [Blockscout](https://github.com/blockscout/blockscout) explorer.
 
-- RPC URL:
-  - `http://localhost:8545`
-- Chain ID
-  - `4243`
-- Blockexplorer
-  - `http://localhost:4000`
+The setup is also used for the custom chain of the deployed dibichain demo. 
 
 
 ## Commands
@@ -24,13 +19,21 @@
 
 # stop and remove chain including explorer
 ./scripts/stop-docker.sh
-
-# deploy chain including explorer (works with known ssh key only)
-./scripts/deploy.sh
 ```
 
 
+## Access
+
+- RPC URL:
+  - `http://localhost:8545`
+- Chain ID
+  - `4243`
+- Blockexplorer
+  - `http://localhost:4000`
+
+
 ## Accounts
+
 ```ts
 const ACCOUNTS = [
     {

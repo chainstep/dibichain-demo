@@ -1,0 +1,38 @@
+@startuml
+autonumber "<b>[00]"
+
+participant "Company A" as COMPA
+participant "Company B" as COMPB
+participant "Operator" as OP
+participant "EventBus Contract" as BC
+
+
+== Announcing new Product ==
+
+COMPA -> OP: anounce new product
+OP -> BC: issue public product data
+BC -> COMPB: notify new product
+|||
+
+== Requesting Product Details ==
+
+COMPB -> OP: request product information
+OP -> BC: issue product details request
+BC -> COMPA: notify product details request
+|||
+
+== Providing Product Details ==
+
+COMPA -> COMPA: encrypt product information
+COMPA -> OP: send encrypted product information
+|||
+
+== Getting Product Details ==
+
+COMPB -> OP: get encrypted product information
+COMPB -> COMPB: decrypt product information
+COMPB -> COMPB: validate product information
+COMPB -> COMPB: proccess product information
+|||
+
+@enduml
