@@ -21,7 +21,7 @@ interface MyProductParams extends Omit<MyProduct, "id" | "uid"> {
  * /my-products:
  *   post:
  *     summary: Post a new product
- *     tags: [My Product]
+ *     tags: [My Products]
  *     requestBody:
  *       content:
  *         application/json:

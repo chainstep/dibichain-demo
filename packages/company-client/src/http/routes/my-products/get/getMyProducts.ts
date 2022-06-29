@@ -14,7 +14,7 @@ import { GetMyProductsService } from "./GetMyProductsService";
  *   get:
  *     summary: Get my new product
  *     description: This route lets you retrieve your products from the company client
- *     tags: [My Product]
+ *     tags: [My Products]
  *     parameters:
  *       - in: query
  *         name: uid
