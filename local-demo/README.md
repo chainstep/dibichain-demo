@@ -25,13 +25,16 @@ This folder holds the configuration needed to run the dibichain demo locally on 
 Logistex
 - frontend url: http://localhost:3101
 - client url: http://localhost:3100
+- client api docs url: http://localhost:3100/api-docs
 
 Logistly
 - frontend url: http://localhost:3201
 - client url: http://localhost:3200
+- client api docs url: http://localhost:3200/api-docs
 
 Operator
 - api url: http://localhost:3000
+- api docs url: http://localhost:3000/api-docs
 
 Explorer
 - explorer url: http://localhost:4000

@@ -5,6 +5,7 @@ import { INVALID_INPUT_TEXT } from "../../../constants";
 import { createRouter } from "../../../routerFactory";
 import { PostNewProductService } from "./PostNewProductService";
 
+
 /**
  * @swagger
  * /new-products:
