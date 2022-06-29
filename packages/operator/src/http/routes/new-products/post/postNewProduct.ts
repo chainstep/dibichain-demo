@@ -1,15 +1,64 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { body } from "express-validator";
 import { Contracts } from "../../../../contract/Contracts";
-import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
+import { INVALID_INPUT_TEXT } from "../../../constants";
 import { createRouter } from "../../../routerFactory";
 import { PostNewProductService } from "./PostNewProductService";
 
-
+/**
+ * @swagger
+ * /new-products:
+ *   post:
+ *     summary: Post a new product to the event bus contract
+ *     tags: [New Products]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               uid:
+ *                 type: string
+ *                 description: the uuid v4 of a product
+ *                 example: 0e66f0e4-1c4e-4781-8fd7-36058206d295
+ *               id:
+ *                 type: string
+ *                 description: the uuid v4 of a product group
+ *                 example: 0e66f0e4-1c4e-4781-8fd7-36058206d295
+ *               name:
+ *                 type: string
+ *                 description: the product name
+ *                 example: Bionic Partition
+ *               type:
+ *                 type: string
+ *                 description: the product type [ assembly | purchase_part | standard_part ]
+ *                 example: purchase_part
+ *               number:
+ *                 type: string
+ *                 description: the product number
+ *                 example: EAN 20359483920
+ *               hash:
+ *                 type: string
+ *                 description: the normalized product hash
+ *                 example: f031e34aaa900645b71588e731425526f1b158fb55f67ef37d05561f9b1b644d
+ *             required:
+ *               - uid
+ *               - id
+ *               - name
+ *               - type
+ *               - number
+ *               - hash
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 export function createPostNewProductRouter(): Router {
     return createRouter({
         method: "post",
-        route: ROUTE_NAMES.newProducts,
+        route: "/new-products",
         inputPath: "body",
         inputChecks: [
             body("uid").isUUID().withMessage(INVALID_INPUT_TEXT + "uid"),

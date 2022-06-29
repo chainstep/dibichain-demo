@@ -2,7 +2,7 @@ import { NextFunction, Request, Response, Router } from "express";
 import { body } from "express-validator";
 import { ProductDetailsResponseStore } from "../../../../storage/product-details-response/ProductDetailsResponseStore";
 import { EncMessage } from "../../../../types";
-import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
+import { INVALID_INPUT_TEXT } from "../../../constants";
 import { createRouter } from "../../../routerFactory";
 import { PostProductDetailsResponseService } from "./PostProductDetailsResponseService";
 
@@ -10,7 +10,7 @@ import { PostProductDetailsResponseService } from "./PostProductDetailsResponseS
 export function createPostProductDetailsResponseRouter(): Router {
     return createRouter({
         method: "post",
-        route: ROUTE_NAMES.productDetailsResponses,
+        route: "/product-details-responses",
         inputPath: "body",
         inputChecks: [
             body("uid").isUUID().withMessage(INVALID_INPUT_TEXT + "uid"),

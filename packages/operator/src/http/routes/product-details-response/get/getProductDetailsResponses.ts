@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { query } from "express-validator";
 import { ProductDetailsResponseStore } from "../../../../storage/product-details-response/ProductDetailsResponseStore";
-import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
+import { INVALID_INPUT_TEXT } from "../../../constants";
 import { createRouter } from "../../../routerFactory";
 import { GetProductDetailsResponseService } from "./GetProductDetailsResponsesService";
 
@@ -9,7 +9,7 @@ import { GetProductDetailsResponseService } from "./GetProductDetailsResponsesSe
 export function createGetProductDetailsResponseRouter(): Router {
     return createRouter({
         method: "get",
-        route: ROUTE_NAMES.productDetailsResponses,
+        route: "/product-details-responses",
         inputPath: "query",
         inputChecks: [
             query("publicKeys")
