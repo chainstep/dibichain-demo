@@ -15,14 +15,14 @@ import { createPostNewProductRouter } from "./routes/new-products/post/postNewPr
 import { createPostProductDetailsRequestRouter } from "./routes/product-details-request/post/postProductDetailsRequest";
 import { createGetProductDetailsResponseRouter } from "./routes/product-details-response/get/getProductDetailsResponses";
 import { createPostProductDetailsResponseRouter } from "./routes/product-details-response/post/postProductDetailsResponse";
-import { commons } from "./routes/swagger/commons";
+import { createConfig } from "./routes/swagger/commons";
 
 
 export function initHttpServer(): Server {
     const httpServer = express();
 
     if (EnvVars.RUN_CONTEXT !== RUN_CONTEXT.TEST) {
-        httpServer.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(commons)));
+        httpServer.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(createConfig())));
     }
 
     httpServer.use(logHttp);

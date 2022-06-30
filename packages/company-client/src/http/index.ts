@@ -24,14 +24,14 @@ import { createPostMyProductRouter } from "./routes/my-products/post/postMyProdu
 import { createGetNewProductsRouter } from "./routes/new-products/get/getNewProduct";
 import { createGetProductDetailsRequestsRouter } from "./routes/product-details-requests/get/getProductDetailsRequests";
 import { createGetProductsRouter } from "./routes/products/get/getProducts";
-import { commons } from "./routes/swagger/commons";
+import { createConfig } from "./routes/swagger/commons";
 
 
 export function initHttpServer(): Server {
     const httpServer = express();
 
     if (EnvVars.RUN_CONTEXT !== RUN_CONTEXT.TEST) {
-        httpServer.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(commons)));
+        httpServer.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(createConfig())));
     }
 
     httpServer.use(logHttp);

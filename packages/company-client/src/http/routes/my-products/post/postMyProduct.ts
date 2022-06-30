@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import { randomUUID } from "crypto";
 import { NextFunction, Request, Response, Router } from "express";
 import { body } from "express-validator";
@@ -26,60 +25,7 @@ interface MyProductParams extends Omit<MyProduct, "id" | "uid"> {
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               uid:
- *                 type: string
- *                 description: the uuid v4 of a product
- *                 example: 0e66f0e4-1c4e-4781-8fd7-36058206d295
- *               id:
- *                 type: string
- *                 description: the uuid v4 of a product group
- *                 example: 0e66f0e4-1c4e-4781-8fd7-36058206d295
- *               name:
- *                 type: string
- *                 description: the product name
- *                 example: Bionic Partition
- *               type:
- *                 type: string
- *                 description: the product type [ assembly | purchase_part | standard_part ]
- *                 example: purchase_part
- *               number:
- *                 type: string
- *                 description: the product number
- *                 example: EAN 20359483920
- *               documents:
- *                 type: array
- *                 description: an array of uids of associated documents
- *                 example: [8181c8ae-eef1-4703-8498-2cf25be2877b, 81c0db28-9d72-4e36-b0f2-e166408bc839]
- *               amount:
- *                 type: number
- *                 description: the amount of the product
- *                 example: 1
- *               amountUnit:
- *                 type: string
- *                 description: the amount unit of the product [ each | l/liter | cm/centimeter | cm2/square_centimeter | cm3/cubic_centimeter | m/meter | m2/square_meter | m3/cubic_meter ]
- *                 example: cm
- *               weight:
- *                 type: number
- *                 description: the weight of the product
- *                 example: 1
- *               weightUnit:
- *                 type: string
- *                 description: the weight unit of the product [ mg/milligram | g/gram | kg/kilogram | %/percentage | ppm/parts_per_million ]
- *                 example: kg
- *               carbonFootprint:
- *                 type: number
- *                 description: the carbon footprint of the product
- *                 example: 1
- *               carbonFootprintUnit:
- *                 type: string
- *                 description: the carbon footprint unit of the product [ mg/milligram | g/gram | kg/kilogram ]
- *                 example: kg
- *             required:
- *               - name
- *               - type
- *               - number
+ *             $ref: '#/components/schemas/Product'
  *     responses:
  *       200:
  *         content:
