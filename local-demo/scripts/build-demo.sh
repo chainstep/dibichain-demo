@@ -9,6 +9,7 @@
 RELATIVE_COMPANY_CLIENT_PATH="../../packages/company-client"
 RELATIVE_COMPANY_FRONTEND_PATH="../../packages/company-frontend"
 RELATIVE_OPERATOR_PATH="../../packages/operator"
+RELATIVE_SMART_CONTRACTS_PATH="../../packages/smart-contracts"
 
 
 ###################################################################################################
@@ -32,6 +33,10 @@ cd ${HERE}/${RELATIVE_COMPANY_FRONTEND_PATH}
 
 echo "[INFO] Building operator image..."
 cd ${HERE}/${RELATIVE_OPERATOR_PATH}
+./scripts/build-docker-image.sh
+
+echo "[INFO] Building contract deployer image..."
+cd ${HERE}/${RELATIVE_SMART_CONTRACTS_PATH}
 ./scripts/build-docker-image.sh
 
 echo "[INFO] Done."

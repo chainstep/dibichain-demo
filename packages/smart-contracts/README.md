@@ -20,7 +20,12 @@ yarn build:clean
 
 # deploy to local chain
 ## CAUTION: you must have a local custom chain running. See ../../ganache folder
-yarn deploy:local
+RPC_URL=http://localhost:8545 DEPLOYER_SECRET=0x786e523ddd21e8c2524ea5da3c8b9b0498b40419aee35e131a6219212ee66b76 yarn deploy
+
+# or use the following command to check if it's already deployed before deploying it
+# (use ./scripts/deploy.sh -h for help)
+
+./scripts/deploy.sh -u http://localhost:8545 -s 0x786e523ddd21e8c2524ea5da3c8b9b0498b40419aee35e131a6219212ee66b76 -c 0xC0156004b2dC4AA2FA30FD0F5E06b7022c718da7
 ```
 
 

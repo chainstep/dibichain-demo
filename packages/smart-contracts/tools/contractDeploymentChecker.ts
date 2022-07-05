@@ -28,7 +28,7 @@ async function main(): Promise<void> {
     const provider = new JsonRpcProvider(rpcUrl);
     try {
         const code = await provider.getCode(address);
-        process.exit(Number(code === "0x"));
+        process.exit(code === "0x" ? 3 : 0);
     } catch (error) {
         console.error((<Error> error).message);
         process.exit(2);

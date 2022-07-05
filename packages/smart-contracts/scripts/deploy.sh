@@ -1,35 +1,37 @@
 #!/bin/bash
 
-# Deploys the contract locally if not already deployed
+# Deploys the contract if not already deployed
 
 ###################################################################################################
 # CONFIGURATION
 ###################################################################################################
 
 CONTRACT_ADDRESS="0xC0156004b2dC4AA2FA30FD0F5E06b7022c718da7"
-
-RPC_URL_LOCAL="http://localhost:8545"
-RPC_URL_REMOTE="https://chain.dibichain.de"
-
-DESTINATION="local"
+RPC_URL="http://localhost:8545"
+DEPLOYER_SECRET="0x786e523ddd21e8c2524ea5da3c8b9b0498b40419aee35e131a6219212ee66b76"
 
 
 ###################################################################################################
 # PARAMETER PARSING
 ###################################################################################################
 
-while getopts "h?u:d:" opt; do
+while getopts "h?u:c:s:" opt; do
     case "$opt" in
         h)
             echo "Parameter: [<value> / (flag)]"
-            echo "-d <destination: local/remote>"
+            echo "-c <contract address>"
+            echo "-s <deployer secret>"
+            echo "-u <rpc url>"
             exit 0
+            ;;
+        c)
+            CONTRACT_ADDRESS=$OPTARG
+            ;;
+        s)
+            DEPLOYER_SECRET=$OPTARG
             ;;
         u)
             RPC_URL=$OPTARG
-            ;;
-        d)
-            DESTINATION=$OPTARG
             ;;
     esac
 done
@@ -46,23 +48,17 @@ HERE="$(pwd)/$(dirname $0)"
 # MAIN
 ###################################################################################################
 
-RPC_URL=""
-if [ ${DESTINATION} == "remote" ]; then
-    RPC_URL=${RPC_URL_REMOTE}
-else
-    RPC_URL=${RPC_URL_LOCAL}
-fi
-
 cd ${HERE}/..
-yarn
 
-npx ts-node ./tools/contractDeploymentChecker.ts ${RPC_URL} ${CONTRACT_ADDRESS}
-EXIT_CODE=$(echo $?)
+echo "Check if contract is already deployed..."
+RPC_URL=${RPC_URL} CONTRACT_ADDRESS=${CONTRACT_ADDRESS} yarn check:contract
+EXIT_CODE_1=$(echo $?)
 
-if [ ${EXIT_CODE} == 1 ]; then # not deployed
-    yarn deploy:${DESTINATION}
-elif [ ${EXIT_CODE} == 2 ]; then # error
+if [ ${EXIT_CODE_1} == 3 ]; then # not deployed
+    echo "Not deployed (exit code 3). Deploying..."
+    RPC_URL=${RPC_URL} DEPLOYER_SECRET=${DEPLOYER_SECRET} yarn deploy
+elif [ ${EXIT_CODE_1} == 2 ]; then # error
     exit 1;
 else
-    echo "[INFO] Contract already deployed."
+    echo "Contract already deployed. Skip deployment"
 fi

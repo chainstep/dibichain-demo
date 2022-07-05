@@ -7,9 +7,7 @@
 ###################################################################################################
 
 BLOCK_CHAIN_WAITING_TIME_SECONDS=20
-
 BUILD_IMAGES=false
-RELATIVE_SMART_CONTRACTS_PATH="../../packages/smart-contracts"
 
 
 ###################################################################################################
@@ -59,9 +57,9 @@ echo "[INFO] Waiting for local chain to be started..."
 sleep ${BLOCK_CHAIN_WAITING_TIME_SECONDS}
 
 echo "[INFO] Deploying contract..."
-cd ${HERE}/${RELATIVE_SMART_CONTRACTS_PATH}/scripts
-./deploy.sh -d local
+COMPOSE_IGNORE_ORPHANS=true ${SUDO} docker-compose -p dibichain-chain -f docker-compose-local-contract-deployer.yml up
 EXIT_CODE=$(echo $?)
+${SUDO} docker-compose -p dibichain-chain -f docker-compose-local-contract-deployer.yml rm -s -f contract-deployer
 
 if [ ${EXIT_CODE} == 1 ]; then
     exit 1;
