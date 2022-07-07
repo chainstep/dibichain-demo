@@ -106,6 +106,45 @@ import { EnvVars, RUN_CONTEXT } from "../../../lib/EnvVars";
  *         - data
  *         - timestamp
  *         - version
+ *     NewProduct:
+ *       type: object
+ *       properties:
+ *         uid:
+ *           type: string
+ *           description: the uuid v4 of a product
+ *           example: 0e66f0e4-1c4e-4781-8fd7-36058206d295
+ *         id:
+ *           type: string
+ *           description: the uuid v4 of a product group
+ *           example: 0e66f0e4-1c4e-4781-8fd7-36058206d295
+ *         name:
+ *           type: string
+ *           description: the product name
+ *           example: Bionic Partition
+ *         type:
+ *           type: string
+ *           description: the product type [ assembly | purchase_part | standard_part ]
+ *           example: purchase_part
+ *         number:
+ *           type: string
+ *           description: the product number
+ *           example: EAN 20359483920
+ *         hash:
+ *           type: string
+ *           description: the normalized product hash
+ *           example: f031e34aaa900645b71588e731425526f1b158fb55f67ef37d05561f9b1b644d
+ *         timestamp:
+ *           type: number
+ *           description: the unix timestamp of the product announcement
+ *           example: 1654606577
+ *       required:
+ *         - uid
+ *         - id
+ *         - name
+ *         - type
+ *         - number
+ *         - hash
+ *         - timestamp
  */
 
  export function createConfig() {
