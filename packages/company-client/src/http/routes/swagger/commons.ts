@@ -7,8 +7,12 @@ import { EnvVars, RUN_CONTEXT } from "../../../lib/EnvVars";
  *  tags:
  *    - name: My Products
  *      description: Routes to handle products the company owns
+ *    - name: Products
+ *      description: Routes to handle products the company requested
  *    - name: My Documents
  *      description: Routes to handle documents the company owns
+ *    - name: Documents
+ *      description: Routes to handle documents the company requested
  */
 
 /**
