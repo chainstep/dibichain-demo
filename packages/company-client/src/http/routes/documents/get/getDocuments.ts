@@ -11,7 +11,7 @@ import { GetDocumentsService } from "./GetDocumentsService";
  * @swagger
  * /documents:
  *   get:
- *     summary: Get documents
+ *     summary: Get requested documents
  *     description: This route lets you retrieve requested documents from the company client
  *     tags: [Documents]
  *     parameters:

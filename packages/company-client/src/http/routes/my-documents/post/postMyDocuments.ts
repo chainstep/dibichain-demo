@@ -19,7 +19,8 @@ interface MyDocumentParams extends Omit<MyDocument, "timestamp"> {
  * /my-documents:
  *   post:
  *     summary: Post a new document
- *     tags: [My Documents]
+ *     description: This route lets you add a new document to the company client
+ *     tags: [Documents]
  *     requestBody:
  *       content:
  *         application/json:

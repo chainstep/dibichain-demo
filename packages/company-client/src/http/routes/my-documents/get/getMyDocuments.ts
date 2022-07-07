@@ -13,7 +13,7 @@ import { GetMyDocumentsService } from "./GetMyDocumentsService";
  *   get:
  *     summary: Get my documents
  *     description: This route lets you retrieve your documents from the company client
- *     tags: [My Documents]
+ *     tags: [Documents]
  *     parameters:
  *       - in: query
  *         name: uid

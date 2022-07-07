@@ -5,14 +5,12 @@ import { EnvVars, RUN_CONTEXT } from "../../../lib/EnvVars";
 /**
  * @swagger
  *  tags:
- *    - name: My Products
- *      description: Routes to handle products the company owns
  *    - name: Products
- *      description: Routes to handle products the company requested
- *    - name: My Documents
- *      description: Routes to handle documents the company owns
+ *      description: Routes to handle products
  *    - name: Documents
- *      description: Routes to handle documents the company requested
+ *      description: Routes to handle documents
+ *    - name: New Products
+ *      description: Routes to handle new product announcements
  */
 
 /**

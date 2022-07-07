@@ -20,7 +20,8 @@ interface MyProductParams extends Omit<MyProduct, "id" | "uid"> {
  * /my-products:
  *   post:
  *     summary: Post a new product
- *     tags: [My Products]
+ *     description: This route lets you add a new product to the company client
+ *     tags: [Products]
  *     requestBody:
  *       content:
  *         application/json:

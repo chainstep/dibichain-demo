@@ -11,7 +11,7 @@ import { GetProductsService } from "./GetProductsService";
  * @swagger
  * /products:
  *   get:
- *     summary: Get products
+ *     summary: Get requested products
  *     description: This route lets you retrieve requested products from the company client
  *     tags: [Products]
  *     parameters:
