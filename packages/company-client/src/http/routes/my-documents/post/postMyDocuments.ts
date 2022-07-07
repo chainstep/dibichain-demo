@@ -14,6 +14,24 @@ interface MyDocumentParams extends Omit<MyDocument, "timestamp"> {
 }
 
 
+/**
+ * @swagger
+ * /my-documents:
+ *   post:
+ *     summary: Post a new document
+ *     tags: [My Documents]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Document'
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 export function createPostMyDocumentsRouter(): Router {
     return createRouter({
         method: "post",

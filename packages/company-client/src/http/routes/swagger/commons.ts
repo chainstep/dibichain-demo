@@ -5,8 +5,10 @@ import { EnvVars, RUN_CONTEXT } from "../../../lib/EnvVars";
 /**
  * @swagger
  *  tags:
- *    name: My Products
- *    description: Routes to handle products the company owns
+ *    - name: My Products
+ *      description: Routes to handle products the company owns
+ *    - name: My Documents
+ *      description: Routes to handle documents the company owns
  */
 
 /**
@@ -68,6 +70,40 @@ import { EnvVars, RUN_CONTEXT } from "../../../lib/EnvVars";
  *         - name
  *         - type
  *         - number
+ *     Document:
+ *       type: object
+ *       properties:
+ *         uid:
+ *           type: string
+ *           description: the uuid v4 of a document
+ *           example: 8181c8ae-eef1-4703-8498-2cf25be2877b
+ *         name:
+ *           type: string
+ *           description: the document name
+ *           example: Bionic_Partition_Report
+ *         type:
+ *           type: string
+ *           description: the document type
+ *           example: pdf
+ *         data:
+ *           type: string
+ *           description: the base 64 encoded document data
+ *           example: JVBERi0xLjMKJcTl8uXrp/Og0MTGCjMgMCBvYmoKPDwgL0ZpbHRlciA...
+ *         timestamp:
+ *           type: number
+ *           description: the unix timestamp the document was created
+ *           example: 1654606577
+ *         version:
+ *           type: string
+ *           description: the document version
+ *           example: 1.1
+ *       required:
+ *         - uid
+ *         - name
+ *         - type
+ *         - data
+ *         - timestamp
+ *         - version
  */
 
  export function createConfig() {
