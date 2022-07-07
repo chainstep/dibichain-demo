@@ -27,7 +27,15 @@ import { GetProductsService } from "./GetProductsService";
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Product'
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     products:
+ *                       type: array
+ *                       items:
+ *                         $ref: '#/components/schemas/Product'
  */
 export function createGetProductsRouter(): Router {
     return createRouter({

@@ -27,7 +27,15 @@ import { GetMyDocumentsService } from "./GetMyDocumentsService";
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Document'
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     myDocuments:
+ *                       type: array
+ *                       items:
+ *                         $ref: '#/components/schemas/Document'
  */
 export function createGetMyDocumentsRouter(): Router {
     return createRouter({
