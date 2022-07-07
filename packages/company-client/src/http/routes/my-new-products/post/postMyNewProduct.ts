@@ -22,7 +22,14 @@ import { PostMyNewProductService } from "./PostMyNewProductService";
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/NewProduct'
+ *             type: object
+ *             properties:
+ *               uid:
+ *                 type: string
+ *                 description: the uuid v4 of a product
+ *                 example: 0e66f0e4-1c4e-4781-8fd7-36058206d295
+ *             required:
+ *               - uid
  *     responses:
  *       200:
  *         content:
