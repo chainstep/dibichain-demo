@@ -13,6 +13,8 @@ import { EnvVars, RUN_CONTEXT } from "../../../lib/EnvVars";
  *      description: Routes to handle new product announcements
  *    - name: Product Details Requests
  *      description: Routes to handle product details requests
+ *    - name: Product Details Responses
+ *      description: Routes to handle product details responses
  */
 
 /**
