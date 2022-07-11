@@ -1,0 +1,13 @@
+version: "3.8"
+networks: 
+  chain-network:
+    external: false
+services:
+  contract-deployer:
+    image: contract-deployer
+    networks: 
+      - chain-network
+    environment: 
+      - RPC_URL=http://ganache:8545
+      - CONTRACT_ADDRESS=0xC0156004b2dC4AA2FA30FD0F5E06b7022c718da7
+      - DEPLOYER_SECRET=0x786e523ddd21e8c2524ea5da3c8b9b0498b40419aee35e131a6219212ee66b76
