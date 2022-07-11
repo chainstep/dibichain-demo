@@ -13,7 +13,7 @@ import { GetMyProductsService } from "./GetMyProductsService";
  *   get:
  *     summary: Get my products
  *     description: This route lets you retrieve your products from the company client
- *     tags: [My Products]
+ *     tags: [Products]
  *     parameters:
  *       - in: query
  *         name: uid
@@ -27,7 +27,15 @@ import { GetMyProductsService } from "./GetMyProductsService";
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Product'
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     myProducts:
+ *                       type: array
+ *                       items:
+ *                         $ref: '#/components/schemas/Product'
  */
 export function createGetMyProductsRouter(): Router {
     return createRouter({

@@ -6,24 +6,6 @@ import { createRouter } from "../../../routerFactory";
 import { PostNewProductService } from "./PostNewProductService";
 
 
-/**
- * @swagger
- * /new-products:
- *   post:
- *     summary: Post a new product to the event bus contract
- *     tags: [New Products]
- *     requestBody:
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Product'
- *     responses:
- *       200:
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- */
 export function createPostNewProductRouter(): Router {
     return createRouter({
         method: "post",

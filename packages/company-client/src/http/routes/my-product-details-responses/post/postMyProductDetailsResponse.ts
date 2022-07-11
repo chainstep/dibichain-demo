@@ -11,6 +11,32 @@ import { createRouter } from "../../../routerFactory";
 import { PostMyProductDetailsResponseService } from "./PostMyProductDetailsResponseService";
 
 
+/**
+ * @swagger
+ * /my-product-details-responses:
+ *   post:
+ *     summary: Sends my product details responses
+ *     description: This route lets you send responses to received product details requests
+ *     tags: [Product Details Responses]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               uid:
+ *                 type: string
+ *                 description: the uuid v4 of a product
+ *                 example: 0e66f0e4-1c4e-4781-8fd7-36058206d295
+ *             required:
+ *               - uid
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 export function createPostMyProductDetailsResponsesRouter(): Router {
     return createRouter({
         method: "post",

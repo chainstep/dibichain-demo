@@ -11,6 +11,32 @@ import { createRouter } from "../../../routerFactory";
 import { PostMyNewProductService } from "./PostMyNewProductService";
 
 
+/**
+ * @swagger
+ * /my-new-products:
+ *   post:
+ *     summary: Announces a new product
+ *     description: This route lets you announce a new product to the dibichain
+ *     tags: [New Products]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               uid:
+ *                 type: string
+ *                 description: the uuid v4 of a product
+ *                 example: 0e66f0e4-1c4e-4781-8fd7-36058206d295
+ *             required:
+ *               - uid
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 export function createPostMyNewProductRouter(): Router {
     return createRouter({
         method: "post",
