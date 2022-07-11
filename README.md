@@ -70,7 +70,6 @@ To access the deployed setup follow these links:
 #### Operator
 
 - api url: https://api.operator.dibichain.de
-- api docs url: https://api.operator.dibichain.de/api-docs
 
 
 #### Block explorer

@@ -34,7 +34,6 @@ Logistly
 
 Operator
 - api url: http://localhost:3000
-- api docs url: http://localhost:3000/api-docs
 
 Explorer
 - explorer url: http://localhost:4000
