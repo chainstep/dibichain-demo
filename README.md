@@ -57,17 +57,20 @@ To access the deployed setup follow these links:
 
 - frontend url: https://www.logistex.dibichain.de
 - client url: https://api.logistex.dibichain.de
+- client api docs url: https://api.logistex.dibichain.de/api-docs
 
 
 #### Logistly
 
 - frontend url: https://www.logistly.dibichain.de
 - client url: https://api.logistly.dibichain.de
+- client api docs url: https://api.logistly.dibichain.de/api-docs
 
 
 #### Operator
 
 - api url: https://api.operator.dibichain.de
+- api docs url: https://api.operator.dibichain.de/api-docs
 
 
 #### Block explorer
