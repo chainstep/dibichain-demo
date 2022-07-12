@@ -46,3 +46,8 @@ To build the docker image, run:
 ``` bash
 ./scripts/build-docker-image.sh
 ```
+
+
+## API Documentation
+
+You can find the API documentation under the `/api-docs` route.

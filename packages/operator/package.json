@@ -4,7 +4,7 @@
     "license": "UNLICENSED",
     "scripts": {
         "start": "node ./dist/src/index.js",
-        "dev": "RUN_CONTEXT=development ts-node-dev ./src/index",
+        "dev": "RUN_CONTEXT=development ts-node-dev --cache-directory ./dev ./src/index",
         "build": "rm -rf ./dist && tsc",
         "lint": "eslint ./ --ext .ts",
         "lint:fix": "eslint ./ --fix --ext .ts",

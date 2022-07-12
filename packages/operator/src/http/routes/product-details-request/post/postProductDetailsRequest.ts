@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { body } from "express-validator";
 import { Contracts } from "../../../../contract/Contracts";
-import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
+import { INVALID_INPUT_TEXT } from "../../../constants";
 import { createRouter } from "../../../routerFactory";
 import { PostProductDetailsRequestService } from "./PostProductDetailsRequestService";
 
@@ -9,7 +9,7 @@ import { PostProductDetailsRequestService } from "./PostProductDetailsRequestSer
 export function createPostProductDetailsRequestRouter(): Router {
     return createRouter({
         method: "post",
-        route: ROUTE_NAMES.productDetailsRequests,
+        route: "/product-details-requests",
         inputPath: "body",
         inputChecks: [
             body("uid").isUUID().withMessage(INVALID_INPUT_TEXT + "uid"),

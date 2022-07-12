@@ -6,15 +6,41 @@ import { Operator } from "../../../../lib/Operator";
 import { MyDocumentStore } from "../../../../storage/my-document/MyDocumentStore";
 import { MyProductStore } from "../../../../storage/my-product/MyProductStore";
 import { ProductDetailsRequestStore } from "../../../../storage/product-details-request/ProductDetailsRequestStore";
-import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
+import { INVALID_INPUT_TEXT } from "../../../constants";
 import { createRouter } from "../../../routerFactory";
 import { PostMyProductDetailsResponseService } from "./PostMyProductDetailsResponseService";
 
 
+/**
+ * @swagger
+ * /my-product-details-responses:
+ *   post:
+ *     summary: Sends my product details responses
+ *     description: This route lets you send responses to received product details requests
+ *     tags: [Product Details Responses]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               uid:
+ *                 type: string
+ *                 description: the uuid v4 of a product
+ *                 example: 0e66f0e4-1c4e-4781-8fd7-36058206d295
+ *             required:
+ *               - uid
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 export function createPostMyProductDetailsResponsesRouter(): Router {
     return createRouter({
         method: "post",
-        route: ROUTE_NAMES.myProductDetailsResponses,
+        route: "/my-product-details-responses",
         inputPath: "body",
         inputChecks: [
             body("uid").isUUID().withMessage(INVALID_INPUT_TEXT + "uid"),

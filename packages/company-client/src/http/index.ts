@@ -6,7 +6,9 @@ import "express-async-errors";
 import { rateLimit } from "express-rate-limit";
 import helmet from "helmet";
 import { createServer, Server } from "http";
-import { EnvVars } from "../lib/EnvVars";
+import swaggerJsDoc from "swagger-jsdoc";
+import swaggerUI from "swagger-ui-express";
+import { EnvVars, RUN_CONTEXT } from "../lib/EnvVars";
 import { logErrors } from "./middlewares/errorLogging";
 import { logHttp } from "./middlewares/httpLogging";
 import { createGetDocumentsRouter } from "./routes/documents/get/getDocuments";
@@ -22,10 +24,15 @@ import { createPostMyProductRouter } from "./routes/my-products/post/postMyProdu
 import { createGetNewProductsRouter } from "./routes/new-products/get/getNewProduct";
 import { createGetProductDetailsRequestsRouter } from "./routes/product-details-requests/get/getProductDetailsRequests";
 import { createGetProductsRouter } from "./routes/products/get/getProducts";
+import { createConfig } from "./routes/swagger/commons";
 
 
 export function initHttpServer(): Server {
     const httpServer = express();
+
+    if (EnvVars.RUN_CONTEXT !== RUN_CONTEXT.TEST) {
+        httpServer.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(createConfig())));
+    }
 
     httpServer.use(logHttp);
     httpServer.use(helmet());
@@ -53,7 +60,7 @@ export function initHttpServer(): Server {
     httpServer.use(createGetDocumentsRouter());
 
     httpServer.all("*", (request, response) => {
-    throw new NotFoundError();
+        throw new NotFoundError();
     });
 
     httpServer.use(logErrors);

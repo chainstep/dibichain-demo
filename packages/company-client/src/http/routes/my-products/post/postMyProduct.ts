@@ -3,8 +3,8 @@ import { NextFunction, Request, Response, Router } from "express";
 import { body } from "express-validator";
 import { MyProductStore } from "../../../../storage/my-product/MyProductStore";
 import { MyProduct } from "../../../../types";
-import { isProductType, isAmountUnit, isWeightUnit, isCarbonFootprintUnit, isDocumentIdArray } from "../../../../utils/propertyCheckers";
-import { INVALID_INPUT_TEXT, ROUTE_NAMES } from "../../../constants";
+import { isAmountUnit, isCarbonFootprintUnit, isDocumentIdArray, isProductType, isWeightUnit } from "../../../../utils/propertyCheckers";
+import { INVALID_INPUT_TEXT } from "../../../constants";
 import { createRouter } from "../../../routerFactory";
 import { PostMyProductService } from "./PostMyProductService";
 
@@ -15,10 +15,29 @@ interface MyProductParams extends Omit<MyProduct, "id" | "uid"> {
 }
 
 
+/**
+ * @swagger
+ * /my-products:
+ *   post:
+ *     summary: Post a new product
+ *     description: This route lets you add a new product to the company client
+ *     tags: [Products]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Product'
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 export function createPostMyProductRouter(): Router {
     return createRouter({
         method: "post",
-        route: ROUTE_NAMES.myProducts,
+        route: "/my-products",
         inputPath: "body",
         inputChecks: [
             body("uid").optional().isUUID().withMessage(INVALID_INPUT_TEXT + "uid"),
