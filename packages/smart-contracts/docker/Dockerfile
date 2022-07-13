@@ -1,5 +1,5 @@
 ###################################################################################################
-# BUILD CONTRACT BUILDER
+# BUILD CONTRACT DEPLOYER
 ###################################################################################################
 
 FROM ubuntu:20.04
@@ -38,6 +38,9 @@ COPY scripts ./scripts
 COPY tools ./tools
 COPY test ./test
 COPY contracts ./contracts
+
+# Build contract
+RUN yarn build
 
 # Set entrypoint
 ENTRYPOINT ["/usr/app/entrypoint.sh"]
