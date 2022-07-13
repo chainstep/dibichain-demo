@@ -24,10 +24,6 @@ RUN yarn install --frozen-lockfile
 # Copy metadata
 COPY tsconfig.json .
 COPY hardhat.config.ts .
-COPY .solhint.json .
-COPY .solhintignore .
-COPY .eslintrc.js .
-COPY .eslintignore .
 
 # Copy docker files
 COPY deployment ./deployment
@@ -36,7 +32,6 @@ COPY scripts ./scripts
 
 # Copy source files
 COPY tools ./tools
-COPY test ./test
 COPY contracts ./contracts
 
 # Build contract
