@@ -12,7 +12,7 @@ env:
   LOGISTEX_DOMAIN: api.logistex.dibichain.de
 
 jobs: 
-  deploy:
+  populate:
     runs-on: ubuntu-latest
     steps:
       - name: Check branch
