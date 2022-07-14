@@ -28,7 +28,7 @@ jobs:
 
       - name: Prepare runner
         run: |
-          apt install jo -y
+          sudo apt install jo -y
 
       - name: Populate logistex
         run: |
