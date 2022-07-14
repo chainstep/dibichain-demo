@@ -1,5 +1,5 @@
 ###################################################################################################
-# BUILD CONTRACT BUILDER
+# BUILD CONTRACT DEPLOYER
 ###################################################################################################
 
 FROM ubuntu:20.04
@@ -24,10 +24,6 @@ RUN yarn install --frozen-lockfile
 # Copy metadata
 COPY tsconfig.json .
 COPY hardhat.config.ts .
-COPY .solhint.json .
-COPY .solhintignore .
-COPY .eslintrc.js .
-COPY .eslintignore .
 
 # Copy docker files
 COPY deployment ./deployment
@@ -36,8 +32,10 @@ COPY scripts ./scripts
 
 # Copy source files
 COPY tools ./tools
-COPY test ./test
 COPY contracts ./contracts
+
+# Build contract
+RUN yarn build
 
 # Set entrypoint
 ENTRYPOINT ["/usr/app/entrypoint.sh"]
