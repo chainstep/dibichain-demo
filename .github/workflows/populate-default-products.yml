@@ -31,6 +31,7 @@ jobs:
           sudo apt install jo -y
 
       - name: Populate logistex
+        shell: bash
         run: |
           #!/bin/bash
           jo -p amount=1 amountUnit="each" carbonFootprint=45 carbonFootprintUnit="kg" documents[]=8181c8ae-eef1-4703-8498-2cf25be2877b name="Scalmalloy Part" number=AP12345 type=purchase_part weight=200 weightUnit=g |
