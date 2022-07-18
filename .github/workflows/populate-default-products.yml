@@ -36,4 +36,5 @@ jobs:
           curl -X POST -H 'Content-Type: application/json' -d @- "https://api.logistex.dibichain.de/my-products"
           
           jo -p myDocuments[]=$(jo uid=8181c8ae-eef1-4703-8498-2cf25be2877b name=Carbon_Footprint_Report_Scalmalloy_AP12345 type=pdf timestamp=$(date +%s) version="1.1" data=%"./resources/Carbon_Footprint_Report_Scalmalloy_AP12345.pdf") |
+          xargs |
           curl -X POST -H 'Content-Type: application/json' -d @- "https://api.logistex.dibichain.de/my-documents"
