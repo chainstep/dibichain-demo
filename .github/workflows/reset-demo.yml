@@ -2,6 +2,8 @@ name: reset dibichain demo
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '1 * 1 * *' # At minute 1 on day-of-month 1
 
 # You also need to add a RUNNER_PRIVATE_KEY action secret
 # and fill it with an ssh private key of the server user
@@ -85,3 +87,9 @@ jobs:
       - restart-operator
     uses: ./.github/workflows/deploy-logistly.yml
     secrets: inherit
+  
+  populate-products:
+    needs:
+      - restart-logistex
+      - restart-logistly
+    uses: ./.github/workflows/populate-default-products.yml
