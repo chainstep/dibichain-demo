@@ -1,0 +1,41 @@
+name: populate default products
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+env:
+  # github config
+  DEPLOY_BRANCH: main
+
+  # server config
+  LOGISTEX_DOMAIN: api.logistex.dibichain.de
+
+jobs: 
+  populate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch
+        run: |
+          BRANCH=${GITHUB_REF#refs/heads/}
+          if [ ${BRANCH} != ${{ env.DEPLOY_BRANCH }} ]; then
+            echo "Action only works on branch: ${{ env.DEPLOY_BRANCH }}"
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Prepare runner
+        run: |
+          sudo apt install jo -y
+
+      - name: Populate logistex
+        shell: bash
+        run: |
+          #!/bin/bash
+          jo -p amount=1 amountUnit="each" carbonFootprint=45 carbonFootprintUnit="kg" documents[]=8181c8ae-eef1-4703-8498-2cf25be2877b name="Scalmalloy Part" number=AP12345 type=purchase_part weight=200 weightUnit=g |
+          curl -X POST -H 'Content-Type: application/json' -d @- "https://api.logistex.dibichain.de/my-products"
+          
+          jo -p myDocuments[]=$(jo uid=8181c8ae-eef1-4703-8498-2cf25be2877b name=Carbon_Footprint_Report_Scalmalloy_AP12345 type=pdf timestamp=$(date +%s) version="1.1" data=%"./resources/Carbon_Footprint_Report_Scalmalloy_AP12345.pdf") |
+          curl -X POST -H 'Content-Type: application/json' -d @- "https://api.logistex.dibichain.de/my-documents"
