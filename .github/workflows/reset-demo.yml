@@ -85,3 +85,9 @@ jobs:
       - restart-operator
     uses: ./.github/workflows/deploy-logistly.yml
     secrets: inherit
+  
+  populate-products:
+    needs:
+      - restart-logistex
+      - restart-logistly
+    uses: ./.github/workflows/populate-default-products.yml
