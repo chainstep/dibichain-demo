@@ -10,6 +10,11 @@ This folder holds the configuration needed to run the dibichain demo locally on 
 ./scripts/run-demo.sh -b
 ```
 
+**Populate**
+```bash
+./scripts/populate-demo.sh
+```
+
 **Stop**
 ```bash
 ./scripts/stop-demo.sh
@@ -54,6 +59,11 @@ After that, run the demo with:
 You can also build the images automatically before running the demo with:
 ```bash
 ./scripts/run-demo.sh -b
+```
+
+For populating the demo with some products use:
+```bash
+./scripts/populate-demo.sh
 ```
 
 You can stop the demo with:
