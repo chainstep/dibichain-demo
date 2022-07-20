@@ -10,6 +10,7 @@ env:
 
   # server config
   LOGISTEX_DOMAIN: api.logistex.dibichain.de
+  LOGISTLY_DOMAIN: api.logistly.dibichain.de
 
 jobs: 
   populate:
@@ -35,3 +36,7 @@ jobs:
         run: |
           node ./resources/productAdder.js ${{ env.LOGISTEX_DOMAIN }} ./resources/products/scalmalloy-part/scalmalloy-part.json
           node ./resources/documentAdder.js ${{ env.LOGISTEX_DOMAIN }} 8181c8ae-eef1-4703-8498-2cf25be2877b ./resources/products/scalmalloy-part/Carbon_Footprint_Report_Scalmalloy_AP12345.pdf
+      
+      - name: Populate logistly
+        run: |
+          node ./resources/productAdder.js ${{ env.LOGISTLY_DOMAIN }} ./resources/products/bionic-partition/bionic-partition.json
