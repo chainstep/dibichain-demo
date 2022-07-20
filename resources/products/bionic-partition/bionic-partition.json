@@ -1,0 +1,11 @@
+{
+    "amount": 1,
+    "amountUnit": "each",
+    "carbonFootprint": 1345,
+    "carbonFootprintUnit": "kilogram",
+    "name": "Bionic Partition",
+    "number": "EAN 20359483920",
+    "type": "assembly",
+    "weight": 65.53,
+    "weightUnit": "kilogram"
+}
