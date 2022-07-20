@@ -73,13 +73,13 @@ function sendRequest(url, options, data) {
     if (url.startsWith("http://")){
         request = http.request(options, response => {
             response.on("data", data => {
-                process.stdout.write(data);
+                checkResponseData(data.toString());
             });
         });
-    } else if(url.startsWith("https://")) {
+    } else if (url.startsWith("https://")) {
         request = https.request(options, response => {
             response.on("data", data => {
-                process.stdout.write(data);
+                checkResponseData(data.toString());
             });
         });
     } else {
@@ -94,4 +94,10 @@ function sendRequest(url, options, data) {
     
     request.write(data);
     request.end();
+}
+
+function checkResponseData(responseData) {
+    if (responseData !== "{}") {
+        console.error(responseData)
+    }
 }
