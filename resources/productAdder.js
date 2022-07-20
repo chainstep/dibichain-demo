@@ -48,7 +48,6 @@ function createOptions(url) {
     const domain = domainAndPortArray[0];
     const port = domainAndPortArray[1];
 
-
     let options = {
         hostname: domain,
         path: "/my-products",
@@ -98,6 +97,6 @@ function sendRequest(url, options, data) {
 
 function checkResponseData(responseData) {
     if (responseData !== "{}") {
-        console.error(responseData)
+        console.error(responseData);
     }
 }
