@@ -1,4 +1,5 @@
 const https = require("https");
+const http = require("http");
 const fs = require("fs");
 
 
@@ -23,19 +24,7 @@ const version = params[3];
 const data = JSON.stringify({ myDocuments: [ createDocumentData(uid, documentPath, version) ] });
 const options = createOptions(url);
 
-const req = https.request(options, res => {
-    res.on("data", d => {
-        process.stdout.write(d);
-    });
-});
-
-req.on("error", error => {
-    console.error(error);
-    process.exit(1);
-});
-
-req.write(data);
-req.end();
+sendRequest(url, options, data);
 
 
 /*###################################################################################################
@@ -70,13 +59,58 @@ function createDocumentData(uid, documentPath, version) {
 
 
 function createOptions(url) {
-    return {
-        hostname: url.startsWith("https://") ? url.replace("https://", "") : url,
+    const domainAndPort = url.startsWith("https://")
+                        ? url.replace("https://", "")
+                        : url.startsWith("http://")
+                        ? url.replace("http://", "")
+                        : url;
+    const domainAndPortArray = domainAndPort.split(":");
+    const domain = domainAndPortArray[0];
+    const port = domainAndPortArray[1];
+
+    let options = {
+        hostname: domain,
         path: "/my-documents",
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Content-Length": data.length,
-        },
+        }
     };
+
+    if (port) {
+        options.port = port;
+    }
+    
+    return options;
+}
+
+
+function sendRequest(url, options, data) {
+    let request;
+
+    if (url.startsWith("http://")){
+        request = http.request(options, response => {
+            response.on("data", data => {
+                process.stdout.write(data);
+            });
+        });
+    } else if(url.startsWith("https://")) {
+        request = https.request(options, response => {
+            response.on("data", data => {
+                process.stdout.write(data);
+            });
+        });
+    } else {
+        console.error("wrong protocol");
+        process.exit(1);
+    }
+
+    request.on("error", error => {
+        console.error(error);
+        process.exit(1);
+    });
+    
+    request.write(data);
+    request.end();
 }

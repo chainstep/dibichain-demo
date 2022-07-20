@@ -33,5 +33,5 @@ jobs:
 
       - name: Populate logistex
         run: |
-          node ./resources/productAdder.js ${{ env.LOGISTEX_DOMAIN }} ./resources/scalmalloy-part/scalmalloy-part.json
-          node ./resources/documentAdder.js ${{ env.LOGISTEX_DOMAIN }} 8181c8ae-eef1-4703-8498-2cf25be2877b ./resources/scalmalloy-part/Carbon_Footprint_Report_Scalmalloy_AP12345.pdf
+          node ./resources/productAdder.js ${{ env.LOGISTEX_DOMAIN }} ./resources/products/scalmalloy-part/scalmalloy-part.json
+          node ./resources/documentAdder.js ${{ env.LOGISTEX_DOMAIN }} 8181c8ae-eef1-4703-8498-2cf25be2877b ./resources/products/scalmalloy-part/Carbon_Footprint_Report_Scalmalloy_AP12345.pdf

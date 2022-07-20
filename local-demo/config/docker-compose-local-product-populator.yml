@@ -1,0 +1,13 @@
+version: "3.8"
+networks: 
+  product-populator-network:
+    external: false
+services:
+  product-populator:
+    image: product-populator
+    networks: 
+      - product-populator-network
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    environment: 
+      - LOGISTEX_URL=http://host.docker.internal:3100
