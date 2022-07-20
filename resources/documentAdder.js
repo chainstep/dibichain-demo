@@ -59,11 +59,7 @@ function createDocumentData(uid, documentPath, version) {
 
 
 function createOptions(url) {
-    const domainAndPort = url.startsWith("https://")
-                        ? url.replace("https://", "")
-                        : url.startsWith("http://")
-                        ? url.replace("http://", "")
-                        : url;
+    const domainAndPort = url.replace("https://", "").replace("http://", "");
     const domainAndPortArray = domainAndPort.split(":");
     const domain = domainAndPortArray[0];
     const port = domainAndPortArray[1];
