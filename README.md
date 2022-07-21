@@ -23,7 +23,9 @@ More information can be found [here](https://innovative-produktkreislaeufe.de/Pr
 </p>
 </details>
 
-<img src="docs/logos/BMBF_gefoerdert_2017_en.jpg" alt="drawing" width="200"/> <img src="docs/logos/dibichain_logo.png" alt="drawing" width="110"/> 
+https://github.com/chainstep/dibichain-demo/blob/update-docu/docs/logos/BMBF.jpg
+
+<img src="docs/logos/BMBF.jpg" alt="drawing" width="200"/> <img src="docs/logos/dibichain.png" alt="drawing" width="110"/> 
 
 ## General
 
