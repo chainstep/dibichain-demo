@@ -2,6 +2,11 @@
 
 This repository hosts the source code of the Dibichain demonstrator.
 
+The demonstrator is part of the R&D project *ReZiProK - Verbundvorhaben: DIBICHAIN - Digitales Abbild von Kreislaufsystemen mittels einer Blockchain* funded by the german government with id *Förderkennzeichen: 033R241C*. 
+
+More information can be found [here](https://innovative-produktkreislaeufe.de/Projekte/DIBICHAIN.html).
+
+
 <details><summary><i>Table of Contents</i></summary>
 <p>
 
@@ -18,6 +23,7 @@ This repository hosts the source code of the Dibichain demonstrator.
 </p>
 </details>
 
+<img src="docs/logos/BMBF_gefoerdert_2017_en.jpg" alt="drawing" width="200"/> <img src="docs/logos/dibichain_logo.png" alt="drawing" width="110"/> 
 
 ## General
 
