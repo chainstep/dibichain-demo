@@ -2,6 +2,11 @@
 
 This repository hosts the source code of the Dibichain demonstrator.
 
+The demonstrator is part of the R&D project *ReZiProK - Verbundvorhaben: DIBICHAIN - Digitales Abbild von Kreislaufsystemen mittels einer Blockchain* funded by the german government with id *Förderkennzeichen: 033R241C*. 
+
+More information can be found [here](https://innovative-produktkreislaeufe.de/resswinn/en/Projects/DIBICHAIN.html).
+
+
 <details><summary><i>Table of Contents</i></summary>
 <p>
 
@@ -18,6 +23,9 @@ This repository hosts the source code of the Dibichain demonstrator.
 </p>
 </details>
 
+https://github.com/chainstep/dibichain-demo/blob/update-docu/docs/logos/BMBF.jpg
+
+<img src="docs/logos/BMBF.jpg" alt="drawing" width="200"/> <img src="docs/logos/dibichain.png" alt="drawing" width="110"/> 
 
 ## General
 
@@ -25,7 +33,7 @@ The general idea of Dibichain is to provide product information to unknown parti
 To do so, it uses an EVM based smart contract as an event bus to broadcast the announcement of new products and interests in product details. A participant is able to either announce new products that one is in control of or to request details of products that one is interested in. Announcing a product requires revealing public available, non-critical product information that is open to everyone.
 Requesting product information is an anonymous process where the requester is only identified by a one-time public key that is dynamically generated for each request. Responses to these requests are encrypted with the help of the requesters public keys. This ensures that only the requester is able to see the detailed product information.
 
-To reduce complexity, a so called operator is used to issue transactions to the contract and to route messages between participants. Since the operator is a central entity and acts as a man-in-the-middle, all participant are required to trust the operator. For further development it is recommended to remove the operator from the Dibichain system and use a peer-to-peer approach.
+To reduce complexity, a so called operator is used to issue transactions to the contract and to route messages between participants. Since the operator is a central entity and acts as a man-in-the-middle, all participant are required to trust the operator. For further development it is recommended to either remove the operator from the Dibichain system and use a peer-to-peer approach, or to decentralize the operator to a network of operators to mitigate company to public key correlation.
 
 The following diagram should give a high level overview of the Dibichain demonstrator flow: (a detailed description of the workflow can be found [here](docs/markdown/detailed-flow.md))
 
