@@ -9,8 +9,8 @@ env:
   DEPLOY_BRANCH: main
 
   # server config
-  LOGISTEX_DOMAIN: api.logistex.dibichain.de
-  LOGISTLY_DOMAIN: api.logistly.dibichain.de
+  LOGISTEX_URL: https://api.logistex.dibichain.de
+  LOGISTLY_URL: https://api.logistly.dibichain.de
 
 jobs: 
   populate:
@@ -34,9 +34,9 @@ jobs:
 
       - name: Populate logistex
         run: |
-          node ./resources/productAdder.js ${{ env.LOGISTEX_DOMAIN }} ./resources/products/scalmalloy-part/scalmalloy-part.json
-          node ./resources/documentAdder.js ${{ env.LOGISTEX_DOMAIN }} 8181c8ae-eef1-4703-8498-2cf25be2877b ./resources/products/scalmalloy-part/Carbon_Footprint_Report_Scalmalloy_AP12345.pdf
+          node ./resources/productAdder.js ${{ env.LOGISTEX_URL }} ./resources/products/scalmalloy-part/scalmalloy-part.json
+          node ./resources/documentAdder.js ${{ env.LOGISTEX_URL }} 8181c8ae-eef1-4703-8498-2cf25be2877b ./resources/products/scalmalloy-part/Carbon_Footprint_Report_Scalmalloy_AP12345.pdf
       
       - name: Populate logistly
         run: |
-          node ./resources/productAdder.js ${{ env.LOGISTLY_DOMAIN }} ./resources/products/bionic-partition/bionic-partition.json
+          node ./resources/productAdder.js ${{ env.LOGISTLY_URL }} ./resources/products/bionic-partition/bionic-partition.json
