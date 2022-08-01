@@ -14,19 +14,19 @@ export abstract class AMongoDBStore {
     }
 
 
-    protected async _upsert<T>(filter: object, update: T): Promise<void> {
+    protected async upsert(filter: object, update: object): Promise<void> {
         await connect(this.url);
-        await this.model.updateOne(filter, update, { upsert: true });
+        await this.model.updateMany(filter, update, { upsert: true });
     }
 
 
-    protected async _find<T>(filter: object): Promise<T[]> {
+    protected async find<T>(filter: object): Promise<T[]> {
         await connect(this.url);
         return await this.model.find(filter, this.REMOVE_MONGO_FIELDS).lean();
     }
 
 
-    protected async _delete(filter: object): Promise<void> {
+    protected async delete(filter: object): Promise<void> {
         await connect(this.url);
         await this.model.deleteMany(filter);
     }

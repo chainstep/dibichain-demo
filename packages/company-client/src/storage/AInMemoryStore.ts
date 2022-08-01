@@ -1,19 +1,20 @@
 
-type Value = string | boolean | number;
-
-
 export abstract class AInMemoryStore {
-    public abstract store: unknown[];
+    public abstract store: object[];
 
 
-    protected _upsert(object: unknown, key: string): void {
-        const index = this.store.findIndex((_object) => {
-            return (<never> _object)[key] === (<never> object)[key];
-        });
-        if (index === -1) {
-            this.store.push(this.deepCopy(object));
+    protected upsert(filter: object, update: object): void {
+        const docs = this.find(filter);
+
+        if (docs.length === 0) {
+            this.store.push(this.deepCopy(update));
         } else {
-            this.store[index] = this.deepCopy(object);
+            docs.forEach((doc) => {
+                const index = this.store.findIndex((_doc) => {
+                    return doc === _doc;
+                });
+                this.store[index] = { ...this.store[index], ...update };
+            });
         }
     }
 
@@ -22,8 +23,11 @@ export abstract class AInMemoryStore {
     }
 
 
-    protected _find<T>(keys: string[], values: Value[]): T[] {
-        return (<T[]> this.store).filter((object) => {
+    protected find<T>(filter: object): T[] {
+        const keys = Object.keys(filter);
+        const values = Object.values(filter);
+
+        return <T[]> <unknown> this.store.filter((object) => {
             for (let i = 0 ; i < keys.length ; i++) {
                 if ((<never> object)[keys[i]] !== values[i]) {
                     return false;
@@ -34,8 +38,11 @@ export abstract class AInMemoryStore {
     }
 
 
-    protected _delete(key: string, value: string | boolean | number): void {
-        this.store = this.store.filter(object => (<never> object)[key]!== value);
+    protected delete(filter: object): void {
+        const docs = this.find(filter);
+        docs.forEach((doc) => {
+            this.store = this.store.filter(_doc => doc !== doc);
+        });
     }
 
 
