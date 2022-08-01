@@ -2,6 +2,11 @@ name: build company frontend image
 
 on:
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      version:
+        type: string
+        required: false
   push:
     branches:
       - main
@@ -14,8 +19,8 @@ env:
   
   # docker config
   IMAGE_NAME: company-frontend
-  IMAGE_TAG: demo-latest
   REGISTRY_NAME: ghcr.io/chainstep/dibichain
+  LATEST_TAG: latest
 
 jobs:
   test-project:
@@ -29,6 +34,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Set image tags
+        run: |
+          echo "IMAGE_TAG=${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.LATEST_TAG }}" >> $GITHUB_ENV
+          if [ "${{ github.event.inputs.version }}" != "" ]; then
+            echo "RELEASE_IMAGE_TAG=${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.version }}" >> $GITHUB_ENV
+          fi
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -51,4 +63,5 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            ${{ env.IMAGE_TAG }}
+            ${{ env.RELEASE_IMAGE_TAG }}
