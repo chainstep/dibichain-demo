@@ -1,43 +1,48 @@
+
 export abstract class AInMemoryStore {
-    public abstract store: unknown[];
+    public abstract store: object[];
 
 
-    protected _upsert(object: unknown, keys: string[]): void {
-        const index = this.store.findIndex(_object => this.hasSameValues(_object, object, keys));
+    protected _upsert(filter: object, update: object): void {
+        const docs = this._find(filter);
 
-        if (index === -1) {
-            this.store.push(this.deepCopy(object));
+        if (docs.length === 0) {
+            this.store.push(this.deepCopy(update));
         } else {
-            this.store[index] = this.deepCopy(object);
+            docs.forEach((doc) => {
+                const index = this.store.findIndex((_doc) => {
+                    return doc === _doc;
+                });
+                this.store[index] = { ...this.store[index], ...update };
+            });
         }
     }
 
-    private hasSameValues(_object: unknown, object: unknown, keys: string[]): boolean {
-        const sameValues = <boolean[]> [];
-        keys.forEach(key => sameValues.push(false));
-        keys.forEach((key, i) => sameValues[i] = (<never> _object)[key] === (<never> object)[key]);
-
-        for (let i = 0 ; i < sameValues.length ; i++) {
-            const sameValue = sameValues[i];
-            if (!sameValue) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    protected deepCopy<T>(object: T): T {
+    private deepCopy<T>(object: T): T {
         return JSON.parse(JSON.stringify(object));
     }
 
 
-    protected _find<T>(key: string, value: string | boolean | number): T[] {
-        return (<T[]> this.store).filter(object => (<never> object)[key] === value);
+    protected _find<T>(filter: object): T[] {
+        const keys = Object.keys(filter);
+        const values = Object.values(filter);
+
+        return <T[]> <unknown> this.store.filter((object) => {
+            for (let i = 0 ; i < keys.length ; i++) {
+                if ((<never> object)[keys[i]] !== values[i]) {
+                    return false;
+                }
+            }
+            return true;
+        });
     }
 
 
-    protected _delete(key: string, value: string | boolean | number): void {
-        this.store = this.store.filter(object => (<never> object)[key]!== value);
+    protected _delete(filter: object): void {
+        const docs = this._find(filter);
+        docs.forEach((doc) => {
+            this.store = this.store.filter(_doc => doc !== doc);
+        });
     }
 
 

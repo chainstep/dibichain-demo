@@ -1,13 +1,5 @@
-export interface ProductDetailsResponse {
-    uid: string
-    publicKey: string;
-    message: {
-        secret: string;
-        cipherText: string;
-        initVector: string;
-    },
-    timestamp: number;
-}
+import { ProductDetailsResponse } from "../../types";
+
 
 export interface IProductDetailsResponseStore {
     upsert(response: ProductDetailsResponse): Promise<void>;

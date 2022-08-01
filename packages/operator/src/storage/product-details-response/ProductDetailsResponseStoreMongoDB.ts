@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
+import { ProductDetailsResponse } from "../../types";
 import { AMongoDBStore } from "../AMongoDBStore";
-import { IProductDetailsResponseStore, ProductDetailsResponse } from "./IProductDetailsResponseStore";
+import { IProductDetailsResponseStore } from "./IProductDetailsResponseStore";
 
 
 export class ProductDetailsResponseStoreMongoDB extends AMongoDBStore implements IProductDetailsResponseStore {
