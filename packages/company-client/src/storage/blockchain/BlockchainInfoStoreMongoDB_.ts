@@ -3,7 +3,7 @@ import { REMOVE_MONGO_FIELDS } from "../constants";
 import { BlockchainInfo, IBlockchainInfoStore } from "./IBlockchainInfoStore";
 
 
-export class BlockchainInfoStoreMongoDb implements IBlockchainInfoStore {
+export class BlockchainInfoStoreMongoDB implements IBlockchainInfoStore {
     private readonly mongoUrl: string;
     private readonly model = model("BlockchainInfo", new Schema<BlockchainInfo>({
         blockHeight: { type: Number, required: true },
