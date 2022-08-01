@@ -2,7 +2,7 @@ import { EnvVars } from "../../lib/EnvVars";
 import { StorageType } from "../StorageType";
 import { IBlockchainInfoStore } from "./IBlockchainInfoStore";
 import { BlockchainInfoStoreInMemory } from "./BlockchainInfoStoreInMemory";
-import { BlockchainInfoStoreMongoDb } from "./BlockchainInfoStoreMongoDb";
+import { BlockchainInfoStoreMongoDB } from "./BlockchainInfoStoreMongoDB";
 
 
 export function createBlockchainInfoStore(type: StorageType): IBlockchainInfoStore {
@@ -24,5 +24,5 @@ function createInMemoryStore(): IBlockchainInfoStore {
 }
 
 function createMongoDbStore(): IBlockchainInfoStore {
-    return new BlockchainInfoStoreMongoDb({ mongoUrl: EnvVars.MONGO_DB_URL });
+    return new BlockchainInfoStoreMongoDB({ mongoUrl: EnvVars.MONGO_DB_URL });
 }

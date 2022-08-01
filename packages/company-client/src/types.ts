@@ -15,6 +15,7 @@ export interface Product {
 
 export type MyProduct = Product
 
+
 export interface ProductEvent {
     uid: string;
     timestamp: number;
@@ -30,6 +31,7 @@ export interface NewProduct extends ProductEvent {
 
 export type MyNewProduct = NewProduct
 
+
 export interface NewProductEventParams {
     id: string;
     uid: string;
@@ -39,11 +41,13 @@ export interface NewProductEventParams {
     hash: string;
 }
 
+
 export interface ProductDetailsRequestEventParams {
     uid: string;
     publicKey: string;
     algorithm: string;
 }
+
 
 export interface ProductDetailsRequest extends ProductEvent {
     publicKey: string;
@@ -53,11 +57,13 @@ export interface ProductDetailsRequest extends ProductEvent {
 
 export type MyProductDetailsRequest = ProductDetailsRequest
 
+
 export interface Key {
     privateKey: string;
     publicKey: string;
     algorithm: string;
 }
+
 
 export interface EncMessage {
     secret: string;
@@ -65,11 +71,13 @@ export interface EncMessage {
     initVector: string;
 }
 
+
 export interface ProductDetailsResponse {
     publicKey: string,
     uid: string;
     message: EncMessage
 }
+
 
 export interface Document {
     uid: string;
@@ -82,7 +90,14 @@ export interface Document {
 
 export type MyDocument = Document
 
+
 export interface ProductPackage {
     product: Product,
     documents: Document[]
+}
+
+
+export type BlockchainInfo = {
+    blockHeight: number;
+    id?: string;
 }

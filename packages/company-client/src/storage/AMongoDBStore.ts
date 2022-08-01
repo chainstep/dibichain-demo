@@ -14,9 +14,9 @@ export abstract class AMongoDBStore {
     }
 
 
-    protected async _upsert<T>(filter: object, update: T): Promise<void> {
+    protected async _upsert(filter: object, update: object): Promise<void> {
         await connect(this.url);
-        await this.model.updateOne(filter, update, { upsert: true });
+        await this.model.updateMany(filter, update, { upsert: true });
     }
 
 

@@ -8,21 +8,16 @@ export class MyProductDetailsRequestStoreInMemory extends AInMemoryStore impleme
 
 
     public async upsert(myProductDetailsRequest: MyProductDetailsRequest): Promise<void> {
-        this._upsert(myProductDetailsRequest, "uid");
+        this._upsert({ uid: myProductDetailsRequest.uid }, myProductDetailsRequest);
     }
 
 
     public async find(params: {uid?: string}): Promise<MyProductDetailsRequest[]> {
-        const { uid } = params;
-        if (uid) {
-            return this._find(["uid"], [uid]);
-        }
-        return this.store;
+        return this._find(params);
     }
 
 
     public async delete(params: {uid: string}): Promise<void> {
-        const { uid } = params;
-        this._delete("uid", uid);
+        return this._delete(params);
     }
 }

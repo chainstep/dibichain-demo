@@ -1,9 +1,9 @@
 import request from "supertest";
 import { initHttpServer } from "../../src/http";
 import { EnvVars } from "../../src/lib/EnvVars";
-import { ProductDetailsResponse } from "../../src/storage/product-details-response/IProductDetailsResponseStore";
 import { ProductDetailsResponseStore } from "../../src/storage/product-details-response/ProductDetailsResponseStore";
 import { ProductDetailsResponseStoreInMemory } from "../../src/storage/product-details-response/ProductDetailsResponseStoreInMemory";
+import { ProductDetailsResponse } from "../../src/types";
 import { config } from "../config";
 import { TEST_PRODUCT_DETAILS_RESPONSE } from "../constants";
 

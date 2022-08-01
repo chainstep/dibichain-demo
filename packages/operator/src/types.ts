@@ -7,8 +7,21 @@ export interface NewProduct {
     hash: string;
 }
 
+
 export interface EncMessage {
     secret: string;
     cipherText: string;
     initVector: string;
+}
+
+
+export interface ProductDetailsResponse {
+    uid: string
+    publicKey: string;
+    message: {
+        secret: string;
+        cipherText: string;
+        initVector: string;
+    },
+    timestamp: number;
 }

@@ -1,4 +1,5 @@
-import { IProductDetailsResponseStore, ProductDetailsResponse } from "../../../../storage/product-details-response/IProductDetailsResponseStore";
+import { IProductDetailsResponseStore } from "../../../../storage/product-details-response/IProductDetailsResponseStore";
+import { ProductDetailsResponse } from "../../../../types";
 import { RouteService } from "../../../routerFactory";
 
 
