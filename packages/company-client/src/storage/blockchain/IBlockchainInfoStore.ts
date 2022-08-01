@@ -1,9 +1,7 @@
-export type BlockchainInfo = {
-    blockHeight: number;
-}
+import { BlockchainInfo } from "../../types";
 
 
 export interface IBlockchainInfoStore {
-    setBlockHeight(blockHeight: number): Promise<void>;
+    upsert(blockchainInfo: BlockchainInfo): Promise<void>;
     get(): Promise<BlockchainInfo | undefined>;
 }

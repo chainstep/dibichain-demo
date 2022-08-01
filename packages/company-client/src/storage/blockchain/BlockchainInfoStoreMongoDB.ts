@@ -1,36 +1,31 @@
-import { connect, model, Schema } from "mongoose";
-import { REMOVE_MONGO_FIELDS } from "../constants";
-import { BlockchainInfo, IBlockchainInfoStore } from "./IBlockchainInfoStore";
+import { model, Schema } from "mongoose";
+import { BlockchainInfo } from "../../types";
+import { AMongoDBStore } from "../AMongoDBStore";
+import { IBlockchainInfoStore } from "./IBlockchainInfoStore";
 
 
-export class BlockchainInfoStoreMongoDB implements IBlockchainInfoStore {
-    private readonly mongoUrl: string;
-    private readonly model = model("BlockchainInfo", new Schema<BlockchainInfo>({
-        blockHeight: { type: Number, required: true },
-    }));
+export class BlockchainInfoStoreMongoDB extends AMongoDBStore implements IBlockchainInfoStore {
+    public static readonly ID = "currentState";
 
 
     constructor(options: { mongoUrl: string }) {
-        this.mongoUrl = options.mongoUrl;
+        super({
+            model: model("BlockchainInfo", new Schema<BlockchainInfo>({
+                id: { type: String, required: true },
+                blockHeight: { type: Number, required: true }
+            })),
+            url: options.mongoUrl
+        });
     }
 
 
-    public async setBlockHeight(blockHeight: number): Promise<void> {
-        const filter = {};
-        const update = {
-            blockHeight
-        };
-
-        await connect(this.mongoUrl);
-        await this.model.updateOne(filter, update, { upsert: true });
+    public async upsert(blockchainInfo: BlockchainInfo): Promise<void> {
+        blockchainInfo.id = BlockchainInfoStoreMongoDB.ID;
+        await super.upsert({ id: blockchainInfo.id }, blockchainInfo);
     }
 
 
     public async get(): Promise<BlockchainInfo | undefined> {
-        const filter = {};
-
-        await connect(this.mongoUrl);
-        const doc = await this.model.findOne(filter, REMOVE_MONGO_FIELDS).lean();
-        return doc || undefined;
+        return (await this.find<BlockchainInfo>({}))[0];
     }
 }

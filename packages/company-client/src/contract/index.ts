@@ -15,7 +15,7 @@ export async function initContractListeners(contract: EventBus): Promise<void> {
     const blockchainInfoStore = BlockchainInfoStore.get();
 
     if (EnvVars.CATCH_UP_ALL_CONTRACT_EVENTS) {
-        await blockchainInfoStore.setBlockHeight(1);
+        await blockchainInfoStore.upsert({ blockHeight: 1 });
     }
 
     const blockchainInfo = await blockchainInfoStore.get();
