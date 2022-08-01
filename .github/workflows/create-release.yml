@@ -1,0 +1,25 @@
+name: create release images
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build-company-client-image:
+    uses: ./.github/workflows/build-company-client-image.yml
+    with:
+      version: ${{ github.event.release.tag_name }}
+    secrets: inherit
+
+  build-company-frontend-image:
+    uses: ./.github/workflows/build-company-frontend-image.yml
+    with:
+      version: ${{ github.event.release.tag_name }}
+    secrets: inherit
+
+  build-operator-image:
+    uses: ./.github/workflows/build-operator.yml
+    with:
+      version: ${{ github.event.release.tag_name }}
+    secrets: inherit
