@@ -10,7 +10,7 @@ export class BlockchainInfoStoreInMemory extends AInMemoryStore implements IBloc
 
     public async upsert(blockchainInfo: BlockchainInfo): Promise<void> {
         blockchainInfo.id = BlockchainInfoStoreInMemory.ID;
-        super.upsert({ id: blockchainInfo.id }, blockchainInfo);
+        this._upsert({ id: blockchainInfo.id }, blockchainInfo);
     }
 
 

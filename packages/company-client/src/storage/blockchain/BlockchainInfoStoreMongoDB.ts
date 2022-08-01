@@ -21,11 +21,11 @@ export class BlockchainInfoStoreMongoDB extends AMongoDBStore implements IBlockc
 
     public async upsert(blockchainInfo: BlockchainInfo): Promise<void> {
         blockchainInfo.id = BlockchainInfoStoreMongoDB.ID;
-        await super.upsert({ id: blockchainInfo.id }, blockchainInfo);
+        await this._upsert({ id: blockchainInfo.id }, blockchainInfo);
     }
 
 
     public async get(): Promise<BlockchainInfo | undefined> {
-        return (await this.find<BlockchainInfo>({}))[0];
+        return (await this._find<BlockchainInfo>({}))[0];
     }
 }

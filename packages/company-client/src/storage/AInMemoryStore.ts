@@ -3,8 +3,8 @@ export abstract class AInMemoryStore {
     public abstract store: object[];
 
 
-    protected upsert(filter: object, update: object): void {
-        const docs = this.find(filter);
+    protected _upsert(filter: object, update: object): void {
+        const docs = this._find(filter);
 
         if (docs.length === 0) {
             this.store.push(this.deepCopy(update));
@@ -23,7 +23,7 @@ export abstract class AInMemoryStore {
     }
 
 
-    protected find<T>(filter: object): T[] {
+    protected _find<T>(filter: object): T[] {
         const keys = Object.keys(filter);
         const values = Object.values(filter);
 
@@ -38,8 +38,8 @@ export abstract class AInMemoryStore {
     }
 
 
-    protected delete(filter: object): void {
-        const docs = this.find(filter);
+    protected _delete(filter: object): void {
+        const docs = this._find(filter);
         docs.forEach((doc) => {
             this.store = this.store.filter(_doc => doc !== doc);
         });
