@@ -8,21 +8,16 @@ export class KeyStoreInMemory extends AInMemoryStore implements IKeyStore {
 
 
     public async upsert(key: Key): Promise<void> {
-        this._upsert(key, "publicKey");
+        this._upsert({ publicKey: key.publicKey }, key);
     }
 
 
     public async find(params: {publicKey?: string}): Promise<Key[]> {
-        const { publicKey } = params;
-        if (publicKey) {
-            return this._find(["publicKey"], [publicKey]);
-        }
-        return this.store;
+        return this._find(params);
     }
 
 
     public async delete(params: {publicKey: string}): Promise<void> {
-        const { publicKey } = params;
-        this._delete("publicKey", publicKey);
+        this._delete(params);
     }
 }

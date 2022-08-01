@@ -8,27 +8,16 @@ export class ProductStoreInMemory extends AInMemoryStore implements IProductStor
 
 
     public async upsert(product: Product): Promise<void> {
-        this._upsert(product, "uid");
+        this._upsert({ uid: product.uid }, product);
     }
 
 
     public async find(params: {id?: string, uid?: string, name?: string}): Promise<Product[]> {
-        const { id, uid, name } = params;
-        if (uid) {
-            return this._find(["uid"], [uid]);
-        }
-        if (id) {
-            return this._find(["id"], [id]);
-        }
-        if (name) {
-            return this._find(["name"], [name]);
-        }
-        return this.store;
+        return this._find(params);
     }
 
 
-    public async delete(params: {uid: string}): Promise<void> {
-        const { uid } = params;
-        this._delete("uid", uid);
+    public async delete(params: { uid: string; }): Promise<void> {
+        this._delete(params);
     }
 }

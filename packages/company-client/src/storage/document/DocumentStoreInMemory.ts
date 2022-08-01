@@ -8,21 +8,16 @@ export class DocumentStoreInMemory extends AInMemoryStore implements IDocumentSt
 
 
     public async upsert(document: Document): Promise<void> {
-        this._upsert(document, "uid");
+        this._upsert({ uid: document.uid }, document);
     }
 
 
     public async find(params: {uid?: string}): Promise<Document[]> {
-        const { uid } = params;
-        if (uid) {
-            return this._find(["uid"], [uid]);
-        }
-        return this.store;
+        return this._find(params);
     }
 
 
     public async delete(params: {uid: string}): Promise<void> {
-        const { uid } = params;
-        this._delete("uid", uid);
+        this._delete(params);
     }
 }
