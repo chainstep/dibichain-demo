@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "license": "UNLICENSED",
     "scripts": {
-        "start": "node ./dist/src/index.js",
+        "start": "node ./dist/src/main.js",
         "dev": "RUN_CONTEXT=development yarn dev:cmd",
         "dev:1": "RUN_CONTEXT=development1 yarn dev:cmd",
         "dev:2": "RUN_CONTEXT=development2 yarn dev:cmd",
