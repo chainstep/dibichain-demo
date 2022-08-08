@@ -6,7 +6,7 @@
         "dev": "RUN_CONTEXT=development yarn dev:cmd",
         "dev:1": "RUN_CONTEXT=development1 yarn dev:cmd",
         "dev:2": "RUN_CONTEXT=development2 yarn dev:cmd",
-        "dev:cmd": "ts-node-dev --cache-directory ./dev ./src/index",
+        "dev:cmd": "ts-node-dev --cache-directory ./dev ./src/main",
         "build": "rm -rf ./dist && tsc",
         "lint": "eslint ./ --ext .ts",
         "lint:fix": "eslint ./ --fix --ext .ts",

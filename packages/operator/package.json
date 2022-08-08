@@ -3,7 +3,7 @@
     "license": "GPL-3.0-only",
     "scripts": {
         "start": "node ./dist/src/main.js",
-        "dev": "RUN_CONTEXT=development ts-node-dev --cache-directory ./dev ./src/index",
+        "dev": "RUN_CONTEXT=development ts-node-dev --cache-directory ./dev ./src/main",
         "build": "rm -rf ./dist && tsc",
         "lint": "eslint ./ --ext .ts",
         "lint:fix": "eslint ./ --fix --ext .ts",
