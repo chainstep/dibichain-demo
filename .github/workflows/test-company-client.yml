@@ -1,7 +1,7 @@
 name: test company client
 
 on:
-  workflow_call:
+  workflow_dispatch:
   pull_request:
     branches:
       - main
@@ -9,7 +9,6 @@ on:
       - packages/company-client/**
 
 env:
-  # github config
   PROJECT_DIR: packages/company-client
 
 jobs:

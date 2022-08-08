@@ -17,7 +17,6 @@ on:
         required: false
 
 env:
-  # docker config
   LATEST_TAG: latest
 
 jobs:
