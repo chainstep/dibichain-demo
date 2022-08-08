@@ -82,4 +82,4 @@ To access the deployed setup follow these links:
 
 #### Block explorer
 
-- explorer url: https://explorer.dibichain.de
+- explorer url: https://goerli.etherscan.io/address/0xd73c88fdD0ba6c4A8da537746835103435757E4d

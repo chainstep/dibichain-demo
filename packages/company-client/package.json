@@ -1,13 +1,12 @@
 {
     "name": "company-client",
-    "version": "1.0.0",
-    "license": "UNLICENSED",
+    "license": "GPL-3.0-only",
     "scripts": {
-        "start": "node ./dist/src/index.js",
+        "start": "node ./dist/src/main.js",
         "dev": "RUN_CONTEXT=development yarn dev:cmd",
         "dev:1": "RUN_CONTEXT=development1 yarn dev:cmd",
         "dev:2": "RUN_CONTEXT=development2 yarn dev:cmd",
-        "dev:cmd": "ts-node-dev --cache-directory ./dev ./src/index",
+        "dev:cmd": "ts-node-dev --cache-directory ./dev ./src/main",
         "build": "rm -rf ./dist && tsc",
         "lint": "eslint ./ --ext .ts",
         "lint:fix": "eslint ./ --fix --ext .ts",

@@ -52,12 +52,12 @@ cd ${HERE}/..
 
 echo "Check if contract is already deployed..."
 RPC_URL=${RPC_URL} CONTRACT_ADDRESS=${CONTRACT_ADDRESS} yarn check:contract
-EXIT_CODE_1=$(echo $?)
+EXIT_CODE=$(echo $?)
 
-if [ ${EXIT_CODE_1} == 3 ]; then # not deployed
+if [ ${EXIT_CODE} == 3 ]; then # not deployed
     echo "Not deployed (exit code 3). Deploying..."
     RPC_URL=${RPC_URL} DEPLOYER_SECRET=${DEPLOYER_SECRET} yarn deploy
-elif [ ${EXIT_CODE_1} == 2 ]; then # error
+elif [ ${EXIT_CODE} == 2 ]; then # error
     exit 1;
 else
     echo "Contract already deployed. Skip deployment"

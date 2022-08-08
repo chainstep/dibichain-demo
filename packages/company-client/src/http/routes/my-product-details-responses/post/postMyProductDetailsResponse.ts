@@ -28,8 +28,17 @@ import { PostMyProductDetailsResponseService } from "./PostMyProductDetailsRespo
  *                 type: string
  *                 description: the uuid v4 of a product
  *                 example: 0e66f0e4-1c4e-4781-8fd7-36058206d295
+ *               publicKey:
+ *                 type: string
+ *                 description: the public key that will be used to encrypt the product details message
+ *                 example: -----BEGIN RSA PUBLIC KEY-----\nMIIBCgKCAQEA4cHLrQ5lgyjP/idKwlsnp0+nhvY1Bh...
+ *               decline:
+ *                 type: boolean
+ *                 description: flag to indicate if the details response should be dropped or sent
+ *                 example: false
  *             required:
  *               - uid
+ *               - publicKey
  *     responses:
  *       200:
  *         content:
