@@ -21,15 +21,15 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd ./${{ github.event.inputs.project_dir }}
+          cd ./${{ inputs.project_dir }}
           yarn install
     
       - name: Lint project
         run: |
-          cd ./${{ github.event.inputs.project_dir }}
+          cd ./${{ inputs.project_dir }}
           yarn lint
 
       - name: Run tests
         run: |
-          cd ./${{ github.event.inputs.project_dir }}
+          cd ./${{ inputs.project_dir }}
           yarn test
