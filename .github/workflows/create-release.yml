@@ -5,21 +5,72 @@ on:
     types:
       - published
 
+env:
+  REGISTRY_NAME: ghcr.io/chainstep/dibichain
+  
+  CLIENT_PROJECT_DIR: packages/company-client
+  CLIENT_IMAGE_NAME: company-client
+
+  FRONTEND_PROJECT_DIR: packages/company-frontend
+  FRONTEND_IMAGE_NAME: company-frontend
+
+  OPERATOR_PROJECT_DIR: packages/operator
+  OPERATOR_IMAGE_NAME: operator
+
 jobs:
-  build-company-client-image:
-    uses: ./.github/workflows/build-company-client-image.yml
-    with:
-      version: ${{ github.event.release.tag_name }}
+  test-company-client:
+    uses: ./.github/workflows/test-project.yml
     secrets: inherit
+    with:
+      project_dir: ${{ env.CLIENT_PROJECT_DIR }}
 
-  build-company-frontend-image:
-    uses: ./.github/workflows/build-company-frontend-image.yml
-    with:
-      version: ${{ github.event.release.tag_name }}
+  test-company-frontend:
+    uses: ./.github/workflows/test-project.yml
     secrets: inherit
+    with:
+      project_dir: ${{ env.FRONTEND_PROJECT_DIR }}
+  
+  test-operator:
+    uses: ./.github/workflows/test-project.yml
+    secrets: inherit
+    with:
+      project_dir: ${{ env.OPERATOR_PROJECT_DIR }}
 
-  build-operator-image:
-    uses: ./.github/workflows/build-operator.yml
-    with:
-      version: ${{ github.event.release.tag_name }}
+  build-company-client:
+    needs:
+      - test-company-client
+      - test-company-frontend
+      - test-operator
+    uses: ./.github/workflows/build-image.yml
     secrets: inherit
+    with:
+      project_dir: ${{ env.CLIENT_PROJECT_DIR }}
+      registry_name: ${{ env.REGISTRY_NAME }}
+      image_name: ${{ env.CLIENT_IMAGE_NAME }}
+      version: ${{ github.event.release.tag_name }}
+
+  build-company-frontend:
+    needs:
+      - test-company-client
+      - test-company-frontend
+      - test-operator
+    uses: ./.github/workflows/build-image.yml
+    secrets: inherit
+    with:
+      project_dir: ${{ env.FRONTEND_PROJECT_DIR }}
+      registry_name: ${{ env.REGISTRY_NAME }}
+      image_name: ${{ env.FRONTEND_IMAGE_NAME }}
+      version: ${{ github.event.release.tag_name }}
+
+  build-operator:
+    needs:
+      - test-company-client
+      - test-company-frontend
+      - test-operator
+    uses: ./.github/workflows/build-image.yml
+    secrets: inherit
+    with:
+      project_dir: ${{ env.OPERATOR_PROJECT_DIR }}
+      registry_name: ${{ env.REGISTRY_NAME }}
+      image_name: ${{ env.OPERATOR_IMAGE_NAME }}
+      version: ${{ github.event.release.tag_name }}
