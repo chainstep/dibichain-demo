@@ -16,6 +16,8 @@ jobs:
       project_dir: packages/company-client
 
   build-company-client:
+    needs:
+      - test-company-client
     uses: ./.github/workflows/build-image.yml
     secrets: inherit
     with:

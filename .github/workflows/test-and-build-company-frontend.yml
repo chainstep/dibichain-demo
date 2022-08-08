@@ -16,6 +16,8 @@ jobs:
       project_dir: packages/company-frontend
 
   build-company-frontend:
+    needs:
+      - test-company-frontend
     uses: ./.github/workflows/build-image.yml
     secrets: inherit
     with:

@@ -16,6 +16,8 @@ jobs:
       project_dir: packages/operator
 
   build-operator:
+    needs:
+      - test-operator
     uses: ./.github/workflows/build-image.yml
     secrets: inherit
     with:
