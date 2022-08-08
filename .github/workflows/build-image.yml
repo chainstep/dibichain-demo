@@ -30,9 +30,9 @@ jobs:
 
       - name: Set image tags
         run: |
-          echo "IMAGE_TAG=${{ github.event.inputs.registry_name }}/${{ github.event.inputs.image_name }}:${{ env.LATEST_TAG }}" >> $GITHUB_ENV
-          if [ "${{ github.event.inputs.version }}" != "" ]; then
-            echo "RELEASE_IMAGE_TAG=${{ github.event.inputs.registry_name }}/${{ github.event.inputs.image_name }}:${{ github.event.inputs.version }}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${{ inputs.registry_name }}/${{ inputs.image_name }}:${{ env.LATEST_TAG }}" >> $GITHUB_ENV
+          if [ "${{ inputs.version }}" != "" ]; then
+            echo "RELEASE_IMAGE_TAG=${{ inputs.registry_name }}/${{ inputs.image_name }}:${{ inputs.version }}" >> $GITHUB_ENV
           fi
 
       - name: Set up QEMU
@@ -51,8 +51,8 @@ jobs:
       - name: Build and push image
         uses: docker/build-push-action@v2
         with:
-          file: ./${{ github.event.inputs.project_dir }}/docker/Dockerfile
-          context: ./${{ github.event.inputs.project_dir }}
+          file: ./${{ inputs.project_dir }}/docker/Dockerfile
+          context: ./${{ inputs.project_dir }}
           platforms: linux/amd64
           push: true
           tags: |
