@@ -8,12 +8,9 @@ on:
     paths:
       - packages/company-client/**
 
-env:
-  PROJECT_DIR: packages/company-client
-
 jobs:
   test-company-client:
     uses: ./.github/workflows/test-project.yml
     secrets: inherit
     with:
-      project_dir: ${{ env.PROJECT_DIR }}
+      project_dir: packages/company-client

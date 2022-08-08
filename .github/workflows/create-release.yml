@@ -5,36 +5,24 @@ on:
     types:
       - published
 
-env:
-  REGISTRY_NAME: ghcr.io/chainstep/dibichain
-  
-  CLIENT_PROJECT_DIR: packages/company-client
-  CLIENT_IMAGE_NAME: company-client
-
-  FRONTEND_PROJECT_DIR: packages/company-frontend
-  FRONTEND_IMAGE_NAME: company-frontend
-
-  OPERATOR_PROJECT_DIR: packages/operator
-  OPERATOR_IMAGE_NAME: operator
-
 jobs:
   test-company-client:
     uses: ./.github/workflows/test-project.yml
     secrets: inherit
     with:
-      project_dir: ${{ env.CLIENT_PROJECT_DIR }}
+      project_dir: packages/company-client
 
   test-company-frontend:
     uses: ./.github/workflows/test-project.yml
     secrets: inherit
     with:
-      project_dir: ${{ env.FRONTEND_PROJECT_DIR }}
+      project_dir: packages/company-frontend
   
   test-operator:
     uses: ./.github/workflows/test-project.yml
     secrets: inherit
     with:
-      project_dir: ${{ env.OPERATOR_PROJECT_DIR }}
+      project_dir: packages/operator
 
   build-company-client:
     needs:
@@ -44,9 +32,9 @@ jobs:
     uses: ./.github/workflows/build-image.yml
     secrets: inherit
     with:
-      project_dir: ${{ env.CLIENT_PROJECT_DIR }}
-      registry_name: ${{ env.REGISTRY_NAME }}
-      image_name: ${{ env.CLIENT_IMAGE_NAME }}
+      project_dir: packages/company-client
+      registry_name: ghcr.io/chainstep/dibichain
+      image_name: company-client
       version: ${{ github.event.release.tag_name }}
 
   build-company-frontend:
@@ -57,9 +45,9 @@ jobs:
     uses: ./.github/workflows/build-image.yml
     secrets: inherit
     with:
-      project_dir: ${{ env.FRONTEND_PROJECT_DIR }}
-      registry_name: ${{ env.REGISTRY_NAME }}
-      image_name: ${{ env.FRONTEND_IMAGE_NAME }}
+      project_dir: packages/company-frontend
+      registry_name: ghcr.io/chainstep/dibichain
+      image_name: company-frontend
       version: ${{ github.event.release.tag_name }}
 
   build-operator:
@@ -70,7 +58,7 @@ jobs:
     uses: ./.github/workflows/build-image.yml
     secrets: inherit
     with:
-      project_dir: ${{ env.OPERATOR_PROJECT_DIR }}
-      registry_name: ${{ env.REGISTRY_NAME }}
-      image_name: ${{ env.OPERATOR_IMAGE_NAME }}
+      project_dir: packages/operator
+      registry_name: ghcr.io/chainstep/dibichain
+      image_name: operator
       version: ${{ github.event.release.tag_name }}

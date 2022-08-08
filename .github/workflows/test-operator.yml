@@ -8,12 +8,9 @@ on:
     paths:
       - packages/operator/**
 
-env:
-  PROJECT_DIR: packages/operator
-
 jobs:
   test-operator:
     uses: ./.github/workflows/test-project.yml
     secrets: inherit
     with:
-      project_dir: ${{ env.PROJECT_DIR }}
+      project_dir: packages/operator

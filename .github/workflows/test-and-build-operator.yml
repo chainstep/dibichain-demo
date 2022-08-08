@@ -8,22 +8,17 @@ on:
     paths:
       - packages/operator/**
 
-env:
-  PROJECT_DIR: packages/operator
-  REGISTRY_NAME: ghcr.io/chainstep/dibichain
-  IMAGE_NAME: operator
-
 jobs:
   test-operator:
     uses: ./.github/workflows/test-project.yml
     secrets: inherit
     with:
-      project_dir: ${{ env.PROJECT_DIR }}
+      project_dir: packages/operator
 
   build-operator:
     uses: ./.github/workflows/build-image.yml
     secrets: inherit
     with:
-      project_dir: ${{ env.PROJECT_DIR }}
-      registry_name: ${{ env.REGISTRY_NAME }}
-      image_name: ${{ env.IMAGE_NAME }}
+      project_dir: packages/operator
+      registry_name: ghcr.io/chainstep/dibichain
+      image_name: operator
