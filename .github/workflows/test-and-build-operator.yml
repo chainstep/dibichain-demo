@@ -1,0 +1,26 @@
+name: test and build operator
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - packages/operator/**
+
+jobs:
+  test-operator:
+    uses: ./.github/workflows/test-project.yml
+    secrets: inherit
+    with:
+      project_dir: packages/operator
+
+  build-operator:
+    needs:
+      - test-operator
+    uses: ./.github/workflows/build-image.yml
+    secrets: inherit
+    with:
+      project_dir: packages/operator
+      registry_name: ghcr.io/chainstep/dibichain
+      image_name: operator

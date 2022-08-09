@@ -1,0 +1,26 @@
+name: test and build company client
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - packages/company-client/**
+
+jobs:
+  test-company-client:
+    uses: ./.github/workflows/test-project.yml
+    secrets: inherit
+    with:
+      project_dir: packages/company-client
+
+  build-company-client:
+    needs:
+      - test-company-client
+    uses: ./.github/workflows/build-image.yml
+    secrets: inherit
+    with:
+      project_dir: packages/company-client
+      registry_name: ghcr.io/chainstep/dibichain
+      image_name: company-client

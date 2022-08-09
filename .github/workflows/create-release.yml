@@ -6,20 +6,59 @@ on:
       - published
 
 jobs:
-  build-company-client-image:
-    uses: ./.github/workflows/build-company-client-image.yml
-    with:
-      version: ${{ github.event.release.tag_name }}
+  test-company-client:
+    uses: ./.github/workflows/test-project.yml
     secrets: inherit
+    with:
+      project_dir: packages/company-client
 
-  build-company-frontend-image:
-    uses: ./.github/workflows/build-company-frontend-image.yml
-    with:
-      version: ${{ github.event.release.tag_name }}
+  test-company-frontend:
+    uses: ./.github/workflows/test-project.yml
     secrets: inherit
+    with:
+      project_dir: packages/company-frontend
+  
+  test-operator:
+    uses: ./.github/workflows/test-project.yml
+    secrets: inherit
+    with:
+      project_dir: packages/operator
 
-  build-operator-image:
-    uses: ./.github/workflows/build-operator.yml
-    with:
-      version: ${{ github.event.release.tag_name }}
+  build-company-client:
+    needs:
+      - test-company-client
+      - test-company-frontend
+      - test-operator
+    uses: ./.github/workflows/build-image.yml
     secrets: inherit
+    with:
+      project_dir: packages/company-client
+      registry_name: ghcr.io/chainstep/dibichain
+      image_name: company-client
+      version: ${{ github.event.release.tag_name }}
+
+  build-company-frontend:
+    needs:
+      - test-company-client
+      - test-company-frontend
+      - test-operator
+    uses: ./.github/workflows/build-image.yml
+    secrets: inherit
+    with:
+      project_dir: packages/company-frontend
+      registry_name: ghcr.io/chainstep/dibichain
+      image_name: company-frontend
+      version: ${{ github.event.release.tag_name }}
+
+  build-operator:
+    needs:
+      - test-company-client
+      - test-company-frontend
+      - test-operator
+    uses: ./.github/workflows/build-image.yml
+    secrets: inherit
+    with:
+      project_dir: packages/operator
+      registry_name: ghcr.io/chainstep/dibichain
+      image_name: operator
+      version: ${{ github.event.release.tag_name }}

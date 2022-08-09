@@ -1,0 +1,26 @@
+name: test and build company frontend
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - packages/company-frontend/**
+
+jobs:
+  test-company-frontend:
+    uses: ./.github/workflows/test-project.yml
+    secrets: inherit
+    with:
+      project_dir: packages/company-frontend
+
+  build-company-frontend:
+    needs:
+      - test-company-frontend
+    uses: ./.github/workflows/build-image.yml
+    secrets: inherit
+    with:
+      project_dir: packages/company-frontend
+      registry_name: ghcr.io/chainstep/dibichain
+      image_name: company-frontend
