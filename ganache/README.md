@@ -1,8 +1,6 @@
 # Ganache Test Chain
 
-This folder holds the configuration to setup a custom test chain. It facilitates [Truffles](https://trufflesuite.com) [Ganache](https://github.com/trufflesuite/ganache) development chain and the [Blockscout](https://github.com/blockscout/blockscout) explorer.
-
-The setup is also used for the custom chain of the deployed dibichain demo. 
+This folder contains the configuration for setting up a custom test chain. It facilitates the [Truffles](https://trufflesuite.com) [Ganache](https://github.com/trufflesuite/ganache) development chain and the [Blockscout](https://github.com/blockscout/blockscout) explorer.
 
 
 ## Commands
