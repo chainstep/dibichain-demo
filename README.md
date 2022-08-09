@@ -54,7 +54,7 @@ The [**operator**](packages/operator/) acts, as described above, as an intermedi
 
 ### Local setup
 
-To run the demonstrator on your local machine follow the steps described [here](local-demo/README.md)
+To run the demonstrator on your local machine follow the steps described [here](local-demo/README.md).
 
 
 ### Deployed setup

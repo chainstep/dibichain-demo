@@ -7,5 +7,5 @@
     "plantuml.diagramsRoot": "docs/plantuml/src",
     "plantuml.exportOutDir": "docs/plantuml/out",
     "plantuml.exportSubFolder": false,
-    "solidity.packageDefaultDependenciesDirectory": "smart-contracts/node_modules"
+    "solidity.packageDefaultDependenciesDirectory": "packages/smart-contracts/node_modules"
 }
