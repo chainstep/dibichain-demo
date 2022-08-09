@@ -6,8 +6,6 @@ import { DummyTransport, initLogger } from "../src/utils/logger";
 
 jest.setTimeout(100 * 1000);
 
-ProductDetailsResponseStore.init(createProductDetailsResponseStore(StorageType.IN_MEMORY));
-
 initLogger({
     level: "all",
     transports: [
@@ -15,3 +13,5 @@ initLogger({
         // new ConsoleTransport()
     ]
 });
+
+ProductDetailsResponseStore.init(createProductDetailsResponseStore(StorageType.IN_MEMORY));

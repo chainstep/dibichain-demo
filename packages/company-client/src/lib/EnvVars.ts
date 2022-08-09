@@ -17,7 +17,6 @@ export class EnvVars {
     public static PORT = 0;
     public static ALLOWED_ORIGINS: string[] = [];
     public static MONGO_DB_URL = "";
-    public static USE_MONGO_DB = false;
     public static MAX_REQUESTS_PER_15_MIN = 0;
     public static OPERATOR_URL = "";
     public static RPC_URL = "";
@@ -41,10 +40,7 @@ export class EnvVars {
 
         this.setVar("MONGO_DB_URL", (envVar) => {
             this.MONGO_DB_URL = String(envVar);
-        });
-        this.setVar("USE_MONGO_DB", (envVar) => {
-            this.USE_MONGO_DB = this.Boolean(envVar);
-        }, false);
+        }, "");
         this.setVar("PORT", (envVar) => {
             this.PORT = Number(envVar);
         }, 3000);

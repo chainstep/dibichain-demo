@@ -33,39 +33,25 @@ import { ConsoleTransport, initLogger, logger } from "./utils/logger";
 
 
 async function main(): Promise<void> {
-    const isDevContext = EnvVars.RUN_CONTEXT === RUN_CONTEXT.DEVELOPMENT;
-
     initLogger({
-        level: isDevContext ? "all" : "http",
+        level: EnvVars.RUN_CONTEXT === RUN_CONTEXT.DEVELOPMENT ? "all" : "http",
         transports: [
             new ConsoleTransport()
         ]
     });
 
     logger.info("Init databases...");
-    if (isDevContext && !EnvVars.USE_MONGO_DB) {
-        BlockchainInfoStore.init(createBlockchainInfoStore(StorageType.IN_MEMORY));
-        ProductStore.init(createProductStore(StorageType.IN_MEMORY));
-        MyProductStore.init(createMyProductStore(StorageType.IN_MEMORY));
-        NewProductStore.init(createNewProductStore(StorageType.IN_MEMORY));
-        MyNewProductStore.init(createMyNewProductStore(StorageType.IN_MEMORY));
-        MyProductDetailsRequestStore.init(createMyProductDetailsRequestStore(StorageType.IN_MEMORY));
-        ProductDetailsRequestStore.init(createProductDetailsRequestStore(StorageType.IN_MEMORY));
-        KeyStore.init(createKeyStore(StorageType.IN_MEMORY));
-        MyDocumentStore.init(createMyDocumentStore(StorageType.IN_MEMORY));
-        DocumentStore.init(createDocumentStore(StorageType.IN_MEMORY));
-    } else {
-        BlockchainInfoStore.init(createBlockchainInfoStore(StorageType.MONGO_DB));
-        ProductStore.init(createProductStore(StorageType.MONGO_DB));
-        MyProductStore.init(createMyProductStore(StorageType.MONGO_DB));
-        NewProductStore.init(createNewProductStore(StorageType.MONGO_DB));
-        MyNewProductStore.init(createMyNewProductStore(StorageType.MONGO_DB));
-        MyProductDetailsRequestStore.init(createMyProductDetailsRequestStore(StorageType.MONGO_DB));
-        ProductDetailsRequestStore.init(createProductDetailsRequestStore(StorageType.MONGO_DB));
-        KeyStore.init(createKeyStore(StorageType.MONGO_DB));
-        MyDocumentStore.init(createMyDocumentStore(StorageType.MONGO_DB));
-        DocumentStore.init(createDocumentStore(StorageType.MONGO_DB));
-    }
+    const storageType = EnvVars.MONGO_DB_URL ? StorageType.MONGO_DB : StorageType.IN_MEMORY;
+    BlockchainInfoStore.init(createBlockchainInfoStore(storageType));
+    ProductStore.init(createProductStore(storageType));
+    MyProductStore.init(createMyProductStore(storageType));
+    NewProductStore.init(createNewProductStore(storageType));
+    MyNewProductStore.init(createMyNewProductStore(storageType));
+    MyProductDetailsRequestStore.init(createMyProductDetailsRequestStore(storageType));
+    ProductDetailsRequestStore.init(createProductDetailsRequestStore(storageType));
+    KeyStore.init(createKeyStore(storageType));
+    MyDocumentStore.init(createMyDocumentStore(storageType));
+    DocumentStore.init(createDocumentStore(storageType));
 
     logger.info("Init RPC provider...");
     RPCProvider.setWSConfig({

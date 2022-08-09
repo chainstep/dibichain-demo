@@ -12,21 +12,16 @@ import { ConsoleTransport, initLogger, logger } from "./utils/logger";
 
 
 async function main(): Promise<void> {
-    const isDevContext = EnvVars.RUN_CONTEXT === RUN_CONTEXT.DEVELOPMENT;
-
     initLogger({
-        level: isDevContext ? "all" : "http",
+        level: EnvVars.RUN_CONTEXT === RUN_CONTEXT.DEVELOPMENT ? "all" : "http",
         transports: [
             new ConsoleTransport()
         ]
     });
 
     logger.info("Init databases...");
-    if (isDevContext && !EnvVars.USE_MONGO_DB) {
-        ProductDetailsResponseStore.init(createProductDetailsResponseStore(StorageType.IN_MEMORY));
-    } else {
-        ProductDetailsResponseStore.init(createProductDetailsResponseStore(StorageType.MONGO_DB));
-    }
+    const storageType = EnvVars.MONGO_DB_URL ? StorageType.MONGO_DB : StorageType.IN_MEMORY;
+    ProductDetailsResponseStore.init(createProductDetailsResponseStore(storageType));
 
     logger.info("Init RPC provider...");
     RPCProvider.init(EnvVars.RPC_URL);

@@ -2,7 +2,7 @@
 
 This folder contains the operator project. To begin development, you must have [Node.js](https://nodejs.org/en/) and the [Yarn](https://yarnpkg.com) package manager installed. 
 
-You also need a valid `.env` file. The easiest way to get one is by copying the `example.env` file and rename the copy to `.env`. The default setup should be good to go.
+You also need a valid `.env` file. The easiest way to get one is by copying the `settings.env` file and rename the copy to `.env`. The default setup should be good to go.
 
 
 ## Commands
