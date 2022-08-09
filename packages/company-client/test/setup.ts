@@ -24,6 +24,14 @@ import { DummyTransport, initLogger } from "../src/utils/logger";
 
 jest.setTimeout(100 * 1000);
 
+initLogger({
+    level: "all",
+    transports: [
+        new DummyTransport(),
+        // new ConsoleTransport()
+    ]
+});
+
 MyProductStore.init(createMyProductStore(StorageType.IN_MEMORY));
 ProductStore.init(createProductStore(StorageType.IN_MEMORY));
 BlockchainInfoStore.init(createBlockchainInfoStore(StorageType.IN_MEMORY));
@@ -34,11 +42,3 @@ ProductDetailsRequestStore.init(createProductDetailsRequestStore(StorageType.IN_
 KeyStore.init(createKeyStore(StorageType.IN_MEMORY));
 DocumentStore.init(createDocumentStore(StorageType.IN_MEMORY));
 MyDocumentStore.init(createMyDocumentStore(StorageType.IN_MEMORY));
-
-initLogger({
-    level: "all",
-    transports: [
-        new DummyTransport(),
-        // new ConsoleTransport()
-    ]
-});
