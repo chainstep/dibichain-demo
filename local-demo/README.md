@@ -1,6 +1,6 @@
 # Local Dibichain Demo
 
-This folder holds the configuration needed to run the dibichain demo locally on your machine. The only precondition is that you have [Docker](https://www.docker.com) and docker compose installed. It is also required to be able to execute bash scripts. If your operating system is Unix based, you are ready to go. If you're on Windows, try [WSL](https://docs.microsoft.com/en-gb/windows/wsl/install) or [Cygwin](https://www.cygwin.com).
+This folder contains the configuration needed to run the Dibichain demo locally on your machine. The only requirement is that you have [Docker](https://www.docker.com) and [Docker Compose](https://docs.docker.com/compose/install/) installed. You also need to be able to run bash scripts. If your operating system is based on Unix, you can get started right away. If it's Windows, try [WSL](https://docs.microsoft.com/en-gb/windows/wsl/install) or [Cygwin](https://www.cygwin.com).
 
 
 ## TL; DR;
@@ -81,7 +81,7 @@ And reset the demo with:
 
 ### Block explorer does not work
 
-Unfortunately, there is a big chance that the block explorer is not working if you're on Apple Silicon. No fix right now.
+Unfortunately, there is a big chance that the block explorer is not working on Apple Silicon. No fix right now.
 
 
 ### Run script stops while contract deployment
