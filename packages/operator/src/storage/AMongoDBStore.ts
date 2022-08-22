@@ -2,7 +2,6 @@ import { connect, Model } from "mongoose";
 
 
 export abstract class AMongoDBStore {
-    private readonly CONNECTION_TIMEOUT_SEC = 60;
     private readonly REMOVE_MONGO_FIELDS = "-_id -__v";
     protected model: Model<unknown>;
     protected url: string;
