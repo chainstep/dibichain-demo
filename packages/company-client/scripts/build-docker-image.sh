@@ -46,7 +46,7 @@ fi
 
 # multi-arch build -> https://blog.jaimyn.dev/how-to-build-multi-architecture-docker-images-on-an-m1-mac/
 BUILD_CMD="build"
-if [ ${FORCE_AMD64} = "true" ]; then
+if [ ${FORCE_AMD64} == true ]; then
     BUILD_CMD="buildx build --platform linux/amd64 --load"
 fi
 
