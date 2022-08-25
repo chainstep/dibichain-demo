@@ -7,7 +7,6 @@ import theme from '../style/theme';
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function App({ Component, pageProps }) {
   return (
-
       <SafeHydrate>
         <ChakraProvider theme={theme}>
             <Component {...pageProps} />
