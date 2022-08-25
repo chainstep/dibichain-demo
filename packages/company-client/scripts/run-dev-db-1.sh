@@ -24,4 +24,9 @@ HERE="$(pwd)/$(dirname $0)"
 # MAIN
 ###################################################################################################
 
-docker run --publish ${EXTERNAL_PORT}:${INTERNAL_PORT} --detach --name ${CONTAINER_NAME} ${IMAGE_NAME}
+SUDO=""
+if [ $(uname) == Linux ]; then
+    SUDO="sudo"
+fi
+
+${SUDO} docker run --publish ${EXTERNAL_PORT}:${INTERNAL_PORT} --detach --name ${CONTAINER_NAME} ${IMAGE_NAME}
