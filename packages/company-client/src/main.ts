@@ -11,7 +11,7 @@ import { RPCProvider } from "./lib/RPCProvider";
 import { BlockchainInfoStore } from "./storage/blockchain/BlockchainInfoStore";
 import { createBlockchainInfoStore } from "./storage/blockchain/blockchainInfoStoreFactory";
 import { DocumentStore } from "./storage/document/DocumentStore";
-import { createDocumentStore } from "./storage/document/DocumentStoreFactory";
+import { createDocumentStore } from "./storage/document/documentStoreFactory_";
 import { KeyStore } from "./storage/key/KeyStore";
 import { createKeyStore } from "./storage/key/KeyStoreFactory";
 import { MyDocumentStore } from "./storage/my-document/MyDocumentStore";
