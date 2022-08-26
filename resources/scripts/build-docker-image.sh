@@ -20,4 +20,9 @@ HERE="$(pwd)/$(dirname $0)"
 # MAIN
 ###################################################################################################
 
-docker build -f ${HERE}/../docker/Dockerfile ${HERE}/.. -t ${IMAGE_NAME}
+SUDO=""
+if [ $(uname) == Linux ]; then
+    SUDO="sudo"
+fi
+
+${SUDO} docker build -f ${HERE}/../docker/Dockerfile ${HERE}/.. -t ${IMAGE_NAME}
