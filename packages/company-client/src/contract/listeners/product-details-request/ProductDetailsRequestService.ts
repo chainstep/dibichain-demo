@@ -36,6 +36,9 @@ export class ProductDetailsRequestService implements ContractEventService {
             const myProductDetailsRequests = await this.myProductDetailsRequestStore.find({
                 uid: productDetailsRequest.uid
             });
+            const productDetailsRequests = await this.productDetailsRequestStore.find({
+                uid: productDetailsRequest.uid
+            });
             const _productDetailsRequest = {
                 algorithm: productDetailsRequest.algorithm,
                 publicKey: productDetailsRequest.publicKey,
@@ -44,7 +47,7 @@ export class ProductDetailsRequestService implements ContractEventService {
                 responded: false
             };
 
-            if (myProductDetailsRequests.length === 0) {
+            if (myProductDetailsRequests.length === 0 && productDetailsRequests.length === 0) {
                 await this.productDetailsRequestStore.upsert(_productDetailsRequest);
             } else if (myProductDetailsRequests[0].timestamp === 0) {
                 await this.myProductDetailsRequestStore.upsert(_productDetailsRequest);
