@@ -29,11 +29,7 @@ export function createPostProductDetailsResponseRouter(): Router {
 
 
 function cleanseInputs(request: Request, response: Response, next: NextFunction): void {
-    const newBody: {
-        uid: string,
-        publicKey: string,
-        message: EncMessage
-    } = {
+    const newBody: { uid: string; publicKey: string; message: EncMessage } = {
         publicKey: request.body.publicKey,
         uid: request.body.uid,
         message: {

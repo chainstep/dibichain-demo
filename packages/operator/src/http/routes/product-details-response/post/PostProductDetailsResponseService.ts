@@ -25,7 +25,6 @@ export class PostProductDetailsResponseService implements RouteService {
 
     public async run(inputs: Inputs): Promise<void> {
         const { uid, message, publicKey } = inputs;
-
         const timestamp = Math.floor(new Date().getTime() / 1000);
         await this.productDetailsResponseStore.upsert({
             message,
