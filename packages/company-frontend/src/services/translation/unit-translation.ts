@@ -1,5 +1,4 @@
 export const translateUnitToAbbreviation = (unit: string): string => {
-
     switch (unit) {
         case 'each': {
             return '';
