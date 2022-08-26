@@ -21,7 +21,7 @@ export async function initContractListeners(contract: EventBus): Promise<void> {
     const blockchainInfo = await blockchainInfoStore.get();
     if (blockchainInfo) {
         await catchUpEvents({
-            fromBlockHeight: blockchainInfo.blockHeight,
+            fromBlockHeight: blockchainInfo.blockHeight + 1,
             contract,
             eventSetups: eventListeners.map((listener) => {
                 return { eventListener: listener };
