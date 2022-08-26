@@ -19,9 +19,8 @@ export class BlockHeightService implements ContractEventService {
 
 
     public async run(inputs: unknown[]): Promise<void> {
-        const event = <Event> inputs[inputs.length - 1];
-
         try {
+            const event = <Event> inputs[inputs.length - 1];
             this.blockchainInfoStore.upsert({ blockHeight: event.blockNumber });
         } catch (error) {
             logger.error((<Error> error).message);

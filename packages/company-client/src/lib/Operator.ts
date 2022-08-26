@@ -86,7 +86,6 @@ export class Operator {
         const { publicKey, myProduct, myDocuments } = params;
         const stringifiedProductPackage = JSON.stringify({ product: myProduct, documents: myDocuments });
         const message = this.crypto.encrypt(publicKey, stringifiedProductPackage);
-
         await axios.post(this.url + "/product-details-responses", {
             publicKey,
             message,
@@ -98,7 +97,6 @@ export class Operator {
     public async getProductDetails(params: { key: Key, hash: string }[]): Promise<ProductPackage[]> {
         const publicKeys = params.map(param => param.key.publicKey);
         const productDetailsResponses = await this.getProductDetailsResponses(publicKeys);
-
         const products = this.extractProductPackages(params, productDetailsResponses);
         return products;
     }

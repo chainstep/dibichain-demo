@@ -30,7 +30,6 @@ if (!config.skipTests.includes("postMyDocuments")) {
 
         const myDocument1 = myDocumentStore.store[0];
         const myDocument2 = myDocumentStore.store[1];
-
         expect(myDocument1).toEqual(TEST_DOCUMENT_1);
         expect(myDocument2).toEqual(TEST_DOCUMENT_2);
     });

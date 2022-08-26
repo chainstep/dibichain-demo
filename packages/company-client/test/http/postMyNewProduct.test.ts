@@ -52,7 +52,6 @@ if (!config.skipTests.includes("postMyNewProduct")) {
             .expect(200);
 
         const myNewProducts = myNewProductStore.store;
-
         expect(myNewProducts.length).toEqual(1);
         expect(myNewProducts[0]).toEqual({ ...TEST_NEW_PRODUCT, timestamp: 0 });
     });

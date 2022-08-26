@@ -24,22 +24,18 @@ export class SkipProductService implements ContractEventService {
 
 
     public async run(inputs: unknown[]): Promise<ContractEventServiceCode> {
-        const product = <{uid: string}> inputs[1];
-
         try {
+            const product = <{uid: string}> inputs[1];
             const products = await this.getProducts(this.stores, product.uid);
 
-            if (!this.skipNonExistingProduct && products.length !== 0) {
-                return ContractEventServiceCode.STOP;
-            }
-            if (this.skipNonExistingProduct && products.length === 0) {
+            if ((!this.skipNonExistingProduct && products.length !== 0)
+              || (this.skipNonExistingProduct && products.length === 0)) {
                 return ContractEventServiceCode.STOP;
             }
         } catch (error) {
             logger.error((<Error> error).message);
             return ContractEventServiceCode.STOP;
         }
-
         return ContractEventServiceCode.CONTINUE;
     }
 

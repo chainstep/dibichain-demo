@@ -27,7 +27,6 @@ if (!config.skipTests.includes("getProducts")) {
             .expect(200);
 
         const product = (<Product[]> response.body.data.products)[0];
-
         expect(product.amount).toEqual(TEST_PRODUCT.amount);
         expect(product.amountUnit?.toLowerCase()).toEqual(TEST_PRODUCT.amountUnit);
         expect(product.carbonFootprint).toEqual(TEST_PRODUCT.carbonFootprint);

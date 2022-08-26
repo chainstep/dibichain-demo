@@ -12,8 +12,8 @@ export async function initContractListeners(contract: EventBus): Promise<void> {
         createNewProductListener(),
         createProductDetailsRequestListener()
     ];
-    const blockchainInfoStore = BlockchainInfoStore.get();
 
+    const blockchainInfoStore = BlockchainInfoStore.get();
     if (EnvVars.CATCH_UP_ALL_CONTRACT_EVENTS) {
         await blockchainInfoStore.upsert({ blockHeight: 1 });
     }
@@ -31,7 +31,6 @@ export async function initContractListeners(contract: EventBus): Promise<void> {
 
     const eventHandler = new ContractEventHandler({ contract });
     await eventHandler.init();
-
     eventListeners.forEach((eventListener) => {
         eventHandler.add(eventListener);
     });

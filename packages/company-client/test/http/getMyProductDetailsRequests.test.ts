@@ -29,7 +29,6 @@ if (!config.skipTests.includes("getMyProductDetailsRequests")) {
             .expect(200);
 
         const myProductDetailsRequests = <MyProductDetailsRequest[]> response.body.data.myProductDetailsRequests;
-
         expect(myProductDetailsRequests.length).toEqual(2);
         const productDetailsRequest = { ...TEST_PRODUCT_DETAILS_REQUEST };
         productDetailsRequest.timestamp = 0;

@@ -55,7 +55,6 @@ if (!config.skipTests.includes("newProduct")) {
         await newProductListener(TEST_NEW_PRODUCT_EVENT_PARAMS.uid, TEST_NEW_PRODUCT_EVENT_PARAMS, event);
 
         const storedNewProduct = newProductStore.store[0];
-
         expect(storedNewProduct).toEqual(TEST_NEW_PRODUCT);
     });
 
@@ -66,7 +65,6 @@ if (!config.skipTests.includes("newProduct")) {
         await newProductListener(TEST_NEW_PRODUCT_EVENT_PARAMS.uid, TEST_NEW_PRODUCT_EVENT_PARAMS, event);
 
         const storedNewProduct = newProductStore.store[0];
-
         expect(storedNewProduct).toBeUndefined();
     });
 } else {

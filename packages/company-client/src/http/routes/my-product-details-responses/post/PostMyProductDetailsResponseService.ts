@@ -52,7 +52,6 @@ export class PostMyProductDetailsResponseService implements RouteService {
         if (!decline) {
             const myProduct = myProducts[0];
             const myDocuments = await this.getMyProductDocuments(myProduct, this.myDocumentStore);
-
             await this.operator.sendProductDetails({
                 myProduct,
                 myDocuments,

@@ -81,11 +81,10 @@ if (!config.skipTests.includes("pollProducts")) {
         });
 
         await service.run();
+
         const product = productStore.store[0];
         const documents = documentStore.store;
-
         expect(product).toEqual(TEST_PRODUCT);
-
         let index = documents.findIndex(document => document.uid === TEST_DOCUMENT_1.uid);
         expect(documents[index]).toEqual(TEST_DOCUMENT_1);
         index = documents.findIndex(document => document.uid === TEST_DOCUMENT_2.uid);

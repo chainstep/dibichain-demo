@@ -26,7 +26,6 @@ if (!config.skipTests.includes("getMyDocuments")) {
             .expect(200);
 
         const myDocuments = <MyDocument[]> response.body.data.myDocuments;
-
         expect(myDocuments.length).toEqual(1);
         expect(myDocuments[0]).toEqual(TEST_DOCUMENT_1);
     });
