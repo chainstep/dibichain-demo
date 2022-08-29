@@ -6,6 +6,8 @@ import Transport from "winston-transport";
 interface ExtraLogLevels {
     event(message: string, ...meta: unknown[]): void;
 }
+
+
 export let logger = <winston.Logger & ExtraLogLevels> {};
 
 

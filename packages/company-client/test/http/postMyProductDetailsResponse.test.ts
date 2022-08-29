@@ -59,7 +59,6 @@ if (!config.skipTests.includes("postMyProductDetailsResponse")) {
             .expect(200);
 
         const productDetailsRequests = await productDetailsRequestStore.find({ uid: TEST_PRODUCT_DETAILS_REQUEST.uid });
-
         expect(messageSent).toEqual(true);
         expect(productDetailsRequests[0].responded).toEqual(true);
     });
@@ -80,7 +79,6 @@ if (!config.skipTests.includes("postMyProductDetailsResponse")) {
             .expect(200);
 
         const productDetailsRequests = await productDetailsRequestStore.find({ uid: TEST_PRODUCT_DETAILS_REQUEST.uid });
-
         expect(messageSent).toEqual(false);
         expect(productDetailsRequests[0].responded).toEqual(true);
     });

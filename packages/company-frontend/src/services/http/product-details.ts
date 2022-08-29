@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { BACKEND_BASE_URL } from '../../constants';
+import { MyProductDetailsRequest, ProductDetailsRequest } from '../../types';
+
 
 export const postMyProductDetailsRequest = async (uid: string): Promise<void> => {
-
     const data = {
         uid
     };
@@ -22,7 +23,8 @@ export const postMyProductDetailsRequest = async (uid: string): Promise<void> =>
     }
 };
 
-export const getMyProductDetailsRequest = async (): Promise<unknown> => {
+
+export const getMyProductDetailsRequest = async (): Promise<{data: {myProductDetailsRequests: MyProductDetailsRequest[]}}> => {
     try {
         const response = await axios.get(`${BACKEND_BASE_URL}/my-product-details-requests`);
         return response.data;
@@ -39,7 +41,8 @@ export const getMyProductDetailsRequest = async (): Promise<unknown> => {
     }
 };
 
-export const getProductDetailsRequest = async (): Promise<unknown> => {
+
+export const getProductDetailsRequest = async (): Promise<{data: {productDetailsRequests: ProductDetailsRequest[]}}> => {
     try {
         const response = await axios.get(`${BACKEND_BASE_URL}/product-details-requests`);
         return response.data;
@@ -56,8 +59,8 @@ export const getProductDetailsRequest = async (): Promise<unknown> => {
     }
 };
 
-export const postMyProductDetailsResponse = async (uid: string, publicKey: string, decline?: boolean): Promise<void> => {
 
+export const postMyProductDetailsResponse = async (uid: string, publicKey: string, decline?: boolean): Promise<void> => {
     const data = {
         uid,
         publicKey,

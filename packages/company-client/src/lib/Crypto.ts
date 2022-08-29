@@ -21,7 +21,6 @@ export class Crypto {
         const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
             modulusLength: 2048
         });
-
         return {
             privateKey: privateKey.export({ type: "pkcs1", format: "pem" }).toString(),
             publicKey: publicKey.export({ type: "pkcs1", format: "pem" }).toString(),
@@ -33,7 +32,6 @@ export class Crypto {
     public encrypt(publicKey: string, message: string): EncryptedMessage {
         const { plainSecret, secret } = this.createSecret(publicKey);
         const { cipherText, initVector } = this.createCipherText(plainSecret, message);
-
         return {
             secret,
             cipherText,

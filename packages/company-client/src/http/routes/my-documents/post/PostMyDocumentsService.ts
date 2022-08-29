@@ -23,7 +23,6 @@ export class PostMyDocumentsService implements RouteService {
 
     public async run(inputs: Inputs): Promise<void> {
         const myDocuments = inputs.myDocuments;
-
         for (let i = 0 ; i < myDocuments.length ; i++) {
             await this.myDocumentStore.upsert(myDocuments[i]);
         }

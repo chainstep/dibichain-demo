@@ -28,7 +28,6 @@ export function createRouter(params: RouterParams): Router {
            const inputs = inputPath === "body" ? request.body
                         : inputPath === "query" ? request.query
                         : undefined;
-
             response.status(successCode || 200).send({
                 data: await service.run(inputs, request, response)
             });

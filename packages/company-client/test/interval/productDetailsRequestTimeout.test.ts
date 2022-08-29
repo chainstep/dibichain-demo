@@ -23,8 +23,8 @@ if (!config.skipTests.includes("productDetailsRequestTimeout")) {
         });
 
         await service.run();
-        const myProductDetailsRequest = myProductDetailsRequestStore.store[0];
 
+        const myProductDetailsRequest = myProductDetailsRequestStore.store[0];
         expect(myProductDetailsRequest.responded).toEqual(true);
     });
 } else {

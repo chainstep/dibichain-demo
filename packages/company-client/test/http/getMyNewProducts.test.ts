@@ -29,7 +29,6 @@ if (!config.skipTests.includes("getMyNewProducts")) {
             .expect(200);
 
         const myNewProducts = <MyNewProduct[]> response.body.data.myNewProducts;
-
         expect(myNewProducts.length).toEqual(2);
         expect(myNewProducts[0]).toEqual(TEST_NEW_PRODUCT);
         expect(myNewProducts[1]).toEqual(myNewProduct);

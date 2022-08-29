@@ -2,7 +2,8 @@ import axios from 'axios';
 import { BACKEND_BASE_URL } from '../../constants';
 import { Document } from '../../types';
 
-export const getMyDocuments = async (uid: string): Promise<unknown> => {
+
+export const getMyDocuments = async (uid: string): Promise<{data: {myDocuments: Document[]}}> => {
     try {
         const response = await axios.get(`${BACKEND_BASE_URL}/my-documents/?uid=${uid}`);
         return response.data;
@@ -19,7 +20,8 @@ export const getMyDocuments = async (uid: string): Promise<unknown> => {
     }
 };
 
-export const getDocuments = async (uid: string): Promise<unknown> => {
+
+export const getDocuments = async (uid: string): Promise<{data: {documents: Document[]}}> => {
     try {
         const response = await axios.get(`${BACKEND_BASE_URL}/documents/?uid=${uid}`);
         return response.data;
@@ -35,6 +37,7 @@ export const getDocuments = async (uid: string): Promise<unknown> => {
         }
     }
 };
+
 
 export const postMyDocuments = async (myDocuments: Document[]): Promise<unknown> => {
     const data = {

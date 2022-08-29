@@ -80,7 +80,6 @@ function getFilteredEvents(events: Event[], eventSetups: EventSetups[]): Event[]
     for (let i = 0 ; i < eventSetups.length ; i++) {
         const { eventName } = eventSetups[i].eventListener;
         const { eventFilter } = eventSetups[i];
-
         let filterEvents = events.filter(event => event.event === eventName);
         if (eventFilter) {
             filterEvents = eventFilter(filterEvents);
@@ -90,20 +89,15 @@ function getFilteredEvents(events: Event[], eventSetups: EventSetups[]): Event[]
     return filteredEvents.sort((a, b) => a.blockNumber - b.blockNumber);
 }
 
-async function callServices(
-    events: Event[],
-    eventSetups: EventSetups[]
-): Promise<void> {
+async function callServices(events: Event[], eventSetups: EventSetups[]): Promise<void> {
     for (let i = 0 ; i < events.length ; i++) {
         const event = events[i];
-
         for (let j = 0 ; j < eventSetups.length ; j++) {
             const { eventName, services } = eventSetups[j].eventListener;
-
             if (event.event === eventName) {
                 try {
-                    for (let j = 0 ; j < services.length ; j++) {
-                        const code = await services[j].run([...event.args || [], event]);
+                    for (let k = 0 ; k < services.length ; k++) {
+                        const code = await services[k].run([...event.args || [], event]);
                         if (code && code === ContractEventServiceCode.STOP) {
                             break;
                         }

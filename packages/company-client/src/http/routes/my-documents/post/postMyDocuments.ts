@@ -63,13 +63,13 @@ function isDocumentArray(value: string): boolean {
 }
 
 function isMyDocumentType(myDocument: MyDocumentParams) {
-    return typeof myDocument.data === "string" &&
-        typeof myDocument.name === "string" &&
-        typeof myDocument.type === "string" &&
-        typeof myDocument.uid === "string" &&
-        isUUID(myDocument.uid) &&
-        typeof myDocument.version === "string" &&
-        (typeof myDocument.timestamp === "number" || typeof myDocument.uploaded === "number");
+    return typeof myDocument.data === "string"
+        && typeof myDocument.name === "string"
+        && typeof myDocument.type === "string"
+        && typeof myDocument.uid === "string"
+        && isUUID(myDocument.uid)
+        && typeof myDocument.version === "string"
+        && (typeof myDocument.timestamp === "number" || typeof myDocument.uploaded === "number");
 }
 
 function cleanseInputs(request: Request, response: Response, next: NextFunction): void {

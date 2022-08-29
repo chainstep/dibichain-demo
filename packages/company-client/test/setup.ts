@@ -1,7 +1,7 @@
 import { BlockchainInfoStore } from "../src/storage/blockchain/BlockchainInfoStore";
 import { createBlockchainInfoStore } from "../src/storage/blockchain/blockchainInfoStoreFactory";
 import { DocumentStore } from "../src/storage/document/DocumentStore";
-import { createDocumentStore } from "../src/storage/document/DocumentStoreFactory";
+import { createDocumentStore } from "../src/storage/document/documentStoreFactory";
 import { KeyStore } from "../src/storage/key/KeyStore";
 import { createKeyStore } from "../src/storage/key/KeyStoreFactory";
 import { MyDocumentStore } from "../src/storage/my-document/MyDocumentStore";
