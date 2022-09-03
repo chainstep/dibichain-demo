@@ -1,5 +1,7 @@
 import { initContractListeners } from "../../src/contract";
 import { EventBus } from "../../src/contract/interfaces/EventBus";
+import { BlockchainInfoStore } from "../../src/storage/blockchain/BlockchainInfoStore";
+import { BlockchainInfoStoreInMemory } from "../../src/storage/blockchain/BlockchainInfoStoreInMemory";
 import { MyProductStore } from "../../src/storage/my-product/MyProductStore";
 import { MyProductStoreInMemory } from "../../src/storage/my-product/MyProductStoreInMemory";
 import { ProductDetailsRequestStore } from "../../src/storage/product-details-request/ProductDetailsRequestStore";
@@ -37,10 +39,12 @@ const event = {
 
 
 if (!config.skipTests.includes("productDetailsRequest")) {
+    const blockchainInfoStore = <BlockchainInfoStoreInMemory> BlockchainInfoStore.get();
     const myProductStore = <MyProductStoreInMemory> MyProductStore.get();
     const productDetailsRequestStore = <ProductDetailsRequestStoreInMemory> ProductDetailsRequestStore.get();
 
     beforeEach(async () => {
+        blockchainInfoStore.clear();
         myProductStore.clear();
         productDetailsRequestStore.clear();
     });
@@ -62,6 +66,7 @@ if (!config.skipTests.includes("productDetailsRequest")) {
         expect(productDetailsRequestStore.store.length).toEqual(1);
         const storedProductDetailsRequests = productDetailsRequestStore.store[0];
         expect(storedProductDetailsRequests).toEqual(TEST_PRODUCT_DETAILS_REQUEST);
+        expect(blockchainInfoStore.store[0].blockHeight).toEqual(10);
     });
 } else {
     test("dummy", () => {

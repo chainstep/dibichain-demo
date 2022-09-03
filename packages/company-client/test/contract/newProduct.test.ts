@@ -1,5 +1,7 @@
 import { initContractListeners } from "../../src/contract";
 import { EventBus } from "../../src/contract/interfaces/EventBus";
+import { BlockchainInfoStore } from "../../src/storage/blockchain/BlockchainInfoStore";
+import { BlockchainInfoStoreInMemory } from "../../src/storage/blockchain/BlockchainInfoStoreInMemory";
 import { NewProductStore } from "../../src/storage/new-product/NewProductStore";
 import { NewProductStoreInMemory } from "../../src/storage/new-product/NewProductStoreInMemory";
 import { ProductStore } from "../../src/storage/product/ProductStore";
@@ -37,10 +39,12 @@ const event = {
 
 
 if (!config.skipTests.includes("newProduct")) {
+    const blockchainInfoStore = <BlockchainInfoStoreInMemory> BlockchainInfoStore.get();
     const newProductStore = <NewProductStoreInMemory> NewProductStore.get();
     const productStore = <ProductStoreInMemory> ProductStore.get();
 
     beforeEach(async () => {
+        blockchainInfoStore.clear();
         newProductStore.clear();
         productStore.clear();
     });
@@ -52,6 +56,7 @@ if (!config.skipTests.includes("newProduct")) {
 
         const storedNewProduct = newProductStore.store[0];
         expect(storedNewProduct).toEqual(TEST_NEW_PRODUCT);
+        expect(blockchainInfoStore.store[0].blockHeight).toEqual(10);
     });
 
 
