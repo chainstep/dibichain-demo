@@ -41,7 +41,7 @@ export function createPostMyDocumentsRouter(): Router {
         inputChecks: [
             body("myDocuments").custom(isDocumentArray).withMessage(INVALID_INPUT_TEXT + "myDocuments"),
         ],
-        middlewares: [ cleanseInputs],
+        middlewares: [ cleanseInputs ],
         service: new PostMyDocumentsService({
             myDocumentStore: MyDocumentStore.get()
         })
