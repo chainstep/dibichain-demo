@@ -5,7 +5,7 @@ import { NewProductStore } from "../../src/storage/new-product/NewProductStore";
 import { NewProductStoreInMemory } from "../../src/storage/new-product/NewProductStoreInMemory";
 import { NewProduct } from "../../src/types";
 import { config } from "../config";
-import { TEST_NEW_PRODUCT } from "../constants";
+import { TEST_NEW_PRODUCT } from "../data";
 
 
 if (!config.skipTests.includes("getNewProducts")) {

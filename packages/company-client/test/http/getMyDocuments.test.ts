@@ -5,7 +5,7 @@ import { MyDocumentStore } from "../../src/storage/my-document/MyDocumentStore";
 import { MyDocumentStoreInMemory } from "../../src/storage/my-document/MyDocumentStoreInMemory";
 import { MyDocument } from "../../src/types";
 import { config } from "../config";
-import { TEST_DOCUMENT_1 } from "../constants";
+import { TEST_DOCUMENT_1 } from "../data";
 
 
 if (!config.skipTests.includes("getMyDocuments")) {

@@ -4,7 +4,7 @@ import { EnvVars } from "../../src/lib/EnvVars";
 import { MyDocumentStore } from "../../src/storage/my-document/MyDocumentStore";
 import { MyDocumentStoreInMemory } from "../../src/storage/my-document/MyDocumentStoreInMemory";
 import { config } from "../config";
-import { TEST_DOCUMENT_1, TEST_DOCUMENT_2 } from "../constants";
+import { TEST_DOCUMENT_1, TEST_DOCUMENT_2 } from "../data";
 
 
 if (!config.skipTests.includes("postMyDocuments")) {

@@ -13,7 +13,7 @@ import { NewProductStoreInMemory } from "../../src/storage/new-product/NewProduc
 import { ProductStore } from "../../src/storage/product/ProductStore";
 import { ProductStoreInMemory } from "../../src/storage/product/ProductStoreInMemory";
 import { config } from "../config";
-import { TEST_DOCUMENT_1, TEST_DOCUMENT_2, TEST_DOCUMENT_3, TEST_KEY, TEST_MESSAGE, TEST_MY_PRODUCT_DETAILS_REQUEST, TEST_NEW_PRODUCT, TEST_PRODUCT } from "../constants";
+import { TEST_DOCUMENT_1, TEST_DOCUMENT_2, TEST_DOCUMENT_3, TEST_KEY, TEST_MESSAGE, TEST_MY_PRODUCT_DETAILS_REQUEST, TEST_NEW_PRODUCT, TEST_PRODUCT } from "../data";
 
 
 // mock axios

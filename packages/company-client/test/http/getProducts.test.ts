@@ -5,7 +5,7 @@ import { ProductStore } from "../../src/storage/product/ProductStore";
 import { ProductStoreInMemory } from "../../src/storage/product/ProductStoreInMemory";
 import { Product } from "../../src/types";
 import { config } from "../config";
-import { TEST_PRODUCT } from "../constants";
+import { TEST_PRODUCT } from "../data";
 
 
 if (!config.skipTests.includes("getProducts")) {
