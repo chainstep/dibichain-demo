@@ -42,7 +42,6 @@ function showHelp() {
 
 function createDocumentData(uid, documentPath, version) {
     const data = fs.readFileSync(documentPath).toString("base64");
-    
     const documentPieces = documentPath.split(".");
     const type = documentPieces.slice(-1)[0];
     const name = documentPieces.slice(-2)[0].split("/").slice(-1)[0];
