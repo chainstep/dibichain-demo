@@ -8,7 +8,7 @@ import { MyProductDetailsRequestStoreInMemory } from "../../src/storage/my-produ
 import { NewProductStore } from "../../src/storage/new-product/NewProductStore";
 import { NewProductStoreInMemory } from "../../src/storage/new-product/NewProductStoreInMemory";
 import { config } from "../config";
-import { TEST_KEY, TEST_MY_PRODUCT_DETAILS_REQUEST, TEST_NEW_PRODUCT } from "../constants";
+import { TEST_KEY, TEST_MY_PRODUCT_DETAILS_REQUEST, TEST_NEW_PRODUCT } from "../data";
 
 
 // mock axios

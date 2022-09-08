@@ -5,7 +5,7 @@ import { ProductDetailsRequestStore } from "../../src/storage/product-details-re
 import { ProductDetailsRequestStoreInMemory } from "../../src/storage/product-details-request/ProductDetailsRequestStoreInMemory";
 import { MyProductDetailsRequest } from "../../src/types";
 import { config } from "../config";
-import { TEST_PRODUCT_DETAILS_REQUEST } from "../constants";
+import { TEST_PRODUCT_DETAILS_REQUEST } from "../data";
 
 
 if (!config.skipTests.includes("getProductDetailsRequests")) {

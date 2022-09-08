@@ -7,7 +7,7 @@ import { NewProductStoreInMemory } from "../../src/storage/new-product/NewProduc
 import { ProductStore } from "../../src/storage/product/ProductStore";
 import { ProductStoreInMemory } from "../../src/storage/product/ProductStoreInMemory";
 import { config } from "../config";
-import { TEST_NEW_PRODUCT, TEST_NEW_PRODUCT_EVENT_PARAMS, TEST_PRODUCT } from "../constants";
+import { TEST_NEW_PRODUCT, TEST_NEW_PRODUCT_EVENT_PARAMS, TEST_PRODUCT } from "../data";
 
 
 // mock EventBus contract
@@ -56,6 +56,7 @@ if (!config.skipTests.includes("newProduct")) {
 
         const storedNewProduct = newProductStore.store[0];
         expect(storedNewProduct).toEqual(TEST_NEW_PRODUCT);
+        expect(blockchainInfoStore.store[0].blockHeight).toEqual(10);
     });
 
 

@@ -7,7 +7,7 @@ import { MyProductStoreInMemory } from "../../src/storage/my-product/MyProductSt
 import { ProductDetailsRequestStore } from "../../src/storage/product-details-request/ProductDetailsRequestStore";
 import { ProductDetailsRequestStoreInMemory } from "../../src/storage/product-details-request/ProductDetailsRequestStoreInMemory";
 import { config } from "../config";
-import { TEST_PRODUCT, TEST_PRODUCT_DETAILS_REQUEST, TEST_PRODUCT_DETAILS_REQUEST_EVENT_PARAMS } from "../constants";
+import { TEST_PRODUCT, TEST_PRODUCT_DETAILS_REQUEST, TEST_PRODUCT_DETAILS_REQUEST_EVENT_PARAMS } from "../data";
 
 
 // mock EventBus contract
@@ -66,6 +66,7 @@ if (!config.skipTests.includes("productDetailsRequest")) {
         expect(productDetailsRequestStore.store.length).toEqual(1);
         const storedProductDetailsRequests = productDetailsRequestStore.store[0];
         expect(storedProductDetailsRequests).toEqual(TEST_PRODUCT_DETAILS_REQUEST);
+        expect(blockchainInfoStore.store[0].blockHeight).toEqual(10);
     });
 } else {
     test("dummy", () => {

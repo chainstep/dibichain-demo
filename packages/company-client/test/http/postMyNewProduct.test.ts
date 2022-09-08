@@ -6,7 +6,7 @@ import { MyNewProductStoreInMemory } from "../../src/storage/my-new-product/MyNe
 import { MyProductStore } from "../../src/storage/my-product/MyProductStore";
 import { MyProductStoreInMemory } from "../../src/storage/my-product/MyProductStoreInMemory";
 import { config } from "../config";
-import { TEST_NEW_PRODUCT, TEST_PRODUCT } from "../constants";
+import { TEST_NEW_PRODUCT, TEST_PRODUCT } from "../data";
 
 
 // mock axios
