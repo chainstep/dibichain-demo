@@ -7,7 +7,7 @@ import { MyDocument, MyProduct } from "../../../../types";
 import { RouteService } from "../../../routerFactory";
 
 
-export interface PostMyProductDetailsResponseServiceOptions {
+export interface ServiceOptions {
     productDetailsRequestStore: IProductDetailsRequestStore;
     myProductStore: IMyProductStore;
     myDocumentStore: IMyDocumentStore;
@@ -22,37 +22,26 @@ interface Inputs {
 
 
 export class PostMyProductDetailsResponseService implements RouteService {
-    private readonly productDetailsRequestStore: IProductDetailsRequestStore;
-    private readonly myProductStore: IMyProductStore;
-    private readonly myDocumentStore: IMyDocumentStore;
-    private readonly operator: Operator;
-
-
-    constructor(options: PostMyProductDetailsResponseServiceOptions) {
-        this.productDetailsRequestStore = options.productDetailsRequestStore;
-        this.myProductStore = options.myProductStore;
-        this.myDocumentStore = options.myDocumentStore;
-        this.operator = options.operator;
-    }
+    constructor(private readonly options: ServiceOptions) {}
 
 
     public async run(inputs: Inputs): Promise<void> {
         const { uid, publicKey, decline } = inputs;
 
-        const productDetailsRequests = await this.productDetailsRequestStore.find({ uid, publicKey });
+        const productDetailsRequests = await this.options.productDetailsRequestStore.find({ uid, publicKey });
         if (productDetailsRequests.length === 0) {
             throw new NotFoundError("product details request not found");
         }
 
-        const myProducts = await this.myProductStore.find({ uid });
+        const myProducts = await this.options.myProductStore.find({ uid });
         if (myProducts.length === 0) {
             throw new NotFoundError("product not found");
         }
 
         if (!decline) {
             const myProduct = myProducts[0];
-            const myDocuments = await this.getMyProductDocuments(myProduct, this.myDocumentStore);
-            await this.operator.sendProductDetails({
+            const myDocuments = await this.getMyProductDocuments(myProduct, this.options.myDocumentStore);
+            await this.options.operator.sendProductDetails({
                 myProduct,
                 myDocuments,
                 publicKey: productDetailsRequests[0].publicKey,
@@ -61,7 +50,7 @@ export class PostMyProductDetailsResponseService implements RouteService {
         }
 
         productDetailsRequests[0].responded = true;
-        await this.productDetailsRequestStore.upsert(productDetailsRequests[0]);
+        await this.options.productDetailsRequestStore.upsert(productDetailsRequests[0]);
     }
 
     private async getMyProductDocuments(myProduct: MyProduct, myDocumentStore: IMyDocumentStore) {

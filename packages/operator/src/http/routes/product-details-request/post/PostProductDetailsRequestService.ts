@@ -2,7 +2,7 @@ import { EventBus } from "../../../../contract/interfaces/EventBus";
 import { RouteService } from "../../../routerFactory";
 
 
-export interface PostProductDetailsRequestServiceOptions {
+export interface ServiceOptions {
     eventBus: EventBus;
 }
 
@@ -14,15 +14,10 @@ interface Inputs {
 
 
 export class PostProductDetailsRequestService implements RouteService {
-    private readonly eventBus: EventBus;
-
-
-    constructor(options: PostProductDetailsRequestServiceOptions) {
-        this.eventBus = options.eventBus;
-    }
+    constructor(private readonly options: ServiceOptions) {}
 
 
     public async run(inputs: Inputs): Promise<void> {
-        await this.eventBus.broadcastProductDetailsRequest(inputs);
+        await this.options.eventBus.broadcastProductDetailsRequest(inputs);
     }
 }

@@ -8,7 +8,7 @@ import { Key, MyProductDetailsRequest, ProductPackage } from "../../../types";
 import { IntervalService } from "../../IntervalHandler";
 
 
-export interface PollProductsServiceOptions {
+interface ServiceOptions {
     myProductDetailsRequestStore: IMyProductDetailsRequestStore;
     keyStore: IKeyStore;
     productStore: IProductStore;
@@ -19,50 +19,35 @@ export interface PollProductsServiceOptions {
 
 
 export class PollProductsService implements IntervalService {
-    private readonly myProductDetailsRequestStore: IMyProductDetailsRequestStore;
-    private readonly keyStore: IKeyStore;
-    private readonly productStore: IProductStore;
-    private readonly documentStore: IDocumentStore;
-    private readonly newProductStore: INewProductStore;
-    private readonly operator: Operator;
-
-
-    constructor(options: PollProductsServiceOptions) {
-        this.myProductDetailsRequestStore = options.myProductDetailsRequestStore;
-        this.keyStore = options.keyStore;
-        this.productStore = options.productStore;
-        this.documentStore = options.documentStore;
-        this.newProductStore = options.newProductStore;
-        this.operator = options.operator;
-    }
+    constructor(private readonly options: ServiceOptions) {}
 
 
     public async run(): Promise<void> {
-        const myProductDetailsRequests = await this.myProductDetailsRequestStore.find({});
+        const myProductDetailsRequests = await this.options.myProductDetailsRequestStore.find({});
         const notRespondedRequests = myProductDetailsRequests.filter((myProductDetailsRequest) => {
             return !myProductDetailsRequest.responded;
         });
 
         const keysAndHashes = await this.getKeysAndHashes(
             notRespondedRequests,
-            this.keyStore,
-            this.newProductStore
+            this.options.keyStore,
+            this.options.newProductStore
         );
 
-        const productPackages = await this.operator.getProductDetails(keysAndHashes);
+        const productPackages = await this.options.operator.getProductDetails(keysAndHashes);
         for (let i = 0 ; i < productPackages.length ; i++) {
             const productPackage = productPackages[i];
 
             await this.updateProductAndDocumentStores(
                 productPackage,
-                this.productStore,
-                this.documentStore
+                this.options.productStore,
+                this.options.documentStore
             );
 
             await this.updateMyProductDetailsRequestStore(
                 notRespondedRequests,
                 productPackage.product.uid,
-                this.myProductDetailsRequestStore
+                this.options.myProductDetailsRequestStore
             );
         }
     }

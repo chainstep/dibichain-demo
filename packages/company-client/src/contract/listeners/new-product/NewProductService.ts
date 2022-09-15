@@ -6,21 +6,14 @@ import { logger } from "../../../utils/logger";
 import { ContractEventService } from "../../ContractEventHandler";
 
 
-interface NewProductServiceOptions {
+interface ServiceOptions {
     newProductStore: INewProductStore;
     myNewProductStore: IMyNewProductStore;
 }
 
 
 export class NewProductService implements ContractEventService {
-    private readonly newProductStore: INewProductStore;
-    private readonly myNewProductStore: IMyNewProductStore;
-
-
-    constructor(options: NewProductServiceOptions) {
-        this.newProductStore = options.newProductStore;
-        this.myNewProductStore = options.myNewProductStore;
-    }
+    constructor(private readonly options: ServiceOptions) {}
 
 
     async run(inputs: unknown[]): Promise<void> {
@@ -33,7 +26,7 @@ export class NewProductService implements ContractEventService {
 
         try {
             const block = await event.getBlock();
-            const myNewProducts =  await this.myNewProductStore.find({ uid: newProduct.uid });
+            const myNewProducts =  await this.options.myNewProductStore.find({ uid: newProduct.uid });
             const _newProduct = {
                 hash: newProduct.hash,
                 id: newProduct.id,
@@ -45,9 +38,9 @@ export class NewProductService implements ContractEventService {
             };
 
             if (myNewProducts.length === 0) {
-                await this.newProductStore.upsert(_newProduct);
+                await this.options.newProductStore.upsert(_newProduct);
             } else if (myNewProducts[0].timestamp === 0) {
-                await this.myNewProductStore.upsert(_newProduct);
+                await this.options.myNewProductStore.upsert(_newProduct);
             }
         } catch (error) {
             logger.error((<Error> error).message,

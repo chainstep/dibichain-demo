@@ -16,7 +16,7 @@ export function createPostProductDetailsRequestRouter(): Router {
             body("publicKey").isString().withMessage(INVALID_INPUT_TEXT + "publicKey"),
             body("algorithm").isString().withMessage(INVALID_INPUT_TEXT + "algorithm"),
         ],
-        middlewares: [ cleanseInputs],
+        middlewares: [ cleanseInputs ],
         service: new PostProductDetailsRequestService({
             eventBus: Contracts.getEventBus()
         })

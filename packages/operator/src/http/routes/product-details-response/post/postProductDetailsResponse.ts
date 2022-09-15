@@ -20,7 +20,7 @@ export function createPostProductDetailsResponseRouter(): Router {
             body("message.cipherText").isString().withMessage(INVALID_INPUT_TEXT + "message.cipherText"),
             body("message.initVector").isString().withMessage(INVALID_INPUT_TEXT + "message.initVector"),
         ],
-        middlewares: [ cleanseInputs],
+        middlewares: [ cleanseInputs ],
         service: new PostProductDetailsResponseService({
             productDetailsResponseStore: ProductDetailsResponseStore.get()
         })

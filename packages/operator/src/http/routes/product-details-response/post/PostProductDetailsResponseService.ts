@@ -3,7 +3,7 @@ import { EncMessage } from "../../../../types";
 import { RouteService } from "../../../routerFactory";
 
 
-export interface PostProductDetailsResponseServiceOptions {
+export interface ServiceOptions {
     productDetailsResponseStore: IProductDetailsResponseStore;
 }
 
@@ -15,18 +15,13 @@ interface Inputs {
 
 
 export class PostProductDetailsResponseService implements RouteService {
-    private readonly productDetailsResponseStore:  IProductDetailsResponseStore;
-
-
-    constructor(options: PostProductDetailsResponseServiceOptions) {
-        this.productDetailsResponseStore = options.productDetailsResponseStore;
-    }
+    constructor(private readonly options: ServiceOptions) {}
 
 
     public async run(inputs: Inputs): Promise<void> {
         const { uid, message, publicKey } = inputs;
         const timestamp = Math.floor(new Date().getTime() / 1000);
-        await this.productDetailsResponseStore.upsert({
+        await this.options.productDetailsResponseStore.upsert({
             message,
             publicKey,
             timestamp,

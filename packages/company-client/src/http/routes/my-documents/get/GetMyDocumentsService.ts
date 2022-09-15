@@ -3,7 +3,7 @@ import { MyDocument } from "../../../../types";
 import { RouteService } from "../../../routerFactory";
 
 
-interface GetMyDocumentsServiceOptions {
+interface ServiceOptions {
     myDocumentStore: IMyDocumentStore;
 }
 
@@ -17,16 +17,11 @@ interface Outputs {
 
 
 export class GetMyDocumentsService implements RouteService {
-    private readonly myDocumentStore: IMyDocumentStore;
-
-
-    constructor(options: GetMyDocumentsServiceOptions) {
-        this.myDocumentStore = options.myDocumentStore;
-    }
+    constructor(private readonly options: ServiceOptions) {}
 
 
     public async run(inputs: Inputs): Promise<Outputs> {
-        const myDocuments = await this.myDocumentStore.find(inputs);
+        const myDocuments = await this.options.myDocumentStore.find(inputs);
         return { myDocuments };
     }
 }

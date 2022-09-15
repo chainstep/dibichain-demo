@@ -4,24 +4,19 @@ import { logger } from "../../utils/logger";
 import { ContractEventService } from "../ContractEventHandler";
 
 
-interface BlockHeightServiceOptions {
+interface ServiceOptions {
     blockchainInfoStore: IBlockchainInfoStore
 }
 
 
 export class BlockHeightService implements ContractEventService {
-    private readonly blockchainInfoStore: IBlockchainInfoStore;
-
-
-    constructor(options: BlockHeightServiceOptions) {
-        this.blockchainInfoStore = options.blockchainInfoStore;
-    }
+    constructor(private readonly options: ServiceOptions) {}
 
 
     public async run(inputs: unknown[]): Promise<void> {
         try {
             const event = <Event> inputs[inputs.length - 1];
-            this.blockchainInfoStore.upsert({ blockHeight: event.blockNumber });
+            this.options.blockchainInfoStore.upsert({ blockHeight: event.blockNumber });
         } catch (error) {
             logger.error((<Error> error).message);
         }
