@@ -1,7 +1,16 @@
 import { NewProduct } from "../../types";
 
+
+export interface FindParams {
+    uid?: string;
+}
+
+export interface DeleteParams {
+    uid: string;
+}
+
 export interface INewProductStore {
-    upsert(event: NewProduct): Promise<void>;
-    find(params: {uid?: string}): Promise<NewProduct[]>;
-    delete(params: {uid: string}): Promise<void>;
+    upsert(newProduct: NewProduct): Promise<void>;
+    find(params: FindParams): Promise<NewProduct[]>;
+    delete(params: DeleteParams): Promise<void>;
 }

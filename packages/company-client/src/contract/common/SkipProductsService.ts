@@ -6,30 +6,23 @@ interface Store {
     find(params: {uid?: string}): Promise<{uid: string}[]>;
 }
 
-interface SkipProductServiceOptions {
+interface ServiceOptions {
     stores: Store[];
     skipIfNotFound?: boolean
 }
 
 
 export class SkipProductService implements ContractEventService {
-    private readonly stores: Store[];
-    private readonly skipNonExistingProduct?: boolean;
-
-
-    constructor(options: SkipProductServiceOptions) {
-        this.stores = options.stores;
-        this.skipNonExistingProduct = options.skipIfNotFound;
-    }
+    constructor(private readonly options: ServiceOptions) {}
 
 
     public async run(inputs: unknown[]): Promise<ContractEventServiceCode> {
         try {
             const product = <{uid: string}> inputs[1];
-            const products = await this.getProducts(this.stores, product.uid);
+            const products = await this.getProducts(this.options.stores, product.uid);
 
-            if ((!this.skipNonExistingProduct && products.length !== 0)
-              || (this.skipNonExistingProduct && products.length === 0)) {
+            if ((!this.options.skipIfNotFound && products.length !== 0)
+              || (this.options.skipIfNotFound && products.length === 0)) {
                 return ContractEventServiceCode.STOP;
             }
         } catch (error) {

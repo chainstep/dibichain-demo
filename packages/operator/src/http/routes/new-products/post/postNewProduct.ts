@@ -19,7 +19,7 @@ export function createPostNewProductRouter(): Router {
             body("number").isString().withMessage(INVALID_INPUT_TEXT + "number"),
             body("hash").isHash("sha256").withMessage(INVALID_INPUT_TEXT + "hash")
         ],
-        middlewares: [ cleanseInputs],
+        middlewares: [ cleanseInputs ],
         service: new PostNewProductService({
             eventBus: Contracts.getEventBus()
         })

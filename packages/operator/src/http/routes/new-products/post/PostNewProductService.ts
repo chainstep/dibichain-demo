@@ -3,7 +3,7 @@ import { NewProduct } from "../../../../types";
 import { RouteService } from "../../../routerFactory";
 
 
-export interface PostNewProductServiceOptions {
+export interface ServiceOptions {
     eventBus: EventBus
 }
 
@@ -11,16 +11,11 @@ type Inputs = NewProduct
 
 
 export class PostNewProductService implements RouteService {
-    private readonly eventBus: EventBus;
-
-
-    constructor(options: PostNewProductServiceOptions) {
-        this.eventBus = options.eventBus;
-    }
+    constructor(private readonly options: ServiceOptions) {}
 
 
     public async run(inputs: Inputs): Promise<void> {
-        await this.eventBus.broadcastNewProduct({
+        await this.options.eventBus.broadcastNewProduct({
             uid: inputs.uid,
             Type: inputs.type,
             hash: inputs.hash,

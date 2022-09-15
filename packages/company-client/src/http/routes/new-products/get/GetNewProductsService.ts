@@ -3,7 +3,7 @@ import { NewProduct } from "../../../../types";
 import { RouteService } from "../../../routerFactory";
 
 
-export interface GetNewProductsServiceOptions {
+export interface ServiceOptions {
     newProductStore: INewProductStore;
 }
 
@@ -18,16 +18,11 @@ interface Outputs {
 
 
 export class GetNewProductsService implements RouteService {
-    private readonly newProductStore: INewProductStore;
-
-
-    constructor(options: GetNewProductsServiceOptions) {
-        this.newProductStore = options.newProductStore;
-    }
+    constructor(private readonly options: ServiceOptions) {}
 
 
     public async run(inputs: Inputs): Promise<Outputs> {
-        const newProducts = await this.newProductStore.find(inputs);
+        const newProducts = await this.options.newProductStore.find(inputs);
         return { newProducts };
     }
 }

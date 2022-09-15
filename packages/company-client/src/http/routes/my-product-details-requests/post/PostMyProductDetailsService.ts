@@ -7,7 +7,7 @@ import { INewProductStore } from "../../../../storage/new-product/INewProductSto
 import { BadRequestError } from "@atz3n/express-utils";
 
 
-export interface PostMyProductDetailsRequestServiceOptions {
+export interface ServiceOptions {
     crypto: Crypto;
     operator: Operator;
     myProductDetailsRequestStore: IMyProductDetailsRequestStore;
@@ -21,37 +21,24 @@ interface Inputs {
 
 
 export class PostMyProductDetailsRequestService implements RouteService {
-    private readonly crypto: Crypto;
-    private readonly operator: Operator;
-    private readonly myProductDetailsRequestStore: IMyProductDetailsRequestStore;
-    private readonly newProductStore: INewProductStore;
-    private readonly keyStore: IKeyStore;
-
-
-    constructor(options: PostMyProductDetailsRequestServiceOptions) {
-        this.myProductDetailsRequestStore = options.myProductDetailsRequestStore;
-        this.newProductStore = options.newProductStore;
-        this.keyStore = options.keyStore;
-        this.crypto = options.crypto;
-        this.operator = options.operator;
-    }
+    constructor(private readonly options: ServiceOptions) {}
 
 
     public async run(inputs: Inputs): Promise<void> {
-        const key = this.crypto.generateKeyPair();
+        const key = this.options.crypto.generateKeyPair();
 
-        const newProducts = await this.newProductStore.find(inputs);
+        const newProducts = await this.options.newProductStore.find(inputs);
         if (newProducts.length === 0) {
             throw new BadRequestError("new product not found");
         }
 
-        await this.operator.announceProductDetailsRequest({
+        await this.options.operator.announceProductDetailsRequest({
             algorithm: key.algorithm,
             publicKey: key.publicKey,
             uid: inputs.uid
         });
 
-        await this.myProductDetailsRequestStore.upsert({
+        await this.options.myProductDetailsRequestStore.upsert({
             algorithm: key.algorithm,
             publicKey: key.publicKey,
             uid: inputs.uid,
@@ -59,6 +46,6 @@ export class PostMyProductDetailsRequestService implements RouteService {
             timestamp: 0
         });
 
-        await this.keyStore.upsert(key);
+        await this.options.keyStore.upsert(key);
     }
 }

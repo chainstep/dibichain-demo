@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 import { MyNewProduct } from "../../types";
 import { AMongoDBStore } from "../AMongoDBStore";
-import { IMyNewProductStore } from "./IMyNewProductStore";
+import { DeleteParams, FindParams, IMyNewProductStore } from "./IMyNewProductStore";
 
 
 export class MyNewProductStoreMongoDB extends AMongoDBStore implements IMyNewProductStore {
@@ -26,12 +26,12 @@ export class MyNewProductStoreMongoDB extends AMongoDBStore implements IMyNewPro
     }
 
 
-    public async find(params: {uid?: string}): Promise<MyNewProduct[]> {
+    public async find(params: FindParams): Promise<MyNewProduct[]> {
         return await this._find(params);
     }
 
 
-    public async delete(params: { uid: string; }): Promise<void> {
+    public async delete(params: DeleteParams): Promise<void> {
         await this._delete(params);
     }
 }

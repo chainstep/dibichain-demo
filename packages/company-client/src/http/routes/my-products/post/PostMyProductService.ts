@@ -4,7 +4,7 @@ import { MyProduct } from "../../../../types";
 import { RouteService } from "../../../routerFactory";
 
 
-export interface PostMyProductServiceOptions {
+export interface ServiceOptions {
     myProductStore: IMyProductStore;
 }
 
@@ -12,20 +12,15 @@ export interface PostMyProductServiceOptions {
 type Inputs = MyProduct
 
 export class PostMyProductService implements RouteService {
-    private readonly myProductStore: IMyProductStore;
-
-
-    constructor(options: PostMyProductServiceOptions) {
-        this.myProductStore = options.myProductStore;
-    }
+    constructor(private readonly options: ServiceOptions) {}
 
 
     public async run(inputs: Inputs): Promise<void> {
-        const products = await this.myProductStore.find({ uid: inputs.uid });
+        const products = await this.options.myProductStore.find({ uid: inputs.uid });
         if (products.length !== 0) {
             throw new BadRequestError("product already exists");
         }
 
-        await this.myProductStore.upsert(inputs);
+        await this.options.myProductStore.upsert(inputs);
     }
 }

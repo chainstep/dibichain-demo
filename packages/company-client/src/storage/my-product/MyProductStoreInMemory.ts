@@ -1,6 +1,6 @@
 import { MyProduct } from "../../types";
 import { AInMemoryStore } from "../AInMemoryStore";
-import { IMyProductStore } from "./IMyProductStore";
+import { DeleteParams, FindParams, IMyProductStore } from "./IMyProductStore";
 
 
 export class MyProductStoreInMemory extends AInMemoryStore implements IMyProductStore {
@@ -12,12 +12,12 @@ export class MyProductStoreInMemory extends AInMemoryStore implements IMyProduct
     }
 
 
-    public async find(params: {id?: string, uid?: string, name?: string}): Promise<MyProduct[]> {
+    public async find(params: FindParams): Promise<MyProduct[]> {
         return this._find(params);
     }
 
 
-    public async delete(params: { uid: string; }): Promise<void> {
+    public async delete(params: DeleteParams): Promise<void> {
         this._delete(params);
     }
 }

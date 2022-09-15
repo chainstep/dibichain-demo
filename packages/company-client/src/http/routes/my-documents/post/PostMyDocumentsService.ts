@@ -3,7 +3,7 @@ import { MyDocument } from "../../../../types";
 import { RouteService } from "../../../routerFactory";
 
 
-interface PostMyDocumentsServiceOptions {
+interface ServiceOptions {
     myDocumentStore: IMyDocumentStore;
 }
 
@@ -13,18 +13,13 @@ interface Inputs {
 
 
 export class PostMyDocumentsService implements RouteService {
-    private readonly myDocumentStore: IMyDocumentStore;
-
-
-    constructor(options: PostMyDocumentsServiceOptions) {
-        this.myDocumentStore = options.myDocumentStore;
-    }
+    constructor(private readonly options: ServiceOptions) {}
 
 
     public async run(inputs: Inputs): Promise<void> {
         const myDocuments = inputs.myDocuments;
         for (let i = 0 ; i < myDocuments.length ; i++) {
-            await this.myDocumentStore.upsert(myDocuments[i]);
+            await this.options.myDocumentStore.upsert(myDocuments[i]);
         }
     }
 }

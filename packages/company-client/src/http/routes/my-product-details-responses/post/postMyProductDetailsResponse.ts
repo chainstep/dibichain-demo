@@ -56,7 +56,7 @@ export function createPostMyProductDetailsResponsesRouter(): Router {
             body("publicKey").isString().withMessage(INVALID_INPUT_TEXT + "publicKey"),
             body("decline").optional().isBoolean().withMessage(INVALID_INPUT_TEXT + "decline")
         ],
-        middlewares: [ cleanseInputs],
+        middlewares: [ cleanseInputs ],
         service: new PostMyProductDetailsResponseService({
             productDetailsRequestStore: ProductDetailsRequestStore.get(),
             myProductStore: MyProductStore.get(),

@@ -6,21 +6,14 @@ import { logger } from "../../../utils/logger";
 import { ContractEventService } from "../../ContractEventHandler";
 
 
-interface ProductDetailsRequestServiceOptions {
+interface ServiceOptions {
     productDetailsRequestStore: IProductDetailsRequestStore;
     myProductDetailsRequestStore: IMyProductDetailsRequestStore;
 }
 
 
 export class ProductDetailsRequestService implements ContractEventService {
-    private readonly productDetailsRequestStore: IProductDetailsRequestStore;
-    private readonly myProductDetailsRequestStore: IMyProductDetailsRequestStore;
-
-
-    constructor(options: ProductDetailsRequestServiceOptions) {
-        this.productDetailsRequestStore = options.productDetailsRequestStore;
-        this.myProductDetailsRequestStore = options.myProductDetailsRequestStore;
-    }
+    constructor(private readonly options: ServiceOptions) {}
 
 
     async run(inputs: unknown[]): Promise<void> {
@@ -33,10 +26,10 @@ export class ProductDetailsRequestService implements ContractEventService {
 
         try {
             const block = await event.getBlock();
-            const myProductDetailsRequests = await this.myProductDetailsRequestStore.find({
+            const myProductDetailsRequests = await this.options.myProductDetailsRequestStore.find({
                 uid: productDetailsRequest.uid
             });
-            const productDetailsRequests = await this.productDetailsRequestStore.find({
+            const productDetailsRequests = await this.options.productDetailsRequestStore.find({
                 uid: productDetailsRequest.uid
             });
             const _productDetailsRequest = {
@@ -48,9 +41,9 @@ export class ProductDetailsRequestService implements ContractEventService {
             };
 
             if (myProductDetailsRequests.length === 0 && productDetailsRequests.length === 0) {
-                await this.productDetailsRequestStore.upsert(_productDetailsRequest);
+                await this.options.productDetailsRequestStore.upsert(_productDetailsRequest);
             } else if (myProductDetailsRequests[0].timestamp === 0) {
-                await this.myProductDetailsRequestStore.upsert(_productDetailsRequest);
+                await this.options.myProductDetailsRequestStore.upsert(_productDetailsRequest);
             }
         } catch (error) {
             logger.error((<Error> error).message,
