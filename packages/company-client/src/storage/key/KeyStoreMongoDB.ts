@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 import { Key } from "../../types";
 import { AMongoDBStore } from "../AMongoDBStore";
-import { IKeyStore } from "./IKeyStore";
+import { DeleteParams, FindParams, IKeyStore } from "./IKeyStore";
 
 
 export class KeyStoreMongoDB extends AMongoDBStore implements IKeyStore {
@@ -22,12 +22,12 @@ export class KeyStoreMongoDB extends AMongoDBStore implements IKeyStore {
     }
 
 
-    public async find(params: {publicKey?: string}): Promise<Key[]> {
+    public async find(params: FindParams): Promise<Key[]> {
         return await this._find(params);
     }
 
 
-    public async delete(params: { publicKey: string; }): Promise<void> {
+    public async delete(params: DeleteParams): Promise<void> {
         await this._delete(params);
     }
 }

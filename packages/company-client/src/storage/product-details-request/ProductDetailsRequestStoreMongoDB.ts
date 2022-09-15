@@ -1,13 +1,10 @@
 import { model, Schema } from "mongoose";
 import { ProductDetailsRequest } from "../../types";
 import { AMongoDBStore } from "../AMongoDBStore";
-import { IProductDetailsRequestStore } from "./IProductDetailsRequestStore";
+import { DeleteParams, FindParams, IProductDetailsRequestStore } from "./IProductDetailsRequestStore";
 
 
 export class ProductDetailsRequestStoreMongoDB extends AMongoDBStore implements IProductDetailsRequestStore {
-    private readonly mongoUrl: string;
-
-
     constructor(options: { mongoUrl: string }) {
         super({
             model: model("ProductDetailsRequest", new Schema<ProductDetailsRequest>({
@@ -19,7 +16,6 @@ export class ProductDetailsRequestStoreMongoDB extends AMongoDBStore implements 
             })),
             url: options.mongoUrl
         });
-        this.mongoUrl = options.mongoUrl;
     }
 
 
@@ -28,12 +24,12 @@ export class ProductDetailsRequestStoreMongoDB extends AMongoDBStore implements 
     }
 
 
-    public async find(params: {uid?: string, publicKey?: string}): Promise<ProductDetailsRequest[]> {
+    public async find(params: FindParams): Promise<ProductDetailsRequest[]> {
         return await this._find(params);
     }
 
 
-    public async delete(params: {uid: string}): Promise<void> {
+    public async delete(params: DeleteParams): Promise<void> {
         return await this._delete(params);
     }
 }

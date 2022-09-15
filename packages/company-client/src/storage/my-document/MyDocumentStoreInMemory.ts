@@ -1,6 +1,6 @@
 import { MyDocument } from "../../types";
 import { AInMemoryStore } from "../AInMemoryStore";
-import { IMyDocumentStore } from "./IMyDocumentStore";
+import { DeleteParams, FindParams, IMyDocumentStore } from "./IMyDocumentStore";
 
 
 export class MyDocumentStoreInMemory extends AInMemoryStore implements IMyDocumentStore {
@@ -12,12 +12,12 @@ export class MyDocumentStoreInMemory extends AInMemoryStore implements IMyDocume
     }
 
 
-    public async find(params: {uid?: string}): Promise<MyDocument[]> {
+    public async find(params: FindParams): Promise<MyDocument[]> {
         return this._find(params);
     }
 
 
-    public async delete(params: { uid: string; }): Promise<void> {
+    public async delete(params: DeleteParams): Promise<void> {
         this._delete(params);
     }
 }
