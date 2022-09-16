@@ -4,13 +4,13 @@ import { logger } from "../../utils/logger";
 import { ContractEventService } from "../ContractEventHandler";
 
 
-interface ServiceOptions {
+interface Options {
     blockchainInfoStore: IBlockchainInfoStore
 }
 
 
 export class BlockHeightService implements ContractEventService {
-    constructor(private readonly options: ServiceOptions) {}
+    constructor(private readonly options: Options) {}
 
 
     public async run(inputs: unknown[]): Promise<void> {

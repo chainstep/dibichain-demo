@@ -3,7 +3,7 @@ import { EncMessage } from "../../../../types";
 import { RouteService } from "../../../routerFactory";
 
 
-export interface ServiceOptions {
+export interface Options {
     productDetailsResponseStore: IProductDetailsResponseStore;
 }
 
@@ -15,7 +15,7 @@ interface Inputs {
 
 
 export class PostProductDetailsResponseService implements RouteService {
-    constructor(private readonly options: ServiceOptions) {}
+    constructor(private readonly options: Options) {}
 
 
     public async run(inputs: Inputs): Promise<void> {

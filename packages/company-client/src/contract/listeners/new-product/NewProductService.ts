@@ -6,14 +6,14 @@ import { logger } from "../../../utils/logger";
 import { ContractEventService } from "../../ContractEventHandler";
 
 
-interface ServiceOptions {
+interface Options {
     newProductStore: INewProductStore;
     myNewProductStore: IMyNewProductStore;
 }
 
 
 export class NewProductService implements ContractEventService {
-    constructor(private readonly options: ServiceOptions) {}
+    constructor(private readonly options: Options) {}
 
 
     async run(inputs: unknown[]): Promise<void> {

@@ -7,7 +7,7 @@ import { INewProductStore } from "../../../../storage/new-product/INewProductSto
 import { BadRequestError } from "@atz3n/express-utils";
 
 
-export interface ServiceOptions {
+export interface Options {
     crypto: Crypto;
     operator: Operator;
     myProductDetailsRequestStore: IMyProductDetailsRequestStore;
@@ -21,7 +21,7 @@ interface Inputs {
 
 
 export class PostMyProductDetailsRequestService implements RouteService {
-    constructor(private readonly options: ServiceOptions) {}
+    constructor(private readonly options: Options) {}
 
 
     public async run(inputs: Inputs): Promise<void> {

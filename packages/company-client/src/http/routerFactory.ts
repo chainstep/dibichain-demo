@@ -9,7 +9,7 @@ export interface RouteService {
 
 
 export interface RouterParams {
-    method: "post" | "get" | "put" | "delete";
+    method: "post" | "get" | "put" | "delete" | "patch";
     route: string;
     inputPath?: "query" | "body";
     inputChecks?: ValidationChain[];

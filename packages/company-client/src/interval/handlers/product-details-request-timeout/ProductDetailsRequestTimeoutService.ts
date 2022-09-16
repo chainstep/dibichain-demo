@@ -2,14 +2,14 @@ import { IMyProductDetailsRequestStore } from "../../../storage/my-product-detai
 import { IntervalService } from "../../IntervalHandler";
 
 
-interface ServiceOptions {
+interface Options {
     myProductDetailsRequestStore: IMyProductDetailsRequestStore;
     timeoutMin: number
 }
 
 
 export class ProductDetailsRequestTimeoutService implements IntervalService {
-    constructor(private readonly options: ServiceOptions) {}
+    constructor(private readonly options: Options) {}
 
 
     public async run(): Promise<void> {

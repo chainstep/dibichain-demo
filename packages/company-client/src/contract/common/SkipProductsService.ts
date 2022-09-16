@@ -6,14 +6,14 @@ interface Store {
     find(params: {uid?: string}): Promise<{uid: string}[]>;
 }
 
-interface ServiceOptions {
+interface Options {
     stores: Store[];
     skipIfNotFound?: boolean
 }
 
 
 export class SkipProductService implements ContractEventService {
-    constructor(private readonly options: ServiceOptions) {}
+    constructor(private readonly options: Options) {}
 
 
     public async run(inputs: unknown[]): Promise<ContractEventServiceCode> {

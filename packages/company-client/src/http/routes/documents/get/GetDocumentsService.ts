@@ -3,7 +3,7 @@ import { Document } from "../../../../types";
 import { RouteService } from "../../../routerFactory";
 
 
-interface ServiceOptions {
+interface Options {
     documentStore: IDocumentStore;
 }
 
@@ -17,7 +17,7 @@ interface Outputs {
 
 
 export class GetDocumentsService implements RouteService {
-    constructor(private readonly options: ServiceOptions) {}
+    constructor(private readonly options: Options) {}
 
 
     public async run(inputs: Inputs): Promise<Outputs> {
