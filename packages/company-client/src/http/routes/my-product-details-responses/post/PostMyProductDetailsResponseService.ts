@@ -7,7 +7,7 @@ import { MyDocument, MyProduct } from "../../../../types";
 import { RouteService } from "../../../routerFactory";
 
 
-export interface ServiceOptions {
+export interface Options {
     productDetailsRequestStore: IProductDetailsRequestStore;
     myProductStore: IMyProductStore;
     myDocumentStore: IMyDocumentStore;
@@ -22,7 +22,7 @@ interface Inputs {
 
 
 export class PostMyProductDetailsResponseService implements RouteService {
-    constructor(private readonly options: ServiceOptions) {}
+    constructor(private readonly options: Options) {}
 
 
     public async run(inputs: Inputs): Promise<void> {

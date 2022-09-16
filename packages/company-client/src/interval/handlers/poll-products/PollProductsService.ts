@@ -8,7 +8,7 @@ import { Key, MyProductDetailsRequest, ProductPackage } from "../../../types";
 import { IntervalService } from "../../IntervalHandler";
 
 
-interface ServiceOptions {
+interface Options {
     myProductDetailsRequestStore: IMyProductDetailsRequestStore;
     keyStore: IKeyStore;
     productStore: IProductStore;
@@ -19,7 +19,7 @@ interface ServiceOptions {
 
 
 export class PollProductsService implements IntervalService {
-    constructor(private readonly options: ServiceOptions) {}
+    constructor(private readonly options: Options) {}
 
 
     public async run(): Promise<void> {

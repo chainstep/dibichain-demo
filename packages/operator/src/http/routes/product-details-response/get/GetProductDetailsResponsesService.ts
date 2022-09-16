@@ -3,7 +3,7 @@ import { ProductDetailsResponse } from "../../../../types";
 import { RouteService } from "../../../routerFactory";
 
 
-export interface ServiceOptions {
+export interface Options {
     productDetailsResponseStore: IProductDetailsResponseStore;
 }
 
@@ -17,7 +17,7 @@ interface Outputs {
 
 
 export class GetProductDetailsResponseService implements RouteService {
-    constructor(private readonly options: ServiceOptions) {}
+    constructor(private readonly options: Options) {}
 
 
     public async run(inputs: Inputs): Promise<Outputs> {
