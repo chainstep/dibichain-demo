@@ -62,26 +62,15 @@ async function main(): Promise<void> {
     });
     RPCProvider.init(EnvVars.RPC_URL, async (provider: Provider) => {
         logger.info("Reinit contract...");
-        Contracts.init({
-            eventBus: <EventBus> new Contract(
-                EnvVars.EVENT_BUS_CONTRACT_ADDRESS,
-                EventBusJSON.abi,
-                provider
-            )
-        });
+        initContracts(provider);
+
         logger.info("Reinit contract listeners...");
         await initContractListeners(Contracts.getEventBus());
         logger.info("Listeners reinitialized");
     });
 
     logger.info("Init contracts...");
-    Contracts.init({
-        eventBus: <EventBus> new Contract(
-            EnvVars.EVENT_BUS_CONTRACT_ADDRESS,
-            EventBusJSON.abi,
-            RPCProvider.provider
-        )
-    });
+    initContracts(RPCProvider.provider);
 
     logger.info("Init http server...");
     const server = initHttpServer();
@@ -98,6 +87,16 @@ async function main(): Promise<void> {
     logger.info("Init intervals...");
     initIntervals();
     logger.info("Done.");
+}
+
+function initContracts(provider: Provider): void {
+    Contracts.init({
+        eventBus: <EventBus> new Contract(
+            EnvVars.EVENT_BUS_CONTRACT_ADDRESS,
+            EventBusJSON.abi,
+            provider
+        )
+    });
 }
 
 
